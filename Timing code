@@ -1,0 +1,5 @@
+Object startDate = new Date().getTime();
+
+
+print("Function " + this + " took " + (new Date().getTime() -  startDate)+" seconds.");
+

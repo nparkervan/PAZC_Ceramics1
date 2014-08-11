@@ -1,0 +1,1 @@
+select freetext from latestnondeletedaentvalue where freetext like '%jpg';
