@@ -566,7 +566,7 @@ remremoveContextGroupReln() {
 }
 
 /*** RelnEnt: Context Group***/
-onEvent("ContextGroup", "show", "saveContextGroup()");
+onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup(\"\");");
 
 onEvent("ContextGroup/ContextGroup_Details/Delete", "click", "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext", "click", "addToContextGroup()");
@@ -711,6 +711,7 @@ removeFromContextGroup() {
 }
 
 /*** Artefact Group ***/
+onEvent("Artefact_Group", "show", "keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachSketch", "click", "attachFileTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Sketch\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(artefact_group_id)");
@@ -809,6 +810,7 @@ autoNumArtefactGroup(){
 }
 
 /*** Sample ***/
+onEvent("Sample", "show", "keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
 onEvent("Sample/Sample_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Sample/Sample_GeneralInformation/Photo\")");
 onEvent("Sample/Sample_GeneralInformation/attachSketch", "click", "attachFileTo(\"Sample/Sample_GeneralInformation/Sketch\")");
 onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(sample_id)");
@@ -1008,17 +1010,24 @@ loadMatrixAttributes(){
 }
 
 /*** Special Find ***/
+onEvent("Special_Find", "show", "keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
-onEvent("Special_Find/Special_Find_GeneralInformation/Update", "delayclick", "saveSpecialFind(\"cancelTabGroup(\\\"Special_Find\\\", false);\")");
-onEvent("Special_Find/Special_Find_GeneralInformation/SaveAndNew", "delayclick", "saveSpecialFind(\"newSpecialFind();\")");
-onEvent("Special_Find/Special_Find_GeneralInformation/Duplicate", "delayclick", "saveSpecialFind(\"special_find_id = null; specialFindAutoNum();\")");
+onEvent("Special_Find/Special_Find_GeneralInformation/SaveAndNew", "delayclick", "newSpecialFind();");
+onEvent("Special_Find/Special_Find_GeneralInformation/Duplicate", "delayclick", "special_find_id = null; specialFindAutoNum();");
 onEvent("Special_Find/Special_Find_GeneralInformation/Delete", "delayclick", "deleteSpecialFind()");
 
 onEvent("Special_Find/Special_Find_Location", "show", "refreshSpecialFindLocations()");
-onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delayclick", "saveSpecialFind(\"newSpecialFindLocation();\")");
+onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delayclick", "newSpecialFindLocation();");
 onEvent("Special_Find/Special_Find_Location/List_Special_Find_Location", "click", "loadSpecialFindLocation()");
 
 String special_find_id = null;
+
+validateSpecialFind(){
+    if (isNull(getFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID"))) {
+        showWarning("Logic Error", "Cannot save record without id");
+        return;
+    }
+}
 
 newSpecialFind(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -1044,15 +1053,11 @@ loadSpecialFind() {
 }
 
 saveSpecialFind(String callback) {
-    if (isNull(getFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
-        return;
-    }
-    
+    Boolean enable_autosave = true;
     if (!isNull(special_find_id)) {
         entity = fetchArchEnt(special_find_id);
     }
-    saveTabGroup("Special_Find", special_find_id, null, null, "special_find_id = getLastSavedRecordId(); onSpecialFindSaved();" + callback);
+    saveTabGroup("Special_Find", special_find_id, null, null, "special_find_id = getLastSavedRecordId(); onSpecialFindSaved();" + callback, enable_autosave);
 }
 
 onSpecialFindSaved(){
@@ -1144,11 +1149,18 @@ specialFindAutoNum(){
 }
 
 /*** Special Find Locations***/
+onEvent("Special_Find_Location", "show", "keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");")
 onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
-onEvent("Special_Find_Location/Special_Find_Location/Update", "delayclick", "saveSpecialFindLocation()");
 onEvent("Special_Find_Location/Special_Find_Location/Delete", "delayclick", "deleteSpecialFindLocation()");
 
 String special_find_location_id = null;
+
+validateSpecialFindLocation(){
+    if (isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Latitude")) || isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Longitude"))) {
+        showWarning("Logic Error", "Cannot save Special Find Location without Latitdue or Longitude");
+        return;
+    }
+}
 
 newSpecialFindLocation(){
     special_find_location_id = null;
@@ -1168,14 +1180,11 @@ loadSpecialFindLocationFrom(archent_id) {
 }
 
 saveSpecialFindLocation() {
-    if (isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Latitude")) || isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Longitude"))) {
-        showWarning("Logic Error", "Cannot save Special Find Location without Latitdue or Longitude");
-        return;
-    }
+    Boolean enable_autosave = true;
     if (!isNull(special_find_location_id)) {
         entity = fetchArchEnt(special_find_location_id);
     }
-    saveTabGroup("Special_Find_Location", special_find_location_id, null, null, "special_find_location_id = getLastSavedRecordId(); onSpecialFindLocationSaved(); cancelTabGroup(\"Special_Find_Location\", false);");
+    saveTabGroup("Special_Find_Location", special_find_location_id, null, null, "special_find_location_id = getLastSavedRecordId(); onSpecialFindLocationSaved();", enable_autosave);
 }
 
 onSpecialFindLocationSaved(){
@@ -1216,12 +1225,19 @@ takeSpecialFindLocationGPS(){
 
 
 /*** Arch Ent: Adobe Element ***/
-onEvent("Adobe_Element/Adobe_Element/Update", "delayclick", "saveAdobe(\"cancelTabGroup(\\\"Adobe_Element\\\", false);\")");
+onEvent("Adobe_Element", "show", "keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
 onEvent("Adobe_Element/Adobe_Element/Delete", "delayclick", "deleteAdobe()");
-onEvent("Adobe_Element/Adobe_Element/SaveAndNew", "delayclick", "saveAdobe(\"newAdobe();\")");
+onEvent("Adobe_Element/Adobe_Element/SaveAndNew", "delayclick", "newAdobe();");
 onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabGroup(\"Adobe_Element\", true)");
 
 String adobe_id = null;
+
+validateAdobe(){
+    if (isNull(getFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID"))) {
+        showWarning("Logic Error", "Cannot save Adobe without Reference ID.");
+        return;
+    }
+}
 
 newAdobe(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -1252,10 +1268,7 @@ loadAdobeAttributes(){
 }
 
 saveAdobe(String callback) {
-    if (isNull(getFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID"))) {
-        showWarning("Logic Error", "Cannot save Adobe without Reference ID.");
-        return;
-    }
+    Boolean enable_autosave = true;
     
     if (!isNull(adobe_id)) {
         entity = fetchArchEnt(adobe_id);
@@ -1265,7 +1278,7 @@ saveAdobe(String callback) {
         showWarning("Logic Error", "Adobe cannot be saved as parent context is not saved or loaded.");
         return null;
     } else {
-       saveTabGroup("Adobe_Element", adobe_id, null, null, "adobe_id = getLastSavedRecordId(); onAdobeSaved();" + callback);
+       saveTabGroup("Adobe_Element", adobe_id, null, null, "adobe_id = getLastSavedRecordId(); onAdobeSaved();" + callback, enable_autosave);
     }
 }
 
@@ -1355,12 +1368,19 @@ updateAllContextAdobes() {
 }
 
 /*** Arch Ent: PhotoLog ***/
-onEvent("Photograph_Log/Photograph_Log/Update", "delayclick", "savePhotoLog(\"cancelTabGroup(\\\"Photograph_Log\\\", false);\")");
+onEvent("Photograph_Log", "show", "keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
 onEvent("Photograph_Log/Photograph_Log/Delete", "delayclick", "deletePhotoLog()");
 onEvent("Photograph_Log/Photograph_Log/SaveAndNew", "delayclick", "savePhotoLog(\"newPhotoLog();\")");
 onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTabGroup(\"Photograph_Log\", true)");
 
 String photolog_id = null;
+
+validatePhotoLog(){
+    if (isNull(getFieldValue("Photograph_Log/Photograph_Log/Photograph_Reference_ID"))) {
+        showWarning("Logic Error", "Cannot save Photgraph without Reference ID.");
+        return;
+    }
+}
 
 newPhotoLog(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -1387,15 +1407,11 @@ loadPhotoLogAttributes(){
 }
 
 savePhotoLog(String callback) {
-    if (isNull(getFieldValue("Photograph_Log/Photograph_Log/Photograph_Reference_ID"))) {
-        showWarning("Logic Error", "Cannot save Photgraph without Reference ID.");
-        return;
-    }
-    
+    Boolean enable_autosave = true;
     if (!isNull(photolog_id)) {
         entity = fetchArchEnt(photolog_id);
     }
-    saveTabGroup("Photograph_Log", photolog_id, null, null, "photolog_id = getLastSavedRecordId(); onPhotoLogSaved();" + callback);
+    saveTabGroup("Photograph_Log", photolog_id, null, null, "photolog_id = getLastSavedRecordId(); onPhotoLogSaved();" + callback, enable_autosave);
 }
 
 onPhotoLogSaved(){

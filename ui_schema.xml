@@ -118,7 +118,6 @@
                 </child3>
               </container5>
               <Your_description/>
-              <Update/>
               <Details/>
             </Context_GeneralInformation>
             <Context_Measure>
@@ -289,7 +288,6 @@
               <specialFindList/>
               <loadSpecialFind/>
               <deleteSpecialFind/>
-              <Update/>
             </Context_Artefacts>
             <Context_Samples>
               <newSample/>
@@ -485,7 +483,6 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
-              <Update/>
               <Delete/>
               <SaveAndNew/>
               <Duplicate/>
@@ -519,7 +516,6 @@
               <Length/>
               <Shape/>
               <Method_Manufacture/>
-              <Update/>
               <SaveAndNew/>
               <Delete/>
               <ReturnToContext/>
@@ -536,7 +532,6 @@
               <Camera/>
               <Caption/>
               <Scene_Type/>
-              <Update/>
               <SaveAndNew/>
               <Delete/>
               <ReturnToContext/>
@@ -1888,9 +1883,6 @@
         Kind of pointless without file attachments
       -->
 
-        <trigger ref="Update">
-          <label>{Save_Special_Find}</label>
-        </trigger>
         <trigger ref="SaveAndNew">
           <label>{Save_and_New_Special_Find}</label>
         </trigger>
@@ -1935,9 +1927,6 @@
         </input>
         <trigger ref="TakeGPS">
           <label>{Take_From_GPS}</label>
-        </trigger>
-        <trigger ref="Update">
-          <label>{Save_Special_Find_Location}</label>
         </trigger>
         <trigger ref="Delete">
           <label>{Delete_Special_Find_Location}</label>
@@ -1988,9 +1977,6 @@
           </select1>
 
           
-          <trigger ref="Update">
-            <label>{Save_and_Close}</label>
-          </trigger>
           <trigger ref="SaveAndNew">
             <label>{Save_and_New}</label>
           </trigger>
@@ -2028,10 +2014,7 @@
           <input faims_attribute_name="Caption" faims_attribute_type="freetext" faims_read_only="false" ref="Caption" faims_certainty="false">
               <label>{Caption}</label>
             </input>
-          <trigger ref="Update">
-            <label>{Save_and_Close}</label>
-          </trigger>
-          <trigger ref="SaveAndNew">
+            <trigger ref="SaveAndNew">
             <label>{Save_and_New}</label>
           </trigger>
           <trigger ref="Delete">
