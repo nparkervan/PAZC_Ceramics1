@@ -1645,3 +1645,270 @@ loadMatrixAttributes();
 loadSpecialFindAttributes();
 loadPhotoLogAttributes();
 loadAdobeAttributes();
+
+
+/** Vocab Population -- copied from lake mungo.**/
+/* Populates the path specified vocabulary from the database based on the given attribute name, where type 
+is the type of the vocab to populate (checkbox, dropdown, radio or list). */
+makeVocab(String type, String path, String attrib, List vocabExclusions) {
+    makeVocab(type, path, attrib, vocabExclusions, null);
+}
+
+/* Populates the path specified vocabulary from the database based on the given attribute name, where type 
+is the type of the vocab to populate (PictureGallery, CheckBoxGroup, DropDown, HierarchicalDropDown, RadioGroup or List). */
+makeVocab(String type, String path, String attrib, List vocabExclusions, String callbackFunction){
+  if (isNull(type) || isNull(path) || isNull(attrib)) {
+    Log.e("makeVocab()", "Can't make populate a vocab when the given type, path or attribute is Null");
+    return;
+  }
+
+  if (type.equals("PictureGallery")) {
+    fetchAll("select vocabid, vocabname, pictureurl from vocabulary left join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
+      onFetch(pictures) {
+        populatePictureGallery(path, pictures);
+        if (callbackFunction != null && !isNull(callbackFunction)) {
+          execute(callbackFunction);
+        }
+      }
+    });
+    return;
+  }
+
+  if (type.equals("HierarchicalDropDown")) {
+    populateHierarchicalDropDown(path, attrib);
+    if (callbackFunction != null && !isNull(callbackFunction)) {
+      execute(callbackFunction);
+    }
+    return;
+  }
+
+  fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;",
+    new FetchCallback() {
+      onFetch(result) {
+        print("makeVocab() result: " + result);
+        if (result!=null && result.size()>0 && vocabExclusions!=null && vocabExclusions.size()>0) {
+          List filteredVocab = new ArrayList();
+          for(item : result) {
+            if (vocabExclusions.contains(item.get(1))) {
+              Log.d("makeVocab()", "removing vocab exclusion: " + item.get(1));
+            } else {
+              filteredVocab.add(item);
+            }
+          }
+          result=filteredVocab;
+        }
+        print("makeVocab() filtered result: " + result);
+        if(type.equals("CheckBoxGroup")) {
+          populateCheckBoxGroup(path, result);
+        } else if(type.equals("DropDown")) {
+          populateDropDown(path, result);
+        } else if(type.equals("RadioGroup")) {
+          populateRadioGroup(path, result);
+        } else if(type.equals("List")) {
+          populateList(path, result);
+        }
+        if (callbackFunction != null && !isNull(callbackFunction)) {
+          execute(callbackFunction);
+        }
+      }
+    });
+}
+
+/** Wrapper for to make a vocab without an exlusion list **/
+makeVocab(String type, String path, String attrib) {
+  makeVocab(type, path, attrib, null);
+}
+
+/** Makes a dynamic vocab nested in the specified and populates it using a data_schema vocab, with a callbackFunction to execute after creating the dynamic view. **/
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container, String attributeName, String attributeType) {
+  viewDef = createViewDef();
+  if (type.equals("CheckBoxGroup")) {
+    viewDef.createCheckboxGroup();
+  } else if (type.equals("RadioGroup")) {
+    viewDef.createRadioGroup();
+  } else if (type.equals("PictureGallery")) {
+    viewDef.createPictureGallery();
+  } else {
+    Log.e("makeDynamicVocab()", "Error: invalid vocab type provided.");
+    return;
+  }
+  // set the label for the dynamic view
+  if (!isNull(label)) {
+    viewDef.setLabel(label);
+  }
+  // link the dynamic view to a property in the data schema
+  if (!isNull(attributeName) && !isNull(attributeType)) {
+    viewDef.setAttributeName(attributeName).setAttributeType(attributeType);
+  }
+  // Add the certainty, annotation and description
+  viewDef.setAnnotationEnabled(true).setCertaintyEnabled(true).setInfoEnabled(true);
+  // populate the dynamic view choices with the contents of some vocabulary
+  String tabgroup = path.split("/")[0];
+  String tab = path.split("/")[1];
+  String view = path.split("/")[2];
+  fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
+    onFetch(result) {
+      print ("Dynamic Vocab: " + result);
+      for (item : result) {
+        viewDef.addChoice(item.get(1), item.get(0));
+      }
+      if (!isNull(container)) {
+        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in container '" + container + "'");
+        createView(path, viewDef, container);
+      } else {
+        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in tab '" + tabgroup + "/" + tab + "'");
+        createView(path, viewDef);
+      }
+      if (callbackFunction != null && !isNull(callbackFunction)) {
+        execute(callbackFunction);
+      }
+    }
+  });
+  Log.d("makeDynamicVocab()", "Refreshing CSS for tabgroup: " + tabgroup);
+  refreshTabgroupCSS(tabgroup);
+}
+
+/** Makes a dynamic vocab and populates it using a data_schema vocab. **/
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container) {
+  makeDynamicVocab(type, path, attrib, label, callbackFunction, container, null, null);
+}
+
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction) {
+  makeDynamicVocab(type, path, attrib, label, callbackFunction, null);
+}
+
+makeDynamicVocab(String type, String path, String attrib, String label) {
+  makeDynamicVocab(type, path, attrib, label, null, null);
+}
+
+/** Entity Relationship Saving **/
+/** Saves two entity id's as a relation. **/
+saveEntitiesToRel(String type, String entity1, String entity2) {
+    if (isNull(entity1) || isNull(entity2)) return;
+    saveRel(null, type, null, null, new SaveCallback() {
+        onSave(rel_id, newRecord) {
+            addReln(entity1, rel_id, null);
+            addReln(entity2, rel_id, null);
+        }
+    });
+}
+
+/** Saves two entity id's as a relation with some callback executed. **/
+saveEntitiesToRel(String type, String entity1, String entity2, String callback) {
+    if (isNull(entity1) || isNull(entity2)) return;
+    saveRel(null, type, null, null, new SaveCallback() {
+        onSave(rel_id, newRecord) {
+            addReln(entity1, rel_id, null);
+            addReln(entity2, rel_id, null);
+            if(!isNull(callback)) {
+               execute(callback);
+            }
+        }
+    });
+}
+
+/** Saves two entity id's as a hierachical relation. **/
+saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb, String e2verb) {
+    if (isNull(entity1) || isNull(entity2)) return;
+    saveRel(null, type, null, null, new SaveCallback() {
+        onSave(rel_id, newRecord) {
+            addReln(entity1, rel_id, e1verb);
+            addReln(entity2, rel_id, e2verb);
+        }
+    });
+}
+
+/** Action Bar **/
+addActionBarItem("sync", new ToggleActionButtonCallback() {
+    actionOnLabel() {
+        "{Sync_Enabled}";
+    }
+    actionOn() {
+        setSyncEnabled(false);
+        setFileSyncEnabled(false);
+        showToast("{Sync_Disabled}");
+    }
+    isActionOff() {
+        isSyncEnabled();
+    }
+    actionOffLabel() {
+        "{Sync_Disabled}";
+    }
+    actionOff() {
+        setSyncEnabled(true);
+        setFileSyncEnabled(true);
+        showToast("{Sync_Enabled}");
+    }
+});
+
+addActionBarItem("internal_gps", new ToggleActionButtonCallback() {
+    actionOnLabel() {
+        "{Internal_GPS_Enabled}";
+    }
+    actionOn() {
+        stopGPS();
+        showToast("{GPS_Disabled}");
+    }
+    isActionOff() {
+        isInternalGPSOn();
+    }
+    actionOffLabel() {
+        "{Internal_GPS_Disabled}";
+    }
+    actionOff() {
+        if(isExternalGPSOn()) {
+            stopGPS();
+        }
+        startInternalGPS();
+        showToast("{GPS_Enabled}");
+    }
+});
+
+addActionBarItem("external_gps", new ToggleActionButtonCallback() {
+    actionOnLabel() {
+        "{External_GPS_Enabled}";
+    }
+    actionOn() {
+        stopGPS();
+        showToast("{GPS_Disabled}");
+
+    }
+    isActionOff() {
+        isExternalGPSOn();
+    }
+    actionOffLabel() {
+        "{External_GPS_Disabled}";
+    }
+    actionOff() {
+        if(isInternalGPSOn()) {
+            stopGPS();
+        }
+        startExternalGPS();
+        if(isBluetoothConnected()) {
+            showToast("{GPS_Enabled}");
+        } else {
+            showToast("{Please_Enable_Bluetooth}");
+            this.isActionOff();
+        }
+    }
+});
+
+setTimestamp(String path) {
+    setFieldValue(path, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date()));
+}
+
+
+loadFromLocalSettings(String key, String defaultVal) {
+    query = "SELECT value FROM localSettings WHERE key = '" + key + "';";
+    fetchOne(query, new FetchCallback() {
+        onFetch(result) {
+            print("" + result);
+            String value = defaultVal;
+            if (!isNull(result)) {
+                value = result.get(0);
+            }
+
+            setFieldValue("Project/Main/" + key, value);
+        }
+    });
+}
