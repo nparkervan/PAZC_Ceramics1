@@ -812,12 +812,18 @@ autoNumArtefactGroup(){
 onEvent("Sample/Sample_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Sample/Sample_GeneralInformation/Photo\")");
 onEvent("Sample/Sample_GeneralInformation/attachSketch", "click", "attachFileTo(\"Sample/Sample_GeneralInformation/Sketch\")");
 onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(sample_id)");
-onEvent("Sample/Sample_GeneralInformation/Update", "delayclick", "saveSample(\"cancelTabGroup(\\\"Sample\\\", false);\")");
-onEvent("Sample/Sample_GeneralInformation/SaveAndNew", "delayclick", "saveSample(\"newSample();\")");
-onEvent("Sample/Sample_GeneralInformation/Duplicate", "delayclick", "saveSample(\"sample_id = null; sampleAutoNum();\")");
+onEvent("Sample/Sample_GeneralInformation/SaveAndNew", "delayclick", "newSample();");
+onEvent("Sample/Sample_GeneralInformation/Duplicate", "delayclick", "sample_id = null; sampleAutoNum();");
 onEvent("Sample/Sample_GeneralInformation/Delete", "delayclick", "deleteSample()");
 
 String sample_id = null;
+
+validateSample() {
+    if (isNull(getFieldValue("Sample/Sample_GeneralInformation/Sample_ID"))) {
+        showWarning("Logic Error", "Cannot save record without id");
+        return;
+    }
+}
 
 newSample(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -843,15 +849,13 @@ loadSample() {
 }
 
 saveSample(String callback) {
-    if (isNull(getFieldValue("Sample/Sample_GeneralInformation/Sample_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
-        return;
-    }
-    
+    Boolean enable_autosave = true;
     if (!isNull(sample_id)) {
         entity = fetchArchEnt(sample_id);
+    } else {
+        sample_id = null;
     }
-    saveTabGroup("Sample", sample_id, null, null, "sample_id = getLastSavedRecordId(); onSampleSaved();" + callback);
+    saveTabGroup("Sample", sample_id, null, null, "sample_id = getLastSavedRecordId(); onSampleSaved();" + callback, enable_autosave);
 }
 
 onSampleSaved(){
