@@ -1646,7 +1646,7 @@ populateListForUsers(){
     makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
 }
 
-populateListForUsers();
+onEvent("user/usertab/", "show", "populateListForUsers()");
 
 String username = "";
 String device = "";
@@ -1655,21 +1655,32 @@ String areaCode = "";
 login(){
     if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
         showWarning("Warning", "Please select a User and an Area Code before logging in.");
-    } else {
-        Object userResult = fetchOne("select userid,fname,lname,email from user where userid='" + getFieldValue("user/usertab/users") + "';");
-        User user = new User(userResult.get(0),userResult.get(1),userResult.get(2),userResult.get(3));
-        userid = userResult.get(0);
-        setUser(user);
-        username = userResult.get(1) + " " + userResult.get(2);
-        showTabGroup("control");
-
-        fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
-        fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
-
-        areaCode = fetchOne("select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ").get(1);
-        
-        getCounterFromDB();   
+        return;
     }
+
+    String userVocabId = getFieldValue("user/usertab/users");
+    fetchOne("select userid,fname,lname,email from user where userid='" + userVocabId + "';", new FetchCallback() {
+      onFetch(result) {
+          user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
+          setUser(user);
+          username = result.get(1) + " " + result.get(2);
+          showTabGroup("control");
+      }
+    });
+
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+
+    areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
+    areaCode  = null;
+    fetchOne(
+        areaCodeQ,
+        new FetchCallback() {
+          onFetch(result) {
+            areaCode = result.get(0);
+          }
+        }
+    );
 }
 
 onEvent("user/usertab/login", "click", "login()");
