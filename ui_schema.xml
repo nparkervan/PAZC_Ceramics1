@@ -387,7 +387,6 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
-              <Update/>
               <Delete/>
               <SaveAndNew/>
               <Duplicate/>
@@ -1636,9 +1635,6 @@
         </trigger>
         <trigger ref="viewattached">
           <label>{View_Attached_Files}</label>
-        </trigger>
-        <trigger ref="Update">
-          <label>{Save_Artefact}</label>
         </trigger>
         <trigger ref="SaveAndNew">
           <label>{Save_and_New_Artefact}</label>

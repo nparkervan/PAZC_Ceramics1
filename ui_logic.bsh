@@ -714,12 +714,18 @@ removeFromContextGroup() {
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachSketch", "click", "attachFileTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Sketch\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(artefact_group_id)");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Update", "delayclick", "saveArtefactGroup(\"cancelTabGroup(\\\"Artefact_Group\\\", false);\")");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/SaveAndNew", "delayclick", "saveArtefactGroup(\"newArtefactGroup();\")");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Duplicate", "delayclick", "saveArtefactGroup(\"artefact_group_id=null; autoNumArtefactGroup();\")");
+onEvent("Artefact_Group/Artefact_Group_GeneralInformation/SaveAndNew", "delayclick", "newArtefactGroup();");
+onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Duplicate", "delayclick", "artefact_group_id=null; autoNumArtefactGroup();");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Delete", "delayclick", "deleteArtefactGroup()");
 
 String artefact_group_id = null;
+
+validateArtefactGroup() {
+    if (isNull(getFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID"))) {
+        showWarning("Logic Error", "Cannot save record without id");
+        return;
+    }
+}
 
 newArtefactGroup(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -745,14 +751,13 @@ loadArtefactGroup() {
 }
 
 saveArtefactGroup(String callback) {
-    if (isNull(getFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
-        return;
-    }
+    Boolean enable_autosave = true;
     if (!isNull(artefact_group_id)) {
         entity = fetchArchEnt(artefact_group_id);
+    } else {
+        artefact_group_id = null;
     }
-    saveTabGroup("Artefact_Group", artefact_group_id, null, null, "artefact_group_id = getLastSavedRecordId(); onArtefactGroupSaved();" + callback);
+    saveTabGroup("Artefact_Group", artefact_group_id, null, null, "artefact_group_id = getLastSavedRecordId(); onArtefactGroupSaved();" + callback, true;);
 }
 
 onArtefactGroupSaved(){
