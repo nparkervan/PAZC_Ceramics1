@@ -76,7 +76,7 @@
                 <child3>
                   <Grid_Location_Reference/>
                 </child3>
-				<child4>
+                <child4>
                   <Sub_Unit/>
                 </child4>
               </container1>
@@ -89,23 +89,23 @@
                 </child2>
               </container2>
               <container6>
-				<child1>
-					<Date_Opened/>
-				</child1>
+                <child1>
+                  <Date_Opened/>
+                </child1>
                 <child2>
-					<Excavator/>
-				</child2>
-			  </container6>
-			  <Context_Type/>
-			  <container7>
-                <child1>			  
-					<Type_of_Definition/>
-				</child1>
+                  <Excavator/>
+                </child2>
+              </container6>
+              <Context_Type/>
+              <container7>
+                <child1>
+                  <Type_of_Definition/>
+                </child1>
                 <child2>
-					<Excavation_Method/>
-				</child2>
-			  </container7>
-			  <Context_Comments/>
+                  <Excavation_Method/>
+                </child2>
+              </container7>
+              <Context_Comments/>
               <container5>
                 <child1>
                   <CreatingUser/>
@@ -131,7 +131,7 @@
                 </child2>
               </container1>
               <Datum/>
-			       <container2>
+              <container2>
                 <child1>
                   <Context_Highest_Level_NW/>
                   <Context_Highest_Level_NE/>
@@ -157,8 +157,8 @@
                 <child3>
                   <Depth/>
                 </child3>
-				</container3>
-				<Volume/>
+              </container3>
+              <Volume/>
               <Update/>
             </Context_Measure>
             <Context_Deposits>
@@ -173,15 +173,14 @@
                 </child2>
               </container1>
               <Soil_Particle_Sorting/>
-             
-				<container8>
-                <child1>			  
-					<Soil_Texture_Actual/>
-				</child1>
+              <container8>
+                <child1>
+                  <Soil_Texture_Actual/>
+                </child1>
                 <child2>
-					<Texture_Helper/>
-				</child2>
-			  </container8>
+                  <Texture_Helper/>
+                </child2>
+              </container8>
               <newMatrix/>
               <matrixList/>
               <loadMatrix/>
