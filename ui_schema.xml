@@ -53,10 +53,6 @@
               <GroupList/>
             </contextGroup>
             <gps>
-              <connectexternal/>
-              <connectinternal/>
-              <startsync/>
-              <stopsync/>
               <startTimeLog/>
               <startDistanceLog/>
               <stopTrackLog/>
@@ -709,18 +705,6 @@
       </group>
       <group ref="gps">
         <label>{Control}</label>
-        <trigger ref="connectexternal">
-          <label>{Connect_To_External_GPS}</label>
-        </trigger>
-        <trigger ref="connectinternal">
-          <label>{Connect_To_Internal_GPS}</label>
-        </trigger>
-        <trigger ref="startsync">
-          <label>{Start_Synching}</label>
-        </trigger>
-        <trigger ref="stopsync">
-          <label>{Stop_Synching}</label>
-        </trigger>
       </group>
     </group>
 

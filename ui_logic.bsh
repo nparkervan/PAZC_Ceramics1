@@ -22,8 +22,6 @@ onEvent("control/data/newContext", "click", "newContext();");
 onEvent("control/data/Search", "click", "clearSearch()");
 onEvent("control/contextGroup/newContextGroup", "click", "newContextGroup(true);");
 onEvent("control/contextGroup/GroupList", "click", "loadContextGroup()");
-onEvent("control/gps/connectexternal", "click", "startExternalGPS()");
-onEvent("control/gps/connectinternal", "click", "startInternalGPS()");
 
 onEvent("control/data/searchButton", "click", "search()");
 
@@ -1617,23 +1615,9 @@ onEvent("user/usertab/login", "click", "login()");
 onEvent("user/usertab/guide", "click", "showTab(\"user/help\")");
 
 /*** SYNC ***/
-
-onEvent("control/gps/startsync", "click", "startSync()");
-onEvent("control/gps/stopsync", "click", "stopSync()");
-
 setSyncMinInterval(120.0f);
 setSyncMaxInterval(600.0f);
 setSyncDelay(5.0f);
-
-startSync() {
-    setSyncEnabled(true);
-    //setFileSyncEnabled(false);
-}
-
-stopSync() {
-    setSyncEnabled(false);
-    //setFileSyncEnabled(false);
-}
 
 // Stuff that needs to happen after everything.
 
