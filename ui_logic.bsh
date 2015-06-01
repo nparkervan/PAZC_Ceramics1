@@ -758,7 +758,7 @@ saveArtefactGroup(String callback) {
     } else {
         artefact_group_id = null;
     }
-    saveTabGroup("Artefact_Group", artefact_group_id, null, null, "artefact_group_id = getLastSavedRecordId(); onArtefactGroupSaved();" + callback, true;);
+    saveTabGroup("Artefact_Group", artefact_group_id, null, null, "artefact_group_id = getLastSavedRecordId(); onArtefactGroupSaved();" + callback, enable_autosave);
 }
 
 onArtefactGroupSaved(){
@@ -1149,7 +1149,7 @@ specialFindAutoNum(){
 }
 
 /*** Special Find Locations***/
-onEvent("Special_Find_Location", "show", "keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");")
+onEvent("Special_Find_Location", "show", "keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
 onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
 onEvent("Special_Find_Location/Special_Find_Location/Delete", "delayclick", "deleteSpecialFindLocation()");
 
