@@ -566,13 +566,21 @@ remremoveContextGroupReln() {
 }
 
 /*** RelnEnt: Context Group***/
-onEvent("ContextGroup/ContextGroup_Details/Update", "delayclick", "saveContextGroup()");
+onEvent("ContextGroup", "show", "saveContextGroup()");
+
 onEvent("ContextGroup/ContextGroup_Details/Delete", "click", "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext", "click", "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext", "click", "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext", "click", "removeFromContextGroup()");
 
 String context_group_id = null;
+
+validateContextGroup() {
+    if (isNull(getFieldValue("ContextGroup/ContextGroup_Details/Title"))) {
+        showWarning("Validation Error", "Context Group requires a title to be saved.");
+        return;
+    }
+}
 
 newContextGroup(menu){
     if (!menu && isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -601,11 +609,8 @@ loadContextGroupFromContext() {
 
 saveContextGroup(){
     if (isNull(context_group_id)) context_group_id = null;
-    if (isNull(getFieldValue("ContextGroup/ContextGroup_Details/Title"))) {
-        showWarning("Validation Error", "Context Group requires a title to be saved.");
-        return;
-    }
-    saveTabGroup("ContextGroup", context_group_id, null, null, "context_group_id = getLastSavedRecordId(); onContextGroupSaved; populateContextGroup();");
+    Boolean enable_autosave = true;
+    saveTabGroup("ContextGroup", context_group_id, null, null, "context_group_id = getLastSavedRecordId(); onContextGroupSaved; populateContextGroup();", enable_autosave);
 }
 
 onContextGroupSaved(){
