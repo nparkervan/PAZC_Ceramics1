@@ -1700,66 +1700,6 @@ loadSpecialFindAttributes();
 loadPhotoLogAttributes();
 loadAdobeAttributes();
 
-<<<<<<< HEAD
-makeVocab(String attrib){
-  Object a = fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '"+attrib+"' ");
-  return a;
-}
-
-/** Makes a dynamic vocab nested in the specified and populates it using a data_schema vocab, with a callbackFunction to execute after creating the dynamic view. **/
-makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container, String attributeName, String attributeType) {
-  viewDef = createViewDef();
-  if (type.equals("CheckBoxGroup")) {
-    viewDef.createCheckboxGroup();
-  } else if (type.equals("RadioGroup")) {
-    viewDef.createRadioGroup();
-  } else if (type.equals("PictureGallery")) {
-    viewDef.createPictureGallery();
-  } else {
-    Log.e("makeDynamicVocab()", "Error: invalid vocab type provided.");
-    return;
-  }
-  // set the label for the dynamic view
-  if (!isNull(label)) {
-    viewDef.setLabel(label);
-  }
-  // link the dynamic view to a property in the data schema
-  if (!isNull(attributeName) && !isNull(attributeType)) {
-    viewDef.setAttributeName(attributeName).setAttributeType(attributeType);
-  }
-  // Add the certainty, annotation and description
-  viewDef.setAnnotationEnabled(true).setCertaintyEnabled(true).setInfoEnabled(true);
-  // populate the dynamic view choices with the contents of some vocabulary
-  String tabgroup = path.split("/")[0];
-  String tab = path.split("/")[1];
-  String view = path.split("/")[2];
-  fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
-    onFetch(result) {
-      print ("Dynamic Vocab: " + result);
-      for (item : result) {
-        viewDef.addChoice(item.get(1), item.get(0));
-      }
-      if (!isNull(container)) {
-        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in container '" + container + "'");
-        createView(path, viewDef, container);
-      } else {
-        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in tab '" + tabgroup + "/" + tab + "'");
-        createView(path, viewDef);
-      }
-      if (callbackFunction != null && !isNull(callbackFunction)) {
-        execute(callbackFunction);
-      }
-    }
-  });
-  Log.d("makeDynamicVocab()", "Refreshing CSS for tabgroup: " + tabgroup);
-  refreshTabgroupCSS(tabgroup);
-}
-
-/** Makes a dynamic vocab and populates it using a data_schema vocab. **/
-makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container) {
-  makeDynamicVocab(type, path, attrib, label, callbackFunction, container, null, null);
-=======
-
 /** Vocab Population -- copied from lake mungo.**/
 /** Wrapper for to make a vocab without an exlusion list **/
 makeVocab(String type, String path, String attrib) {
@@ -1838,17 +1778,12 @@ makeVocab(String type, String path, String attrib, List vocabExclusions, String 
 
 makeDynamicVocab(String type, String path, String attrib, String label) {
   makeDynamicVocab(type, path, attrib, label, null, null);
->>>>>>> f72e1cd54a71032fa30b018866c4bb3b095885c0
 }
 
 makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction) {
   makeDynamicVocab(type, path, attrib, label, callbackFunction, null);
 }
 
-<<<<<<< HEAD
-makeDynamicVocab(String type, String path, String attrib, String label) {
-  makeDynamicVocab(type, path, attrib, label, null, null);
-=======
 /** Makes a dynamic vocab and populates it using a data_schema vocab. **/
 makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container) {
   makeDynamicVocab(type, path, attrib, label, callbackFunction, container, null, null);
@@ -1921,7 +1856,6 @@ makeDynamicVocab(String type, String path, String attrib, String label, String c
       refreshTabgroupCSS(tabgroup);
     }
   });
->>>>>>> f72e1cd54a71032fa30b018866c4bb3b095885c0
 }
 
 /** Entity Relationship Saving **/
@@ -1960,8 +1894,6 @@ saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb
         }
     });
 }
-<<<<<<< HEAD
-=======
 
 /** Action Bar **/
 addActionBarItem("sync", new ToggleActionButtonCallback() {
@@ -2060,4 +1992,3 @@ loadFromLocalSettings(String key, String defaultVal) {
         }
     });
 }
->>>>>>> f72e1cd54a71032fa30b018866c4bb3b095885c0
