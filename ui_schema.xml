@@ -432,7 +432,6 @@
               <Stone_Size/>
               <Shape/>
               <Stoniness/>
-              <Update/>
               <Delete/>
               <SaveAndNew/>
             </Matrix>
@@ -1770,9 +1769,6 @@
         <input faims_attribute_name="Stoniness" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Stoniness">
           <label>{Soil_Stoniness}</label>
         </input>
-        <trigger ref="Update">
-          <label>{Save_and_Close}</label>
-        </trigger>
         <trigger ref="SaveAndNew">
           <label>{Save_and_New_Matrix}</label>
         </trigger>

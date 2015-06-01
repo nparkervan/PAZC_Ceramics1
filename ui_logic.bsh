@@ -926,11 +926,18 @@ sampleAutoNum(){
 }
 
 /*** Matrix ***/
-onEvent("Matrix/Matrix/Update", "delayclick", "saveMatrix(\"cancelTabGroup(\\\"Matrix\\\", false);\")");
+onEvent("Matrix", "show", "keepTabGroupChanges(\"Matrix\"); saveMatrix(\"\");");
 onEvent("Matrix/Matrix/Delete", "delayclick", "deleteMatrix()");
-onEvent("Matrix/Matrix/SaveAndNew", "delayclick", "saveMatrix(\"newMatrix();\")");
+onEvent("Matrix/Matrix/SaveAndNew", "delayclick", "newMatrix();");
 
 String matrix_id = null;
+
+validateMatrix() {
+    if (isNull(getFieldValue("Matrix/Matrix/Component"))) {
+        showWarning("Logic Error", "Cannot save Matrix without Component");
+        return;
+    }
+}
 
 newMatrix(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -953,15 +960,13 @@ loadMatrix() {
 }
 
 saveMatrix(String callback) {
-    if (isNull(getFieldValue("Matrix/Matrix/Component"))) {
-        showWarning("Logic Error", "Cannot save Matrix without Component");
-        return;
-    }
-    
+    Boolean enable_autosave = true;
     if (!isNull(matrix_id)) {
         entity = fetchArchEnt(matrix_id);
+    } else {
+        matrix_id = null;
     }
-    saveTabGroup("Matrix", matrix_id, null, null, "matrix_id = getLastSavedRecordId(); onMatrixSaved();" + callback);
+    saveTabGroup("Matrix", matrix_id, null, null, "matrix_id = getLastSavedRecordId(); onMatrixSaved();" + callback, enable_autosave);
 }
 
 onMatrixSaved(){
