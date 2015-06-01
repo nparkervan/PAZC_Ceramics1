@@ -159,7 +159,6 @@
                 </child3>
               </container3>
               <Volume/>
-              <Update/>
             </Context_Measure>
             <Context_Deposits>
               <Soil_Compaction_Type/>
@@ -188,7 +187,6 @@
               <Deposit_Inclusions/>
               <Deposit_Thickness_Extent/>
               <Horizon_Boundary/>
-              <Update/>
             </Context_Deposits>
             <Context_Cuts>
               <container1>
@@ -207,7 +205,6 @@
               <Orientation/>
               <Inclination_of_axis/>
               <Truncation/>
-              <Update/>
             </Context_Cuts>
             <Context_Structures>
               <Structural_Components/>
@@ -221,7 +218,6 @@
               <loadAdobe/>
               <deleteAdobe/>  
 
-              <Update/>
               <Delete/>
             </Context_Structures>
             <Context_Interpretation>
@@ -238,7 +234,6 @@
               </container1>
               <Phase_From/>
               <Phase_To/>
-              <Update/>
               <AddContextGroup/>
               <ContextGroupList/>
               <ShowContextGroup/>
@@ -280,8 +275,7 @@
               <newPhotoLog/>
               <PhotoLogList/>
               <loadPhotoLog/>
-              <deletePhotoLog/>              
-              <Update/>
+              <deletePhotoLog/>
               <SaveAndNew/>
               <Duplicate/>
               <Delete/>
@@ -351,7 +345,6 @@
               <End_Date/>
               <Phase_From/>
               <Phase_To/>
-              <Update/>
               <Delete/>
             </ContextGroup_Details>
             <ContextGroup_Contexts>
@@ -871,9 +864,6 @@
           </group>
         </group>
  
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
-        </trigger>
         <trigger ref="Details">
           <label>{Fill_in_Context_Type_Details}</label>
         </trigger>
@@ -1052,9 +1042,6 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
-        </trigger>
       </group>
       <group faims_hidden="true" ref="Context_Cuts">
         <label>{Cut}</label>
@@ -1135,9 +1122,6 @@
         <input faims_attribute_name="Truncation" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Truncation">
           <label>{Truncation}</label>
         </input>
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
-        </trigger>
       </group>
       <group faims_hidden="true" ref="Context_Structures">
         <label>{Structures}</label>
@@ -1188,9 +1172,6 @@
           <label>Delete {Adobe}</label>
         </trigger>
 
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
-        </trigger>
       </group>
       <group ref="Context_Interpretation">
         <label>{Int}</label>
@@ -1234,9 +1215,6 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
-        </trigger>
         <trigger ref="AddContextGroup">
           <label>{Add_New_Context_Group}</label>
         </trigger>
@@ -1358,9 +1336,6 @@
           <label>{Delete_Special_Find}</label>
         </trigger>
 
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
-        </trigger>
       </group>
       <group ref="Context_Samples">
         <label>{Samples}</label>
@@ -1441,9 +1416,6 @@
         </trigger>
         <trigger ref="deletePhotoLog">
           <label>{Delete_Photograph_Log}</label>
-        </trigger>
-        <trigger ref="Update">
-          <label>{Save_Context}</label>
         </trigger>
         <trigger ref="SaveAndNew">
           <label>{Save_and_New_Context}</label>
@@ -1540,9 +1512,6 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="Update">
-          <label>{Save_Context_Group}</label>
-        </trigger>
         <trigger ref="Delete">
           <label>{Delete_Context_Group}</label>
         </trigger>
