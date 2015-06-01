@@ -1637,40 +1637,11 @@ getDefaultUsersList() {
 populateListForUsers(){
     fetchAll("select userid, fname || ' ' || lname from user where userdeleted is null;", new FetchCallback() {
         onFetch(result) {
-            populateList("user/usertab/users", result);
+            populateDropDown("user/usertab/users", result);
         }
     });
 
     makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
-
-    String localAreaQ = "select value from localSettings where key = 'Area';";
-    String localUserQ = "select value from localSettings where key = 'User';";
-    Object localArea  = null;
-    Object localUser  = null;
-
-    fetchOne(
-        localAreaQ,
-        new FetchCallback() {
-          onFetch(result) {
-            localArea = result;
-          }
-        }
-    );
-    fetchOne(
-        localUserQ,
-        new FetchCallback() {
-          onFetch(result) {
-            localUser = result;
-          }
-        }
-    );
-
-    if (!isNull(localArea)){
-        setFieldValue("user/usertab/Area_Code", localArea.get(0));
-    }
-    if (!isNull(localUser)){
-        setFieldValue("user/usertab/users", localUser.get(0));
-    }
 }
 
 populateListForUsers();
