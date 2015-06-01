@@ -537,36 +537,36 @@ updateRelns(){
 }
 
 loadContextAttributes(){
-    populatePictureGallery("Context/Context_GeneralInformation/Context_Type", makePictureGallery("Context Type"));
-    populateDropDown("Context/Context_GeneralInformation/Type_of_Definition", makeVocab("Type of Definition"));
-    populateDropDown("Context/Context_GeneralInformation/Excavation_Method", makeVocab("Excavation Method"));
-    populateHierarchicalDropDown("Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
-    populateHierarchicalDropDown("Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
-    populateDropDown("Context/Context_Deposits/Soil_Texture_Actual", makeVocab("Soil Texture"));
-    populateHierarchicalPictureGallery("Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
-    populateDropDown("Context/Context_Deposits/Horizon_Boundary", makeVocab("Horizon Boundary"));
+    // populatePictureGallery("Context/Context_GeneralInformation/Context_Type", makePictureGallery("Context Type"));
+    // populateDropDown("Context/Context_GeneralInformation/Type_of_Definition", makeVocab("Type of Definition"));
+    // populateDropDown("Context/Context_GeneralInformation/Excavation_Method", makeVocab("Excavation Method"));
+    // populateHierarchicalDropDown("Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
+    // populateHierarchicalDropDown("Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
+    // populateDropDown("Context/Context_Deposits/Soil_Texture_Actual", makeVocab("Soil Texture"));
+    // populateHierarchicalPictureGallery("Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
+    // populateDropDown("Context/Context_Deposits/Horizon_Boundary", makeVocab("Horizon Boundary"));
 
-    populateDropDown("Context/Context_Cuts/Shape_of_Cut", makeVocab("Shape of Cut"));
+    // populateDropDown("Context/Context_Cuts/Shape_of_Cut", makeVocab("Shape of Cut"));
 
-    populateDropDown("Context/Context_Cuts/Sides_of_Cut", makeVocab("Sides of Cut"));
-    populateRadioGroup("Context/Context_Cuts/Shape_of_Corners", makeVocab("Shape of Corners"));
-    populateRadioGroup("Context/Context_Cuts/Break_of_Slope_Top", makeVocab("Break of Slope - Top"));
-    populateRadioGroup("Context/Context_Cuts/Break_of_slope_Base", makeVocab("Break of slope - Base"));
-    populateHierarchicalDropDown("Context/Context_Cuts/Shape_of_Base", "Shape of Base");
-    populateRadioGroup("Context/Context_Cuts/Orientation", makeVocab("Orientation"));
+    // populateDropDown("Context/Context_Cuts/Sides_of_Cut", makeVocab("Sides of Cut"));
+    // populateRadioGroup("Context/Context_Cuts/Shape_of_Corners", makeVocab("Shape of Corners"));
+    // populateRadioGroup("Context/Context_Cuts/Break_of_Slope_Top", makeVocab("Break of Slope - Top"));
+    // populateRadioGroup("Context/Context_Cuts/Break_of_slope_Base", makeVocab("Break of slope - Base"));
+    // populateHierarchicalDropDown("Context/Context_Cuts/Shape_of_Base", "Shape of Base");
+    // populateRadioGroup("Context/Context_Cuts/Orientation", makeVocab("Orientation"));
 
-    populateHierarchicalPictureGallery("Context/Context_Structures/Bond_Type", "Bond Type");
-    populateHierarchicalDropDown("Context/Context_Structures/Structural_Components", "Structural Components");
-    populateDropDown("Context/Context_Structures/Bonding", makeVocab("Bonding"));
+    // populateHierarchicalPictureGallery("Context/Context_Structures/Bond_Type", "Bond Type");
+    // populateHierarchicalDropDown("Context/Context_Structures/Structural_Components", "Structural Components");
+    // populateDropDown("Context/Context_Structures/Bonding", makeVocab("Bonding"));
 
-    populateRadioGroup("Context/Context_Interpretation/Your_Interpretation", makeVocab("Your Interpretation"));
-    populateDropDown("Context/Context_Interpretation/Phase_From", makeVocab("Phase From"));
-    populateDropDown("Context/Context_Interpretation/Phase_To", makeVocab("Phase To"));
+    // populateRadioGroup("Context/Context_Interpretation/Your_Interpretation", makeVocab("Your Interpretation"));
+    // populateDropDown("Context/Context_Interpretation/Phase_From", makeVocab("Phase From"));
+    // populateDropDown("Context/Context_Interpretation/Phase_To", makeVocab("Phase To"));
 
-    populateHierarchicalDropDown("Context/Texture_Helper/Soil_Texture", "Soil Texture Helper");
+    // populateHierarchicalDropDown("Context/Texture_Helper/Soil_Texture", "Soil Texture Helper");
 
-    relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union select relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' order by relntypeid, name;");
-    populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", relnList);
+    // relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union select relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' order by relntypeid, name;");
+    // populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", relnList);
 }
 
 openContextTabs(){
@@ -736,9 +736,9 @@ populateContextGroup() {
 }
 
 loadContextGroupAttributes(){
-    populatePictureGallery("ContextGroup/ContextGroup_Details/Context_Type", makePictureGallery("CG Context Type"));
-    populateDropDown("ContextGroup/ContextGroup_Details/Phase_From", makeVocab("CG Phase From"));
-    populateDropDown("ContextGroup/ContextGroup_Details/Phase_To", makeVocab("CG Phase To"));
+    // populatePictureGallery("ContextGroup/ContextGroup_Details/Context_Type", makePictureGallery("CG Context Type"));
+    // populateDropDown("ContextGroup/ContextGroup_Details/Phase_From", makeVocab("CG Phase From"));
+    // populateDropDown("ContextGroup/ContextGroup_Details/Phase_To", makeVocab("CG Phase To"));
 }
 
 loadContextFromContextGroup(){
@@ -862,7 +862,7 @@ doNotDelete(){
 }
 
 loadArtefactGroupAttributes(){
-    populateHierarchicalDropDown("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Class", "Artefact Class");
+    // populateHierarchicalDropDown("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Class", "Artefact Class");
 }
 
 autoNumArtefactGroup(){
@@ -962,8 +962,8 @@ doNotDelete(){
 }
 
 loadSampleAttributes(){
-    populateDropDown("Sample/Sample_GeneralInformation/Sample_Type", makeVocab("Sample Type"));
-    populateDropDown("Sample/Sample_GeneralInformation/Collection_Method", makeVocab("Collection Method"));
+    // populateDropDown("Sample/Sample_GeneralInformation/Sample_Type", makeVocab("Sample Type"));
+    // populateDropDown("Sample/Sample_GeneralInformation/Collection_Method", makeVocab("Collection Method"));
 }
 
 sampleAutoNum(){
@@ -1073,9 +1073,9 @@ doNotDelete(){
 }
 
 loadMatrixAttributes(){
-    populateDropDown("Matrix/Matrix/Component_Type", makeVocab("Component Type"));
-    populateDropDown("Matrix/Matrix/Component", makeVocab("Component"));
-    populateHierarchicalPictureGallery("Matrix/Matrix/Shape", "Shape");
+    // populateDropDown("Matrix/Matrix/Component_Type", makeVocab("Component Type"));
+    // populateDropDown("Matrix/Matrix/Component", makeVocab("Component"));
+    // populateHierarchicalPictureGallery("Matrix/Matrix/Shape", "Shape");
 }
 
 /*** Special Find ***/
@@ -1161,7 +1161,7 @@ doNotDelete(){
 }
 
 loadSpecialFindAttributes(){
-    populateHierarchicalDropDown("Special_Find/Special_Find_GeneralInformation/Special_Find_Class", "Special Find Class");
+    // populateHierarchicalDropDown("Special_Find/Special_Find_GeneralInformation/Special_Find_Class", "Special Find Class");
 }
 
 refreshSpecialFindLocations() {
@@ -1331,8 +1331,8 @@ loadAdobe() {
 }
 
 loadAdobeAttributes(){
-    populateDropDown("Adobe_Element/Adobe_Element/Method_Manufacture",  makeVocab("Method_Manufacture"));
-    populateDropDown("Adobe_Element/Adobe_Element/Shape",  makeVocab("AdobeShape"));
+    // populateDropDown("Adobe_Element/Adobe_Element/Method_Manufacture",  makeVocab("Method_Manufacture"));
+    // populateDropDown("Adobe_Element/Adobe_Element/Shape",  makeVocab("AdobeShape"));
 
 }
 
@@ -1472,7 +1472,7 @@ loadPhotoLog() {
 }
 
 loadPhotoLogAttributes(){
-    populateDropDown("Photograph_Log/Photograph_Log/Camera", makeVocab("Camera"));
+    // populateDropDown("Photograph_Log/Photograph_Log/Camera", makeVocab("Camera"));
 }
 
 savePhotoLog(String callback) {
@@ -1982,4 +1982,48 @@ loadFromLocalSettings(String key, String defaultVal) {
             setFieldValue("Project/Main/" + key, value);
         }
     });
+}
+
+/* Removes sidebar navigation buttons */
+removeNavigationButtons() {
+  // removeNavigationButton("new");
+  // removeNavigationButton("duplicate");
+  // removeNavigationButton("delete");
+}
+
+addNaviationButtons(String tabgroup) {
+  removeNavigationButtons();
+  addNavigationButton("new", new ActionButtonCallback() {
+    actionOnLabel() {
+      "New";
+    }
+    actionOn() {
+      if(!isNull(getRecordId(tabgroup))) {
+          newRecord(tabgroup);
+          showToast("New record created");
+      } else {
+          showAlert("Warning", "Any unsaved changes will be lost!", "newRecord(\""+tabgroup+"\")", "");
+      }
+    }
+  }, "success");
+  // addNavigationButton("duplicate", new ActionButtonCallback() {
+  //   actionOnLabel() {
+  //     "Duplicate";
+  //   }
+  //   actionOn() {
+  //     if(!isNull(getRecordId(tabgroup))) {
+  //         // duplicateSample();
+  //     } else {
+  //         showWarning("Warning", "The record could not be duplicated");
+  //     }
+  //   }
+  // }, "primary");
+  addNavigationButton("delete", new ActionButtonCallback() {
+    actionOnLabel() {
+      "Delete";
+    }
+    actionOn() {
+      deleteRecord(tabgroup, getRecordId(tabgroup));
+    }
+  }, "danger");
 }
