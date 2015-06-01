@@ -2,19 +2,67 @@
 User user; // don't touch
 String userid;
 
+import java.util.concurrent.Callable;
+import android.util.Log;
+import java.io.File;
+import jsqlite;
+import jsqlite.Callback;
+
+Log.d("PAZC Module", "Very first line of logic after imports.");
+
+
 /*setSyncEnabled(true);
 setFileSyncEnabled(true);*/
 
 
 makeLocalID(){
-    fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);");
-    fetchOne("drop view if exists identifierAsSpreadsheet;");
-    fetchOne("create view identifierAsSpreadsheet as select uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response from (select * from latestNonDeletedArchentIdentifiers order by attributename) group by uuid;");
+    fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
+    fetchOne("drop view if exists parentchild;", null);
+    fetchOne( "create view parentchild as "+
+            "  select parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename"+
+            "    from (select uuid, participatesverb, aenttypename, relationshipid"+
+            "            from latestnondeletedaentreln "+
+            "            join relationship using (relationshipid) "+
+            "            join latestnondeletedarchent using (uuid) "+
+            "            join aenttype using (aenttypeid)) parent "+
+            "    join (select uuid, relationshipid "+
+            "            from latestnondeletedaentreln "+
+            "            join relationship using (relationshipid)) child "+
+            "      on (parent.relationshipid = child.relationshipid and parent.uuid != child.uuid);", null);
+
 }
+
+/*
+drop view if exists parentchild;
+"create view parentchild as "+
+"  select parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename"+
+"  from (  select uuid, participatesverb, aenttypename, relationshipid"+
+"          from latestnondeletedaentreln "+
+"          join relationship using (relationshipid) "+
+"          join latestnondeletedarchent using (uuid) "+
+"          join aenttype using (aenttypeid)) parent "+
+"   join (select uuid, relationshipid "+
+"         from latestnondeletedaentreln "+
+"        join relationship using (relationshipid)) child "+
+"     on (parent.relationshipid = child.relationshipid and parent.uuid != child.uuid);"
+;
+
+
+select childuuid, response
+  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) join createdmodifiedatby using (uuid)
+ where relationshipid in (select relationshipid 
+                            from latestnondeletedrelationship join relntype using (relntypeid) 
+                           where relntypename = 'ContextSample')
+   and parentaenttypename = 'Context'
+ order by createdat desc;
+
+*/
+
 
 makeLocalID();
     
 /*** control ***/
+
 
 onEvent("control/data", "show", "refreshEntities()");
 onEvent("control/data/ContextList", "click", "loadContext()");
@@ -34,7 +82,8 @@ clearSearch(){
 onEvent("control/contextGroup", "show", "reloadGroupList()");
 
 reloadGroupList(){
-    populateList("control/contextGroup/GroupList", fetchEntityList("Context Group"));
+    populateCursorList("control/contextGroup/GroupList", "SELECT uuid, response FROM latestNonDeletedArchEntFormattedIdentifiers JOIN createdmodifiedatby USING (uuid) ORDER BY modifiedat DESC LIMIT ? OFFSET ?", 25);
+    refreshTabgroupCSS("control");
 }
 
 refreshEntities() {
@@ -45,47 +94,37 @@ refreshEntities() {
 }
 
 searchFew(){
-    populateList("control/data/ContextList", fetchAll(""+
-        "SELECT uuid, group_concat(coalesce(measure   || ' '  || vocabname || '('  ||  freetext ||'; '|| (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' '  || vocabname || ' (' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     freetext  || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     measure,  "+
-        "                                     vocabname,  "+
-        "                                     freetext), ' ') as response, valuetimestamp  "+
-        "FROM (select * from latestNonDeletedArchentIdentifiers order by attributename) "+
-        "WHERE aenttypename = 'Context' "+        
-        "GROUP BY uuid "+
-        "order by valuetimestamp desc limit 10;"));
+    populateCursorList("control/data/ContextList", ""+
+        "SELECT uuid, response  "+
+        "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
+        "  JOIN createdmodifiedatby USING (uuid) "+
+        " WHERE aenttypename = 'Context' "+
+        " ORDER BY modifiedat DESC "+
+        " LIMIT ? "+
+        "OFFSET ?", 10);
+
+
 }
 
 search(){
-    populateList("control/data/ContextList", fetchAll(""+
-        "SELECT uuid, group_concat(coalesce(measure   || ' '  || vocabname || '('  ||  freetext ||'; '|| (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' '  || vocabname || ' (' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     freetext  || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     measure,  "+
-        "                                     vocabname,  "+
-        "                                     freetext), ' ') as response, valuetimestamp  "+
-        "FROM (select * from latestNonDeletedArchentIdentifiers order by attributename) "+
-        "WHERE aenttypename = 'Context' "+
-        "and uuid in (select uuid from latestnondeletedaentvalue left outer join vocabulary using (vocabid) where freetext like '%"+getFieldValue("control/data/Search")+"%' or vocabname like '%"+getFieldValue("control/data/Search")+"%' or measure like '%"+getFieldValue("control/data/Search")+"%') "+
-        "GROUP BY uuid "+
-        "order by response;"));
+    populateCursorList("control/data/ContextList", ""+
+        "SELECT uuid, response "+
+        "  FROM latestNonDeletedArchEntFormattedIdentifiers " +
+        "  JOIN createdmodifiedatby USING (uuid) " +
+        " WHERE aenttypename = 'Context' "+
+        "   AND uuid IN (select uuid from latestnondeletedaentvalue left outer join vocabulary using (vocabid) where freetext like '%"+getFieldValue("control/data/Search")+"%' or vocabname like '%"+getFieldValue("control/data/Search")+"%' or measure like '%"+getFieldValue("control/data/Search")+"%') "+
+        " ORDER BY modifiedat DESC " +
+        " LIMIT ? "+
+        " OFFSET ? ", 25);
+
+
 }
 
+
 /*** ArchEnt: Context ***/
+
+//TODO: refactor this event stuff.
+
 onEvent("Context", "show", "openContextTabs();");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Cuts\");");
@@ -157,39 +196,29 @@ String context_id = null;
 Object dialog;
 
 newContext(){
-    contextIncrement = getFieldValue("control/data/ContextIncrement");
-    contextIncMatch = fetchOne("select count(freetext), '"+contextIncrement+"' LIKE '___-____' AND trim('"+contextIncrement+"','0123456789') = '-' from latestnondeletedaentvalue where freetext = '"+contextIncrement+"';");
+    contextIncrement = Integer.parseInt(getFieldValue("control/data/ContextIncrement"));
+    setFieldValue("control/data/ContextIncrement", contextIncrement+1);
 
-    if (!isNull(contextIncMatch) && (contextIncMatch.get(0).equals("0")) && (contextIncMatch.get(1).equals("1"))){
-        context_id = null;
-        newTabGroup("Context");
-        setFieldValue("Context/Context_GeneralInformation/AreaCode", areaCode.substring(0,3));
-        setFieldValue("Context/Context_GeneralInformation/Grid_Location_Reference", areaCode.substring(0,4));
-        setFieldValue("Context/Context_Measure/Datum", areaCode.substring(0,4));
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('contextIncrement', '" + contextIncrement + "');", null);
+    setFieldValue("Context/Context_GeneralInformation/AreaCode", areaCode.substring(0,3));
+    setFieldValue("Context/Context_GeneralInformation/Grid_Location_Reference", areaCode.substring(0,4));
+    setFieldValue("Context/Context_Measure/Datum", areaCode.substring(0,4));
 
-        setFieldValue("Context/Context_GeneralInformation/Site_Code","PAZC14");
-        setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
-        date = fetchOne("select date('now');");
-        setFieldValue("Context/Context_GeneralInformation/Date_Opened", date.get(0));
-        setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
-    } else {
-        if (!contextIncMatch.get(0).equals("0")) {
-            showWarning("Alert!","You tried to create a context with a duplicate ID. Please choose a different one. ");
-        }
-        else if (! contextIncMatch.get(1).equals("1")) {
-            showWarning("alert!","your context ID doesn't match the required pattern");
-        }
-        else {
-            showWarning("um","Something went wrong.");
-        }
-    }
+    setFieldValue("Context/Context_GeneralInformation/Site_Code","PAZC14");
+    setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
+    setTimestamp("Context/Context_GeneralInformation/Date_Opened");
+    
+    setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
+
+    // make autosaving work
 }
 
 loadContext() {
+    //TODO redo the loading
     context_id = getListItemValue();
     loadContextFrom(context_id);
-    Object foo = fetchOne("select fname || ' ' || lname from user join archentity using (userid) where uuid = '"+context_id+"' group by uuid having min(aenttimestamp)");
-    setFieldValue("Context/Context_GeneralInformation/CreatingUser", foo.get(0));
+
+    //do we need to load user from createdmodifiedatby to the creating user field?
     
 }
 
@@ -198,24 +227,12 @@ loadContextFrom(contextid) {
     if (isNull(context_id)) return;
     
     showTabGroup("Context", context_id);
+
+    //make autosaving work
 }
 
-saveContext(String callback) {
-    if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
-        return;
-    }
-    if (!isNull(context_id)) {
-        entity = fetchArchEnt(context_id);
-    }
-    saveTabGroup("Context", context_id, null, null, "context_id = getLastSavedRecordId();getCounterFromDB();" + callback);
-}
+//make duplicate context work.
 
-duplicateContext(){
-    context_id = null;
-    getCounterFromDB();
-    setFieldValue("Context/Context_GeneralInformation/Context_ID", getFieldValue("control/data/ContextIncrement"));
-}
 
 deleteContext(){
     if (!isNull(context_id)) {
@@ -234,32 +251,6 @@ doNotDelete(){
     showToast("Delete Cancelled.");
 }
 
-getCounterFromDB(){
-    Object counter = fetchOne(""+
-        "select response, deviceMatch, aenttimestamp "+
-        "from (select freetext, v.vocabName || coalesce(substr('000'||(substr(freetext,-3)+1),-3),'') as response, aenttimestamp,  "+
-        "             uuid in (select uuid "+
-        "                        from latestnondeletedaentvalue AS av join attributekey using (attributeid), localSettings "+
-        "                        where userid = value "+
-        "                         and key = 'User') as deviceMatch, value "+
-        " from latestnondeletedarchentidentifiers join (select uuid from latestnondeletedaentvalue av join vocabulary v on (av.vocabid = substr(v.vocabname,0,4)), localSettings where key = 'Area' and value = v.vocabid) using (uuid), localSettings join vocabulary v on (value = v.vocabid) "+
-        " where attributename = 'Context ID' "+
-        " and key = 'Area' limit 1) "+
-        " where response not in (select freetext from latestnondeletedarchentidentifiers where freetext is not null) "+
-        "union select response, -1, aenttimestamp "+
-        "from (select vocabName || '001' as response, datetime(1, 'unixepoch') as aenttimestamp from localSettings join vocabulary on (value = vocabid) where key = 'Area') "+
-        "order by deviceMatch desc, aenttimestamp desc limit 1;");
-    String out = "";
-
-    if (!isNull(counter)){
-         out = counter.get(0);
-         
-         if (counter.get(1).equals("0"))
-             showWarning("Alert!", "ID may be intruding in other Device's allocated ID range.");
-    }
-
-    setFieldValue("control/data/ContextIncrement", out);
-}
 
 loadContextFromReln(){
     String relnid = getFieldValue("Context/Context_Relationships_to_Other_Contexts/listRelns");
@@ -282,17 +273,85 @@ deleteReln(){
 
 fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
-        date = fetchOne("select date('now');");
-        setFieldValue("Context/Context_GeneralInformation/Date_Closed", date.get(0));
+        setTimestamp("Context/Context_GeneralInformation/Date_Closed")        
     } else {
         showToast("To avoid accidents, please clear the Date Closed field before updating.");
     }
 }
+//todo wire in placeholder archents into all of these.
+
+
+updateContextRelationshipBasedDropdown(path, relntypename, uuid){
+    if (!isNull(context_id)){
+        fetchAll("select childuuid, response "+
+                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+                 "  join createdmodifiedatby using (uuid) "+
+                 " where relationshipid in (select relationshipid  "+
+                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+                 "                           where relntypename = '"+relntypename+"' "+
+                 "                             and uuid = "+uuid+") "+
+                 "   and parentaenttypename = 'Context' "+
+                 " order by createdat desc; "+
+                 "",
+
+        new FetchCallback() {
+          onFetch(result) {
+            populateDropDown(path, result);
+
+          }});
+}
+
+updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename, uuid){
+    if (!isNull(context_id)){
+        fetchAll("select childuuid, response "+
+                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+                 "  join createdmodifiedatby using (uuid) "+
+                 " where relationshipid in (select relationshipid  "+
+                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+                 "                           where relntypename = '"+relntypename+"' "+
+                 "                             and uuid = "+uuid+") "+
+                 "   and parentaenttypename = '"+parentaenttypename+"' "+
+                 " order by createdat desc; "+
+                 "",
+
+        new FetchCallback() {
+          onFetch(result) {
+            populateDropDown(path, result);
+
+          }});
+}
+
+
 
 updateAllContextMatrices() {
-    Object contextMatrices = new ArrayList();
+    updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", 'ContextMatrix',context_id);
+}
+
+/*
+
     if (!isNull(context_id)){
-        contextMatrices = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
+        fetchAll("select childuuid, response "+
+                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+                 "  join createdmodifiedatby using (uuid) "+
+                 " where relationshipid in (select relationshipid  "+
+                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+                 "                           where relntypename = 'ContextMatrix' "+
+                 "                             and uuid = "+context_id+") "+
+                 "   and parentaenttypename = 'Context' "+
+                 " order by createdat desc; "+
+                 "",
+
+        new FetchCallback() {
+          onFetch(result) {
+            populateDropDown("Context/Context_Deposits/matrixList", result);
+
+          }});
+        /*
+        contextMatrices = 
+
+
+
+        fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
             "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
             "            FROM latestNonDeletedArchentIdentifiers\n"+
             "           WHERE aenttypename = 'Matrix'\n"+
@@ -310,9 +369,16 @@ updateAllContextMatrices() {
             "order by valuetimestamp desc, uuid, attributename;");
     }
     populateDropDown("Context/Context_Deposits/matrixList",  contextMatrices);
-}
+    */
+
+
+    
+
 
 updateAllContextGroups() {
+    updateContextRelationshipBasedDropdown("Context/Context_Interpretation/ContextGroupList", 'ContextContextGroup', context_id);
+
+    /*
     Object contextGroups = new ArrayList();
     if (!isNull(context_id)){
         contextGroups = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
@@ -333,9 +399,15 @@ updateAllContextGroups() {
             "order by valuetimestamp desc, uuid, attributename;");
     }
     populateDropDown("Context/Context_Interpretation/ContextGroupList",  contextGroups);
+    */
 }
 
 updateAllContextArtefacts(){
+    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/artefactGroupList", 'ContextArtefactGroup', context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/specialFindList", 'ContextSpecialFind', context_id);
+
+
+    /*
     Object localArtefactGroup = new ArrayList();
     Object localSpecialFind = new ArrayList();
     if (!isNull(context_id)){
@@ -374,9 +446,13 @@ updateAllContextArtefacts(){
     }
     populateDropDown("Context/Context_Artefacts/artefactGroupList", localArtefactGroup);
     populateDropDown("Context/Context_Artefacts/specialFindList", localSpecialFind);
+    */
 }
 
 updateAllContextSamples(){
+    updateContextRelationshipBasedDropdown("Context/Context_Samples/sampleList", 'ContextSample', context_id);
+
+    /*
     Object localSample = new ArrayList();
     if (!isNull(context_id)){
         localSample = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
@@ -397,21 +473,32 @@ updateAllContextSamples(){
             "order by valuetimestamp desc, uuid, attributename;");
     }
     populateDropDown("Context/Context_Samples/sampleList", localSample);
+    */
 }
 
 updateAllContextRelationships(){
+
+    //TODO Figure out how to make this a cursor list, otherwise performance will scale like shit
+
+
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
 
     Object contextList = new ArrayList();
-    
+    /*
     if (!isNull(context_id)){
         contextList = fetchAll("select uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response from latestNonDeletedArchEntIdentifiers where aenttypename = 'Context' and uuid != '"+context_id+"' group by uuid;" );
     }    
     populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", contextList);
+    */
+
+
     updateRelns();
 }
 
 updateAllContextPhotologs() {
+    updateContextRelationshipBasedDropdown("Context/Context_Attachments/PhotoLogList", 'ContextPhotographLog', context_id);
+
+    /*
     Object contextPhotologs = new ArrayList();
     if (!isNull(context_id)){
         contextPhotologs = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
@@ -432,6 +519,7 @@ updateAllContextPhotologs() {
             "order by valuetimestamp desc, uuid, attributename;");
     }
     populateDropDown("Context/Context_Attachments/PhotoLogList",  contextPhotologs);
+    */
 }
 
 makeHierReln(){
@@ -453,14 +541,67 @@ makeHierReln(){
 
 showRelnFromList(){
     listID = getListItemValue();
-    
+    //TODO figure out how to refactor this. 
     foo = fetchOne("select group_concat(response, '\n') from ( select attributename || ': ' || coalesce(vocabname, freetext) as response from ( select uuid from latestnondeletedarchent join latestnondeletedaentreln using (uuid) where uuid != "+context_id+" and relationshipid = "+listID+" ) join latestnondeletedaentvalue using (uuid) join attributekey using (attributeid) left outer join vocabulary using (attributeid, vocabid) where attributename in ('Context ID', 'Context Type', 'Brief Description', 'Date Opened', 'Date Closed', 'Your Interpretation', 'Your description')  and coalesce(vocabname, freetext) is not null group by uuid, attributename order by case attributename when 'Context ID' then 1 when 'Context Type' then 2 when 'Your Interpretation' then 3 when 'Your description' then 4 when 'Date Opened' then 5 when 'Date Closed' then 6 end); ");
     if (!isNull(foo)){
         showToast(foo.get(0));
     }
 }
 
+
+
+//BRIAN: TODO
+updateAllContextRelnsDropdown(path, uuid){
+    if (!isNull(context_id)){
+        fetchAll("select childuuid, response "+
+                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+                 "  join createdmodifiedatby using (uuid) "+
+                 " where relationshipid in (select relationshipid  "+
+                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+                 "                           where relntypename = '"+relntypename+"' "+
+                 "                             and uuid = "+uuid+") "+
+                 "   and parentaenttypename = 'Context' "+
+                 " order by createdat desc; "+
+                 "",
+
+        new FetchCallback() {
+          onFetch(result) {
+            populateDropDown(path, result);
+
+          }});
+    }
+}
 updateRelns(){
+    //TODO Figure out a better way of doing this other than a dropdown.
+
+fetchAll("Context/Context_Relationships_to_Other_Contexts/listOfRelns","select childuuid, response "+
+                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+                 "  join createdmodifiedatby using (uuid) "+
+                 " where relationshipid in (select relationshipid  "+
+                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+                 "                           where relntypename not like 'Context%' "+
+                 "                             and uuid = "+uuid+") "+
+                 "   and parentaenttypename = 'Context' "+
+                 " order by createdat desc", 
+
+        new FetchCallback() {
+          onFetch(result) {
+            populateDropDown("Context/Context_Relationships_to_Other_Contexts/listRelns", result);
+
+          }});
+
+populateCursorList("Context/Context_Relationships_to_Other_Contexts/listOfRelns","select childuuid, response "+
+                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+                 "  join createdmodifiedatby using (uuid) "+
+                 " where relationshipid in (select relationshipid  "+
+                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+                 "                           where relntypename not like 'Context%' "+
+                 "                             and uuid = "+uuid+") "+
+                 "   and parentaenttypename = 'Context' "+
+                 " order by createdat desc "+
+                 " limit ? offset ? ;", 25);
+
+    /*
     Object contextRelnList = fetchAll("select parent.relationshipid, parent.participatesverb || ' ' || child.response "+
         "from (latestNonDeletedAentReln) parent  "+
         "join (latestNonDeletedAentReln join identifierAsSpreadsheet using (uuid)) child on (parent.relationshipid = child.relationshipid and parent.uuid != child.uuid) "+
@@ -471,9 +612,11 @@ updateRelns(){
     
     populateDropDown("Context/Context_Relationships_to_Other_Contexts/listRelns", contextRelnList);
     populateList("Context/Context_Relationships_to_Other_Contexts/listOfRelns", contextRelnList);
+    */
 }
 
 loadContextAttributes(){
+    /*
     populatePictureGallery("Context/Context_GeneralInformation/Context_Type", makePictureGallery("Context Type"));
     populateDropDown("Context/Context_GeneralInformation/Type_of_Definition", makeVocab("Type of Definition"));
     populateDropDown("Context/Context_GeneralInformation/Excavation_Method", makeVocab("Excavation Method"));
@@ -502,33 +645,78 @@ loadContextAttributes(){
 
     populateHierarchicalDropDown("Context/Texture_Helper/Soil_Texture", "Soil Texture Helper");
 
-    relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union select relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' order by relntypeid, name;");
+    
+    */
+/*
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Type_of_Definition", "Type of Definition");
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Excavation_Method", "Excavation Method");
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Context_Type", "Context Type");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
+    //Hierarchical makeVocab("DropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
+    makeVocab("DropDown", "Context/Context_Deposits/Horizon_Boundary", "Horizon Boundary");
+    makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Cut", "Shape of Cut");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Shape_of_Corners", "Shape of Corners");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Break_of_Slope_Top", "Break of Slope - Top");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Break_of_slope_Base", "Break of slope - Base");
+    makeVocab("DropDown", "Context/Context_Cuts/Sides_of_Cut", "Sides of Cut");
+    makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Base", "Shape of Base");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Orientation", "Orientation");
+    makeVocab("DropDown", "Context/Context_Structures/Structural_Components", "Structural Components");
+    makeVocab("DropDown", "Context/Context_Structures/Bonding", "Bonding");
+    makeVocab("DropDown", "Context/Context_Structures/Bond_Type", "Bond Type");
+    makeVocab("RadioGroup", "Context/Context_Interpretation/Your_Interpretation", "Your Interpretation");
+    makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
+    makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
+    //makeVocab("DropDown", "Context/Context_Interpretation/ContextGroupList", "");
+
+    //TODO picture gallery, hierarchical, etc
+
+    */
+
+/*
+
+TODO -- we need to discuss how to implement "relating contexts to each other" -- this is not a very good way to do it at all. 
+relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union select relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' order by relntypeid, name;");
     populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", relnList);
+*/
 }
 
 openContextTabs(){
-    Object name = fetchOne("select vocabName from vocabulary where vocabid = '"+getFieldValue("Context/Context_GeneralInformation/Context_Type")+"';");
-    if (!isNull(name)){
-        String vocab = name.get(0);
-        if ((vocab.equals("{Deposit}")) || (vocab.equals("{Natural}"))){
-            cancelTab("Context/Context_Cuts", false);
-            cancelTab("Context/Context_Structures", false);
-            showTab("Context/Context_Deposits");
-        } else if (vocab.equals("{Cut}")){
-            cancelTab("Context/Context_Deposits", false);
-            cancelTab("Context/Context_Structures", false);
-            showTab("Context/Context_Cuts");
-        } else if (vocab.equals("{Structure}")){
-            cancelTab("Context/Context_Deposits", false);
-            cancelTab("Context/Context_Cuts", false);
-            showTab("Context/Context_Structures");
-        }
-    } else {
 
-        cancelTab("Context/Context_Cuts", false);
-        cancelTab("Context/Context_Deposits", false);
-        cancelTab("Context/Context_Structures", false);
-    }
+//TODO: Check this. I'm sure we have new functions that makes this easier.
+    fetchOne("select vocabName from vocabulary where vocabid = '"+getFieldValue("Context/Context_GeneralInformation/Context_Type")+"';",
+
+        new FetchCallback() {
+          onFetch(name) {
+            if (!isNull(name)){
+                String vocab = name.get(0);
+                if ((vocab.equals("{Deposit}")) || (vocab.equals("{Natural}"))){
+                    cancelTab("Context/Context_Cuts", false);
+                    cancelTab("Context/Context_Structures", false);
+                    showTab("Context/Context_Deposits");
+                } else if (vocab.equals("{Cut}")){
+                    cancelTab("Context/Context_Deposits", false);
+                    cancelTab("Context/Context_Structures", false);
+                    showTab("Context/Context_Cuts");
+                } else if (vocab.equals("{Structure}")){
+                    cancelTab("Context/Context_Deposits", false);
+                    cancelTab("Context/Context_Cuts", false);
+                    showTab("Context/Context_Structures");
+                }
+            } else {
+
+                cancelTab("Context/Context_Cuts", false);
+                cancelTab("Context/Context_Deposits", false);
+                cancelTab("Context/Context_Structures", false);
+            }
+
+          }});
+
+
+   
+    
 }
 
 helpSetTextureActual(){
@@ -536,22 +724,31 @@ helpSetTextureActual(){
 }
 
 setTextureActual(){
-    Object textureToSet = fetchOne("select vocabid from vocabulary join attributekey using (attributeid)where attributeName = 'Soil Texture Actual'and vocabname = (select vocabname"
-                + " from vocabulary join attributekey using (attributeid)"
-                + " where vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"'"
-                + " and attributeName = 'Soil Texture');");
-    if(!isNull(textureToSet)){
-        setFieldValue("Context/Context_Deposits/Soil_Texture_Actual", textureToSet.get(0));
-    }
-    cancelTab("Context/Texture_Helper", false);
-    showTab("Context/Context_Deposits");
+
+    //This function makes the hierarchical soil texture selector write to the texture dropdown. We should discuss.
+fetchOne("select vocabid from vocabulary join attributekey using (attributeid)where attributeName = 'Soil Texture Actual'and vocabname = (select vocabname"
+        + " from vocabulary join attributekey using (attributeid) "
+       + " where vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"' "
+         + " and attributeName = 'Soil Texture'); ",
+
+        new FetchCallback() {
+          onFetch(textureToSet) {
+            if(!isNull(textureToSet)){
+                setFieldValue("Context/Context_Deposits/Soil_Texture_Actual", textureToSet.get(0));
+            }
+            cancelTab("Context/Texture_Helper", false);
+            showTab("Context/Context_Deposits");
+            }});
+
+
 }
 
 returnToContext(){
     cancelTab("Context/Texture_Helper", false);
     showTab("Context/Context_Deposits");
 }
-
+/*
+TODO: redo. figure out what queries are needed here.)
 remremoveContextGroupReln() {
     context_group_id = getFieldValue("Context/Context_Interpretation/ContextGroupList");
     if(!isNull(context_id) && !isNull(context_group_id)) {
@@ -570,8 +767,9 @@ remremoveContextGroupReln() {
         
     }
 }
+*/
 
-/*** RelnEnt: Context Group***/
+/*** ArchEnt: Context Group***/
 onEvent("ContextGroup/ContextGroup_Details/Update", "delayclick", "saveContextGroup()");
 onEvent("ContextGroup/ContextGroup_Details/Delete", "click", "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext", "click", "addToContextGroup()");
@@ -631,6 +829,9 @@ addToContextGroup() {
 }
 
 populateContextGroup() {
+    //updateNonContextRelationshipBasedDropdown("ContextGroup/ContextGroup_Contexts/AddContextList", 'ContextContextGroup', 'ContextGroup', context_group_id);
+    //TODO: Discuss how to turn these into cursor lists. I don't think this scales well.
+    /*
     populateDropDown("ContextGroup/ContextGroup_Contexts/AddContextList", 
         fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
             "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
@@ -665,6 +866,7 @@ populateContextGroup() {
             "        ORDER BY uuid, attributename ASC)\n"+
             "group by uuid\n"+
             "order by valuetimestamp desc, uuid, attributename;"));
+            */
 }
 
 loadContextGroupAttributes(){
@@ -691,6 +893,7 @@ reallyDeleteContextGroup(){
 doNotDelete(){
     showToast("Delete Cancelled.");
 }
+/* TODO: Redo.
 
 removeFromContextGroup() {
     context_id = getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList");
@@ -709,7 +912,8 @@ removeFromContextGroup() {
         }
         
     }
-}
+}*/
+
 
 /*** Artefact Group ***/
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
@@ -1495,55 +1699,20 @@ initMap() {
 //initMap();
 
 
-/*** TRACKLOG ***/
-/*
-setGPSUpdateInterval(4);
-
-onEvent("control/gps/startTimeLog", "click", "startTrackingGPS(\"time\", 10, \"saveTimeGPSTrack()\")");
-onEvent("control/gps/startDistanceLog", "click", "startTrackingGPS(\"distance\", 10, \"saveDistanceGPSTrack()\")");
-onEvent("control/gps/stopTrackLog", "click", "stopTrackingGPS()");
-
-saveTimeGPSTrack() {
-    List attributes = createAttributeList();
-    attributes.add(createEntityAttribute("gps_type", "time", null, null, null));
-    saveGPSTrack(attributes);
-}
-
-saveDistanceGPSTrack() {
-    List attributes = createAttributeList();
-    attributes.add(createEntityAttribute("gps_type", "distance", null, null, null));
-    saveGPSTrack(attributes);
-}
-
-saveGPSTrack(List attributes) {
-    position = getGPSPosition();
-    if (position == null) return;
-
-    //attributes.add(createEntityAttribute("gps_user", "" + user.getUserId(), null, null, null));
-    attributes.add(createEntityAttribute("gps_timestamp", "" + getCurrentTime(), null, null, null));
-    attributes.add(createEntityAttribute("gps_longitude", "" + position.getLongitude(), null, null, null));
-    attributes.add(createEntityAttribute("gps_latitude", "" + position.getLatitude(), null, null, null));
-    //attributes.add(createEntityAttribute("gps_heading", "" + getGPSHeading(), null, null, null));
-    attributes.add(createEntityAttribute("gps_accuracy", "" + getGPSEstimatedAccuracy(), null, null, null));
-    
-    positionProj = getGPSPositionProjected();
-    Point p = new Point(new MapPos(positionProj.getLongitude(), positionProj.getLatitude()), null, (PointStyle) null, null);
-    ArrayList l = new ArrayList();
-    l.add(p);
-    
-    saveArchEnt(null, "gps_track", l, attributes);
-}
-*/
 /*** USER ***/
 
-getDefaultUsersList() {
-    users = fetchAll("select userid, fname ||' ' || lname from user");
-    return users;
-}
 
 populateListForUsers(){
-    populateDropDown("user/usertab/users", getDefaultUsersList());
-    populateDropDown("user/usertab/Area_Code", makeVocab("AreaCode"));
+
+     fetchAll("select userid, fname || ' ' || lname from user where userdeleted is null;", new FetchCallback() {
+        onFetch(result) {
+            populateList("user/usertab/users", result);
+        }
+    });
+
+
+    
+    makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
 
     Object localArea = fetchOne("select value from localSettings where key = 'Area';");
     Object localUser = fetchOne("select value from localSettings where key = 'User';");
@@ -1563,24 +1732,29 @@ populateListForUsers();
 String username = "";
 String device = "";
 String areaCode = "";
+User user;
 
 login(){
     if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
         showWarning("Warning", "Please select a User and an Area Code before logging in.");
     } else {
-        Object userResult = fetchOne("select userid,fname,lname,email from user where userid='" + getFieldValue("user/usertab/users") + "';");
-        User user = new User(userResult.get(0),userResult.get(1),userResult.get(2),userResult.get(3));
-        userid = userResult.get(0);
-        setUser(user);
-        username = userResult.get(1) + " " + userResult.get(2);
-        showTabGroup("control");
+
+        fetchOne("select userid,fname,lname,email from user where userid='" + getListItemValue() + "';", new FetchCallback() {
+        onFetch(result) {
+            user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
+            setUser(user);
+            username = result.get(1) + " " + result.get(2);
+            showTabGroup("control");
+        }
+    });
+
+  
 
         fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
         fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
 
         areaCode = fetchOne("select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ").get(1);
         
-        getCounterFromDB();   
     }
 }
 
@@ -1616,3 +1790,270 @@ loadMatrixAttributes();
 loadSpecialFindAttributes();
 loadPhotoLogAttributes();
 loadAdobeAttributes();
+
+
+/** Vocab Population -- copied from lake mungo.**/
+/* Populates the path specified vocabulary from the database based on the given attribute name, where type 
+is the type of the vocab to populate (checkbox, dropdown, radio or list). */
+makeVocab(String type, String path, String attrib, List vocabExclusions) {
+    makeVocab(type, path, attrib, vocabExclusions, null);
+}
+
+/* Populates the path specified vocabulary from the database based on the given attribute name, where type 
+is the type of the vocab to populate (PictureGallery, CheckBoxGroup, DropDown, HierarchicalDropDown, RadioGroup or List). */
+makeVocab(String type, String path, String attrib, List vocabExclusions, String callbackFunction){
+  if (isNull(type) || isNull(path) || isNull(attrib)) {
+    Log.e("makeVocab()", "Can't make populate a vocab when the given type, path or attribute is Null");
+    return;
+  }
+
+  if (type.equals("PictureGallery")) {
+    fetchAll("select vocabid, vocabname, pictureurl from vocabulary left join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
+      onFetch(pictures) {
+        populatePictureGallery(path, pictures);
+        if (callbackFunction != null && !isNull(callbackFunction)) {
+          execute(callbackFunction);
+        }
+      }
+    });
+    return;
+  }
+
+  if (type.equals("HierarchicalDropDown")) {
+    populateHierarchicalDropDown(path, attrib);
+    if (callbackFunction != null && !isNull(callbackFunction)) {
+      execute(callbackFunction);
+    }
+    return;
+  }
+
+  fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;",
+    new FetchCallback() {
+      onFetch(result) {
+        print("makeVocab() result: " + result);
+        if (result!=null && result.size()>0 && vocabExclusions!=null && vocabExclusions.size()>0) {
+          List filteredVocab = new ArrayList();
+          for(item : result) {
+            if (vocabExclusions.contains(item.get(1))) {
+              Log.d("makeVocab()", "removing vocab exclusion: " + item.get(1));
+            } else {
+              filteredVocab.add(item);
+            }
+          }
+          result=filteredVocab;
+        }
+        print("makeVocab() filtered result: " + result);
+        if(type.equals("CheckBoxGroup")) {
+          populateCheckBoxGroup(path, result);
+        } else if(type.equals("DropDown")) {
+          populateDropDown(path, result);
+        } else if(type.equals("RadioGroup")) {
+          populateRadioGroup(path, result);
+        } else if(type.equals("List")) {
+          populateList(path, result);
+        }
+        if (callbackFunction != null && !isNull(callbackFunction)) {
+          execute(callbackFunction);
+        }
+      }
+    });
+}
+
+/** Wrapper for to make a vocab without an exlusion list **/
+makeVocab(String type, String path, String attrib) {
+  makeVocab(type, path, attrib, null);
+}
+
+/** Makes a dynamic vocab nested in the specified and populates it using a data_schema vocab, with a callbackFunction to execute after creating the dynamic view. **/
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container, String attributeName, String attributeType) {
+  viewDef = createViewDef();
+  if (type.equals("CheckBoxGroup")) {
+    viewDef.createCheckboxGroup();
+  } else if (type.equals("RadioGroup")) {
+    viewDef.createRadioGroup();
+  } else if (type.equals("PictureGallery")) {
+    viewDef.createPictureGallery();
+  } else {
+    Log.e("makeDynamicVocab()", "Error: invalid vocab type provided.");
+    return;
+  }
+  // set the label for the dynamic view
+  if (!isNull(label)) {
+    viewDef.setLabel(label);
+  }
+  // link the dynamic view to a property in the data schema
+  if (!isNull(attributeName) && !isNull(attributeType)) {
+    viewDef.setAttributeName(attributeName).setAttributeType(attributeType);
+  }
+  // Add the certainty, annotation and description
+  viewDef.setAnnotationEnabled(true).setCertaintyEnabled(true).setInfoEnabled(true);
+  // populate the dynamic view choices with the contents of some vocabulary
+  String tabgroup = path.split("/")[0];
+  String tab = path.split("/")[1];
+  String view = path.split("/")[2];
+  fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
+    onFetch(result) {
+      print ("Dynamic Vocab: " + result);
+      for (item : result) {
+        viewDef.addChoice(item.get(1), item.get(0));
+      }
+      if (!isNull(container)) {
+        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in container '" + container + "'");
+        createView(path, viewDef, container);
+      } else {
+        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in tab '" + tabgroup + "/" + tab + "'");
+        createView(path, viewDef);
+      }
+      if (callbackFunction != null && !isNull(callbackFunction)) {
+        execute(callbackFunction);
+      }
+    }
+  });
+  Log.d("makeDynamicVocab()", "Refreshing CSS for tabgroup: " + tabgroup);
+  refreshTabgroupCSS(tabgroup);
+}
+
+/** Makes a dynamic vocab and populates it using a data_schema vocab. **/
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container) {
+  makeDynamicVocab(type, path, attrib, label, callbackFunction, container, null, null);
+}
+
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction) {
+  makeDynamicVocab(type, path, attrib, label, callbackFunction, null);
+}
+
+makeDynamicVocab(String type, String path, String attrib, String label) {
+  makeDynamicVocab(type, path, attrib, label, null, null);
+}
+
+/** Entity Relationship Saving **/
+/** Saves two entity id's as a relation. **/
+saveEntitiesToRel(String type, String entity1, String entity2) {
+    if (isNull(entity1) || isNull(entity2)) return;
+    saveRel(null, type, null, null, new SaveCallback() {
+        onSave(rel_id, newRecord) {
+            addReln(entity1, rel_id, null);
+            addReln(entity2, rel_id, null);
+        }
+    });
+}
+
+/** Saves two entity id's as a relation with some callback executed. **/
+saveEntitiesToRel(String type, String entity1, String entity2, String callback) {
+    if (isNull(entity1) || isNull(entity2)) return;
+    saveRel(null, type, null, null, new SaveCallback() {
+        onSave(rel_id, newRecord) {
+            addReln(entity1, rel_id, null);
+            addReln(entity2, rel_id, null);
+            if(!isNull(callback)) {
+               execute(callback);
+            }
+        }
+    });
+}
+
+/** Saves two entity id's as a hierachical relation. **/
+saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb, String e2verb) {
+    if (isNull(entity1) || isNull(entity2)) return;
+    saveRel(null, type, null, null, new SaveCallback() {
+        onSave(rel_id, newRecord) {
+            addReln(entity1, rel_id, e1verb);
+            addReln(entity2, rel_id, e2verb);
+        }
+    });
+}
+
+/** Action Bar **/
+addActionBarItem("sync", new ToggleActionButtonCallback() {
+    actionOnLabel() {
+        "{Sync_Enabled}";
+    }
+    actionOn() {
+        setSyncEnabled(false);
+        setFileSyncEnabled(false);
+        showToast("{Sync_Disabled}");
+    }
+    isActionOff() {
+        isSyncEnabled();
+    }
+    actionOffLabel() {
+        "{Sync_Disabled}";
+    }
+    actionOff() {
+        setSyncEnabled(true);
+        setFileSyncEnabled(true);
+        showToast("{Sync_Enabled}");
+    }
+});
+
+addActionBarItem("internal_gps", new ToggleActionButtonCallback() {
+    actionOnLabel() {
+        "{Internal_GPS_Enabled}";
+    }
+    actionOn() {
+        stopGPS();
+        showToast("{GPS_Disabled}");
+    }
+    isActionOff() {
+        isInternalGPSOn();
+    }
+    actionOffLabel() {
+        "{Internal_GPS_Disabled}";
+    }
+    actionOff() {
+        if(isExternalGPSOn()) {
+            stopGPS();
+        }
+        startInternalGPS();
+        showToast("{GPS_Enabled}");
+    }
+});
+
+addActionBarItem("external_gps", new ToggleActionButtonCallback() {
+    actionOnLabel() {
+        "{External_GPS_Enabled}";
+    }
+    actionOn() {
+        stopGPS();
+        showToast("{GPS_Disabled}");
+
+    }
+    isActionOff() {
+        isExternalGPSOn();
+    }
+    actionOffLabel() {
+        "{External_GPS_Disabled}";
+    }
+    actionOff() {
+        if(isInternalGPSOn()) {
+            stopGPS();
+        }
+        startExternalGPS();
+        if(isBluetoothConnected()) {
+            showToast("{GPS_Enabled}");
+        } else {
+            showToast("{Please_Enable_Bluetooth}");
+            this.isActionOff();
+        }
+    }
+});
+
+setTimestamp(String path) {
+    setFieldValue(path, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date()));
+}
+
+
+loadFromLocalSettings(String key, String defaultVal) {
+    query = "SELECT value FROM localSettings WHERE key = '" + key + "';";
+    fetchOne(query, new FetchCallback() {
+        onFetch(result) {
+            print("" + result);
+            String value = defaultVal;
+            if (!isNull(result)) {
+                value = result.get(0);
+            }
+
+            setFieldValue("Project/Main/" + key, value);
+        }
+    });
+}
