@@ -1632,8 +1632,15 @@ loadAdobeAttributes();
 
 
 /** Vocab Population -- copied from lake mungo.**/
+/** Wrapper for to make a vocab without an exlusion list **/
+makeVocab(String type, String path, String attrib) {
+  makeVocab(type, path, attrib, null);
+}
+
+/*** 'Editable' - you can edit the code below based on the needs ***/
+/** Vocab Population **/
 /* Populates the path specified vocabulary from the database based on the given attribute name, where type 
-is the type of the vocab to populate (checkbox, dropdown, radio or list). */
+is the type of the vocab to populate (PictureGallery, CheckBoxGroup, DropDown, HierarchicalDropDown, RadioGroup or List). */
 makeVocab(String type, String path, String attrib, List vocabExclusions) {
     makeVocab(type, path, attrib, vocabExclusions, null);
 }
@@ -1659,7 +1666,8 @@ makeVocab(String type, String path, String attrib, List vocabExclusions, String 
   }
 
   if (type.equals("HierarchicalDropDown")) {
-    populateHierarchicalDropDown(path, attrib);
+    // populateHierarchicalDropDown(path, attrib);
+    populateHierarchicalDropDown(path, attrib, true);
     if (callbackFunction != null && !isNull(callbackFunction)) {
       execute(callbackFunction);
     }
@@ -1669,7 +1677,7 @@ makeVocab(String type, String path, String attrib, List vocabExclusions, String 
   fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;",
     new FetchCallback() {
       onFetch(result) {
-        print("makeVocab() result: " + result);
+        // print("makeVocab() result: " + result);
         if (result!=null && result.size()>0 && vocabExclusions!=null && vocabExclusions.size()>0) {
           List filteredVocab = new ArrayList();
           for(item : result) {
@@ -1681,11 +1689,12 @@ makeVocab(String type, String path, String attrib, List vocabExclusions, String 
           }
           result=filteredVocab;
         }
-        print("makeVocab() filtered result: " + result);
+        // print("makeVocab() filtered result: " + result);
         if(type.equals("CheckBoxGroup")) {
           populateCheckBoxGroup(path, result);
         } else if(type.equals("DropDown")) {
-          populateDropDown(path, result);
+          // populateDropDown(path, result);
+          populateDropDown(path, result, true);
         } else if(type.equals("RadioGroup")) {
           populateRadioGroup(path, result);
         } else if(type.equals("List")) {
@@ -1698,58 +1707,12 @@ makeVocab(String type, String path, String attrib, List vocabExclusions, String 
     });
 }
 
-/** Wrapper for to make a vocab without an exlusion list **/
-makeVocab(String type, String path, String attrib) {
-  makeVocab(type, path, attrib, null);
+makeDynamicVocab(String type, String path, String attrib, String label) {
+  makeDynamicVocab(type, path, attrib, label, null, null);
 }
 
-/** Makes a dynamic vocab nested in the specified and populates it using a data_schema vocab, with a callbackFunction to execute after creating the dynamic view. **/
-makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container, String attributeName, String attributeType) {
-  viewDef = createViewDef();
-  if (type.equals("CheckBoxGroup")) {
-    viewDef.createCheckboxGroup();
-  } else if (type.equals("RadioGroup")) {
-    viewDef.createRadioGroup();
-  } else if (type.equals("PictureGallery")) {
-    viewDef.createPictureGallery();
-  } else {
-    Log.e("makeDynamicVocab()", "Error: invalid vocab type provided.");
-    return;
-  }
-  // set the label for the dynamic view
-  if (!isNull(label)) {
-    viewDef.setLabel(label);
-  }
-  // link the dynamic view to a property in the data schema
-  if (!isNull(attributeName) && !isNull(attributeType)) {
-    viewDef.setAttributeName(attributeName).setAttributeType(attributeType);
-  }
-  // Add the certainty, annotation and description
-  viewDef.setAnnotationEnabled(true).setCertaintyEnabled(true).setInfoEnabled(true);
-  // populate the dynamic view choices with the contents of some vocabulary
-  String tabgroup = path.split("/")[0];
-  String tab = path.split("/")[1];
-  String view = path.split("/")[2];
-  fetchAll("select vocabid, vocabname from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
-    onFetch(result) {
-      print ("Dynamic Vocab: " + result);
-      for (item : result) {
-        viewDef.addChoice(item.get(1), item.get(0));
-      }
-      if (!isNull(container)) {
-        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in container '" + container + "'");
-        createView(path, viewDef, container);
-      } else {
-        Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in tab '" + tabgroup + "/" + tab + "'");
-        createView(path, viewDef);
-      }
-      if (callbackFunction != null && !isNull(callbackFunction)) {
-        execute(callbackFunction);
-      }
-    }
-  });
-  Log.d("makeDynamicVocab()", "Refreshing CSS for tabgroup: " + tabgroup);
-  refreshTabgroupCSS(tabgroup);
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction) {
+  makeDynamicVocab(type, path, attrib, label, callbackFunction, null);
 }
 
 /** Makes a dynamic vocab and populates it using a data_schema vocab. **/
@@ -1757,12 +1720,73 @@ makeDynamicVocab(String type, String path, String attrib, String label, String c
   makeDynamicVocab(type, path, attrib, label, callbackFunction, container, null, null);
 }
 
-makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction) {
-  makeDynamicVocab(type, path, attrib, label, callbackFunction, null);
-}
+/** Makes a dynamic vocab nested in the specified and populates it using a data_schema vocab, with a callbackFunction to execute after creating the dynamic view. **/
+makeDynamicVocab(String type, String path, String attrib, String label, String callbackFunction, String container, String attributeName, String attributeType) {
+  executeViewTask(new ViewTask(){
+    doTask() {
 
-makeDynamicVocab(String type, String path, String attrib, String label) {
-  makeDynamicVocab(type, path, attrib, label, null, null);
+      // Check if view exists before trying to create it
+      if (hasView(path)) {
+        Log.e("makeDynamicVocab()", "The view '"+path+"' already exists. Exiting function.");
+        return;
+      }
+
+      viewDef = createViewDef();
+      if (type.equals("DropDown")) {
+        viewDef.createDropDown();
+      } else if (type.equals("CheckBoxGroup")) {
+        viewDef.createCheckboxGroup();
+      } else if (type.equals("RadioGroup")) {
+        viewDef.createRadioGroup();
+      } else if (type.equals("PictureGallery")) {
+        viewDef.createPictureGallery();
+      } else {
+        Log.e("makeDynamicVocab()", "Error: invalid vocab type provided.");
+        return;
+      }
+      // set the label for the dynamic view
+      if (!isNull(label)) {
+        viewDef.setLabel(label);
+      }
+      // link the dynamic view to a property in the data schema
+      if (!isNull(attributeName) && !isNull(attributeType)) {
+        viewDef.setAttributeName(attributeName).setAttributeType(attributeType);
+      }
+      // Add the certainty, annotation and description
+      viewDef.setAnnotationEnabled(true).setCertaintyEnabled(true).setInfoEnabled(true);
+      // populate the dynamic view choices with the contents of some vocabulary
+      String tabgroup = path.split("/")[0];
+      String tab = path.split("/")[1];
+      String view = path.split("/")[2];
+      fetchAll("select vocabid, vocabname, pictureurl from vocabulary join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabcountorder;", new FetchCallback() {
+        onFetch(result) {
+          if (!isNull(container)) {
+            Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in container '" + container + "'");
+            createView(path, viewDef, container);
+          } else {
+            Log.d("makeDynamicVocab()", "Creating dynamic view '" + view + "' in tab '" + tabgroup + "/" + tab + "'");
+            createView(path, viewDef);
+          }
+
+          if (type.equals("DropDown")) {
+            // populateDropDown(path, result);
+            populateDropDown(path, result, true);
+          } else if (type.equals("CheckBoxGroup")) {
+            populateCheckBoxGroup(path, result);
+          } else if (type.equals("RadioGroup")) {
+            populateRadioGroup(path, result);
+          } else if (type.equals("PictureGallery")) {
+            populatePictureGallery(path, result);
+          }    
+
+          if (callbackFunction != null && !isNull(callbackFunction)) {
+            execute(callbackFunction);
+          }
+        }
+      });
+      refreshTabgroupCSS(tabgroup);
+    }
+  });
 }
 
 /** Entity Relationship Saving **/
@@ -1805,7 +1829,7 @@ saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb
 /** Action Bar **/
 addActionBarItem("sync", new ToggleActionButtonCallback() {
     actionOnLabel() {
-        "{Sync_Enabled}";
+        "{Disable_Sync}";
     }
     actionOn() {
         setSyncEnabled(false);
@@ -1816,7 +1840,7 @@ addActionBarItem("sync", new ToggleActionButtonCallback() {
         isSyncEnabled();
     }
     actionOffLabel() {
-        "{Sync_Disabled}";
+        "{Enable_Sync}";
     }
     actionOff() {
         setSyncEnabled(true);
@@ -1827,41 +1851,44 @@ addActionBarItem("sync", new ToggleActionButtonCallback() {
 
 addActionBarItem("internal_gps", new ToggleActionButtonCallback() {
     actionOnLabel() {
-        "{Internal_GPS_Enabled}";
+        "{Disable_Internal_GPS}";
     }
     actionOn() {
         stopGPS();
-        showToast("{GPS_Disabled}");
+        showToast("{Internal_GPS_Disabled}");
     }
     isActionOff() {
         isInternalGPSOn();
     }
     actionOffLabel() {
-        "{Internal_GPS_Disabled}";
+        "{Enable_Internal_GPS}";
     }
     actionOff() {
         if(isExternalGPSOn()) {
             stopGPS();
         }
         startInternalGPS();
-        showToast("{GPS_Enabled}");
+        showToast("{Internal_GPS_Enabled}");
     }
 });
 
 addActionBarItem("external_gps", new ToggleActionButtonCallback() {
     actionOnLabel() {
-        "{External_GPS_Enabled}";
+        "{Disable_External_GPS}";
     }
     actionOn() {
         stopGPS();
-        showToast("{GPS_Disabled}");
-
+        if (isBluetoothConnected()) {
+          showToast("{External_GPS_Disabled}");
+        } else {
+          showToast("{Please_Enable_Bluetooth}");
+        }
     }
     isActionOff() {
         isExternalGPSOn();
     }
     actionOffLabel() {
-        "{External_GPS_Disabled}";
+        "{Enable_External_GPS}";
     }
     actionOff() {
         if(isInternalGPSOn()) {
@@ -1869,10 +1896,10 @@ addActionBarItem("external_gps", new ToggleActionButtonCallback() {
         }
         startExternalGPS();
         if(isBluetoothConnected()) {
-            showToast("{GPS_Enabled}");
+            showToast("{External_GPS_Enabled}");
         } else {
             showToast("{Please_Enable_Bluetooth}");
-            this.isActionOff();
+            this.actionOn();
         }
     }
 });
