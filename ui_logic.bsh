@@ -1992,3 +1992,47 @@ loadFromLocalSettings(String key, String defaultVal) {
         }
     });
 }
+
+/* Removes sidebar navigation buttons */
+removeNavigationButtons() {
+  // removeNavigationButton("new");
+  // removeNavigationButton("duplicate");
+  // removeNavigationButton("delete");
+}
+
+addNaviationButtons(String tabgroup) {
+  removeNavigationButtons();
+  addNavigationButton("new", new ActionButtonCallback() {
+    actionOnLabel() {
+      "New";
+    }
+    actionOn() {
+      if(!isNull(getRecordId(tabgroup))) {
+          newRecord(tabgroup);
+          showToast("New record created");
+      } else {
+          showAlert("Warning", "Any unsaved changes will be lost!", "newRecord(\""+tabgroup+"\")", "");
+      }
+    }
+  }, "success");
+  // addNavigationButton("duplicate", new ActionButtonCallback() {
+  //   actionOnLabel() {
+  //     "Duplicate";
+  //   }
+  //   actionOn() {
+  //     if(!isNull(getRecordId(tabgroup))) {
+  //         // duplicateSample();
+  //     } else {
+  //         showWarning("Warning", "The record could not be duplicated");
+  //     }
+  //   }
+  // }, "primary");
+  addNavigationButton("delete", new ActionButtonCallback() {
+    actionOnLabel() {
+      "Delete";
+    }
+    actionOn() {
+      deleteRecord(tabgroup, getRecordId(tabgroup));
+    }
+  }, "danger");
+}
