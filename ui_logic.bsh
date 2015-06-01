@@ -86,25 +86,18 @@ search(){
 }
 
 /*** ArchEnt: Context ***/
-onEvent("Context", "show", "openContextTabs();");
+onEvent("Context", "show", "openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Cuts\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Structures\");");
 
-onEvent("Context/Context_GeneralInformation/Details","click","saveContext(\"openContextTabs();\")");
+onEvent("Context/Context_GeneralInformation/Details","click","openContextTabs();");
 onEvent("Context/Context_GeneralInformation/close", "click", "fillInCloseDate()");
-onEvent("Context/Context_Attachments/Update", "delayclick", "saveContext(\"\")");
-onEvent("Context/Context_GeneralInformation/Update", "delayclick", "saveContext(\"\")");
-onEvent("Context/Context_Deposits/Update", "delayclick", "saveContext(\"\")");
-onEvent("Context/Context_Structures/Update", "delayclick", "saveContext(\"\")");
 onEvent("Context/Texture_Helper/Update_Texture", "click", "setTextureActual()");
 onEvent("Context/Texture_Helper/Return", "click", "returnToContext()");
 onEvent("Context/Context_Deposits/Texture_Helper", "click", "helpSetTextureActual()");
-onEvent("Context/Context_Cuts/Update", "delayclick", "saveContext(\"\")");
-onEvent("Context/Context_Artefacts/Update", "delayclick", "saveContext(\"\")");
-onEvent("Context/Context_Interpretation/Update", "delayclick", "saveContext(\"\")");
 
-onEvent("Context/Context_Deposits/newMatrix", "click", "saveContext(\"newMatrix();\")");
+onEvent("Context/Context_Deposits/newMatrix", "click", "newMatrix();");
 onEvent("Context/Context_Deposits/loadMatrix", "click", "loadMatrix()");
 onEvent("Context/Context_Deposits/deleteMatrix", "click", "deleteMatrixFromContext()");
 
@@ -112,30 +105,30 @@ onEvent("Context/Context_Interpretation/AddContextGroup", "click", "newContextGr
 onEvent("Context/Context_Interpretation/ShowContextGroup", "click", "loadContextGroupFromContext()");
 onEvent("Context/Context_Interpretation/RemoveFromContextGroup", "click", "removeContextGroupReln()");
 
-onEvent("Context/Context_Structures/newAdobe", "click", "saveContext(\"newAdobe();\")");
+onEvent("Context/Context_Structures/newAdobe", "click", "newAdobe();");
 onEvent("Context/Context_Structures/loadAdobe", "click", "loadAdobe()");
 onEvent("Context/Context_Structures/deleteAdobe", "click", "deleteAdobeFromContext()");
 onEvent("Context/Context_Structures", "show", "updateAllContextAdobes()");
 
-onEvent("Context/Context_Attachments/newPhotoLog", "click", "saveContext(\"newPhotoLog();\")");
+onEvent("Context/Context_Attachments/newPhotoLog", "click", "newPhotoLog();");
 onEvent("Context/Context_Attachments/loadPhotoLog", "click", "loadPhotoLog()");
 onEvent("Context/Context_Attachments/deletePhotoLog", "click", "deletePhotoLogFromContext()");
 
 onEvent("Context/Context_Attachments/attachPhoto", "click", "attachPictureTo(\"Context/Context_Attachments/Photo\")");
 onEvent("Context/Context_Attachments/attachSketch", "click", "attachFileTo(\"Context/Context_Attachments/Sketch\")");
 onEvent("Context/Context_Attachments/viewattached", "click", "viewArchEntAttachedFiles(context_id)");
-onEvent("Context/Context_Attachments/SaveAndNew", "delayclick", "saveContext(\"newContext();openContextTabs();\")");
-onEvent("Context/Context_Attachments/Duplicate", "delayclick", "saveContext(\"duplicateContext()\")");
+onEvent("Context/Context_Attachments/SaveAndNew", "delayclick", "newContext();openContextTabs();");
+onEvent("Context/Context_Attachments/Duplicate", "delayclick", "duplicateContext()");
 onEvent("Context/Context_Attachments/Delete", "delayclick", "deleteContext()");
 
-onEvent("Context/Context_Artefacts/newArtefactGroup", "delayclick", "saveContext(\"newArtefactGroup();\")");
+onEvent("Context/Context_Artefacts/newArtefactGroup", "delayclick", "newArtefactGroup();");
 onEvent("Context/Context_Artefacts/loadArtefactGroup", "click", "loadArtefactGroup()");
 onEvent("Context/Context_Artefacts/deleteArtefactGroup", "delayclick", "deleteArtefactGroupFromContext()");
-onEvent("Context/Context_Artefacts/newSpecialFind", "delayclick", "saveContext(\"newSpecialFind();\")");
+onEvent("Context/Context_Artefacts/newSpecialFind", "delayclick", "newSpecialFind();");
 onEvent("Context/Context_Artefacts/loadSpecialFind", "click", "loadSpecialFind()");
 onEvent("Context/Context_Artefacts/deleteSpecialFind", "delayclick", "deleteSpecialFindFromContext()");
 
-onEvent("Context/Context_Samples/newSample", "click", "saveContext(\"newSample();\")");
+onEvent("Context/Context_Samples/newSample", "click", "newSample();");
 onEvent("Context/Context_Samples/loadSample", "click", "loadSample()");
 onEvent("Context/Context_Samples/deleteSample", "click", "deleteSampleFromContext()");
 
@@ -201,6 +194,7 @@ loadContextFrom(contextid) {
 }
 
 saveContext(String callback) {
+    Boolean enable_autosave = true;
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
         showWarning("Logic Error", "Cannot save record without id");
         return;
@@ -208,7 +202,7 @@ saveContext(String callback) {
     if (!isNull(context_id)) {
         entity = fetchArchEnt(context_id);
     }
-    saveTabGroup("Context", context_id, null, null, "context_id = getLastSavedRecordId();getCounterFromDB();" + callback);
+    saveTabGroup("Context", context_id, null, null, "context_id = getLastSavedRecordId();getCounterFromDB();" + callback, enable_autosave);
 }
 
 duplicateContext(){
