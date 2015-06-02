@@ -505,7 +505,15 @@ String context_id = null;
 Object dialog;
 
 newContext(){
-    contextIncrement = Integer.parseInt(getFieldValue("control/data/ContextIncrement"));
+    String increment = getFieldValue("control/data/ContextIncrement");
+    if (isNull(increment)) {
+        showWarning("Alert!","No starting ID is entered. Please enter one. ");
+        return;   
+    }
+
+    context_id = null;
+    newTabGroup("Context");
+    contextIncrement = Integer.parseInt(increment);
     setFieldValue("control/data/ContextIncrement", contextIncrement+1);
 
     fetchOne("REPLACE INTO localSettings(key, value) VALUES('contextIncrement', '" + contextIncrement + "');", null);
@@ -538,8 +546,7 @@ loadContextFrom(contextid) {
     showTabGroup("Context", context_id);
 }
 
-saveContext(String callback) {
-    Boolean enable_autosave = true;
+saveContext(String callback) {  
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
         showWarning("Logic Error", "Cannot save record without id");
         return;
@@ -547,7 +554,16 @@ saveContext(String callback) {
     if (!isNull(context_id)) {
         entity = fetchArchEnt(context_id);
     }
-    saveTabGroup("Context", context_id, null, null, "context_id = getLastSavedRecordId();getCounterFromDB();" + callback, enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Context", context_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            context_id = uuid;
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 //make duplicate context work.
@@ -908,7 +924,16 @@ loadContextGroupFromContext() {
 saveContextGroup(){
     if (isNull(context_group_id)) context_group_id = null;
     Boolean enable_autosave = true;
-    saveTabGroup("ContextGroup", context_group_id, null, null, "context_group_id = getLastSavedRecordId(); onContextGroupSaved; populateContextGroup();", enable_autosave);
+    saveTabGroup("ContextGroup", context_group_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            context_group_id = uuid;
+            onContextGroupSaved();
+            populateContextGroup();
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onContextGroupSaved(){
@@ -927,7 +952,8 @@ addToContextGroup() {
     populateContextGroup();
 }
 
-// populateContextGroup() {
+populateContextGroup() {
+    showToast("TODO: update populateContextGroup() method");
 //     //updateNonContextRelationshipBasedDropdown("ContextGroup/ContextGroup_Contexts/AddContextList", 'ContextContextGroup', 'ContextGroup', context_group_id);
 //     //TODO: Discuss how to turn these into cursor lists. I don't think this scales well.
     
@@ -966,7 +992,7 @@ addToContextGroup() {
 //             "group by uuid\n"+
 //             "order by valuetimestamp desc, uuid, attributename;"));
     
-// }
+}
 
 loadContextGroupAttributes(){
     // populatePictureGallery("ContextGroup/ContextGroup_Details/Context_Type", makePictureGallery("CG Context Type"));
@@ -1056,13 +1082,22 @@ loadArtefactGroup() {
 }
 
 saveArtefactGroup(String callback) {
-    Boolean enable_autosave = true;
     if (!isNull(artefact_group_id)) {
         entity = fetchArchEnt(artefact_group_id);
     } else {
         artefact_group_id = null;
     }
-    saveTabGroup("Artefact_Group", artefact_group_id, null, null, "artefact_group_id = getLastSavedRecordId(); onArtefactGroupSaved();" + callback, enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Artefact_Group", artefact_group_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            artefact_group_id = uuid;
+            onArtefactGroupSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onArtefactGroupSaved(){
@@ -1143,13 +1178,22 @@ loadSample() {
 }
 
 saveSample(String callback) {
-    Boolean enable_autosave = true;
     if (!isNull(sample_id)) {
         entity = fetchArchEnt(sample_id);
     } else {
         sample_id = null;
     }
-    saveTabGroup("Sample", sample_id, null, null, "sample_id = getLastSavedRecordId(); onSampleSaved();" + callback, enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Sample", sample_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            sample_id = uuid;
+            onSampleSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onSampleSaved(){
@@ -1225,13 +1269,22 @@ loadMatrix() {
 }
 
 saveMatrix(String callback) {
-    Boolean enable_autosave = true;
     if (!isNull(matrix_id)) {
         entity = fetchArchEnt(matrix_id);
     } else {
         matrix_id = null;
     }
-    saveTabGroup("Matrix", matrix_id, null, null, "matrix_id = getLastSavedRecordId(); onMatrixSaved();" + callback, enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Matrix", matrix_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            matrix_id = uuid();
+            onMatrixSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onMatrixSaved(){
@@ -1316,11 +1369,20 @@ loadSpecialFind() {
 }
 
 saveSpecialFind(String callback) {
-    Boolean enable_autosave = true;
     if (!isNull(special_find_id)) {
         entity = fetchArchEnt(special_find_id);
     }
-    saveTabGroup("Special_Find", special_find_id, null, null, "special_find_id = getLastSavedRecordId(); onSpecialFindSaved();" + callback, enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Special_Find", special_find_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            special_find_id = uuid;
+            onSpecialFindSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onSpecialFindSaved(){
@@ -1413,11 +1475,19 @@ loadSpecialFindLocationFrom(archent_id) {
 }
 
 saveSpecialFindLocation() {
-    Boolean enable_autosave = true;
     if (!isNull(special_find_location_id)) {
         entity = fetchArchEnt(special_find_location_id);
     }
-    saveTabGroup("Special_Find_Location", special_find_location_id, null, null, "special_find_location_id = getLastSavedRecordId(); onSpecialFindLocationSaved();", enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Special_Find_Location", special_find_location_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            special_find_location_id = uuid;
+            onSpecialFindLocationSaved();
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onSpecialFindLocationSaved(){
@@ -1501,8 +1571,6 @@ loadAdobeAttributes(){
 }
 
 saveAdobe(String callback) {
-    Boolean enable_autosave = true;
-    
     if (!isNull(adobe_id)) {
         entity = fetchArchEnt(adobe_id);
     }
@@ -1511,7 +1579,17 @@ saveAdobe(String callback) {
         showWarning("Logic Error", "Adobe cannot be saved as parent context is not saved or loaded.");
         return null;
     } else {
-       saveTabGroup("Adobe_Element", adobe_id, null, null, "adobe_id = getLastSavedRecordId(); onAdobeSaved();" + callback, enable_autosave);
+        Boolean enable_autosave = true;
+        saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback() {
+            onSave(uuid, newRecord) {
+                adobe_id = uuid;
+                onAdobeSaved();
+                execute(callback);
+            }
+            onError(message) {
+                showToast(message);
+            }
+        }, enable_autosave);
     }
 }
 
@@ -1613,11 +1691,20 @@ loadPhotoLogAttributes(){
 }
 
 savePhotoLog(String callback) {
-    Boolean enable_autosave = true;
     if (!isNull(photolog_id)) {
         entity = fetchArchEnt(photolog_id);
     }
-    saveTabGroup("Photograph_Log", photolog_id, null, null, "photolog_id = getLastSavedRecordId(); onPhotoLogSaved();" + callback, enable_autosave);
+    Boolean enable_autosave = true;
+    saveTabGroup("Photograph_Log", photolog_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            photolog_id = uuid;
+            onPhotoLogSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onPhotoLogSaved(){
