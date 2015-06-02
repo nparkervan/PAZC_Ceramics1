@@ -323,7 +323,7 @@ saveEntitiesToHierRel(type, entity1, entity2, e1verb, e2verb) {
 
 makePictureGallery(String attrib) {
     Object gallery = null;
-    String query   = "select vocabid, vocabname, pictureurl from vocabulary left join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabname;"
+    String query   = "select vocabid, vocabname, pictureurl from vocabulary left join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabname;";
 
     fetchAll(
         query,
