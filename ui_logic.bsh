@@ -753,16 +753,20 @@ showRelnFromList(){
 updateRelns(){
     //TODO Figure out a better way of doing this other than a dropdown.
 
-    populateCursorList("Context/Context_Relationships_to_Other_Contexts/listOfRelns","select childuuid, response "+
-         "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
-         "  join createdmodifiedatby using (uuid) "+
-         " where relationshipid in (select relationshipid  "+
-         "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
-         "                           where relntypename not like 'Context%' "+
-         "                             and uuid = "+uuid+") "+
-         "   and parentaenttypename = 'Context' "+
-         " order by createdat desc "+
-         " limit ? offset ? ;", 25);
+    populateCursorList(
+            "Context/Context_Relationships_to_Other_Contexts/listOfRelns",
+            "select childuuid, response "+
+            "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+            "  join createdmodifiedatby using (uuid) "+
+            " where relationshipid in (select relationshipid  "+
+            "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+            "                           where relntypename not like 'Context%' "+
+            "                             and uuid = "+uuid+") "+
+            "   and parentaenttypename = 'Context' "+
+            " order by createdat desc "+
+            " limit ? offset ? ;",
+            25
+    );
 }
 
 loadContextAttributes(){       
@@ -881,12 +885,14 @@ remremoveContextGroupReln() {
 */
 
 /*** ArchEnt: Context Group***/
-onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup(\"\");");
+onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
-onEvent("ContextGroup/ContextGroup_Details/Delete", "click", "deleteContextGroup()");
-onEvent("ContextGroup/ContextGroup_Contexts/AddContext", "click", "addToContextGroup()");
-onEvent("ContextGroup/ContextGroup_Contexts/ShowContext", "click", "loadContextFromContextGroup()");
-onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext", "click", "removeFromContextGroup()");
+onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
+makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase From");
+makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To");
 
 String context_group_id = null;
 
