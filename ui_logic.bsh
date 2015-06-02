@@ -252,7 +252,7 @@ deleteReln(){
 
 fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
-        setTimestamp("Context/Context_GeneralInformation/Date_Closed")        
+        setTimestamp("Context/Context_GeneralInformation/Date_Closed");
     } else {
         showToast("To avoid accidents, please clear the Date Closed field before updating.");
     }
@@ -303,7 +303,7 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
 
 
 updateAllContextMatrices() {
-    updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", 'ContextMatrix',context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", "ContextMatrix",context_id);
 }
 
 /*
@@ -355,7 +355,7 @@ updateAllContextMatrices() {
 
 
 updateAllContextGroups() {
-    updateContextRelationshipBasedDropdown("Context/Context_Interpretation/ContextGroupList", 'ContextContextGroup', context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Interpretation/ContextGroupList", "ContextContextGroup", context_id);
 
     /*
     Object contextGroups = new ArrayList();
@@ -382,8 +382,8 @@ updateAllContextGroups() {
 }
 
 updateAllContextArtefacts(){
-    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/artefactGroupList", 'ContextArtefactGroup', context_id);
-    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/specialFindList", 'ContextSpecialFind', context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/artefactGroupList", "ContextArtefactGroup", context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/specialFindList", "ContextSpecialFind", context_id);
 
 
     /*
@@ -429,7 +429,7 @@ updateAllContextArtefacts(){
 }
 
 updateAllContextSamples(){
-    updateContextRelationshipBasedDropdown("Context/Context_Samples/sampleList", 'ContextSample', context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Samples/sampleList", "ContextSample", context_id);
 
     /*
     Object localSample = new ArrayList();
@@ -475,7 +475,7 @@ updateAllContextRelationships(){
 }
 
 updateAllContextPhotologs() {
-    updateContextRelationshipBasedDropdown("Context/Context_Attachments/PhotoLogList", 'ContextPhotographLog', context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Attachments/PhotoLogList", "ContextPhotographLog", context_id);
 
     /*
     Object contextPhotologs = new ArrayList();
