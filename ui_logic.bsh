@@ -16,10 +16,48 @@ setFileSyncEnabled(true);*/
 
 
 makeLocalID(){
-    fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);");
-    fetchOne("drop view if exists identifierAsSpreadsheet;");
-    fetchOne("create view identifierAsSpreadsheet as select uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response from (select * from latestNonDeletedArchentIdentifiers order by attributename) group by uuid;");
+    fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
+    fetchOne("drop view if exists parentchild;", null);
+    fetchOne( "create view parentchild as "+
+            "  select parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename"+
+            "    from (select uuid, participatesverb, aenttypename, relationshipid"+
+            "            from latestnondeletedaentreln "+
+            "            join relationship using (relationshipid) "+
+            "            join latestnondeletedarchent using (uuid) "+
+            "            join aenttype using (aenttypeid)) parent "+
+            "    join (select uuid, relationshipid "+
+            "            from latestnondeletedaentreln "+
+            "            join relationship using (relationshipid)) child "+
+            "      on (parent.relationshipid = child.relationshipid and parent.uuid != child.uuid);", null);
+
 }
+
+/*
+drop view if exists parentchild;
+"create view parentchild as "+
+"  select parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename"+
+"  from (  select uuid, participatesverb, aenttypename, relationshipid"+
+"          from latestnondeletedaentreln "+
+"          join relationship using (relationshipid) "+
+"          join latestnondeletedarchent using (uuid) "+
+"          join aenttype using (aenttypeid)) parent "+
+"   join (select uuid, relationshipid "+
+"         from latestnondeletedaentreln "+
+"        join relationship using (relationshipid)) child "+
+"     on (parent.relationshipid = child.relationshipid and parent.uuid != child.uuid);"
+;
+
+
+select childuuid, response
+  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) join createdmodifiedatby using (uuid)
+ where relationshipid in (select relationshipid 
+                            from latestnondeletedrelationship join relntype using (relntypeid) 
+                           where relntypename = 'ContextSample')
+   and parentaenttypename = 'Context'
+ order by createdat desc;
+
+*/
+
 
 makeLocalID();
     
@@ -171,6 +209,7 @@ loadContextFrom(contextid) {
     if (isNull(context_id)) return;
     
     showTabGroup("Context", context_id);
+}
 
 saveContext(String callback) {
     Boolean enable_autosave = true;
@@ -204,32 +243,6 @@ doNotDelete(){
     showToast("Delete Cancelled.");
 }
 
-getCounterFromDB(){
-    Object counter = fetchOne(""+
-        "select response, deviceMatch, aenttimestamp "+
-        "from (select freetext, v.vocabName || coalesce(substr('000'||(substr(freetext,-3)+1),-3),'') as response, aenttimestamp,  "+
-        "             uuid in (select uuid "+
-        "                        from latestnondeletedaentvalue AS av join attributekey using (attributeid), localSettings "+
-        "                        where userid = value "+
-        "                         and key = 'User') as deviceMatch, value "+
-        " from latestnondeletedarchentidentifiers join (select uuid from latestnondeletedaentvalue av join vocabulary v on (av.vocabid = substr(v.vocabname,0,4)), localSettings where key = 'Area' and value = v.vocabid) using (uuid), localSettings join vocabulary v on (value = v.vocabid) "+
-        " where attributename = 'Context ID' "+
-        " and key = 'Area' limit 1) "+
-        " where response not in (select freetext from latestnondeletedarchentidentifiers where freetext is not null) "+
-        "union select response, -1, aenttimestamp "+
-        "from (select vocabName || '001' as response, datetime(1, 'unixepoch') as aenttimestamp from localSettings join vocabulary on (value = vocabid) where key = 'Area') "+
-        "order by deviceMatch desc, aenttimestamp desc limit 1;");
-    String out = "";
-
-    if (!isNull(counter)){
-         out = counter.get(0);
-         
-         if (counter.get(1).equals("0"))
-             showWarning("Alert!", "ID may be intruding in other Device's allocated ID range.");
-    }
-
-    setFieldValue("control/data/ContextIncrement", out);
-}
 
 loadContextFromReln(){
     String relnid = getFieldValue("Context/Context_Relationships_to_Other_Contexts/listRelns");
@@ -252,7 +265,7 @@ deleteReln(){
 
 fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
-        setTimestamp("Context/Context_GeneralInformation/Date_Closed");
+        setTimestamp("Context/Context_GeneralInformation/Date_Closed")        
     } else {
         showToast("To avoid accidents, please clear the Date Closed field before updating.");
     }
@@ -303,156 +316,23 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
 
 
 updateAllContextMatrices() {
-    updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", "ContextMatrix",context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", 'ContextMatrix',context_id);
 }
-
-/*
-
-    if (!isNull(context_id)){
-        fetchAll("select childuuid, response "+
-                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
-                 "  join createdmodifiedatby using (uuid) "+
-                 " where relationshipid in (select relationshipid  "+
-                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
-                 "                           where relntypename = 'ContextMatrix' "+
-                 "                             and uuid = "+context_id+") "+
-                 "   and parentaenttypename = 'Context' "+
-                 " order by createdat desc; "+
-                 "",
-
-        new FetchCallback() {
-          onFetch(result) {
-            populateDropDown("Context/Context_Deposits/matrixList", result);
-
-          }});
-        /*
-        contextMatrices = 
-
-
-
-        fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Matrix'\n"+
-            "             AND uuid in (select uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           where relationshipid in (select relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship using (relationshipid)\n"+
-            "                                                      JOIN relntype using (relntypeid)\n"+
-            "                                                     where uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextMatrix')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "order by valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Deposits/matrixList",  contextMatrices);
-    */
-
-
-    
 
 
 updateAllContextGroups() {
-    updateContextRelationshipBasedDropdown("Context/Context_Interpretation/ContextGroupList", "ContextContextGroup", context_id);
-
-    /*
-    Object contextGroups = new ArrayList();
-    if (!isNull(context_id)){
-        contextGroups = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Context Group'\n"+
-            "             AND uuid in (select uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           where relationshipid in (select relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship using (relationshipid)\n"+
-            "                                                      JOIN relntype using (relntypeid)\n"+
-            "                                                     where uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextContextGroup')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "order by valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Interpretation/ContextGroupList",  contextGroups);
-    */
+    updateContextRelationshipBasedDropdown("Context/Context_Interpretation/ContextGroupList", 'ContextContextGroup', context_id);
 }
 
 updateAllContextArtefacts(){
-    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/artefactGroupList", "ContextArtefactGroup", context_id);
-    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/specialFindList", "ContextSpecialFind", context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/artefactGroupList", 'ContextArtefactGroup', context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/specialFindList", 'ContextSpecialFind', context_id);
 
 
-    /*
-    Object localArtefactGroup = new ArrayList();
-    Object localSpecialFind = new ArrayList();
-    if (!isNull(context_id)){
-        localArtefactGroup = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Artefact Group'\n"+
-            "             AND uuid in (select uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           where relationshipid in (select relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship using (relationshipid)\n"+
-            "                                                      JOIN relntype using (relntypeid)\n"+
-            "                                                    where uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextArtefactGroup')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "order by valuetimestamp desc, uuid, attributename;");
-        localSpecialFind = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Special Find'\n"+
-            "             AND uuid in (select uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           where relationshipid in (select relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship using (relationshipid)\n"+
-            "                                                      JOIN relntype using (relntypeid)\n"+
-            "                                                     where uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextSpecialFind')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "order by valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Artefacts/artefactGroupList", localArtefactGroup);
-    populateDropDown("Context/Context_Artefacts/specialFindList", localSpecialFind);
-    */
 }
 
 updateAllContextSamples(){
-    updateContextRelationshipBasedDropdown("Context/Context_Samples/sampleList", "ContextSample", context_id);
-
-    /*
-    Object localSample = new ArrayList();
-    if (!isNull(context_id)){
-        localSample = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Sample'\n"+
-            "             AND uuid in (select uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           where relationshipid in (select relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship using (relationshipid)\n"+
-            "                                                      JOIN relntype using (relntypeid)\n"+
-            "                                                     where uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextSample')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "order by valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Samples/sampleList", localSample);
-    */
+    updateContextRelationshipBasedDropdown("Context/Context_Samples/sampleList", 'ContextSample', context_id);
 }
 
 updateAllContextRelationships(){
@@ -475,30 +355,8 @@ updateAllContextRelationships(){
 }
 
 updateAllContextPhotologs() {
-    updateContextRelationshipBasedDropdown("Context/Context_Attachments/PhotoLogList", "ContextPhotographLog", context_id);
+    updateContextRelationshipBasedDropdown("Context/Context_Attachments/PhotoLogList", 'ContextPhotographLog', context_id);
 
-    /*
-    Object contextPhotologs = new ArrayList();
-    if (!isNull(context_id)){
-        contextPhotologs = fetchAll("select uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Photograph Log'\n"+
-            "             AND uuid in (select uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           where relationshipid in (select relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship using (relationshipid)\n"+
-            "                                                      JOIN relntype using (relntypeid)\n"+
-            "                                                     where uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextPhotographLog')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "order by valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Attachments/PhotoLogList",  contextPhotologs);
-    */
 }
 
 makeHierReln(){
@@ -527,29 +385,6 @@ showRelnFromList(){
     }
 }
 
-
-
-//BRIAN: TODO
-updateAllContextRelnsDropdown(path, uuid){
-    if (!isNull(context_id)){
-        fetchAll("select childuuid, response "+
-                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
-                 "  join createdmodifiedatby using (uuid) "+
-                 " where relationshipid in (select relationshipid  "+
-                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
-                 "                           where relntypename = '"+relntypename+"' "+
-                 "                             and uuid = "+uuid+") "+
-                 "   and parentaenttypename = 'Context' "+
-                 " order by createdat desc; "+
-                 "",
-
-        new FetchCallback() {
-          onFetch(result) {
-            populateDropDown(path, result);
-
-          }});
-    }
-}
 updateRelns(){
     //TODO Figure out a better way of doing this other than a dropdown.
 
@@ -580,49 +415,37 @@ populateCursorList("Context/Context_Relationships_to_Other_Contexts/listOfRelns"
                  " order by createdat desc "+
                  " limit ? offset ? ;", 25);
 
-    /*
-    Object contextRelnList = fetchAll("select parent.relationshipid, parent.participatesverb || ' ' || child.response "+
-        "from (latestNonDeletedAentReln) parent  "+
-        "join (latestNonDeletedAentReln join identifierAsSpreadsheet using (uuid)) child on (parent.relationshipid = child.relationshipid and parent.uuid != child.uuid) "+
-        "join latestNonDeletedRelationship using (relationshipid) join relntype using (relntypeid) "+
-        "where relntypename not like 'Context%' "+
-        "and parent.uuid = '"+context_id+"'  "+
-        "order by relntimestamp desc");
-    
-    populateDropDown("Context/Context_Relationships_to_Other_Contexts/listRelns", contextRelnList);
-    populateList("Context/Context_Relationships_to_Other_Contexts/listOfRelns", contextRelnList);
-    */
+   
 }
 
 loadContextAttributes(){
-    /*
-    populatePictureGallery("Context/Context_GeneralInformation/Context_Type", makePictureGallery("Context Type"));
-    populateDropDown("Context/Context_GeneralInformation/Type_of_Definition", makeVocab("Type of Definition"));
-    populateDropDown("Context/Context_GeneralInformation/Excavation_Method", makeVocab("Excavation Method"));
-    populateHierarchicalDropDown("Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
-    populateHierarchicalDropDown("Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
-    populateDropDown("Context/Context_Deposits/Soil_Texture_Actual", makeVocab("Soil Texture"));
-    populateHierarchicalPictureGallery("Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
-    populateDropDown("Context/Context_Deposits/Horizon_Boundary", makeVocab("Horizon Boundary"));
+    // populatePictureGallery("Context/Context_GeneralInformation/Context_Type", makePictureGallery("Context Type"));
+    // populateDropDown("Context/Context_GeneralInformation/Type_of_Definition", makeVocab("Type of Definition"));
+    // populateDropDown("Context/Context_GeneralInformation/Excavation_Method", makeVocab("Excavation Method"));
+    // populateHierarchicalDropDown("Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
+    // populateHierarchicalDropDown("Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
+    // populateDropDown("Context/Context_Deposits/Soil_Texture_Actual", makeVocab("Soil Texture"));
+    // populateHierarchicalPictureGallery("Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
+    // populateDropDown("Context/Context_Deposits/Horizon_Boundary", makeVocab("Horizon Boundary"));
 
-    populateDropDown("Context/Context_Cuts/Shape_of_Cut", makeVocab("Shape of Cut"));
+    // populateDropDown("Context/Context_Cuts/Shape_of_Cut", makeVocab("Shape of Cut"));
 
-    populateDropDown("Context/Context_Cuts/Sides_of_Cut", makeVocab("Sides of Cut"));
-    populateRadioGroup("Context/Context_Cuts/Shape_of_Corners", makeVocab("Shape of Corners"));
-    populateRadioGroup("Context/Context_Cuts/Break_of_Slope_Top", makeVocab("Break of Slope - Top"));
-    populateRadioGroup("Context/Context_Cuts/Break_of_slope_Base", makeVocab("Break of slope - Base"));
-    populateHierarchicalDropDown("Context/Context_Cuts/Shape_of_Base", "Shape of Base");
-    populateRadioGroup("Context/Context_Cuts/Orientation", makeVocab("Orientation"));
+    // populateDropDown("Context/Context_Cuts/Sides_of_Cut", makeVocab("Sides of Cut"));
+    // populateRadioGroup("Context/Context_Cuts/Shape_of_Corners", makeVocab("Shape of Corners"));
+    // populateRadioGroup("Context/Context_Cuts/Break_of_Slope_Top", makeVocab("Break of Slope - Top"));
+    // populateRadioGroup("Context/Context_Cuts/Break_of_slope_Base", makeVocab("Break of slope - Base"));
+    // populateHierarchicalDropDown("Context/Context_Cuts/Shape_of_Base", "Shape of Base");
+    // populateRadioGroup("Context/Context_Cuts/Orientation", makeVocab("Orientation"));
 
-    populateHierarchicalPictureGallery("Context/Context_Structures/Bond_Type", "Bond Type");
-    populateHierarchicalDropDown("Context/Context_Structures/Structural_Components", "Structural Components");
-    populateDropDown("Context/Context_Structures/Bonding", makeVocab("Bonding"));
+    // populateHierarchicalPictureGallery("Context/Context_Structures/Bond_Type", "Bond Type");
+    // populateHierarchicalDropDown("Context/Context_Structures/Structural_Components", "Structural Components");
+    // populateDropDown("Context/Context_Structures/Bonding", makeVocab("Bonding"));
 
-    populateRadioGroup("Context/Context_Interpretation/Your_Interpretation", makeVocab("Your Interpretation"));
-    populateDropDown("Context/Context_Interpretation/Phase_From", makeVocab("Phase From"));
-    populateDropDown("Context/Context_Interpretation/Phase_To", makeVocab("Phase To"));
+    // populateRadioGroup("Context/Context_Interpretation/Your_Interpretation", makeVocab("Your Interpretation"));
+    // populateDropDown("Context/Context_Interpretation/Phase_From", makeVocab("Phase From"));
+    // populateDropDown("Context/Context_Interpretation/Phase_To", makeVocab("Phase To"));
 
-    populateHierarchicalDropDown("Context/Texture_Helper/Soil_Texture", "Soil Texture Helper");
+    // populateHierarchicalDropDown("Context/Texture_Helper/Soil_Texture", "Soil Texture Helper");
 
     
     */
@@ -663,6 +486,7 @@ relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||
 }
 
 openContextTabs(){
+    
 
 //TODO: Check this. I'm sure we have new functions that makes this easier.
     fetchOne("select vocabName from vocabulary where vocabid = '"+getFieldValue("Context/Context_GeneralInformation/Context_Type")+"';",
@@ -746,9 +570,8 @@ remremoveContextGroupReln() {
         
     }
 }
-*/
 
-/*** RelnEnt: Context Group***/
+/*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup(\"\");");
 
 onEvent("ContextGroup/ContextGroup_Details/Delete", "click", "deleteContextGroup()");
@@ -850,7 +673,7 @@ populateContextGroup() {
             "        ORDER BY uuid, attributename ASC)\n"+
             "group by uuid\n"+
             "order by valuetimestamp desc, uuid, attributename;"));
-            */
+*/
 }
 
 loadContextGroupAttributes(){
@@ -896,8 +719,7 @@ removeFromContextGroup() {
         }
         
     }
-}*/
-
+}
 
 /*** Artefact Group ***/
 onEvent("Artefact_Group", "show", "keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
@@ -1502,7 +1324,7 @@ reallyDeleteAdobe(){
 doNotDelete(){
     showToast("Delete Cancelled.");
 }
-
+/*
 adobeAutoNum(){
     Object autoNum = fetchOne(""+
         "select freetext||'-AE'||foo as response, foo  "+
@@ -1532,7 +1354,8 @@ adobeAutoNum(){
         " limit 1; ");
     setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", autoNum.get(0));
 }
-
+*/
+/*
 updateAllContextAdobes() {
     Object contextAdobes = new ArrayList();
     if (!isNull(context_id)){
@@ -1555,6 +1378,8 @@ updateAllContextAdobes() {
     }
     populateDropDown("Context/Context_Structures/AdobeList",  contextAdobes);
 }
+
+*/
 
 /*** Arch Ent: PhotoLog ***/
 onEvent("Photograph_Log", "show", "keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
@@ -1707,46 +1532,6 @@ initMap() {
 
 //initMap();
 
-
-/*** TRACKLOG ***/
-/*
-setGPSUpdateInterval(4);
-
-onEvent("control/gps/startTimeLog", "click", "startTrackingGPS(\"time\", 10, \"saveTimeGPSTrack()\")");
-onEvent("control/gps/startDistanceLog", "click", "startTrackingGPS(\"distance\", 10, \"saveDistanceGPSTrack()\")");
-onEvent("control/gps/stopTrackLog", "click", "stopTrackingGPS()");
-
-saveTimeGPSTrack() {
-    List attributes = createAttributeList();
-    attributes.add(createEntityAttribute("gps_type", "time", null, null, null));
-    saveGPSTrack(attributes);
-}
-
-saveDistanceGPSTrack() {
-    List attributes = createAttributeList();
-    attributes.add(createEntityAttribute("gps_type", "distance", null, null, null));
-    saveGPSTrack(attributes);
-}
-
-saveGPSTrack(List attributes) {
-    position = getGPSPosition();
-    if (position == null) return;
-
-    //attributes.add(createEntityAttribute("gps_user", "" + user.getUserId(), null, null, null));
-    attributes.add(createEntityAttribute("gps_timestamp", "" + getCurrentTime(), null, null, null));
-    attributes.add(createEntityAttribute("gps_longitude", "" + position.getLongitude(), null, null, null));
-    attributes.add(createEntityAttribute("gps_latitude", "" + position.getLatitude(), null, null, null));
-    //attributes.add(createEntityAttribute("gps_heading", "" + getGPSHeading(), null, null, null));
-    attributes.add(createEntityAttribute("gps_accuracy", "" + getGPSEstimatedAccuracy(), null, null, null));
-    
-    positionProj = getGPSPositionProjected();
-    Point p = new Point(new MapPos(positionProj.getLongitude(), positionProj.getLatitude()), null, (PointStyle) null, null);
-    ArrayList l = new ArrayList();
-    l.add(p);
-    
-    saveArchEnt(null, "gps_track", l, attributes);
-}
-*/
 /*** USER ***/
 
 getDefaultUsersList() {
@@ -1758,7 +1543,7 @@ populateListForUsers(){
     // Populate user dropdown
     fetchAll("select userid, fname || ' ' || lname from user where userdeleted is null;", new FetchCallback() {
         onFetch(result) {
-            populateDropDown("user/usertab/users", result);
+            populateList("user/usertab/users", result);
         }
     });
 
@@ -1771,37 +1556,30 @@ onEvent("user/usertab/", "show", "populateListForUsers()");
 String username = "";
 String device = "";
 String areaCode = "";
-User user;
 
 login(){
     if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
         showWarning("Warning", "Please select a User and an Area Code before logging in.");
-        return;
-    }
+    } else {
 
-    String userVocabId = getFieldValue("user/usertab/users");
-    fetchOne("select userid,fname,lname,email from user where userid='" + userVocabId + "';", new FetchCallback() {
-      onFetch(result) {
-          user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
-          setUser(user);
-          username = result.get(1) + " " + result.get(2);
-          showTabGroup("control");
-      }
+        fetchOne("select userid,fname,lname,email from user where userid='" + getListItemValue() + "';", new FetchCallback() {
+        onFetch(result) {
+            user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
+            setUser(user);
+            username = result.get(1) + " " + result.get(2);
+            showTabGroup("control");
+        }
     });
 
-    fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
-    fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+  //fix
 
-    areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
-    areaCode  = null;
-    fetchOne(
-        areaCodeQ,
-        new FetchCallback() {
-          onFetch(result) {
-            areaCode = result.get(0);
-          }
-        }
-    );
+
+        fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
+        fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+
+        areaCode = fetchOne("select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ").get(1);
+        
+    }
 }
 
 onEvent("user/usertab/login", "click", "login()");
