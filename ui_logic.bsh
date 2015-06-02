@@ -1546,11 +1546,6 @@ initMap() {
 
 /*** USER ***/
 
-getDefaultUsersList() {
-    users = fetchAll("select userid, fname ||' ' || lname from user");
-    return users;
-}
-
 populateListForUsers(){
     // Populate user dropdown
     fetchAll("select userid, fname || ' ' || lname from user where userdeleted is null;", new FetchCallback() {
