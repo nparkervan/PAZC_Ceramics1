@@ -1561,7 +1561,7 @@ populateListForUsers(){
 onEvent("user/usertab/", "show", "populateListForUsers()");
 
 String username = "";
-String device = "";
+String device   = "";
 String areaCode = "";
 
 login(){
