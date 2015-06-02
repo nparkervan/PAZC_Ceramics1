@@ -1492,9 +1492,9 @@
           <label>{Delete_Context_Group}</label>
         </trigger>
       </group>
-      <group ref="ContextGroup_Contexts" faims_scrollable="false">
+      <group ref="ContextGroup_Contexts" faims_scrollable="true">
         <label>{Contexts}</label>
-        <select1 faims_certainty="false" faims_read_only="false" ref="AddContextList">
+        <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="AddContextList">
           <label>{Add_Additional_Context}</label>
           <item>
             <label>{placeholder}</label>
