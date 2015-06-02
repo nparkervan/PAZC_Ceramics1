@@ -321,8 +321,20 @@ saveEntitiesToHierRel(type, entity1, entity2, e1verb, e2verb) {
     addReln(entity2, rel_id, e2verb);
 }
 
-makePictureGallery(String attrib){
-    fetchAll("select vocabid, vocabname, pictureurl from vocabulary left join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabname;");
+makePictureGallery(String attrib) {
+    Object gallery = null;
+    String query   = "select vocabid, vocabname, pictureurl from vocabulary left join attributekey using (attributeid) where attributename = '" + attrib + "' order by vocabname;"
+
+    fetchAll(
+        query,
+        new FetchCallback() {
+            onFetch(result) {
+                gallery = result;
+            }
+        }
+    );
+
+    return gallery;
 }
 
 /*** 'Uneditable' - you can edit the code below with extreme precaution ***/
