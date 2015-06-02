@@ -103,7 +103,8 @@ clearSearch(){
 onEvent("control/contextGroup", "show", "reloadGroupList()");
 
 reloadGroupList(){
-    populateList("control/contextGroup/GroupList", fetchEntityList("Context Group"));
+    populateCursorList("control/contextGroup/GroupList", "SELECT uuid, response FROM latestNonDeletedArchEntFormattedIdentifiers JOIN createdmodifiedatby USING (uuid) ORDER BY modifiedat DESC LIMIT ? OFFSET ?", 25);
+    refreshTabgroupCSS("control");
 }
 
 refreshEntities() {
