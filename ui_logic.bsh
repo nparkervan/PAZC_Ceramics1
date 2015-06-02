@@ -338,7 +338,7 @@ populateListForUsers(){
     // Populate user dropdown
     fetchAll("select userid, fname || ' ' || lname from user where userdeleted is null;", new FetchCallback() {
         onFetch(result) {
-            populateList("user/usertab/users", result);
+            populateDropDown("user/usertab/users", result);
         }
     });
 
@@ -356,24 +356,30 @@ login(){
     if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
         showWarning("Warning", "Please select a User and an Area Code before logging in.");
     } else {
+        String userVocabId = getFieldValue("user/usertab/users");
+        fetchOne("select userid,fname,lname,email from user where userid='" + userVocabId + "';", new FetchCallback() {
+            onFetch(result) {
+                user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
+                setUser(user);
+                username = result.get(1) + " " + result.get(2);
+                showTabGroup("control");
+            }
+        });
 
-        fetchOne("select userid,fname,lname,email from user where userid='" + getListItemValue() + "';", new FetchCallback() {
-        onFetch(result) {
-            user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
-            setUser(user);
-            username = result.get(1) + " " + result.get(2);
-            showTabGroup("control");
-        }
-    });
-
-  //fix
-
-
+        //fix
         fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
         fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
 
-        areaCode = fetchOne("select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ").get(1);
-        
+        areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
+        areaCode  = null;
+        fetchOne(
+            areaCodeQ,
+            new FetchCallback() {
+              onFetch(result) {
+                areaCode = result.get(0);
+              }
+            }
+        );
     }
 }
 
@@ -611,7 +617,9 @@ updateContextRelationshipBasedDropdown(path, relntypename, uuid){
           onFetch(result) {
             populateDropDown(path, result);
 
-          }});
+          }
+        });
+    }
 }
 
 updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename, uuid){
@@ -630,8 +638,9 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
         new FetchCallback() {
           onFetch(result) {
             populateDropDown(path, result);
-
-          }});
+          }
+        });
+    }
 }
 
 
@@ -664,12 +673,12 @@ updateAllContextRelationships(){
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
 
     Object contextList = new ArrayList();
-    /*
+    
     if (!isNull(context_id)){
         contextList = fetchAll("select uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response from latestNonDeletedArchEntIdentifiers where aenttypename = 'Context' and uuid != '"+context_id+"' group by uuid;" );
     }    
     populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", contextList);
-    */
+    
 
 
     updateRelns();
@@ -739,42 +748,35 @@ populateCursorList("Context/Context_Relationships_to_Other_Contexts/listOfRelns"
    
 }
 
-loadContextAttributes(){
-       
-//     makeVocab("DropDown", "Context/Context_GeneralInformation/Type_of_Definition", "Type of Definition");
-//     makeVocab("DropDown", "Context/Context_GeneralInformation/Excavation_Method", "Excavation Method");
-//     makeVocab("DropDown", "Context/Context_GeneralInformation/Context_Type", "Context Type");
-//     makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
-//     makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
-//     makeVocab("DropDown", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
-//     //Hierarchical makeVocab("DropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
-//     makeVocab("DropDown", "Context/Context_Deposits/Horizon_Boundary", "Horizon Boundary");
-//     makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Cut", "Shape of Cut");
-//     makeVocab("RadioGroup", "Context/Context_Cuts/Shape_of_Corners", "Shape of Corners");
-//     makeVocab("RadioGroup", "Context/Context_Cuts/Break_of_Slope_Top", "Break of Slope - Top");
-//     makeVocab("RadioGroup", "Context/Context_Cuts/Break_of_slope_Base", "Break of slope - Base");
-//     makeVocab("DropDown", "Context/Context_Cuts/Sides_of_Cut", "Sides of Cut");
-//     makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Base", "Shape of Base");
-//     makeVocab("RadioGroup", "Context/Context_Cuts/Orientation", "Orientation");
-//     makeVocab("DropDown", "Context/Context_Structures/Structural_Components", "Structural Components");
-//     makeVocab("DropDown", "Context/Context_Structures/Bonding", "Bonding");
-//     makeVocab("DropDown", "Context/Context_Structures/Bond_Type", "Bond Type");
-//     makeVocab("RadioGroup", "Context/Context_Interpretation/Your_Interpretation", "Your Interpretation");
-//     makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
-//     makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
-//     //makeVocab("DropDown", "Context/Context_Interpretation/ContextGroupList", "");
+loadContextAttributes(){       
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Type_of_Definition", "Type of Definition");
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Excavation_Method", "Excavation Method");
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Context_Type", "Context Type");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
+    //Hierarchical makeVocab("DropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
+    makeVocab("DropDown", "Context/Context_Deposits/Horizon_Boundary", "Horizon Boundary");
+    makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Cut", "Shape of Cut");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Shape_of_Corners", "Shape of Corners");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Break_of_Slope_Top", "Break of Slope - Top");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Break_of_slope_Base", "Break of slope - Base");
+    makeVocab("DropDown", "Context/Context_Cuts/Sides_of_Cut", "Sides of Cut");
+    makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Base", "Shape of Base");
+    makeVocab("RadioGroup", "Context/Context_Cuts/Orientation", "Orientation");
+    makeVocab("DropDown", "Context/Context_Structures/Structural_Components", "Structural Components");
+    makeVocab("DropDown", "Context/Context_Structures/Bonding", "Bonding");
+    makeVocab("DropDown", "Context/Context_Structures/Bond_Type", "Bond Type");
+    makeVocab("RadioGroup", "Context/Context_Interpretation/Your_Interpretation", "Your Interpretation");
+    makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
+    makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
+    //makeVocab("DropDown", "Context/Context_Interpretation/ContextGroupList", "");
 
-//     //TODO picture gallery, hierarchical, etc
+    //TODO picture gallery, hierarchical, etc
 
-
-
-// TODO -- we need to discuss how to implement "relating contexts to each other" -- this is not a very good way to do it at all. 
-// relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union select relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' order by relntypeid, name;");
-//     populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", relnList);
-
-    
-
-
+    // TODO -- we need to discuss how to implement "relating contexts to each other" -- this is not a very good way to do it at all. 
+    // relnList = fetchAll("select relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union select relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid from relntype where relntypename not like '%Context%' and relntypename not like '%SpecialFind%' order by relntypeid, name;");
+    // populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", relnList);
 
 }
 
@@ -808,11 +810,7 @@ openContextTabs(){
                 cancelTab("Context/Context_Structures", false);
             }
 
-          }});
-
-
-   
-    
+          }});    
 }
 
 helpSetTextureActual(){
@@ -822,7 +820,7 @@ helpSetTextureActual(){
 setTextureActual(){
 
     //This function makes the hierarchical soil texture selector write to the texture dropdown. We should discuss.
-fetchOne("select vocabid from vocabulary join attributekey using (attributeid)where attributeName = 'Soil Texture Actual'and vocabname = (select vocabname"
+    fetchOne("select vocabid from vocabulary join attributekey using (attributeid)where attributeName = 'Soil Texture Actual'and vocabname = (select vocabname"
         + " from vocabulary join attributekey using (attributeid) "
        + " where vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"' "
          + " and attributeName = 'Soil Texture'); ",
