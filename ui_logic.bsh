@@ -887,10 +887,10 @@ remremoveContextGroupReln() {
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup(\"\");");
 
-onEvent("ContextGroup/ContextGroup_Details/Delete", "click", "deleteContextGroup()");
-onEvent("ContextGroup/ContextGroup_Contexts/AddContext", "click", "addToContextGroup()");
-onEvent("ContextGroup/ContextGroup_Contexts/ShowContext", "click", "loadContextFromContextGroup()");
-onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext", "click", "removeFromContextGroup()");
+onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
 
 String context_group_id = null;
 
