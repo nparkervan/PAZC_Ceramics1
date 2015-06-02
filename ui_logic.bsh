@@ -780,11 +780,11 @@ updateRelns(){
 loadContextAttributes(){       
     makeVocab("DropDown", "Context/Context_GeneralInformation/Type_of_Definition", "Type of Definition");
     makeVocab("DropDown", "Context/Context_GeneralInformation/Excavation_Method", "Excavation Method");
-    makeVocab("DropDown", "Context/Context_GeneralInformation/Context_Type", "Context Type");
+    makeVocab("PictureGallery", "Context/Context_GeneralInformation/Context_Type", "Context Type");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
-    makeVocab("DropDown", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
-    //Hierarchical makeVocab("DropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
+    makeVocab("PictureGallery", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
+    makeVocab("HierarchicalDropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
     makeVocab("DropDown", "Context/Context_Deposits/Horizon_Boundary", "Horizon Boundary");
     makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Cut", "Shape of Cut");
     makeVocab("RadioGroup", "Context/Context_Cuts/Shape_of_Corners", "Shape of Corners");
@@ -795,7 +795,7 @@ loadContextAttributes(){
     makeVocab("RadioGroup", "Context/Context_Cuts/Orientation", "Orientation");
     makeVocab("DropDown", "Context/Context_Structures/Structural_Components", "Structural Components");
     makeVocab("DropDown", "Context/Context_Structures/Bonding", "Bonding");
-    makeVocab("DropDown", "Context/Context_Structures/Bond_Type", "Bond Type");
+    makeVocab("HierarchicalPictureGallery", "Context/Context_Structures/Bond_Type", "Bond Type");
     makeVocab("RadioGroup", "Context/Context_Interpretation/Your_Interpretation", "Your Interpretation");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
@@ -1758,7 +1758,7 @@ doNotDelete(){
 
 // Stuff that needs to happen after everything.
 
-// loadContextAttributes();
+loadContextAttributes();
 // loadContextGroupAttributes();
 // loadArtefactGroupAttributes();
 // loadSampleAttributes();
