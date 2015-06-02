@@ -114,44 +114,26 @@ refreshEntities() {
 }
 
 searchFew(){
-    populateList("control/data/ContextList", fetchAll(""+
-        "SELECT uuid, group_concat(coalesce(measure   || ' '  || vocabname || '('  ||  freetext ||'; '|| (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' '  || vocabname || ' (' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     freetext  || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     measure,  "+
-        "                                     vocabname,  "+
-        "                                     freetext), ' ') as response, valuetimestamp  "+
-        "FROM (select * from latestNonDeletedArchentIdentifiers order by attributename) "+
-        "WHERE aenttypename = 'Context' "+        
-        "GROUP BY uuid "+
-        "order by valuetimestamp desc limit 10;"));
+    populateCursorList("control/data/ContextList", ""+
+        "SELECT uuid, response  "+
+        "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
+        "  JOIN createdmodifiedatby USING (uuid) "+
+        " WHERE aenttypename = 'Context' "+
+        " ORDER BY modifiedat DESC "+
+        " LIMIT ? "+
+        "OFFSET ?", 10);
 }
 
 search(){
-    populateList("control/data/ContextList", fetchAll(""+
-        "SELECT uuid, group_concat(coalesce(measure   || ' '  || vocabname || '('  ||  freetext ||'; '|| (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || '; ' || (certainty * 100.0) || '% certain)',  "+
-        "                                     measure   || ' '  || vocabname || ' (' || (certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' || freetext  || ')',  "+
-        "                                     measure   || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     vocabname || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     freetext  || ' (' ||(certainty * 100.0) || '% certain)',  "+
-        "                                     measure,  "+
-        "                                     vocabname,  "+
-        "                                     freetext), ' ') as response, valuetimestamp  "+
-        "FROM (select * from latestNonDeletedArchentIdentifiers order by attributename) "+
-        "WHERE aenttypename = 'Context' "+
-        "and uuid in (select uuid from latestnondeletedaentvalue left outer join vocabulary using (vocabid) where freetext like '%"+getFieldValue("control/data/Search")+"%' or vocabname like '%"+getFieldValue("control/data/Search")+"%' or measure like '%"+getFieldValue("control/data/Search")+"%') "+
-        "GROUP BY uuid "+
-        "order by response;"));
+    populateCursorList("control/data/ContextList", ""+
+        "SELECT uuid, response "+
+        "  FROM latestNonDeletedArchEntFormattedIdentifiers " +
+        "  JOIN createdmodifiedatby USING (uuid) " +
+        " WHERE aenttypename = 'Context' "+
+        "   AND uuid IN (select uuid from latestnondeletedaentvalue left outer join vocabulary using (vocabid) where freetext like '%"+getFieldValue("control/data/Search")+"%' or vocabname like '%"+getFieldValue("control/data/Search")+"%' or measure like '%"+getFieldValue("control/data/Search")+"%') "+
+        " ORDER BY modifiedat DESC " +
+        " LIMIT ? "+
+        " OFFSET ? ", 25);
 }
 
 /*** ArchEnt: Context ***/
