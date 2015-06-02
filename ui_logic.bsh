@@ -885,12 +885,14 @@ remremoveContextGroupReln() {
 */
 
 /*** ArchEnt: Context Group***/
-onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup(\"\");");
+onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
 onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
+makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase From");
+makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To");
 
 String context_group_id = null;
 
