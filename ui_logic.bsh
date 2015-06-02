@@ -753,34 +753,16 @@ showRelnFromList(){
 updateRelns(){
     //TODO Figure out a better way of doing this other than a dropdown.
 
-fetchAll("Context/Context_Relationships_to_Other_Contexts/listOfRelns","select childuuid, response "+
-                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
-                 "  join createdmodifiedatby using (uuid) "+
-                 " where relationshipid in (select relationshipid  "+
-                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
-                 "                           where relntypename not like 'Context%' "+
-                 "                             and uuid = "+uuid+") "+
-                 "   and parentaenttypename = 'Context' "+
-                 " order by createdat desc", 
-
-        new FetchCallback() {
-          onFetch(result) {
-            populateDropDown("Context/Context_Relationships_to_Other_Contexts/listRelns", result);
-
-          }});
-
-populateCursorList("Context/Context_Relationships_to_Other_Contexts/listOfRelns","select childuuid, response "+
-                 "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
-                 "  join createdmodifiedatby using (uuid) "+
-                 " where relationshipid in (select relationshipid  "+
-                 "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
-                 "                           where relntypename not like 'Context%' "+
-                 "                             and uuid = "+uuid+") "+
-                 "   and parentaenttypename = 'Context' "+
-                 " order by createdat desc "+
-                 " limit ? offset ? ;", 25);
-
-   
+    populateCursorList("Context/Context_Relationships_to_Other_Contexts/listOfRelns","select childuuid, response "+
+         "  from parentchild join latestnondeletedaentformattedidentifier on (childuuid = uuid) "+
+         "  join createdmodifiedatby using (uuid) "+
+         " where relationshipid in (select relationshipid  "+
+         "                            from latestnondeletedrelationship join relntype using (relntypeid)  "+
+         "                           where relntypename not like 'Context%' "+
+         "                             and uuid = "+uuid+") "+
+         "   and parentaenttypename = 'Context' "+
+         " order by createdat desc "+
+         " limit ? offset ? ;", 25);
 }
 
 loadContextAttributes(){       
