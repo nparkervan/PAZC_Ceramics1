@@ -687,11 +687,19 @@ updateAllContextRelationships(){
     Object contextList = new ArrayList();
     
     if (!isNull(context_id)){
-        contextList = fetchAll("select uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response from latestNonDeletedArchEntIdentifiers where aenttypename = 'Context' and uuid != '"+context_id+"' group by uuid;" );
-    }    
-    populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", contextList);
-    
+        String query = "" +
+            "select uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response from latestNonDeletedArchEntIdentifiers where aenttypename = 'Context' and uuid != '"+context_id+"' group by uuid;"
 
+        fetchAll(
+            query,
+            new FetchCallback() {
+                onFetch(result) {
+                    contextList = result;
+                }
+            }
+        );
+    }
+    populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", contextList);
 
     updateRelns();
 }
