@@ -1010,9 +1010,9 @@ populateContextGroup() {
 }
 
 loadContextGroupAttributes(){
-    // populatePictureGallery("ContextGroup/ContextGroup_Details/Context_Type", makePictureGallery("CG Context Type"));
-    // populateDropDown("ContextGroup/ContextGroup_Details/Phase_From", makeVocab("CG Phase From"));
-    // populateDropDown("ContextGroup/ContextGroup_Details/Phase_To", makeVocab("CG Phase To"));
+    makeVocab("PictureGallery", "ContextGroup/ContextGroup_Details/Context_Type", "CG Context Type");
+    makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "CG Phase From");
+    makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To", "CG Phase To");
 }
 
 loadContextFromContextGroup(){
@@ -1147,7 +1147,7 @@ doNotDelete(){
 }
 
 loadArtefactGroupAttributes(){
-    // populateHierarchicalDropDown("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Class", "Artefact Class");
+    makeVocab("HierarchicalDropDown", "Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Class", "Artefact Class");
 }
 
 
@@ -1244,8 +1244,8 @@ doNotDelete(){
 }
 
 loadSampleAttributes(){
-    // populateDropDown("Sample/Sample_GeneralInformation/Sample_Type", makeVocab("Sample Type"));
-    // populateDropDown("Sample/Sample_GeneralInformation/Collection_Method", makeVocab("Collection Method"));
+    makeVocab("DropDown", "Sample/Sample_GeneralInformation/Sample_Type", "Sample Type");
+    makeVocab("DropDown", "Sample/Sample_GeneralInformation/Collection_Method", "Collection Method");
 }
 
 
@@ -1335,9 +1335,9 @@ doNotDelete(){
 }
 
 loadMatrixAttributes(){
-    // populateDropDown("Matrix/Matrix/Component_Type", makeVocab("Component Type"));
-    // populateDropDown("Matrix/Matrix/Component", makeVocab("Component"));
-    // populateHierarchicalPictureGallery("Matrix/Matrix/Shape", "Shape");
+    makeVocab("DropDown", "Matrix/Matrix/Component_Type", "Component Type");
+    makeVocab("DropDown", "Matrix/Matrix/Component", "Component");
+    makeVocab("HierarchicalPictureGallery", "Matrix/Matrix/Shape", "Shape");
 }
 
 /*** Special Find ***/
@@ -1432,7 +1432,7 @@ doNotDelete(){
 }
 
 loadSpecialFindAttributes(){
-    // populateHierarchicalDropDown("Special_Find/Special_Find_GeneralInformation/Special_Find_Class", "Special Find Class");
+    makeVocab("HierarchicalDropDown", "Special_Find/Special_Find_GeneralInformation/Special_Find_Class", "Special Find Class");
 }
 
 // refreshSpecialFindLocations() {
@@ -1580,9 +1580,8 @@ loadAdobe() {
 }
 
 loadAdobeAttributes(){
-    // populateDropDown("Adobe_Element/Adobe_Element/Method_Manufacture",  makeVocab("Method_Manufacture"));
-    // populateDropDown("Adobe_Element/Adobe_Element/Shape",  makeVocab("AdobeShape"));
-
+    makeVocab("DropDown", "Adobe_Element/Adobe_Element/Method_Manufacture", "Method_Manufacture");
+    makeVocab("DropDown", "Adobe_Element/Adobe_Element/Shape", "AdobeShape");
 }
 
 saveAdobe(String callback) {
@@ -1702,7 +1701,7 @@ loadPhotoLog() {
 }
 
 loadPhotoLogAttributes(){
-    // populateDropDown("Photograph_Log/Photograph_Log/Camera", makeVocab("Camera"));
+    makeVocab("DropDown", "Photograph_Log/Photograph_Log/Camera", "Camera");
 }
 
 savePhotoLog(String callback) {
@@ -1759,10 +1758,10 @@ doNotDelete(){
 // Stuff that needs to happen after everything.
 
 loadContextAttributes();
-// loadContextGroupAttributes();
-// loadArtefactGroupAttributes();
-// loadSampleAttributes();
-// loadMatrixAttributes();
-// loadSpecialFindAttributes();
-// loadPhotoLogAttributes();
-// loadAdobeAttributes();
+loadContextGroupAttributes();
+loadArtefactGroupAttributes();
+loadSampleAttributes();
+loadMatrixAttributes();
+loadSpecialFindAttributes();
+loadPhotoLogAttributes();
+loadAdobeAttributes();
