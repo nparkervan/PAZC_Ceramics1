@@ -597,6 +597,70 @@ search(){
         " OFFSET ? ", 25);
 }
 
+entityTypes = new ArrayList();
+entityTypes.add(0, new NameValuePair("{All}", "All"));
+entityTypes.add(new NameValuePair("{Context}", "Context"));
+entityTypes.add(new NameValuePair("{Context_Group}", "Context Group"));
+entityTypes.add(new NameValuePair("{Artefact_Group}", "Artefact Group"));
+entityTypes.add(new NameValuePair("{Sample}", "Sample"));
+entityTypes.add(new NameValuePair("{Matrix}", "Matrix"));
+entityTypes.add(new NameValuePair("{Special_Find}", "Special Find"));
+entityTypes.add(new NameValuePair("{Special_Find_Location}", "Special Find Location"));
+entityTypes.add(new NameValuePair("{Adobe}", "Adobe Element"));
+entityTypes.add(new NameValuePair("{Photograph_Log}", "Photograph Log"));
+populateDropDown("control/search/entityTypes", entityTypes);
+
+loadSearch() {
+  // load a list view of existing entities
+  String type = getFieldValue("control/search/entityTypes");
+  if (!type.equals("All")) {
+    populateCursorList("control/search/entityList", "select uuid, response from latestNonDeletedArchEntFormattedIdentifiers where aenttypename = '" + type + "' limit ? offset ?;", 25);
+  } else {
+    populateCursorList("control/search/entityList", "select uuid, response from latestNonDeletedArchEntFormattedIdentifiers where " +
+      " aenttypename = 'Context' OR aenttypename = 'Context Group' OR aenttypename = 'Artefact Group' OR aenttypename = 'Sample' OR " +
+      " aenttypename = 'Matrix' OR aenttypename = 'Special Find' OR aenttypename = 'Special Find Location' OR " +
+      " aenttypename = 'Adobe Element' OR aenttypename = 'Photograph Log' " +
+      " limit ? offset ?;", 25);
+  }
+}
+
+loadEntity() {
+  String listID = getListItemValue();
+  if (!isNull(listID)) {
+    fetchAll("select aenttypename from latestnondeletedarchent join aenttype using (aenttypeid) where uuid = '" + listID + "';", new FetchCallback() {
+      onFetch(result) {
+        String name = result.get(0).get(0);
+        if (name.equals("Context")) {
+          loadContextFrom(listID);
+        } else if (name.equals("Context Group")) {
+          loadContextGroupFrom(listID);
+        } else if (name.equals("Artefact Group")) {
+          loadArtefactGroupFrom(listID);
+        } else if (name.equals("Sample")) {
+          loadSampleFrom(listID);
+        } else if (name.equals("Matrix")) {
+          loadMatrixFrom(listID);
+        } else if (name.equals("Special Find")) {
+          loadSpecialFindFrom(listID);
+        } else if (name.equals("Special Find Location")) {
+          loadSpecialFindLocationFrom(listID);
+        } else if (name.equals("Adobe Element")) {
+          loadAdobeFrom(listID);
+        } else if (name.equals("Photograph Log")) {
+          loadPhotoLogFrom(listID);
+        }
+      }
+    });
+  } else {
+    Log.e("PAZC Module", "Cannot load an entity with a null ID.");
+  }
+}
+
+onEvent("control/search"             , "show"       , "loadSearch();");
+onEvent("control/search/entityTypes" , "click"      , "loadSearch();");
+onEvent("control/search/entityList"  , "click"      , "loadEntity();");
+
+
 /*** ArchEnt: Context ***/
 onEvent("Context", "show", "addNavigationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
@@ -1080,6 +1144,11 @@ newContextGroup(menu){
 
 loadContextGroup(){
     context_group_id = getListItemValue();
+    loadContextGroupFrom(context_group_id);
+}
+
+loadContextGroupFrom(String id){
+  context_group_id = id;
     showTabGroup("ContextGroup", context_group_id);
     populateContextGroup();
 }
@@ -1242,6 +1311,11 @@ newArtefactGroup(){
 
 loadArtefactGroup() {
     artefact_group_id = getFieldValue("Context/Context_Artefacts/artefactGroupList");
+    loadArtefactGroupFrom(artefact_group_id);
+}
+
+loadArtefactGroupFrom(String id) {
+    artefact_group_id = id;
     if (isNull(artefact_group_id)) return;
     loadArtefactGroupAttributes();
     showTabGroup("Artefact_Group", artefact_group_id);
@@ -1330,6 +1404,11 @@ newSample(){
 
 loadSample() {
     sample_id = getFieldValue("Context/Context_Samples/sampleList");
+    loadSampleFrom(sample_id);
+}
+
+loadSampleFrom(String id) {
+    sample_id = id;
     if (isNull(sample_id)) return;
     loadSampleAttributes();
     showTabGroup("Sample", sample_id);
@@ -1414,6 +1493,11 @@ newMatrix(){
 
 loadMatrix() {
     matrix_id = getFieldValue("Context/Context_Deposits/matrixList");
+    loadMatrixFrom(matrix_id);
+}
+
+loadMatrixFrom(String id) {
+    matrix_id = id;
     if (isNull(matrix_id)) return;
     loadMatrixAttributes();
     showTabGroup("Matrix", matrix_id);
@@ -1506,6 +1590,11 @@ newSpecialFind(){
 
 loadSpecialFind() {
     special_find_id = getFieldValue("Context/Context_Artefacts/specialFindList");
+    loadSpecialFindFrom(special_find_id);
+}
+
+loadSpecialFindFrom(String id) {
+    special_find_id = id;
     if (isNull(special_find_id)) return;
     loadSpecialFindAttributes();
     showTabGroup("Special_Find", special_find_id);
@@ -1694,6 +1783,11 @@ newAdobe(){
 
 loadAdobe() {
     adobe_id = getFieldValue("Context/Context_Structures/AdobeList");
+    loadAdobeFrom(adobe_id);
+}
+
+loadAdobeFrom(String id) {
+    adobe_id = id;
     if (isNull(adobe_id)) return;
     showTabGroup("Adobe_Element", adobe_id);
 }
@@ -1809,6 +1903,11 @@ newPhotoLog(){
 
 loadPhotoLog() {
     photolog_id = getFieldValue("Context/Context_Attachments/PhotoLogList");
+    loadPhotoLogFrom(photolog_id);
+}
+
+loadPhotoLogFrom(String id) {
+    photolog_id = id;
     if (isNull(photolog_id)) return;
     showTabGroup("Photograph_Log", photolog_id);
 }
