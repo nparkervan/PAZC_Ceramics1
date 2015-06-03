@@ -547,7 +547,7 @@
       <bind nodeset="/faims/Context/Context_Interpretation/Your_Discussion" type="string"/>
       <bind nodeset="/faims/Context/Context_Interpretation/container1/child1/Start_date" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Interpretation/container1/child2/End_date" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Interpretation/Associations" type="string"/>
+<!--       <bind nodeset="/faims/Context/Context_Interpretation/Associations" type="string"/> -->
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child1/Length" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child2/Width" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child3/Depth" type="decimal"/>
@@ -568,7 +568,7 @@
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child2/Longitude" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/Special_Find_Description" type="string"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container4/child1/Date_From" type="decimal"/>
-      <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container5/child2/Date_To" type="decimal"/>
+      <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container4/child2/Date_To" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/Special_Find_Comment" type="string"/>
       <bind nodeset="/faims/Matrix/Matrix/Percentage" type="decimal"/>
     </model>
@@ -1335,7 +1335,7 @@
          <input faims_attribute_name="Drawings" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Drawings">
               <label>{Drawings}</label>
             </input>
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1346,7 +1346,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="true" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1563,7 +1563,7 @@
         <input faims_attribute_name="Stored" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Stored">
           <label>{Stored}</label>
         </input>                                          
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1573,7 +1573,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="true" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true"  faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1640,7 +1640,7 @@
         <input faims_attribute_name="Sample Comments" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Sample_Comments">
           <label>{Sample_Comments}</label>
         </input>
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1650,7 +1650,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="true" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1799,7 +1799,7 @@
         <input faims_attribute_name="Special Find Comment" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Special_Find_Comment">
           <label>{Special_Find} Comment</label>
         </input>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="true" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>

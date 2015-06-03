@@ -8098,11 +8098,11 @@
         </term>
 	  </lookup>
 	</property>	  
-    <property name="Sketch" type="file">
+    <property name="Sketch" type="file" thumbnail="true" sync="false">
       <description>Sketch
       </description>
     </property>
-    <property name="Photo" type="file">
+    <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
     </property>
@@ -8680,11 +8680,11 @@
       <description>General comment about this group of Artefacts from this Context, eg 'Lots of early porcelain. Few marks.'
       </description>
     </property>
-    <property name="Sketch" type="file">
+    <property name="Sketch" type="file" thumbnail="true" sync="false">
       <description>Sketch
       </description>
     </property>
-    <property name="Photo" type="file">
+    <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
     </property>
@@ -8960,11 +8960,11 @@
       <description>Other description about structural elements, eg slate dry-proofing.
       </description>
     </property>
-    <property name="Sketch" type="file">
+    <property name="Sketch" type="file" thumbnail="true" sync="false">
       <description>Sketch
       </description>
     </property>
-    <property name="Photo" type="file">
+    <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
     </property>
@@ -9066,7 +9066,7 @@
       <description>
       </description>
     </property>
-    <property name="Photo" type="file">
+    <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
     </property>
