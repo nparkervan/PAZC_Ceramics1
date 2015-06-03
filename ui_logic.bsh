@@ -470,10 +470,10 @@ makePictureGallery(String attrib) {
 
 /*** USER ***/
 
-getDefaultUsersList() {
-    users = fetchAll("select userid, fname ||' ' || lname from user");
-    return users;
-}
+// getDefaultUsersList() {
+//     users = fetchAll("select userid, fname ||' ' || lname from user");
+//     return users;
+// }
 
 populateListForUsers(){
     // Populate user dropdown
@@ -482,12 +482,7 @@ populateListForUsers(){
             populateDropDown("user/usertab/users", result);
         }
     });
-
-    // Populate Area code dropdown
-    makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
 }
-
-onEvent("user/usertab/", "show", "populateListForUsers()");
 
 String username = "";
 String device = "";
@@ -507,24 +502,38 @@ login(){
             }
         });
 
-        //fix
-        fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
-        fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
-
-        areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
-        areaCode  = null;
-        fetchOne(
-            areaCodeQ,
-            new FetchCallback() {
-              onFetch(result) {
-                areaCode = result.get(0);
-              }
-            }
-        );
+        // store the user and area code into local settings, and set the globals
+        areaCode = getFieldValue("user/usertab/Area_Code");
+        saveUserAndAreaCode();
     }
 }
 
+saveUserAndAreaCode() {
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+}
+
+loadAreaCode() {
+  areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
+  areaCode  = null;
+  fetchOne(
+      areaCodeQ,
+      new FetchCallback() {
+        onFetch(result) {
+          String fetchedValue = result.get(0);
+          if (!isNull(fetchedValue)) {
+            areaCode = fetchedValue;
+            setFieldValue("user/usertab/Area_Code", fetchedValue);
+          }
+        }
+      }
+  );
+}
+
+makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode"); // Populate Area code dropdown
+onEvent("user", "load", "loadAreaCode()");
 onEvent("user", "show", "removeNavigationButtons()");
+onEvent("user/usertab/", "show", "populateListForUsers()");
 onEvent("user/usertab/login", "click", "login()");
 onEvent("user/usertab/guide", "click", "showTab(\"user/help\")");
 
