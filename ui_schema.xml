@@ -62,6 +62,7 @@
           <!--ArchEnt / Record Type: CONTEXT-->
           <Context>
             <Context_GeneralInformation>
+              <validate/>
               <container1>
                 <child1>
                   <Site_Code/>
@@ -115,6 +116,7 @@
               </container5>
               <Your_description/>
               <Details/>
+              <validationResults/>
             </Context_GeneralInformation>
             <Context_Measure>
               <container1>
@@ -695,6 +697,9 @@
       <label>{Context}</label>
       <group ref="Context_GeneralInformation">
         <label>{General}</label>
+        <trigger ref="validate">
+          <label>{Validate}</label>
+        </trigger>
         <group faims_style="orientation" ref="container1">
           <label/>
           <group faims_style="even" ref="child1">
@@ -825,6 +830,10 @@
         <trigger ref="Details">
           <label>{Fill_in_Context_Type_Details}</label>
         </trigger>
+
+        <input ref="validationResults" faims_web="true">
+          <label>{Validation_Results}</label>
+        </input>
       </group>
 
       <group ref="Context_Measure">

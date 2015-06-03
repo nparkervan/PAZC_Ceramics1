@@ -658,6 +658,138 @@ String context_id = null;
 
 Object dialog;
 
+fieldPair(String ref, String name) {
+    List fp = new ArrayList();
+    fp.add(ref);
+    fp.add(name);
+    return fp;
+}
+/* Returns true if field specified by `ref` is valid. False otherwise.
+ */
+validateField(String ref) {
+    return !isNull(getFieldValue(ref));
+}
+/* `format` can either be HTML or PLAINTEXT
+ */
+validateFields(List fields, String format) {
+    Integer numInvalid = 0;
+
+    /* Build validation message string (and count how many invalid fields exist) */
+    String out = "Please fill out the following fields:\n";
+    for(f : fields) {
+        String ref  = f.get(0); // Reference to field
+        String name = f.get(1); // Human-readable name
+
+        if (!validateField(ref)) {
+            out += "- " + name + "\n";
+            numInvalid++;
+        }
+    }
+    // All the fields are valid, just overwrite `out` with a cheery message
+    if (numInvalid == 0)
+        out = "All fields contain valid data!";
+
+    /* Format the output as dictated by `format` */
+    if (format == "HTML") {
+        out = out.replace("\n", "<br>");
+    } else if (format == "PLAINTEXT") {
+        ;
+    }
+
+    return out;
+}
+validateFields() {
+    List fields = new ArrayList();  // Fields to be validated
+
+    fields.add(fieldPair("Context/Context_GeneralInformation/Date_Closed"  , "{Date_Closed}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Date_Opened"  , "{Date_Opened}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
+    // TODO: There are other fields which require validation
+
+    String validationMessagePlain = validateFields(fields, "PLAINTEXT");
+    String validationMessageHtml  = validateFields(fields, "HTML");
+
+    showWarning("Validation_Results"                                           , validationMessagePlain);
+    populateWebViewHtml("Context/Context_GeneralInformation/validationResults" , validationMessageHtml);
+}
+onEvent("Context/Context_GeneralInformation/validate", "click", "validateFields()");
+
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,
  * otherwise increments its value.
@@ -678,7 +810,7 @@ incField(String ref, Integer defaultVal) {
     return i;
 }
 
-/* Increments the field at `ref` or returns false if it does not contain a
+/* Increments the field at `ref` or returns null if it does not contain a
  * number.
  */
 incField(String ref) {
