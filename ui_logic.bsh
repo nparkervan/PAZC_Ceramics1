@@ -523,6 +523,9 @@ loadAreaCode() {
       areaCodeQ,
       new FetchCallback() {
         onFetch(result) {
+          if (isNull(result)) {
+            return;
+          }
           String fetchedValue = result.get(0);
           if (!isNull(fetchedValue)) {
             areaCode = fetchedValue;
@@ -1047,7 +1050,6 @@ remremoveContextGroupReln() {
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
-onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
@@ -1588,7 +1590,6 @@ loadSpecialFindAttributes(){
 /*** Special Find Locations***/
 onEvent("Special_Find_Location", "show", "addNavigationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
 onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
-onEvent("Special_Find_Location/Special_Find_Location/Delete", "delayclick", "deleteSpecialFindLocation()");
 
 String special_find_location_id = null;
 
