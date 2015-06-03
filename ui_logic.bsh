@@ -338,7 +338,7 @@ newRecord(String tabgroup) {
     newContext();
   } else if (tabgroup.equals("ContextGroup")) {
     cancelTabGroup(tabgroup, false);
-    newContextGroup();
+    newContextGroup(true);
   } else if (tabgroup.equals("Artefact_Group")) {
     cancelTabGroup(tabgroup, false);
     newArtefactGroup();
