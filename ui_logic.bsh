@@ -656,28 +656,23 @@ String context_id = null;
 Object dialog;
 
 /*
- * If the value of the field specified by `ref` is null and `defaultVal` is null
- * does nothing and returns false.
+ * If value of field specified by `ref` is null, sets the field to `defaultVal`,
+ * otherwise increments its value.
  *
- * If field's value is null and `defaultVal` is not null, sets the field to
- * `defaultVal` and returns that value.
- *
- * Otherwise, increments the field and returns the incremented value.
+ * Returns the value the field was updated to.
  */
 incField(String ref, Integer defaultVal) {
     String val = getFieldValue(ref);
 
-    if (isNull(val) && defaultVal == null) {
-        return false;
-    }
     if (isNull(val)) {
         setFieldValue(ref, defaultVal);
         return defaultVal;
     }
 
     Integer i = Integer.parseInt(val);
-    setFieldValue(ref, i+1);
-    return i+1;
+    i++;
+    setFieldValue(ref, i);
+    return i;
 }
 
 /* Increments the field at `ref` or returns false if it does not contain a
@@ -688,7 +683,8 @@ incField(String ref) {
 }
 
 newContext(){
-    if (incField("control/data/ContextIncrement").getClass() != Integer.class) {
+    contextIncrement = incField("control/data/ContextIncrement");
+    if (contextIncrement == null) {
         showWarning("{Alert}","{No_starting_ID_is_entered_please_enter_one}");
         return;
     }
@@ -1240,7 +1236,7 @@ newArtefactGroup(){
     newTabGroup("Artefact_Group");
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    autoNumArtefactGroup();
+    incField("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", 1);
 }
 
 loadArtefactGroup() {
@@ -1329,7 +1325,7 @@ newSample(){
     newTabGroup("Sample");
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Sample/Sample_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    sampleAutoNum();
+    incField("Sample/Sample_GeneralInformation/Context_ID", 1);
 }
 
 loadSample() {
@@ -1507,7 +1503,7 @@ newSpecialFind(){
     newTabGroup("Special_Find");
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    specialFindAutoNum();
+    incField("Special_Find/Special_Find_GeneralInformation/Context_ID", 1);
 }
 
 loadSpecialFind() {
@@ -1696,9 +1692,9 @@ newAdobe(){
     }
     adobe_id = null;
     newTabGroup("Adobe_Element");
-    adobeAutoNum();
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Adobe_Element/Adobe_Element/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    incField("Adobe_Element/Adobe_Element/Context_ID", 1);
 }
 
 loadAdobe() {
