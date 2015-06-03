@@ -121,11 +121,17 @@
         <term>2<description/></term>
         <term>3<description/></term>
         <term>4<description/></term>
+  	<term>5<description/></term>	
+	<term>6<description/></term>
+	<term>7<description/></term>
+	<term>8<description/></term>
+	<term>9<description/></term>
       </lookup>
     </property>
     <property name="Grid Location Reference" type="freetext">
       <description>Reference number for the Unit or grid square(s) within which this Context falls. </description>
     </property>
+<!--Make below a required Field -->
     <property name="Context Type" type="enum">
       <description>Deposit, cut or 'other' (feature).
       </description>
@@ -156,14 +162,17 @@
         </term>
       </lookup>
     </property>
+<!--Make below a required Field. Automatic?-->
     <property name="Date Opened" type="date">
       <description>Date on which the Context was first excavated.
       </description>
     </property>
+<!--Make below a required Field. Automatic?-->
     <property name="Date Closed" type="date">
       <description>The date the excavation of this Context ceased.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Excavation Method" type="enum">
       <description>Method and conditions of archaeological excavation.</description>
 	  <lookup>
@@ -173,56 +182,72 @@
 		<term>Otro<description>Otro</description></term>
 		</lookup>
     </property>
+<!--Make below a required Field -->
     <property name="Highest Level" type="float">
       <description> The highest elevation, or 'starting level', recorded for that context. This may be relative to the site grid, or real world co-ordinates, depending on the method of measurement.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Lowest Level" type="float">
       <description>The lowest elevation recorded for that context. This may be relative to the site grid, or real world co-ordinates, depending on the method of measurement.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Length" type="float">
       <description>Length of the longest side, in mm.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Width" type="float">
       <description>Width or diameter, in mm.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Depth" type="float">
       <description>Depth or Height, in mm.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Highest Level NE" type="float">
       <description>The highest elevation, or 'opening level', recorded for the NE quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Highest Level SE" type="float">
       <description>The highest elevation, or 'opening level', recorded for the SE quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Highest Level SW" type="float">
       <description>The highest elevation, or 'opening level', recorded for the SW quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Highest Level NW" type="float">
       <description>The highest elevation, or 'opening level', recorded for the NW quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Highest Level Ctr" type="float">
       <description>The highest elevation, or 'opening level', recorded for the centre of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Lowest Level NE" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the NE quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Lowest Level SE" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the SE quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Lowest Level SW" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the SW quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Lowest Level NW" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the NW quadrant of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Lowest Level Ctr" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the centre of the Context.</description>
     </property>
+<!--Make below a required Field -->
     <property name="Context Comments" type="blocktext">
       <description>Additional comments on the description of the Context.
       </description>
@@ -265,7 +290,7 @@
 
           <description>Anaerobic accumulation of partially decayed vegetation.</description>
           <term>{Firm}
-            <description>Fibres compressed together. (MoLAS 1994: 30)</description></term>
+            <description>Fibers compressed together. (MoLAS 1994: 30)</description></term>
           <term>{Plastic}
             <description>Can be moulded in hands and smeared between fingers. (MoLAS 1994: 30)</description></term>
           <term>{Spongy}
@@ -7394,6 +7419,7 @@
 
       </lookup>
     </property>
+<!--Make below a required Field -->
     <property name="Soil Colour" type="freetext">
       <description>Simple description of the colour of the soil. This field is interpreted from the Soil Munsell Colour
       </description>
@@ -7737,6 +7763,7 @@
         </term>
       </lookup>
     </property>
+<!--Make below a required Field. Also, make sure that all of these terms translated in final version and that no brackets appear in buttons.-->
     <property name="Shape of Cut" type="enum">
       <description>The shape at the top of the cut.
       </description>
@@ -7941,8 +7968,9 @@
       <description>Describe the nature of truncation to the cut (where appropriate).
       </description>
     </property>
+<!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  “Capa Superficial,” “relleno huella de poste,” “huella de poste,” “relleno de pozo,” “huella de tinaja,” “basural,” “relleno,” “contexto huaqueado,” “huella de muro de quincha,” “relleno de huella de muro de quincha,” “fogón,” “muro de quincha,” “artefacto,” “no identificado,” “otro”-->
     <property isIdentifier="true" name="Your Interpretation" type="freetext">
-      <description>Your Interpretation of the likely functional zone of the context, whether inside a structure, or part of the structure itself.</description>
+      <description>Your Interpretation of the function.</description>
       <lookup>
         <term>{Internal}
 
@@ -7958,18 +7986,22 @@
           <description/></term>
       </lookup>
     </property>
+<!--Make below a required Field -->
     <property name="Your Discussion" type="blocktext">
       <description>Elaborate upon your basic interpretation.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Your description" type="blocktext">
       <description>Enter a simple descriptive interpretation. For example, is it a floor, midden, brickearth wall, gully or pit?
       </description>
     </property>
+<!--Make below a required Field. Automatic?-->
     <property name="Start date" type="date">
       <description>Start Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
+<!--Make below a required Field. Automatic-->
     <property name="End date" type="date">
       <description>End Date (may also include time and/or have fuzzy limits)
       </description>
@@ -7978,6 +8010,7 @@
       <description>The earliest phase in which this Context was likely to have been created.
       </description>
       <lookup>
+<!--Make sure 16th century shows up as an option. Add values here -->
          <term>No Se Observa
           <description>data not collected 
 		  </description>
@@ -8035,6 +8068,7 @@
           </description>
         </term>
 	  </lookup>
+<!--Make below a required Field -->
     </property>
 	<property name="Phase To" type="freetext">
 	  <description>The latest phase in which this Context was likely to have been deposited or sealed.
@@ -8102,6 +8136,7 @@
       <description>Sketch
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
@@ -8261,7 +8296,7 @@
       </lookup>
     </property>
     <property name="Distinguishing Marks" type="freetext">
-      <description>stinguishing marks on brick or stone.
+      <description>Distinguishing marks on brick or stone.
       </description>
     </property>
     <property name="Structure Description" type="blocktext">
@@ -8281,9 +8316,11 @@
     	<term>{Other}<description>No description.</description></term>
   	</lookup> 
 	</property>
+<!--Make below a required Field -->
 	<property name="Excavator" type="freetext">   
 	<description> The primary excavator of the {Context}.</description> 
 	</property>
+<!--Make below a required Field -->
 	<property name="Volume" type="freetext">   
 	<description> The volume in litres of deposit recovered from the {Context}.</description> 
 	</property>
@@ -8339,34 +8376,42 @@
         </term>
       </lookup>
     </property>
+<!--Make below a required Field -->
     <property name="Description" type="freetext">
       <description>
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Length" type="float">
       <description>Length of the longest side, in mm.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Width" type="float">
       <description>Width or diameter, in mm.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Depth" type="float">
       <description>Depth or Height, in mm.
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Your Discussion" type="freetext">
       <description>
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="Start date" type="date">
       <description>Start Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="End date" type="date">
       <description>End Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
+<!--Make below a required Field -->
     <property name="CG Phase From" type="freetext">
       <description>The earliest phase in which this Context was likely to have been created.
       </description>
@@ -8684,6 +8729,7 @@
       <description>Sketch
       </description>
     </property>
+<!--Make below a required Field if Artifact entered-->
     <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
