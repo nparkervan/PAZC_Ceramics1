@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSchema name="PAZC" preparer="Penny Crook" >
+<dataSchema name="PAZC" preparer="Penny Crook">
   <!-- PAZC 2014 for University of Vermont -->
   <RelationshipElement name="AboveBelow" type="hierarchical">
     <description>Implements a above below for contexts.
@@ -57,17 +57,14 @@
     <description>Implements a 1:N between special finds and their locations
     </description>
   </RelationshipElement>
-
   <RelationshipElement name="ContextPhotographLog" type="bidirectional">
     <description>Implements a 1:N between context and its photograph logs
     </description>
   </RelationshipElement>
-
   <RelationshipElement name="ContextAdobe" type="bidirectional">
     <description>Implements a 1:N between context and its Adobe bricks
     </description>
   </RelationshipElement>
-
   <!-- CONTEXT -->
   <ArchaeologicalElement name="Context">
     <description>The physical result of any single action, whether it leaves a positive or negative record within the stratigraphic sequence. (MoLAS 1994)
@@ -85,7 +82,7 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-       <lookup>
+      <lookup>
         <term>123-0<description>{Site} 123.</description></term>
         <term>125-0<description>{Site} 125.</description></term>
         <term>128-0<description>{Site} 128.</description></term>
@@ -96,22 +93,22 @@
         <term>128-1<description>{Site} 128.</description></term>
         <term>131-1<description>{Site} 131.</description></term>
         <term>136-1<description>{Site} 136.</description></term>
-		<term>123-2<description>{Site} 123. </description></term>
+        <term>123-2<description>{Site} 123. </description></term>
         <term>125-2<description>{Site} 125.</description></term>
         <term>128-2<description>{Site} 128.</description></term>
         <term>131-2<description>{Site} 131.</description></term>
         <term>136-2<description>{Site} 136.</description></term>
-		<term>123-3<description>{Site} 123. </description></term>
+        <term>123-3<description>{Site} 123. </description></term>
         <term>125-3<description>{Site} 125.</description></term>
         <term>128-3<description>{Site} 128.</description></term>
         <term>131-3<description>{Site} 131.</description></term>
         <term>136-3<description>{Site} 136.</description></term>
-		<term>123-4<description>{Site} 123. </description></term>
+        <term>123-4<description>{Site} 123. </description></term>
         <term>125-4<description>{Site} 125.</description></term>
         <term>128-4<description>{Site} 128.</description></term>
         <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>      
-		</lookup>
+        <term>136-4<description>{Site} 136.</description></term>
+      </lookup>
     </property>
     <property name="Device Code" type="::sigh::">
       <description/>
@@ -121,11 +118,17 @@
         <term>2<description/></term>
         <term>3<description/></term>
         <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
       </lookup>
     </property>
     <property name="Grid Location Reference" type="freetext">
       <description>Reference number for the Unit or grid square(s) within which this Context falls. </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Context Type" type="enum">
       <description>Deposit, cut or 'other' (feature).
       </description>
@@ -156,73 +159,92 @@
         </term>
       </lookup>
     </property>
+    <!--Make below a required Field. Automatic?-->
     <property name="Date Opened" type="date">
       <description>Date on which the Context was first excavated.
       </description>
     </property>
+    <!--Make below a required Field. Automatic?-->
     <property name="Date Closed" type="date">
       <description>The date the excavation of this Context ceased.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Excavation Method" type="enum">
       <description>Method and conditions of archaeological excavation.</description>
-	  <lookup>
+      <lookup>
         <term>Lampa<description>Lampa</description></term>
-		<term>Badilejo<description>Badilejo</description></term>
-		<term>Pico<description>Pico</description></term>
-		<term>Otro<description>Otro</description></term>
-		</lookup>
+        <term>Badilejo<description>Badilejo</description></term>
+        <term>Pico<description>Pico</description></term>
+        <term>Otro<description>Otro</description></term>
+      </lookup>
     </property>
+    <!--Make below a required Field -->
     <property name="Highest Level" type="float">
       <description> The highest elevation, or 'starting level', recorded for that context. This may be relative to the site grid, or real world co-ordinates, depending on the method of measurement.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Lowest Level" type="float">
       <description>The lowest elevation recorded for that context. This may be relative to the site grid, or real world co-ordinates, depending on the method of measurement.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Length" type="float">
       <description>Length of the longest side, in mm.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Width" type="float">
       <description>Width or diameter, in mm.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Depth" type="float">
       <description>Depth or Height, in mm.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Highest Level NE" type="float">
       <description>The highest elevation, or 'opening level', recorded for the NE quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Highest Level SE" type="float">
       <description>The highest elevation, or 'opening level', recorded for the SE quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Highest Level SW" type="float">
       <description>The highest elevation, or 'opening level', recorded for the SW quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Highest Level NW" type="float">
       <description>The highest elevation, or 'opening level', recorded for the NW quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Highest Level Ctr" type="float">
       <description>The highest elevation, or 'opening level', recorded for the centre of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Lowest Level NE" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the NE quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Lowest Level SE" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the SE quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Lowest Level SW" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the SW quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Lowest Level NW" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the NW quadrant of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Lowest Level Ctr" type="float">
       <description>The lowest elevation, or 'closing level', recorded for the centre of the Context.</description>
     </property>
+    <!--Make below a required Field -->
     <property name="Context Comments" type="blocktext">
       <description>Additional comments on the description of the Context.
       </description>
@@ -265,7 +287,7 @@
 
           <description>Anaerobic accumulation of partially decayed vegetation.</description>
           <term>{Firm}
-            <description>Fibres compressed together. (MoLAS 1994: 30)</description></term>
+            <description>Fibers compressed together. (MoLAS 1994: 30)</description></term>
           <term>{Plastic}
             <description>Can be moulded in hands and smeared between fingers. (MoLAS 1994: 30)</description></term>
           <term>{Spongy}
@@ -7391,9 +7413,9 @@
             </term>
           </term>
         </term>
-
       </lookup>
     </property>
+    <!--Make below a required Field -->
     <property name="Soil Colour" type="freetext">
       <description>Simple description of the colour of the soil. This field is interpreted from the Soil Munsell Colour
       </description>
@@ -7737,6 +7759,7 @@
         </term>
       </lookup>
     </property>
+    <!--Make below a required Field. Also, make sure that all of these terms translated in final version and that no brackets appear in buttons.-->
     <property name="Shape of Cut" type="enum">
       <description>The shape at the top of the cut.
       </description>
@@ -7941,8 +7964,9 @@
       <description>Describe the nature of truncation to the cut (where appropriate).
       </description>
     </property>
+    <!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  “Capa Superficial,” “relleno huella de poste,” “huella de poste,” “relleno de pozo,” “huella de tinaja,” “basural,” “relleno,” “contexto huaqueado,” “huella de muro de quincha,” “relleno de huella de muro de quincha,” “fogón,” “muro de quincha,” “artefacto,” “no identificado,” “otro”-->
     <property isIdentifier="true" name="Your Interpretation" type="freetext">
-      <description>Your Interpretation of the likely functional zone of the context, whether inside a structure, or part of the structure itself.</description>
+      <description>Your Interpretation of the function.</description>
       <lookup>
         <term>{Internal}
 
@@ -7958,31 +7982,36 @@
           <description/></term>
       </lookup>
     </property>
+    <!--Make below a required Field -->
     <property name="Your Discussion" type="blocktext">
       <description>Elaborate upon your basic interpretation.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Your description" type="blocktext">
       <description>Enter a simple descriptive interpretation. For example, is it a floor, midden, brickearth wall, gully or pit?
       </description>
     </property>
+    <!--Make below a required Field. Automatic?-->
     <property name="Start date" type="date">
       <description>Start Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
+    <!--Make below a required Field. Automatic-->
     <property name="End date" type="date">
       <description>End Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
-	<property name="Phase From" type="freetext">
+    <property name="Phase From" type="freetext">
       <description>The earliest phase in which this Context was likely to have been created.
       </description>
       <lookup>
-         <term>No Se Observa
+        <!--Make sure 16th century shows up as an option. Add values here -->
+        <term>No Se Observa
           <description>data not collected 
 		  </description>
         </term>
-		<term>{Formativo} 
+        <term>{Formativo} 
           <description>No description
           </description>
         </term>
@@ -8002,7 +8031,7 @@
 		 <description>No description
           </description>
 		</term>
-		<term>{Sican_Temprano} 
+        <term>{Sican_Temprano} 
           <description>No description
           </description>
         </term>
@@ -8022,29 +8051,30 @@
           <description>No description
           </description>
         </term>
-		<term>{Siglo_16} 
+        <term>{Siglo_16} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_17} 
+        <term>{Siglo_17} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_18} 
+        <term>{Siglo_18} 
           <description>No description
           </description>
         </term>
-	  </lookup>
+      </lookup>
+      <!--Make below a required Field -->
     </property>
-	<property name="Phase To" type="freetext">
-	  <description>The latest phase in which this Context was likely to have been deposited or sealed.
+    <property name="Phase To" type="freetext">
+      <description>The latest phase in which this Context was likely to have been deposited or sealed.
       </description>
       <lookup>
-	     <term>No Se Observa
+        <term>No Se Observa
           <description>data not collected 
 		  </description>
         </term>
-		<term>{Formativo} 
+        <term>{Formativo} 
           <description>No description
           </description>
         </term>
@@ -8064,7 +8094,7 @@
 		 <description>No description
           </description>
 		</term>
-		<term>{Sican_Temprano} 
+        <term>{Sican_Temprano} 
           <description>No description
           </description>
         </term>
@@ -8084,29 +8114,30 @@
           <description>No description
           </description>
         </term>
-		<term>{Siglo_16} 
+        <term>{Siglo_16} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_17} 
+        <term>{Siglo_17} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_18} 
+        <term>{Siglo_18} 
           <description>No description
           </description>
         </term>
-	  </lookup>
-	</property>	  
+      </lookup>
+    </property>
     <property name="Sketch" type="file" thumbnail="true" sync="false">
       <description>Sketch
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
     </property>
-	<property name="Structural Components" type="enum">
+    <property name="Structural Components" type="enum">
       <description>Primary components of structure or feature, eg dry-pressed brick, rough-hewn stone.
       </description>
       <lookup>
@@ -8114,13 +8145,13 @@
           <description>data not collected
           </description>
         </term>
-    		<term>{Adobe}
+        <term>{Adobe}
     		 <description>Sun-dried brick.
               </description>
       		<term>{With_Straw}<description>{Adobe} {brick} with straw temper.</description></term>
       		<term>{Without_Straw}<description>{Adobe} {brick} without straw temper.</description></term>
     		</term>
-		    <term>{Brick}
+        <term>{Brick}
           <description>Fired clay block used in masonry construction.
           </description>
         </term>
@@ -8148,11 +8179,11 @@
 		  </description>
 		  </term>
         </term>
-		<term>{Quincha}
+        <term>{Quincha}
 	   <description>Mud and rushes.
 	   </description>
 	   </term>
-		<term>{Timber}
+        <term>{Timber}
           <description>{Timber} uprights or other elements for a wall or fence.
           </description>
           <term>
@@ -8168,11 +8199,11 @@
             </description>
           </term>
         </term>
-		<term>{Earth}
+        <term>{Earth}
           <description>Compact earthen wall or floor.
           </description>
-        </term>     
-	 </lookup>
+        </term>
+      </lookup>
     </property>
     <property name="Bonding" type="enum">
       <description>Primary bonding material of structure or feature, eg mortar.
@@ -8261,41 +8292,41 @@
       </lookup>
     </property>
     <property name="Distinguishing Marks" type="freetext">
-      <description>stinguishing marks on brick or stone.
+      <description>Distinguishing marks on brick or stone.
       </description>
     </property>
     <property name="Structure Description" type="blocktext">
       <description>Other description about structural elements, eg slate dry-proofing.
       </description>
     </property>
-	<property name="Sub Unit" type="freetext">   
-	<description>Squares within an excavation {Grid_Location_Reference}, eg A1, B2 etc.</description>
-	</property>
-	<property name="Type of Definition" type="enum">   
-  	<description> The reason why the {Context} was declared, ie because of a change in soil color or consistency, a change in the characteristics of material culture recovered, or for arbitrary reasons.</description> 
-  	<lookup>
-    	<term>No Se Observa<description>data not collected</description></term>
-		<term>{Natural}<description>No description.</description></term>
-    	<term>{Cultural}<description>No description.</description></term>
-    	<term>{Arbitrary}<description>No description.</description></term>
-    	<term>{Other}<description>No description.</description></term>
-  	</lookup> 
-	</property>
-	<property name="Excavator" type="freetext">   
-	<description> The primary excavator of the {Context}.</description> 
-	</property>
-	<property name="Volume" type="freetext">   
-	<description> The volume in litres of deposit recovered from the {Context}.</description> 
-	</property>
-	<property name="Datum" type="freetext">   
-	<description>The local elevation datum set up by the project total station for the {Grid_Location_Reference}.</description> 
-	</property>
-	<property name="Drawings" type="freetext">
-	<description>The reference numbers for drawings of this {Context}.</description>
-	</property>
-
+    <property name="Sub Unit" type="freetext">
+      <description>Squares within an excavation {Grid_Location_Reference}, eg A1, B2 etc.</description>
+    </property>
+    <property name="Type of Definition" type="enum">
+      <description> The reason why the {Context} was declared, ie because of a change in soil color or consistency, a change in the characteristics of material culture recovered, or for arbitrary reasons.</description>
+      <lookup>
+        <term>No Se Observa<description>data not collected</description></term>
+        <term>{Natural}<description>No description.</description></term>
+        <term>{Cultural}<description>No description.</description></term>
+        <term>{Arbitrary}<description>No description.</description></term>
+        <term>{Other}<description>No description.</description></term>
+      </lookup>
+    </property>
+    <!--Make below a required Field -->
+    <property name="Excavator" type="freetext">
+      <description> The primary excavator of the {Context}.</description>
+    </property>
+    <!--Make below a required Field -->
+    <property name="Volume" type="freetext">
+      <description> The volume in litres of deposit recovered from the {Context}.</description>
+    </property>
+    <property name="Datum" type="freetext">
+      <description>The local elevation datum set up by the project total station for the {Grid_Location_Reference}.</description>
+    </property>
+    <property name="Drawings" type="freetext">
+      <description>The reference numbers for drawings of this {Context}.</description>
+    </property>
   </ArchaeologicalElement>
-
   <!--CONTEXT GROUP-->
   <ArchaeologicalElement name="Context Group" type="container">
     <description>A group of contexts.
@@ -8339,43 +8370,51 @@
         </term>
       </lookup>
     </property>
+    <!--Make below a required Field -->
     <property name="Description" type="freetext">
       <description>
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Length" type="float">
       <description>Length of the longest side, in mm.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Width" type="float">
       <description>Width or diameter, in mm.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Depth" type="float">
       <description>Depth or Height, in mm.
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Your Discussion" type="freetext">
       <description>
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="Start date" type="date">
       <description>Start Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="End date" type="date">
       <description>End Date (may also include time and/or have fuzzy limits)
       </description>
     </property>
+    <!--Make below a required Field -->
     <property name="CG Phase From" type="freetext">
       <description>The earliest phase in which this Context was likely to have been created.
       </description>
-            <lookup>
-         <term>No Se Observa
+      <lookup>
+        <term>No Se Observa
           <description>data not collected 
 		  </description>
         </term>
-		<term>{Formativo} 
+        <term>{Formativo} 
           <description>No description
           </description>
         </term>
@@ -8395,7 +8434,7 @@
 		 <description>No description
           </description>
 		</term>
-		<term>{Sicán_Temprano} 
+        <term>{Sicán_Temprano} 
           <description>No description
           </description>
         </term>
@@ -8415,29 +8454,29 @@
           <description>No description
           </description>
         </term>
-		<term>{Siglo_16} 
+        <term>{Siglo_16} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_17} 
+        <term>{Siglo_17} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_18} 
+        <term>{Siglo_18} 
           <description>No description
           </description>
         </term>
-	  </lookup>
-   </property>
+      </lookup>
+    </property>
     <property name="CG Phase To" type="freetext">
       <description>The latest phase in which this Context was likely to have been deposited or sealed.
       </description>
       <lookup>
-         <term>No Se Observa
+        <term>No Se Observa
           <description>data not collected 
 		  </description>
         </term>
-		<term>{Formativo} 
+        <term>{Formativo} 
           <description>No description
           </description>
         </term>
@@ -8457,7 +8496,7 @@
 		 <description>No description
           </description>
 		</term>
-		<term>{Sicán_Temprano} 
+        <term>{Sicán_Temprano} 
           <description>No description
           </description>
         </term>
@@ -8477,22 +8516,21 @@
           <description>No description
           </description>
         </term>
-		<term>{Siglo_16} 
+        <term>{Siglo_16} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_17} 
+        <term>{Siglo_17} 
           <description>No description
           </description>
         </term>
-		<term>{Siglo_18} 
+        <term>{Siglo_18} 
           <description>No description
           </description>
         </term>
-	  </lookup>
-     </property>
+      </lookup>
+    </property>
   </ArchaeologicalElement>
-
   <!-- Matrix -->
   <ArchaeologicalElement name="Matrix">
     <description> </description>
@@ -8609,7 +8647,6 @@
       </description>
     </property>
   </ArchaeologicalElement>
-
   <!-- ARTEFACT GROUP-->
   <ArchaeologicalElement name="Artefact Group">
     <description>The total group or assemblage of objects recovered from a single Context. These are sometimes referred to as 'Bulk Finds'.
@@ -8636,17 +8673,17 @@
         <term>{Ceramic}
           <description> </description>
         <term>{Diagnostic}
-		<description></description>
+		<description/>
 		</term>
 		<term>{Not diagnostic}
-		<description></description>
+		<description/>
 		</term>
         </term>
         <term>{Beads}
-		<description></description>
+		<description/>
 		</term>
-		<term>{Charcoal}<description>No description.</description></term>
-		<term>{Macrobotanical}<description></description></term>
+        <term>{Charcoal}<description>No description.</description></term>
+        <term>{Macrobotanical}<description/></term>
         <term>{Building_Materials}
           <description> </description>
 			<term>{Adobe}
@@ -8659,14 +8696,14 @@
 			<description>Mud and rushes.</description>
 			</term>
         </term>
-		<term>{Lithics}<description></description></term>
-		<term>{Bone}<description></description></term>
-		<term>{Human_Bone}<description></description></term>
-		<term>{Other}<description></description></term>
-		<term>{Metal}<description></description></term>
-		<term>{Textile}<description></description></term>
-		<term>{Glass}<description></description></term>
-        <term>{Other}<description></description></term>
+        <term>{Lithics}<description/></term>
+        <term>{Bone}<description/></term>
+        <term>{Human_Bone}<description/></term>
+        <term>{Other}<description/></term>
+        <term>{Metal}<description/></term>
+        <term>{Textile}<description/></term>
+        <term>{Glass}<description/></term>
+        <term>{Other}<description/></term>
       </lookup>
     </property>
     <property name="Artefact Quantity" type="float">
@@ -8684,6 +8721,7 @@
       <description>Sketch
       </description>
     </property>
+    <!--Make below a required Field if Artifact entered-->
     <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
@@ -8713,9 +8751,8 @@
       <description>The initials and date the {Artefact_Group} was put away in storage, eg ‘AB 5/27’.</description>
     </property>
   </ArchaeologicalElement>
-
   <!--SAMPLE-->
-	<ArchaeologicalElement name="Sample">
+  <ArchaeologicalElement name="Sample">
     <description>Deposit samples, or samples of building elements, recovered from this Context for the purpose of further analysis, or ongoing reference. </description>
     <property name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
@@ -8728,7 +8765,7 @@
       <description>The unique code or reference for the Sample.
       </description>
     </property>
-	<property name="Sample Type" type="enum">
+    <property name="Sample Type" type="enum">
       <description>The type of Sample collected, eg Soil, Wood, Pollen.
       </description>
       <lookup>
@@ -8739,24 +8776,24 @@
         <term>{Charcoal}
 		<description>Sample of {Charcoal}.</description>
 		</term>
-		<term>{Ceramic}
+        <term>{Ceramic}
 		<description>Sample of {Ceramic} sherds.</description>
 		</term>
-		<term>{Phytolith}
-		<description></description>
+        <term>{Phytolith}
+		<description/>
 		</term>
-		<term>{Phosphate}
-		<description></description>
+        <term>{Phosphate}
+		<description/>
 		</term>
-		<term>{Building_Materials}
+        <term>{Building_Materials}
 
           <description>Sample of bricks or worked stone collected from this Context.
           </description>
         </term>
         <term>{Microarchaeological}
-		<description></description>
+		<description/>
 		</term>
-		<term>{Soil}
+        <term>{Soil}
 
           <description>General collection of soil deposit from the Context.
           </description>
@@ -8766,10 +8803,10 @@
           <description>Collection of wood or charcoal fragments from the Context.
           </description>
         </term>
-		<term>{Other}
+        <term>{Other}
 		<description>Other sample.</description>
 		</term>
-</lookup>
+      </lookup>
     </property>
     <property name="Collection Method" type="enum">
       <description>Method of collecting the sample.
@@ -8785,7 +8822,7 @@
           <description>Hand sample of building elements, for example.
           </description>
         </term>
-		<term>{Clean_trowel}
+        <term>{Clean_trowel}
 
           <description>Sample collected with a clean trowel.
           </description>
@@ -8969,9 +9006,8 @@
       </description>
     </property>
   </ArchaeologicalElement>
-
   <!-- SPECIAL FIND -->
-	<ArchaeologicalElement name="Special Find">
+  <ArchaeologicalElement name="Special Find">
     <property name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
@@ -8984,7 +9020,7 @@
       </description>
     </property>
     <property isIdentifier="true" name="Special Find Class" type="freetext">
-	  <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
+      <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
       </description>
       <lookup>
         <term>No Se Observa
@@ -8994,17 +9030,17 @@
         <term>{Ceramic}
           <description> </description>
         <term>{Diagnostic}
-		<description></description>
+		<description/>
 		</term>
 		<term>{Not diagnostic}
-		<description></description>
+		<description/>
 		</term>
         </term>
         <term>{Beads}
-		<description></description>
+		<description/>
 		</term>
-		<term>{Charcoal}<description>No description.</description></term>
-		<term>{Macrobotanical}<description></description></term>
+        <term>{Charcoal}<description>No description.</description></term>
+        <term>{Macrobotanical}<description/></term>
         <term>{Building_Materials}
           <description> </description>
 			<term>{Adobe}
@@ -9017,16 +9053,16 @@
 			<description>Mud and rushes.</description>
 			</term>
         </term>
-		<term>{Lithics}<description></description></term>
-		<term>{Bone}<description></description></term>
-		<term>{Human_Bone}<description></description></term>
-		<term>{Other}<description></description></term>
-		<term>{Metal}<description></description></term>
-		<term>{Textile}<description></description></term>
-		<term>{Glass}<description></description></term>
-        <term>{Other}<description></description></term>
+        <term>{Lithics}<description/></term>
+        <term>{Bone}<description/></term>
+        <term>{Human_Bone}<description/></term>
+        <term>{Other}<description/></term>
+        <term>{Metal}<description/></term>
+        <term>{Textile}<description/></term>
+        <term>{Glass}<description/></term>
+        <term>{Other}<description/></term>
       </lookup>
-      </property>
+    </property>
     <property name="Special Find Name" type="freetext">
       <description>Brief name or description for the Special Find, eg 'Wedgwood plate'.
       </description>
@@ -9071,7 +9107,6 @@
       </description>
     </property>
   </ArchaeologicalElement>
-
   <!-- SPECIAL FIND LOCATION -->
   <ArchaeologicalElement name="Special Find Location">
     <property name="Latitude" isIdentifier="true">
@@ -9087,12 +9122,10 @@
       <description>Easting of Special Find</description>
     </property>
   </ArchaeologicalElement>
-
-<!-- ADOBE ELEMENT -->
-
-   <ArchaeologicalElement name="Adobe Element">
+  <!-- ADOBE ELEMENT -->
+  <ArchaeologicalElement name="Adobe Element">
     <description>An individual adobe brick within a structure.
-    </description>  
+    </description>
     <property name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
@@ -9103,50 +9136,48 @@
     <property isIdentifier="true" name="Adobe Element ID" type="freetext">
       <description>Unique number or code for the {Adobe_Element}.
       </description>
-    </property> 
-  <property name="Height" type="freetext">
-    <description>Maximum height of the adobe brick. </description>
-  </property>
-  <property name="Width"  type="freetext">
-    <description>Maximum width of the adobe brick.</description>
-  </property>
-  <property name="Length" type="freetext">
-   <description>Maximum length of the adobe brick</description>
-  </property>
-  <property name="AdobeShape" type="enum">
-    <description>Shape of the adobe brick.</description>
-    <lookup>
-      <term>No Se Observa<description>data not collected</description></term>
-	  <term>{Flat}<description>No description.</description></term>
-      <term>{Rounded}<description>No description.</description></term>
-      <term>{Loaf-shaped}<description>No description.</description></term>
-    </lookup>
-  </property>
-  <property name="Method_Manufacture" type="enum">
-    <description>The method of adobe manufacture.</description>
-    <lookup>
-      <term>No Se Observa<description>data not collected</description></term>
-	  <term>{Mold_made}<description>Bears evidence of having been made in a {Mould}.</description></term>
-      <term>{Non_mold_made}<description>Free form, or bears no evidence of having been made in a {Mould}.</description></term>
-  </lookup>
-  </property>
-</ArchaeologicalElement>
-
-<!-- photograph log -->
-
+    </property>
+    <property name="Height" type="freetext">
+      <description>Maximum height of the adobe brick. </description>
+    </property>
+    <property name="Width" type="freetext">
+      <description>Maximum width of the adobe brick.</description>
+    </property>
+    <property name="Length" type="freetext">
+      <description>Maximum length of the adobe brick</description>
+    </property>
+    <property name="AdobeShape" type="enum">
+      <description>Shape of the adobe brick.</description>
+      <lookup>
+        <term>No Se Observa<description>data not collected</description></term>
+        <term>{Flat}<description>No description.</description></term>
+        <term>{Rounded}<description>No description.</description></term>
+        <term>{Loaf-shaped}<description>No description.</description></term>
+      </lookup>
+    </property>
+    <property name="Method_Manufacture" type="enum">
+      <description>The method of adobe manufacture.</description>
+      <lookup>
+        <term>No Se Observa<description>data not collected</description></term>
+        <term>{Mold_made}<description>Bears evidence of having been made in a {Mould}.</description></term>
+        <term>{Non_mold_made}<description>Free form, or bears no evidence of having been made in a {Mould}.</description></term>
+      </lookup>
+    </property>
+  </ArchaeologicalElement>
+  <!-- photograph log -->
   <ArchaeologicalElement name="Photograph Log">
     <description>A record of images created and stored on another device, eg by a professional site photographer.</description>
     <property name="ContextID" type="freetext">
       <description>Unique number or code for each Context</description>
     </property>
-    <property name="Photograph Reference ID" isIdentifier= "true" type="freetext">
+    <property name="Photograph Reference ID" isIdentifier="true" type="freetext">
       <description>Unique number or code allocated by creator of the image. It could be a filename or a reference number</description>
     </property>
     <property name="Scene Type" type="enum">
       <description>The type of scene captured, eg opening or closing view of the Context. (Vocab: Open, Close, Other)</description>
       <lookup>
         <term>No Se Observa<description>data not collected</description></term>
-		<term>{Open}
+        <term>{Open}
           <description/>
         </term>
         <term>{Close}
@@ -9158,23 +9189,20 @@
       </lookup>
     </property>
     <property name="Camera" type="enum">
-  <description>The name or type of camera on which the photograph was taken. </description>
-  <lookup>
-  <term>No Se Observa<description>data not collected</description></term>
-  <term>{Parker_Nikon_D90}<description>Parker's Nikon D90</description></term>
-  <term>{Parker_Canon_SX260HS}<description>Parker's Canon SX260HS</description></term>
-  <term>{Parker_Canon_S100}<description>Parker CanonS100</description></term>
-  <term>{Carlos_Camara}<description>Carlo's Camara</description></term>
-  <term>{Theo_Camara}<description>Theo'd Camara</description></term>
-  <term>{Alex_Nikon_D300}<description>Alex's Nikon D300</description></term>
-  <term>{Noa_Camara}<description>Noa's Camara</description></term>
-  </lookup>
-  </property>
-
-  <property name="Caption" type="freetext">
-    <description>A brief description of the photograph</description>
-  </property>
+      <description>The name or type of camera on which the photograph was taken. </description>
+      <lookup>
+        <term>No Se Observa<description>data not collected</description></term>
+        <term>{Parker_Nikon_D90}<description>Parker's Nikon D90</description></term>
+        <term>{Parker_Canon_SX260HS}<description>Parker's Canon SX260HS</description></term>
+        <term>{Parker_Canon_S100}<description>Parker CanonS100</description></term>
+        <term>{Carlos_Camara}<description>Carlo's Camara</description></term>
+        <term>{Theo_Camara}<description>Theo'd Camara</description></term>
+        <term>{Alex_Nikon_D300}<description>Alex's Nikon D300</description></term>
+        <term>{Noa_Camara}<description>Noa's Camara</description></term>
+      </lookup>
+    </property>
+    <property name="Caption" type="freetext">
+      <description>A brief description of the photograph</description>
+    </property>
   </ArchaeologicalElement>
-
-
 </dataSchema>
