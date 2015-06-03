@@ -665,8 +665,6 @@ newContext(){
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
     
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
-
-    // make autosaving work
 }
 
 loadContext() {
@@ -702,9 +700,6 @@ saveContext(String callback) {
         }
     }, enable_autosave);
 }
-
-//make duplicate context work.
-
 
 deleteContext(){
     if (!isNull(context_id)) {
