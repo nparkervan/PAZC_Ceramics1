@@ -261,18 +261,18 @@ loadFromLocalSettings(String key, String defaultVal) {
     });
 }
 
-/* Removes sidebar navigation buttons */
+/*** Navigation Drawer ***/
 removeNavigationButtons() {
-  // removeNavigationButton("new");
-  // removeNavigationButton("duplicate");
-  // removeNavigationButton("delete");
+  removeNavigationButton("new");
+  removeNavigationButton("duplicate");
+  removeNavigationButton("delete");
 }
 
 addNaviationButtons(String tabgroup) {
   removeNavigationButtons();
   addNavigationButton("new", new ActionButtonCallback() {
     actionOnLabel() {
-      "New";
+      "{New}";
     }
     actionOn() {
       if(!isNull(getRecordId(tabgroup))) {
@@ -283,27 +283,147 @@ addNaviationButtons(String tabgroup) {
       }
     }
   }, "success");
-  // addNavigationButton("duplicate", new ActionButtonCallback() {
-  //   actionOnLabel() {
-  //     "Duplicate";
-  //   }
-  //   actionOn() {
-  //     if(!isNull(getRecordId(tabgroup))) {
-  //         // duplicateSample();
-  //     } else {
-  //         showWarning("Warning", "The record could not be duplicated");
-  //     }
-  //   }
-  // }, "primary");
+  addNavigationButton("duplicate", new ActionButtonCallback() {
+    actionOnLabel() {
+      "{Duplicate}";
+    }
+    actionOn() {
+      if(!isNull(getRecordId(tabgroup))) {
+          duplicateRecord(tabgroup);
+      } else {
+          showWarning("Warning", "This record is unsaved and cannot be duplicated");
+      }
+    }
+  }, "primary");
   addNavigationButton("delete", new ActionButtonCallback() {
     actionOnLabel() {
-      "Delete";
+      "{Delete}";
     }
     actionOn() {
       deleteRecord(tabgroup, getRecordId(tabgroup));
     }
   }, "danger");
 }
+
+// Returns the record id of the given tabgroup
+getRecordId(String tabgroup) {
+  if (tabgroup.equals("Context")) {
+    return context_id;
+  } else if (tabgroup.equals("ContextGroup")) {
+    return context_group_id;
+  } else if (tabgroup.equals("Artefact_Group")) {
+    return artefact_group_id;
+  } else if (tabgroup.equals("Sample")) {
+    return sample_id;
+  } else if (tabgroup.equals("Matrix")) {
+    return matrix_id;
+  } else if (tabgroup.equals("Special_Find")) {
+    return special_find_id;
+  } else if (tabgroup.equals("Special_Find_Location")) {
+    return special_find_location_id;
+  } else if (tabgroup.equals("Adobe_Element")) {
+    return adobe_id;
+  } else if (tabgroup.equals("Photograph_Log")) {
+    return photolog_id;
+  } else {
+    Log.e("PAZC Module", "Can't get the record id for the tabgroup '"+tabgroup+"'");
+    return;
+  }
+}
+
+// Makes a new record of the given tabgroup
+newRecord(String tabgroup) {
+  if (tabgroup.equals("Context")) {
+    cancelTabGroup(tabgroup, false);
+    newContext();
+  } else if (tabgroup.equals("ContextGroup")) {
+    cancelTabGroup(tabgroup, false);
+    newContextGroup();
+  } else if (tabgroup.equals("Artefact_Group")) {
+    cancelTabGroup(tabgroup, false);
+    newArtefactGroup();
+  } else if (tabgroup.equals("Sample")) {
+    cancelTabGroup(tabgroup, false);
+    newSample();
+  } else if (tabgroup.equals("Matrix")) {
+    cancelTabGroup(tabgroup, false);
+    newMatrix();
+  } else if (tabgroup.equals("Special_Find")) {
+    cancelTabGroup(tabgroup, false);
+    newSpecialFind();
+  } else if (tabgroup.equals("Special_Find_Location")) {
+    cancelTabGroup(tabgroup, false);
+    newSpecialFindLocation();
+  } else if (tabgroup.equals("Adobe_Element")) {
+    cancelTabGroup(tabgroup, false);
+    newAdobe();
+  } else if (tabgroup.equals("Photograph_Log")) {
+    cancelTabGroup(tabgroup, false);
+    newPhotoLog();
+  } else {
+    Log.e("PAZC Module", "Can't make new record for the tabgroup '"+tabgroup+"'");
+    return;
+  }
+}
+
+// Duplicates the current record of the given tabgroup
+duplicateRecord(String tabgroup) {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      showToast("{Duplicated record}");
+    }
+  };
+  if (tabgroup.equals("Context")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("ContextGroup")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Artefact_Group")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Sample")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Matrix")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Special_Find")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Special_Find_Location")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Adobe_Element")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else if (tabgroup.equals("Photograph_Log")) {
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+  } else {
+    Log.e("PAZC Module", "Can't make duplicate the record for the tabgroup '"+tabgroup+"'");
+    return;
+  }
+}
+
+// Deletes the current record of the given tabgroup
+deleteRecord(String tabgroup, String id) {
+  if (tabgroup.equals("Context")) {
+    deleteContext();
+  } else if (tabgroup.equals("ContextGroup")) {
+    deleteContextGroup();
+  } else if (tabgroup.equals("Artefact_Group")) {
+    deleteArtefactGroup();
+  } else if (tabgroup.equals("Sample")) {
+    deleteSample();
+  } else if (tabgroup.equals("Matrix")) {
+    deleteMatrix();
+  } else if (tabgroup.equals("Special_Find")) {
+    deleteSpecialFind();
+  } else if (tabgroup.equals("Special_Find_Location")) {
+    deleteSpecialFindLocation();
+  } else if (tabgroup.equals("Adobe_Element")) {
+    deleteAdobe();
+  } else if (tabgroup.equals("Photograph_Log")) {
+    deletePhotoLog();
+  } else {
+    Log.e("PAZC Module", "Can't delete the record for the tabgroup '"+tabgroup+"' of id '"+id+"'");
+    return;
+  }
+}
+
+
 
 /*** SYNC ***/
 setSyncMinInterval(120.0f);
@@ -404,13 +524,14 @@ login(){
     }
 }
 
+onEvent("user", "show", "removeNavigationButtons()");
 onEvent("user/usertab/login", "click", "login()");
 onEvent("user/usertab/guide", "click", "showTab(\"user/help\")");
 
 /*** end user login code ***/
     
 /*** control ***/
-
+onEvent("control", "show", "removeNavigationButtons()");
 onEvent("control/data", "show", "refreshEntities()");
 onEvent("control/data/ContextList", "click", "loadContext()");
 onEvent("control/data/newContext", "click", "newContext();");
@@ -462,7 +583,7 @@ search(){
 }
 
 /*** ArchEnt: Context ***/
-onEvent("Context", "show", "openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
+onEvent("Context", "show", "addNaviationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Cuts\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Structures\");");
@@ -894,7 +1015,7 @@ remremoveContextGroupReln() {
 */
 
 /*** ArchEnt: Context Group***/
-onEvent("ContextGroup", "show", "keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
+onEvent("ContextGroup", "show", "addNaviationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
 onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
@@ -1057,7 +1178,7 @@ removeFromContextGroup() {
 */
 
 /*** Artefact Group ***/
-onEvent("Artefact_Group", "show", "keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
+onEvent("Artefact_Group", "show", "addNaviationButtons(\"Artefact_Group\"); keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachSketch", "click", "attachFileTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Sketch\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(artefact_group_id)");
@@ -1153,7 +1274,7 @@ loadArtefactGroupAttributes(){
 
 
 /*** Sample ***/
-onEvent("Sample", "show", "keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
+onEvent("Sample", "show", "addNaviationButtons(\"Sample\"); keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
 onEvent("Sample/Sample_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Sample/Sample_GeneralInformation/Photo\")");
 onEvent("Sample/Sample_GeneralInformation/attachSketch", "click", "attachFileTo(\"Sample/Sample_GeneralInformation/Sketch\")");
 onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(sample_id)");
@@ -1342,7 +1463,7 @@ loadMatrixAttributes(){
 }
 
 /*** Special Find ***/
-onEvent("Special_Find", "show", "keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
+onEvent("Special_Find", "show", "addNaviationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
 onEvent("Special_Find/Special_Find_GeneralInformation/SaveAndNew", "delayclick", "newSpecialFind();");
 onEvent("Special_Find/Special_Find_GeneralInformation/Duplicate", "delayclick", "special_find_id = null; specialFindAutoNum();");
@@ -1460,7 +1581,7 @@ loadSpecialFindAttributes(){
 // }
 
 /*** Special Find Locations***/
-onEvent("Special_Find_Location", "show", "keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
+onEvent("Special_Find_Location", "show", "addNaviationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
 onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
 onEvent("Special_Find_Location/Special_Find_Location/Delete", "delayclick", "deleteSpecialFindLocation()");
 
@@ -1544,7 +1665,7 @@ takeSpecialFindLocationGPS(){
 
 
 /*** Arch Ent: Adobe Element ***/
-onEvent("Adobe_Element", "show", "keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
+onEvent("Adobe_Element", "show", "addNaviationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
 onEvent("Adobe_Element/Adobe_Element/Delete", "delayclick", "deleteAdobe()");
 onEvent("Adobe_Element/Adobe_Element/SaveAndNew", "delayclick", "newAdobe();");
 onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabGroup(\"Adobe_Element\", true)");
@@ -1667,7 +1788,7 @@ updateAllContextAdobes() {
 */
 
 /*** Arch Ent: PhotoLog ***/
-onEvent("Photograph_Log", "show", "keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
+onEvent("Photograph_Log", "show", "addNaviationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
 onEvent("Photograph_Log/Photograph_Log/Delete", "delayclick", "deletePhotoLog()");
 onEvent("Photograph_Log/Photograph_Log/SaveAndNew", "delayclick", "savePhotoLog(\"newPhotoLog();\")");
 onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTabGroup(\"Photograph_Log\", true)");
