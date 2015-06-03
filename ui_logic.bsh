@@ -1,3 +1,4 @@
+
 /*** 'Editable' - you can edit the code below based on the needs ***/
 User user; // don't touch
 String userid;
@@ -41,7 +42,7 @@ SELECT childuuid, response
 
 makeLocalID();
 
-/** Vocab Population -- copied FROM lake mungo.**/
+/** Vocab Population -- copied from lake mungo.**/
 /** Wrapper for to make a vocab without an exlusion list **/
 makeVocab(String type, String path, String attrib) {
   makeVocab(type, path, attrib, null);
@@ -49,13 +50,13 @@ makeVocab(String type, String path, String attrib) {
 
 /*** 'Editable' - you can edit the code below based on the needs ***/
 /** Vocab Population **/
-/* Populates the path specified vocabulary FROM the database based on the given attribute name, WHERE type 
+/* Populates the path specified vocabulary from the database based on the given attribute name, where type 
 is the type of the vocab to populate (PictureGallery, HierarchicalPictureGallery, CheckBoxGroup, DropDown, HierarchicalDropDown, RadioGroup or List). */
 makeVocab(String type, String path, String attrib, List vocabExclusions) {
     makeVocab(type, path, attrib, vocabExclusions, null);
 }
 
-/* Populates the path specified vocabulary FROM the database based on the given attribute name, WHERE type 
+/* Populates the path specified vocabulary from the database based on the given attribute name, where type 
 is the type of the vocab to populate (PictureGallery, HierarchicalPictureGallery, CheckBoxGroup, DropDown, HierarchicalDropDown, RadioGroup or List). */
 makeVocab(String type, String path, String attrib, List vocabExclusions, String callbackFunction){
   if (isNull(type) || isNull(path) || isNull(attrib)) {
@@ -280,7 +281,7 @@ removeNavigationButtons() {
   removeNavigationButton("delete");
 }
 
-addNaviationButtons(String tabgroup) {
+addNavigationButtons(String tabgroup) {
   removeNavigationButtons();
   addNavigationButton("new", new ActionButtonCallback() {
     actionOnLabel() {
@@ -289,9 +290,9 @@ addNaviationButtons(String tabgroup) {
     actionOn() {
       if(!isNull(getRecordId(tabgroup))) {
           newRecord(tabgroup);
-          showToast("New record created");
+          showToast("{New_record_created}");
       } else {
-          showAlert("Warning", "Any unsaved changes will be lost!", "newRecord(\""+tabgroup+"\")", "");
+          showAlert("{Warning}", "{Any_unsaved_changes_will_be_lost}", "newRecord(\""+tabgroup+"\")", "");
       }
     }
   }, "success");
@@ -303,7 +304,7 @@ addNaviationButtons(String tabgroup) {
       if(!isNull(getRecordId(tabgroup))) {
           duplicateRecord(tabgroup);
       } else {
-          showWarning("Warning", "This record is unsaved and cannot be duplicated");
+          showWarning("{Warning}", "{This_record_is_unsaved_and_cannot_be_duplicated}");
       }
     }
   }, "primary");
@@ -350,7 +351,7 @@ newRecord(String tabgroup) {
     newContext();
   } else if (tabgroup.equals("ContextGroup")) {
     cancelTabGroup(tabgroup, false);
-    newContextGroup();
+    newContextGroup(true);
   } else if (tabgroup.equals("Artefact_Group")) {
     cancelTabGroup(tabgroup, false);
     newArtefactGroup();
@@ -382,7 +383,7 @@ newRecord(String tabgroup) {
 duplicateRecord(String tabgroup) {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      showToast("{Duplicated record}");
+      showToast("{Duplicated_record}");
     }
   };
   if (tabgroup.equals("Context")) {
@@ -449,6 +450,7 @@ setFileSyncEnabled(true);*/
 
 /*** USER ***/
 
+
 populateListForUsers(){
     // Populate user dropdown
 
@@ -461,12 +463,9 @@ populateListForUsers(){
             populateDropDown("user/usertab/users", result);
         }
     });
-
-    // Populate Area code dropdown
-    makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
 }
 
-onEvent("user/usertab/", "show", "populateListForUsers()");
+
 
 String username = "";
 String device = "";
@@ -474,7 +473,8 @@ String areaCode = "";
 
 login(){
     if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
-        showWarning("Warning", "Please SELECT a User and an Area Code before logging in.");
+        showWarning("{Warning}", "{Please_select_a_User_and_an_Area_Code_before_logging_in}");
+        return;
     } else {
         String userVocabId = getFieldValue("user/usertab/users");
         fetchOne("SELECT userid,fname,lname,email FROM user WHERE userid='" + userVocabId + "';", new FetchCallback() {
@@ -482,29 +482,48 @@ login(){
                 user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
                 setUser(user);
                 username = result.get(1) + " " + result.get(2);
+
                 showTabGroup("control");
+                incField("control/data/ContextIncrement", 1);
             }
 
         });
 
-        //fix
-        fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
-        fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
-
-        areaCodeQ = "SELECT vocabid, vocabname FROM vocabulary JOIN localSettings on (value=vocabid) WHERE key = 'Area' ";
-        areaCode  = null;
-        fetchOne(
-            areaCodeQ,
-            new FetchCallback() {
-              onFetch(result) {
-                areaCode = result.get(0);
-              }
-            }
-        );
+        // store the user and area code into local settings, and set the globals
+        areaCode = getFieldValue("user/usertab/Area_Code");
+        saveUserAndAreaCode();
     }
 }
 
+saveUserAndAreaCode() {
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+}
+
+loadAreaCode() {
+  areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
+  areaCode  = null;
+  fetchOne(
+      areaCodeQ,
+      new FetchCallback() {
+        onFetch(result) {
+          if (isNull(result)) {
+            return;
+          }
+          String fetchedValue = result.get(0);
+          if (!isNull(fetchedValue)) {
+            areaCode = fetchedValue;
+            setFieldValue("user/usertab/Area_Code", fetchedValue);
+          }
+        }
+      }
+  );
+}
+
+makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode"); // Populate Area code dropdown
+onEvent("user", "load", "loadAreaCode()");
 onEvent("user", "show", "removeNavigationButtons()");
+onEvent("user/usertab/", "show", "populateListForUsers()");
 onEvent("user/usertab/login", "click", "login()");
 onEvent("user/usertab/guide", "click", "showTab(\"user/help\")");
 
@@ -528,7 +547,7 @@ clearSearch(){
 onEvent("control/contextGroup", "show", "reloadGroupList()");
 
 reloadGroupList(){
-    populateCursorList("control/contextGroup/GroupList", "SELECT uuid, response FROM latestNonDeletedArchEntFormattedIdentifiers JOIN createdmodifiedatby USING (uuid) ORDER BY  modifiedat DESC LIMIT ? OFFSET ?", 25);
+    populateCursorList("control/contextGroup/GroupList", "SELECT uuid, response FROM latestNonDeletedArchEntFormattedIdentifiers JOIN createdmodifiedatby USING (uuid) ORDER BY modifiedat DESC LIMIT ? OFFSET ?", 25);
     refreshTabgroupCSS("control");
 }
 
@@ -545,7 +564,7 @@ searchFew(){
         "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
         "  JOIN createdmodifiedatby USING (uuid) "+
         " WHERE aenttypename = 'Context' "+
-        " ORDER BY  modifiedat DESC "+
+        " ORDER BY modifiedat DESC "+
         " LIMIT ? "+
         "OFFSET ?", 10);
 }
@@ -567,8 +586,72 @@ search(){
         " OFFSET ? ", 25);
 }
 
+entityTypes = new ArrayList();
+entityTypes.add(0, new NameValuePair("{All}", "All"));
+entityTypes.add(new NameValuePair("{Context}", "Context"));
+entityTypes.add(new NameValuePair("{Context_Group}", "Context Group"));
+entityTypes.add(new NameValuePair("{Artefact_Group}", "Artefact Group"));
+entityTypes.add(new NameValuePair("{Sample}", "Sample"));
+entityTypes.add(new NameValuePair("{Matrix}", "Matrix"));
+entityTypes.add(new NameValuePair("{Special_Find}", "Special Find"));
+entityTypes.add(new NameValuePair("{Special_Find_Location}", "Special Find Location"));
+entityTypes.add(new NameValuePair("{Adobe}", "Adobe Element"));
+entityTypes.add(new NameValuePair("{Photograph_Log}", "Photograph Log"));
+populateDropDown("control/search/entityTypes", entityTypes);
+
+loadSearch() {
+  // load a list view of existing entities
+  String type = getFieldValue("control/search/entityTypes");
+  if (!type.equals("All")) {
+    populateCursorList("control/search/entityList", "select uuid, response from latestNonDeletedArchEntFormattedIdentifiers where aenttypename = '" + type + "' limit ? offset ?;", 25);
+  } else {
+    populateCursorList("control/search/entityList", "select uuid, response from latestNonDeletedArchEntFormattedIdentifiers where " +
+      " aenttypename = 'Context' OR aenttypename = 'Context Group' OR aenttypename = 'Artefact Group' OR aenttypename = 'Sample' OR " +
+      " aenttypename = 'Matrix' OR aenttypename = 'Special Find' OR aenttypename = 'Special Find Location' OR " +
+      " aenttypename = 'Adobe Element' OR aenttypename = 'Photograph Log' " +
+      " limit ? offset ?;", 25);
+  }
+}
+
+loadEntity() {
+  String listID = getListItemValue();
+  if (!isNull(listID)) {
+    fetchAll("select aenttypename from latestnondeletedarchent join aenttype using (aenttypeid) where uuid = '" + listID + "';", new FetchCallback() {
+      onFetch(result) {
+        String name = result.get(0).get(0);
+        if (name.equals("Context")) {
+          loadContextFrom(listID);
+        } else if (name.equals("Context Group")) {
+          loadContextGroupFrom(listID);
+        } else if (name.equals("Artefact Group")) {
+          loadArtefactGroupFrom(listID);
+        } else if (name.equals("Sample")) {
+          loadSampleFrom(listID);
+        } else if (name.equals("Matrix")) {
+          loadMatrixFrom(listID);
+        } else if (name.equals("Special Find")) {
+          loadSpecialFindFrom(listID);
+        } else if (name.equals("Special Find Location")) {
+          loadSpecialFindLocationFrom(listID);
+        } else if (name.equals("Adobe Element")) {
+          loadAdobeFrom(listID);
+        } else if (name.equals("Photograph Log")) {
+          loadPhotoLogFrom(listID);
+        }
+      }
+    });
+  } else {
+    Log.e("PAZC Module", "Cannot load an entity with a null ID.");
+  }
+}
+
+onEvent("control/search"             , "show"       , "loadSearch();");
+onEvent("control/search/entityTypes" , "click"      , "loadSearch();");
+onEvent("control/search/entityList"  , "click"      , "loadEntity();");
+
+
 /*** ArchEnt: Context ***/
-onEvent("Context", "show", "addNaviationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
+onEvent("Context", "show", "addNavigationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Cuts\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Structures\");");
@@ -599,9 +682,6 @@ onEvent("Context/Context_Attachments/deletePhotoLog", "click", "deletePhotoLogFr
 onEvent("Context/Context_Attachments/attachPhoto", "click", "attachPictureTo(\"Context/Context_Attachments/Photo\")");
 onEvent("Context/Context_Attachments/attachSketch", "click", "attachFileTo(\"Context/Context_Attachments/Sketch\")");
 onEvent("Context/Context_Attachments/viewattached", "click", "viewArchEntAttachedFiles(context_id)");
-onEvent("Context/Context_Attachments/SaveAndNew", "delayclick", "newContext();openContextTabs();");
-onEvent("Context/Context_Attachments/Duplicate", "delayclick", "duplicateContext()");
-onEvent("Context/Context_Attachments/Delete", "delayclick", "deleteContext()");
 
 onEvent("Context/Context_Artefacts/newArtefactGroup", "delayclick", "newArtefactGroup();");
 onEvent("Context/Context_Artefacts/loadArtefactGroup", "click", "loadArtefactGroup()");
@@ -631,17 +711,42 @@ String context_id = null;
 
 Object dialog;
 
+/*
+ * If value of field specified by `ref` is null, sets the field to `defaultVal`,
+ * otherwise increments its value.
+ *
+ * Returns the value the field was updated to.
+ */
+incField(String ref, Integer defaultVal) {
+    String val = getFieldValue(ref);
+
+    if (isNull(val)) {
+        setFieldValue(ref, defaultVal);
+        return defaultVal;
+    }
+
+    Integer i = Integer.parseInt(val);
+    i++;
+    setFieldValue(ref, i);
+    return i;
+}
+
+/* Increments the field at `ref` or returns false if it does not contain a
+ * number.
+ */
+incField(String ref) {
+    return incField(ref, null);
+}
+
 newContext(){
-    String increment = getFieldValue("control/data/ContextIncrement");
-    if (isNull(increment)) {
-        showWarning("Alert!","No starting ID is entered. Please enter one. ");
-        return;   
+    contextIncrement = incField("control/data/ContextIncrement");
+    if (contextIncrement == null) {
+        showWarning("{Alert}","{No_starting_ID_is_entered_please_enter_one}");
+        return;
     }
 
     context_id = null;
     newTabGroup("Context");
-    contextIncrement = Integer.parseInt(increment);
-    setFieldValue("control/data/ContextIncrement", contextIncrement+1);
 
     fetchOne("REPLACE INTO localSettings(key, value) VALUES('contextIncrement', '" + contextIncrement + "');", null);
     setFieldValue("Context/Context_GeneralInformation/AreaCode", areaCode.substring(0,3));
@@ -651,10 +756,9 @@ newContext(){
     setFieldValue("Context/Context_GeneralInformation/Site_Code","PAZC14");
     setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
-    
+
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
 
-    // make autosaving work
 }
 
 loadContext() {
@@ -662,7 +766,7 @@ loadContext() {
     context_id = getListItemValue();
     loadContextFrom(context_id);
 
-    //do we need to load user FROM createdmodifiedatby to the creating user field?
+    //do we need to load user from createdmodifiedatby to the creating user field?
     
 }
 
@@ -673,14 +777,16 @@ loadContextFrom(contextid) {
     showTabGroup("Context", context_id);
 }
 
+// TODO: update old save validation
+validateContext() {
+  if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
+      showWarning("{Error}", "{Cannot_save_record_without_id}");
+      return;
+  }
+}
+
 saveContext(String callback) {  
-    if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
-        return;
-    }
-    if (!isNull(context_id)) {
-        entity = fetchArchEnt(context_id);
-    }
+  
     Boolean enable_autosave = true;
     saveTabGroup("Context", context_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -693,12 +799,9 @@ saveContext(String callback) {
     }, enable_autosave);
 }
 
-//make duplicate context work.
-
-
 deleteContext(){
     if (!isNull(context_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Context!", "reallyDeleteContext()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Context}", "reallyDeleteContext()", "doNotDelete()");
     } else {
         cancelTabGroup("Context", true);
     }
@@ -710,7 +813,7 @@ reallyDeleteContext(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 
@@ -737,7 +840,7 @@ fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
         setTimestamp("Context/Context_GeneralInformation/Date_Closed");        
     } else {
-        showToast("To avoid accidents, please clear the Date Closed field before updating.");
+        showToast("{To_avoid_accidents_please_clear_the_Date_Closed_field_before_updating}");
     }
 }
 //todo wire in placeholder archents into all of these.
@@ -753,7 +856,7 @@ updateContextRelationshipBasedDropdown(path, relntypename, uuid){
                  "                           WHERE relntypename = '"+relntypename+"' "+
                  "                             and uuid = "+uuid+") "+
                  "   and parentaenttypename = 'Context' "+
-                 " ORDER BY  createdat desc; "+
+                 " ORDER BY createdat desc; "+
                  "",
 
         new FetchCallback() {
@@ -775,7 +878,7 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
                  "                           WHERE relntypename = '"+relntypename+"' "+
                  "                             and uuid = "+uuid+") "+
                  "   and parentaenttypename = '"+parentaenttypename+"' "+
-                 " ORDER BY  createdat desc; "+
+                 " ORDER BY createdat desc; "+
                  "",
 
         new FetchCallback() {
@@ -841,12 +944,12 @@ updateAllContextPhotologs() {
 
 makeHierReln(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
 
     if (isNull(context_id)){
-        showToast("You must have saved your entity.");
+        showToast("{You_must_have_saved_your_entity}");
         return;
     }
     String[] arguments = getFieldValue("Context/Context_Relationships_to_Other_Contexts/reln").split("~!~");
@@ -878,7 +981,7 @@ updateRelns(){
             "                           WHERE relntypename not like 'Context%' "+
             "                             and uuid = "+uuid+") "+
             "   and parentaenttypename = 'Context' "+
-            " ORDER BY  createdat desc "+
+            " ORDER BY createdat desc "+
             " limit ? offset ? ;",
             25
     );
@@ -957,8 +1060,8 @@ setTextureActual(){
 
     //This function makes the hierarchical soil texture selector write to the texture dropdown. We should discuss.
     fetchOne("SELECT vocabid FROM vocabulary JOIN attributekey USING (attributeid)WHERE attributeName = 'Soil Texture Actual'and vocabname = (SELECT vocabname"
-        + " FROM vocabulary JOIN attributekey USING (attributeid) "
-       + " WHERE vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"' "
+            + " FROM vocabulary JOIN attributekey USING (attributeid) "
+           + " WHERE vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"' "
          + " and attributeName = 'Soil Texture'); ",
 
         new FetchCallback() {
@@ -1000,9 +1103,8 @@ remremoveContextGroupReln() {
 */
 
 /*** ArchEnt: Context Group***/
-onEvent("ContextGroup", "show", "addNaviationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
+onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
-onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
@@ -1011,16 +1113,17 @@ makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To"
 
 String context_group_id = null;
 
+// TODO: update old save validation
 validateContextGroup() {
     if (isNull(getFieldValue("ContextGroup/ContextGroup_Details/Title"))) {
-        showWarning("Validation Error", "Context Group requires a title to be saved.");
+        showWarning("{Validation_Error}", "{Context_Group_requires_a_title_to_be_saved}");
         return;
     }
 }
 
 newContextGroup(menu){
     if (!menu && isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     newTabGroup("ContextGroup");
@@ -1032,6 +1135,11 @@ newContextGroup(menu){
 
 loadContextGroup(){
     context_group_id = getListItemValue();
+    loadContextGroupFrom(context_group_id);
+}
+
+loadContextGroupFrom(String id){
+  context_group_id = id;
     showTabGroup("ContextGroup", context_group_id);
     populateContextGroup();
 }
@@ -1044,7 +1152,6 @@ loadContextGroupFromContext() {
 }
 
 saveContextGroup(){
-    if (isNull(context_group_id)) context_group_id = null;
     Boolean enable_autosave = true;
     saveTabGroup("ContextGroup", context_group_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1060,7 +1167,6 @@ saveContextGroup(){
 
 onContextGroupSaved(){
     if(!isNull(context_id)) {
-        context_group_id = getLastSavedRecordId();
         saveEntitiesToRel("ContextContextGroup", context_id, context_group_id);
     }
 }
@@ -1128,7 +1234,7 @@ loadContextFromContextGroup(){
 
 deleteContextGroup(){
     if (!isNull(context_group_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Context Group!", "reallyDeleteContextGroup()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Context_Group}", "reallyDeleteContextGroup()", "doNotDelete()");
     }
 }           
 
@@ -1138,7 +1244,7 @@ reallyDeleteContextGroup(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 /* TODO: Redo.
 
@@ -1163,52 +1269,50 @@ removeFromContextGroup() {
 */
 
 /*** Artefact Group ***/
-onEvent("Artefact_Group", "show", "addNaviationButtons(\"Artefact_Group\"); keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
+onEvent("Artefact_Group", "show", "addNavigationButtons(\"Artefact_Group\"); keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachSketch", "click", "attachFileTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Sketch\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(artefact_group_id)");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/SaveAndNew", "delayclick", "newArtefactGroup();");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Duplicate", "delayclick", "artefact_group_id=null; autoNumArtefactGroup();");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Delete", "delayclick", "deleteArtefactGroup()");
 
 String artefact_group_id = null;
 
+// TODO: update old save validation
 validateArtefactGroup() {
     if (isNull(getFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
 }
 
 newArtefactGroup(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     if (isNull(context_id)){
-        showToast("You must save a context first.");
+        showToast("{You_must_save_a_context_first}");
         return;
     }
     artefact_group_id = null;
     newTabGroup("Artefact_Group");
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    autoNumArtefactGroup();
+    incField("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", 1);
 }
 
 loadArtefactGroup() {
     artefact_group_id = getFieldValue("Context/Context_Artefacts/artefactGroupList");
+    loadArtefactGroupFrom(artefact_group_id);
+}
+
+loadArtefactGroupFrom(String id) {
+    artefact_group_id = id;
     if (isNull(artefact_group_id)) return;
     loadArtefactGroupAttributes();
     showTabGroup("Artefact_Group", artefact_group_id);
 }
 
 saveArtefactGroup(String callback) {
-    if (!isNull(artefact_group_id)) {
-        entity = fetchArchEnt(artefact_group_id);
-    } else {
-        artefact_group_id = null;
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Artefact_Group", artefact_group_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1223,21 +1327,20 @@ saveArtefactGroup(String callback) {
 }
 
 onArtefactGroupSaved(){
-    artefact_group_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextArtefactGroup", context_id, artefact_group_id);
-    showToast("Associated with Context");
+    showToast("{Associated_with_Context}");
 }
 
 deleteArtefactGroupFromContext(){
     artefact_group_id = getFieldValue("Context/Context_Artefacts/artefactGroupList");
     if (!isNull(artefact_group_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Artefact Group!", "reallyDeleteArtefactGroup()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Artefact_Group}", "reallyDeleteArtefactGroup()", "doNotDelete()");
     }
 }
 
 deleteArtefactGroup(){
     if (!isNull(artefact_group_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Artefact Group!", "reallyDeleteArtefactGroup()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Artefact_Group}", "reallyDeleteArtefactGroup()", "doNotDelete()");
     } else {
         cancelTabGroup("Artefact_Group", true);
     }
@@ -1250,7 +1353,7 @@ reallyDeleteArtefactGroup(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 loadArtefactGroupAttributes(){
@@ -1259,52 +1362,50 @@ loadArtefactGroupAttributes(){
 
 
 /*** Sample ***/
-onEvent("Sample", "show", "addNaviationButtons(\"Sample\"); keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
+onEvent("Sample", "show", "addNavigationButtons(\"Sample\"); keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
 onEvent("Sample/Sample_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Sample/Sample_GeneralInformation/Photo\")");
 onEvent("Sample/Sample_GeneralInformation/attachSketch", "click", "attachFileTo(\"Sample/Sample_GeneralInformation/Sketch\")");
 onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(sample_id)");
-onEvent("Sample/Sample_GeneralInformation/SaveAndNew", "delayclick", "newSample();");
-onEvent("Sample/Sample_GeneralInformation/Duplicate", "delayclick", "sample_id = null; sampleAutoNum();");
-onEvent("Sample/Sample_GeneralInformation/Delete", "delayclick", "deleteSample()");
 
 String sample_id = null;
 
+// TODO: update old save validation
 validateSample() {
     if (isNull(getFieldValue("Sample/Sample_GeneralInformation/Sample_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
 }
 
 newSample(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     if (isNull(context_id)){
-        showToast("You must save a context first.");
+        showToast("{You_must_save_a_context_first}");
         return;
     }
     sample_id = null;
     newTabGroup("Sample");
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Sample/Sample_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    sampleAutoNum();
+    incField("Sample/Sample_GeneralInformation/Context_ID", 1);
 }
 
 loadSample() {
     sample_id = getFieldValue("Context/Context_Samples/sampleList");
+    loadSampleFrom(sample_id);
+}
+
+loadSampleFrom(String id) {
+    sample_id = id;
     if (isNull(sample_id)) return;
     loadSampleAttributes();
     showTabGroup("Sample", sample_id);
 }
 
 saveSample(String callback) {
-    if (!isNull(sample_id)) {
-        entity = fetchArchEnt(sample_id);
-    } else {
-        sample_id = null;
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Sample", sample_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1319,22 +1420,21 @@ saveSample(String callback) {
 }
 
 onSampleSaved(){
-    sample_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextSample", context_id, sample_id);
-    showToast("Associated with Context");
+    showToast("{Associated_with_Context}");
 
 }
 
 deleteSampleFromContext(){
     sample_id = getFieldValue("Context/Context_Samples/sampleList");
     if (!isNull(sample_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Sample!", "reallyDeleteSample()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Sample}", "reallyDeleteSample()", "doNotDelete()");
     }
 }
 
 deleteSample(){
     if (!isNull(sample_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Sample!", "reallyDeleteSample()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Sample}", "reallyDeleteSample()", "doNotDelete()");
     } else {
         cancelTabGroup("Sample", true);
     }
@@ -1347,7 +1447,7 @@ reallyDeleteSample(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 loadSampleAttributes(){
@@ -1358,25 +1458,24 @@ loadSampleAttributes(){
 
 /*** Matrix ***/
 onEvent("Matrix", "show", "keepTabGroupChanges(\"Matrix\"); saveMatrix(\"\");");
-onEvent("Matrix/Matrix/Delete", "delayclick", "deleteMatrix()");
-onEvent("Matrix/Matrix/SaveAndNew", "delayclick", "newMatrix();");
 
 String matrix_id = null;
 
+// TODO: update old save validation
 validateMatrix() {
     if (isNull(getFieldValue("Matrix/Matrix/Component"))) {
-        showWarning("Logic Error", "Cannot save Matrix without Component");
+        showWarning("{Error}", "{Cannot_save_Matrix_without_Component}");
         return;
     }
 }
 
 newMatrix(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     if (isNull(context_id)){
-        showToast("You must save a context first.");
+        showToast("{You_must_save_a_context_first}");
         return;
     }
     matrix_id = null;
@@ -1385,17 +1484,17 @@ newMatrix(){
 
 loadMatrix() {
     matrix_id = getFieldValue("Context/Context_Deposits/matrixList");
+    loadMatrixFrom(matrix_id);
+}
+
+loadMatrixFrom(String id) {
+    matrix_id = id;
     if (isNull(matrix_id)) return;
     loadMatrixAttributes();
     showTabGroup("Matrix", matrix_id);
 }
 
 saveMatrix(String callback) {
-    if (!isNull(matrix_id)) {
-        entity = fetchArchEnt(matrix_id);
-    } else {
-        matrix_id = null;
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Matrix", matrix_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1410,22 +1509,21 @@ saveMatrix(String callback) {
 }
 
 onMatrixSaved(){
-    matrix_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextMatrix", context_id, matrix_id);
-    showToast("Associated with Context");
+    showToast("{Associated_with_Context}");
 
 }
 
 deleteMatrixFromContext(){
     matrix_id = getFieldValue("Context/Context_Deposits/matrixList");
     if (!isNull(matrix_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Matrix!", "reallyDeleteMatrix()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Matrix}", "reallyDeleteMatrix()", "doNotDelete()");
     }
 }
 
 deleteMatrix(){
     if (!isNull(matrix_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Matrix!", "reallyDeleteMatrix()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Matrix}", "reallyDeleteMatrix()", "doNotDelete()");
     } else {
         cancelTabGroup("Matrix", true);
     }
@@ -1438,7 +1536,7 @@ reallyDeleteMatrix(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 loadMatrixAttributes(){
@@ -1448,11 +1546,8 @@ loadMatrixAttributes(){
 }
 
 /*** Special Find ***/
-onEvent("Special_Find", "show", "addNaviationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
+onEvent("Special_Find", "show", "addNavigationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
-onEvent("Special_Find/Special_Find_GeneralInformation/SaveAndNew", "delayclick", "newSpecialFind();");
-onEvent("Special_Find/Special_Find_GeneralInformation/Duplicate", "delayclick", "special_find_id = null; specialFindAutoNum();");
-onEvent("Special_Find/Special_Find_GeneralInformation/Delete", "delayclick", "deleteSpecialFind()");
 
 onEvent("Special_Find/Special_Find_Location", "show", "refreshSpecialFindLocations()");
 onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delayclick", "newSpecialFindLocation();");
@@ -1460,40 +1555,43 @@ onEvent("Special_Find/Special_Find_Location/List_Special_Find_Location", "click"
 
 String special_find_id = null;
 
+// TODO: update old save validation
 validateSpecialFind(){
     if (isNull(getFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
 }
 
 newSpecialFind(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     if (isNull(context_id)){
-        showToast("You must save a context first.");
+        showToast("{You_must_save_a_context_first}");
         return;
     }
     special_find_id = null;
     newTabGroup("Special_Find");
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    specialFindAutoNum();
+    incField("Special_Find/Special_Find_GeneralInformation/Context_ID", 1);
 }
 
 loadSpecialFind() {
     special_find_id = getFieldValue("Context/Context_Artefacts/specialFindList");
+    loadSpecialFindFrom(special_find_id);
+}
+
+loadSpecialFindFrom(String id) {
+    special_find_id = id;
     if (isNull(special_find_id)) return;
     loadSpecialFindAttributes();
     showTabGroup("Special_Find", special_find_id);
 }
 
 saveSpecialFind(String callback) {
-    if (!isNull(special_find_id)) {
-        entity = fetchArchEnt(special_find_id);
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Special_Find", special_find_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1508,21 +1606,20 @@ saveSpecialFind(String callback) {
 }
 
 onSpecialFindSaved(){
-    special_find_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextSpecialFind", context_id, special_find_id);
-    showToast("Associated with Context");
+    showToast("{Associated_with_Context}");
 }
 
 deleteSpecialFindFromContext(){
     special_find_id = getFieldValue("Context/Context_Artefacts/specialFindList");
     if (!isNull(special_find_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Special Find!", "reallyDeleteSpecialFind()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Special_Find}", "reallyDeleteSpecialFind()", "doNotDelete()");
     }
 }
 
 deleteSpecialFind(){
     if (!isNull(special_find_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Special Find!", "reallyDeleteSpecialFind()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Special_Find}", "reallyDeleteSpecialFind()", "doNotDelete()");
     } else {
         cancelTabGroup("Special_Find", true);
     }
@@ -1535,7 +1632,7 @@ reallyDeleteSpecialFind(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 loadSpecialFindAttributes(){
@@ -1558,23 +1655,23 @@ loadSpecialFindAttributes(){
 //             "                                                     WHERE uuid = "+special_find_id+"\n"+
 //             "                                                       and relntypeName = 'SpecialFindSpecialFindLocation')\n"+
 //             "                             and uuid != "+special_find_id+")\n"+
-//             "        ORDER BY  uuid, attributename ASC)\n"+
+//             "        ORDER BY uuid, attributename ASC)\n"+
 //             "group by uuid\n"+
-//             "ORDER BY  valuetimestamp desc, uuid, attributename;");
+//             "ORDER BY valuetimestamp desc, uuid, attributename;");
 //     }
 //     populateList("Special_Find/Special_Find_Location/List_Special_Find_Location",  specialFindLocations);    
 // }
 
 /*** Special Find Locations***/
-onEvent("Special_Find_Location", "show", "addNaviationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
+onEvent("Special_Find_Location", "show", "addNavigationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
 onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
-onEvent("Special_Find_Location/Special_Find_Location/Delete", "delayclick", "deleteSpecialFindLocation()");
 
 String special_find_location_id = null;
 
+// TODO: update old save validation
 validateSpecialFindLocation(){
     if (isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Latitude")) || isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Longitude"))) {
-        showWarning("Logic Error", "Cannot save Special Find Location without Latitdue or Longitude");
+        showWarning("{Error}", "{Cannot_save_Special_Find_Location_without_Latitdue_or_Longitude}");
         return;
     }
 }
@@ -1597,9 +1694,6 @@ loadSpecialFindLocationFrom(archent_id) {
 }
 
 saveSpecialFindLocation() {
-    if (!isNull(special_find_location_id)) {
-        entity = fetchArchEnt(special_find_location_id);
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Special_Find_Location", special_find_location_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1613,14 +1707,13 @@ saveSpecialFindLocation() {
 }
 
 onSpecialFindLocationSaved(){
-    special_find_location_id = getLastSavedRecordId();
     saveEntitiesToRel("SpecialFindSpecialFindLocation", special_find_location_id, special_find_id);
-    showToast("Associated with Special Find");
+    showToast("{Associated_with_Special_Find}");
 }
 
 deleteSpecialFindLocation(){
     if (!isNull(special_find_location_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Special Find Location Record!", "reallyDeleteSpecialFindLocation()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Special_Find_Location_Record}", "reallyDeleteSpecialFindLocation()", "doNotDelete()");
     } else {
         cancelTabGroup("Special_Find_Location", true);
     }
@@ -1644,44 +1737,48 @@ takeSpecialFindLocationGPS(){
         setFieldValue("Special_Find_Location/Special_Find_Location/Northing", northing);
         setFieldValue("Special_Find_Location/Special_Find_Location/Easting", easting);
     } else {
-        showToast("GPS Not initialized");
+        showToast("{GPS_Not_initialized}");
     }
 }
 
 
 /*** Arch Ent: Adobe Element ***/
-onEvent("Adobe_Element", "show", "addNaviationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
-onEvent("Adobe_Element/Adobe_Element/Delete", "delayclick", "deleteAdobe()");
-onEvent("Adobe_Element/Adobe_Element/SaveAndNew", "delayclick", "newAdobe();");
+onEvent("Adobe_Element", "show", "addNavigationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
 onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabGroup(\"Adobe_Element\", true)");
 
 String adobe_id = null;
 
+// TODO: update old save validation
 validateAdobe(){
     if (isNull(getFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID"))) {
-        showWarning("Logic Error", "Cannot save Adobe without Reference ID.");
+        showWarning("{Error}", "{Cannot_save_Adobe_without_Reference_ID}");
         return;
     }
 }
 
 newAdobe(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     if (isNull(context_id)){
-        showToast("You must save a context first.");
+        showToast("{You_must_save_a_context_first}");
         return;
     }
     adobe_id = null;
     newTabGroup("Adobe_Element");
-    adobeAutoNum();
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Adobe_Element/Adobe_Element/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    incField("Adobe_Element/Adobe_Element/Context_ID", 1);
 }
 
 loadAdobe() {
     adobe_id = getFieldValue("Context/Context_Structures/AdobeList");
+    loadAdobeFrom(adobe_id);
+}
+
+loadAdobeFrom(String id) {
+    adobe_id = id;
     if (isNull(adobe_id)) return;
     showTabGroup("Adobe_Element", adobe_id);
 }
@@ -1692,45 +1789,40 @@ loadAdobeAttributes(){
 }
 
 saveAdobe(String callback) {
-    if (!isNull(adobe_id)) {
-        entity = fetchArchEnt(adobe_id);
+    if (isNull(context_id)) {
+        showWarning("{Error}", "{Adobe_cannot_be_saved_as_parent_context_is_not_saved_or_loaded}");
+        return null;
     }
 
-    if (isNull(context_id)) {
-        showWarning("Logic Error", "Adobe cannot be saved as parent context is not saved or loaded.");
-        return null;
-    } else {
-        Boolean enable_autosave = true;
-        saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback() {
-            onSave(uuid, newRecord) {
-                adobe_id = uuid;
-                onAdobeSaved();
-                execute(callback);
-            }
-            onError(message) {
-                showToast(message);
-            }
-        }, enable_autosave);
-    }
+    Boolean enable_autosave = true;
+    saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            adobe_id = uuid;
+            onAdobeSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onAdobeSaved(){
-    adobe_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextAdobe", context_id, adobe_id);
-    showToast("Associated with Context");
+    showToast("{Associated_with_Context}");
 
 }
 
 deleteAdobeFromContext(){
     adobe_id = getFieldValue("Context/Context_Structures/AdobeList");
     if (!isNull(adobe_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Photograph Log!", "reallyDeleteAdobe()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Photograph_Log}", "reallyDeleteAdobe()", "doNotDelete()");
     }
 }
 
 deleteAdobe(){
     if (!isNull(adobe_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Adobe!", "reallyDeleteAdobe()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Adobe}!", "reallyDeleteAdobe()", "doNotDelete()");
     } else {
         cancelTabGroup("Adobe_Element", true);
     }
@@ -1743,7 +1835,7 @@ reallyDeleteAdobe(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 /*
@@ -1765,7 +1857,7 @@ updateAllContextAdobes() {
             "                             and uuid != "+context_id+")\n"+
             "        ORDER BY  uuid, attributename ASC)\n"+
             "group by uuid\n"+
-            "ORDER BY  valuetimestamp desc, uuid, attributename;");
+            "ORDER BY valuetimestamp desc, uuid, attributename;");
     }
     populateDropDown("Context/Context_Structures/AdobeList",  contextAdobes);
 }
@@ -1773,27 +1865,26 @@ updateAllContextAdobes() {
 */
 
 /*** Arch Ent: PhotoLog ***/
-onEvent("Photograph_Log", "show", "addNaviationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
-onEvent("Photograph_Log/Photograph_Log/Delete", "delayclick", "deletePhotoLog()");
-onEvent("Photograph_Log/Photograph_Log/SaveAndNew", "delayclick", "savePhotoLog(\"newPhotoLog();\")");
+onEvent("Photograph_Log", "show", "addNavigationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
 onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTabGroup(\"Photograph_Log\", true)");
 
 String photolog_id = null;
 
+// TODO: update old save validation
 validatePhotoLog(){
     if (isNull(getFieldValue("Photograph_Log/Photograph_Log/Photograph_Reference_ID"))) {
-        showWarning("Logic Error", "Cannot save Photgraph without Reference ID.");
+        showWarning("{Error}", "{Cannot_save_Photgraph_without_Reference_ID}");
         return;
     }
 }
 
 newPhotoLog(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-        showWarning("Logic Error", "Cannot save record without id");
+        showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
     }
     if (isNull(context_id)){
-        showToast("You must save a context first.");
+        showToast("{You_must_save_a_context_first}");
         return;
     }
     photolog_id = null;
@@ -1803,6 +1894,11 @@ newPhotoLog(){
 
 loadPhotoLog() {
     photolog_id = getFieldValue("Context/Context_Attachments/PhotoLogList");
+    loadPhotoLogFrom(photolog_id);
+}
+
+loadPhotoLogFrom(String id) {
+    photolog_id = id;
     if (isNull(photolog_id)) return;
     showTabGroup("Photograph_Log", photolog_id);
 }
@@ -1812,9 +1908,6 @@ loadPhotoLogAttributes(){
 }
 
 savePhotoLog(String callback) {
-    if (!isNull(photolog_id)) {
-        entity = fetchArchEnt(photolog_id);
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Photograph_Log", photolog_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1829,22 +1922,21 @@ savePhotoLog(String callback) {
 }
 
 onPhotoLogSaved(){
-    photolog_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextPhotographLog", context_id, photolog_id);
-    showToast("Associated with Context");
+    showToast("{Associated_with_Context}");
 
 }
 
 deletePhotoLogFromContext(){
     photolog_id = getFieldValue("Context/Context_Attachments/PhotoLogList");
     if (!isNull(photolog_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Photograph Log!", "reallyDeletePhotoLog()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Photograph_Log}", "reallyDeletePhotoLog()", "doNotDelete()");
     }
 }
 
 deletePhotoLog(){
     if (!isNull(photolog_id)) {
-        showAlert("Confirm Deletion", "Press OK to Delete this Photograph Log!", "reallyDeletePhotoLog()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Photograph_Log}", "reallyDeletePhotoLog()", "doNotDelete()");
     } else {
         cancelTabGroup("Photograph_Log", true);
     }
@@ -1857,7 +1949,7 @@ reallyDeletePhotoLog(){
 }
 
 doNotDelete(){
-    showToast("Delete Cancelled.");
+    showToast("{Delete_Cancelled}");
 }
 
 
