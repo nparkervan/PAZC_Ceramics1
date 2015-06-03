@@ -57,6 +57,10 @@
               <startDistanceLog/>
               <stopTrackLog/>
             </gps>
+            <search>
+              <entityTypes/>
+              <entityList/>
+            </search>
           </control>
           <!--list of tabgroups for entities-->
           <!--ArchEnt / Record Type: CONTEXT-->
@@ -688,7 +692,24 @@
         </select1>
       </group>
       <group ref="gps">
-        <label>{Control}</label>
+        <label>{GPS}</label>
+      </group>
+      <group ref="search" faims_scrollable="false">
+        <label>{Search}</label>
+        <select1 ref="entityTypes" faims_attribute_type="vocab">
+          <label>{EntityTypes}</label>
+          <item>
+            <label>placeholder</label>
+            <value>placeholder</value>
+          </item>
+        </select1>
+        <select1 appearance="compact" ref="entityList" faims_style_class="menu-list">
+          <label>{EntityList}</label>
+          <item>
+            <label>placeholder</label>
+            <value>placeholder</value>
+          </item>
+        </select1>
       </group>
     </group>
 
