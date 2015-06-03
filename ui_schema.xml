@@ -336,7 +336,6 @@
               <End_Date/>
               <Phase_From/>
               <Phase_To/>
-              <Delete/>
             </ContextGroup_Details>
             <ContextGroup_Contexts>
               <AddContextList/>
@@ -474,6 +473,8 @@
               <List_Special_Find_Location/>
             </Special_Find_Location>
           </Special_Find>
+
+          <!-- ArchEnt: Special Find Location -->
           <Special_Find_Location>
             <Special_Find_Location>
               <Latitude/>
@@ -481,8 +482,7 @@
               <Northing/>
               <Easting/>
               <TakeGPS/>
-              <Update/>
-              <Delete/>
+              <Update/>ß
             </Special_Find_Location>
           </Special_Find_Location>
 
@@ -1461,9 +1461,6 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="Delete">
-          <label>{Delete_Context_Group}</label>
-        </trigger>
       </group>
       <group ref="ContextGroup_Contexts" faims_scrollable="true">
         <label>{Contexts}</label>
@@ -1850,9 +1847,6 @@
         </input>
         <trigger ref="TakeGPS">
           <label>{Take_From_GPS}</label>
-        </trigger>
-        <trigger ref="Delete">
-          <label>{Delete_Special_Find_Location}</label>
         </trigger>
       </group>
     </group>
