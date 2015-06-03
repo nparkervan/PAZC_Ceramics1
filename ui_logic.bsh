@@ -15,8 +15,8 @@ makeLocalID(){
     fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
     fetchOne("drop view if exists parentchild;", null);
     fetchOne( "create view parentchild as "+
-            "  select parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename"+
-            "    from (select uuid, participatesverb, aenttypename, relationshipid"+
+            "  select parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename "+
+            "    from (select uuid, participatesverb, aenttypename, relationshipid "+
             "            from latestnondeletedaentreln "+
             "            join relationship using (relationshipid) "+
             "            join latestnondeletedarchent using (uuid) "+
