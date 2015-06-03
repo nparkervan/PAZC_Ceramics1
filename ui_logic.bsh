@@ -520,6 +520,9 @@ loadAreaCode() {
       areaCodeQ,
       new FetchCallback() {
         onFetch(result) {
+          if (isNull(result)) {
+            return;
+          }
           String fetchedValue = result.get(0);
           if (!isNull(fetchedValue)) {
             areaCode = fetchedValue;
