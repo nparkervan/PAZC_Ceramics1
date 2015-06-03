@@ -491,6 +491,7 @@ String areaCode = "";
 login(){
     if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
         showWarning("{Warning}", "{Please_select_a_User_and_an_Area_Code_before_logging_in}");
+        return;
     } else {
         String userVocabId = getFieldValue("user/usertab/users");
         fetchOne("select userid,fname,lname,email from user where userid='" + userVocabId + "';", new FetchCallback() {
@@ -498,7 +499,9 @@ login(){
                 user = new User(result.get(0),result.get(1),result.get(2),result.get(3));
                 setUser(user);
                 username = result.get(1) + " " + result.get(2);
+
                 showTabGroup("control");
+                incField("control/data/ContextIncrement", 1);
             }
         });
 
@@ -655,17 +658,46 @@ String context_id = null;
 
 Object dialog;
 
+/*
+ * If the value of the field specified by `ref` is null and `defaultVal` is null
+ * does nothing and returns false.
+ *
+ * If field's value is null and `defaultVal` is not null, sets the field to
+ * `defaultVal` and returns that value.
+ *
+ * Otherwise, increments the field and returns the incremented value.
+ */
+incField(String ref, Integer defaultVal) {
+    String val = getFieldValue(ref);
+
+    if (isNull(val) && defaultVal == null) {
+        return false;
+    }
+    if (isNull(val)) {
+        setFieldValue(ref, defaultVal);
+        return defaultVal;
+    }
+
+    Integer i = Integer.parseInt(val);
+    setFieldValue(ref, i+1);
+    return i+1;
+}
+
+/* Increments the field at `ref` or returns false if it does not contain a
+ * number.
+ */
+incField(String ref) {
+    return incField(ref, null);
+}
+
 newContext(){
-    String increment = getFieldValue("control/data/ContextIncrement");
-    if (isNull(increment)) {
+    if (incField("control/data/ContextIncrement").getClass() != Integer.class) {
         showWarning("{Alert}","{No_starting_ID_is_entered_please_enter_one}");
-        return;   
+        return;
     }
 
     context_id = null;
     newTabGroup("Context");
-    contextIncrement = Integer.parseInt(increment);
-    setFieldValue("control/data/ContextIncrement", contextIncrement+1);
 
     fetchOne("REPLACE INTO localSettings(key, value) VALUES('contextIncrement', '" + contextIncrement + "');", null);
     setFieldValue("Context/Context_GeneralInformation/AreaCode", areaCode.substring(0,3));
@@ -675,7 +707,7 @@ newContext(){
     setFieldValue("Context/Context_GeneralInformation/Site_Code","PAZC14");
     setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
-    
+
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
 }
 
