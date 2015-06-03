@@ -268,7 +268,7 @@ removeNavigationButtons() {
   removeNavigationButton("delete");
 }
 
-addNaviationButtons(String tabgroup) {
+addNavigationButtons(String tabgroup) {
   removeNavigationButtons();
   addNavigationButton("new", new ActionButtonCallback() {
     actionOnLabel() {
@@ -583,7 +583,7 @@ search(){
 }
 
 /*** ArchEnt: Context ***/
-onEvent("Context", "show", "addNaviationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
+onEvent("Context", "show", "addNavigationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Cuts\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Structures\");");
@@ -1015,7 +1015,7 @@ remremoveContextGroupReln() {
 */
 
 /*** ArchEnt: Context Group***/
-onEvent("ContextGroup", "show", "addNaviationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
+onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
 onEvent("ContextGroup/ContextGroup_Details/Delete"         , "click" , "deleteContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
@@ -1178,7 +1178,7 @@ removeFromContextGroup() {
 */
 
 /*** Artefact Group ***/
-onEvent("Artefact_Group", "show", "addNaviationButtons(\"Artefact_Group\"); keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
+onEvent("Artefact_Group", "show", "addNavigationButtons(\"Artefact_Group\"); keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachSketch", "click", "attachFileTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Sketch\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(artefact_group_id)");
@@ -1274,7 +1274,7 @@ loadArtefactGroupAttributes(){
 
 
 /*** Sample ***/
-onEvent("Sample", "show", "addNaviationButtons(\"Sample\"); keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
+onEvent("Sample", "show", "addNavigationButtons(\"Sample\"); keepTabGroupChanges(\"Sample\"); saveSample(\"\");");
 onEvent("Sample/Sample_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Sample/Sample_GeneralInformation/Photo\")");
 onEvent("Sample/Sample_GeneralInformation/attachSketch", "click", "attachFileTo(\"Sample/Sample_GeneralInformation/Sketch\")");
 onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(sample_id)");
@@ -1463,7 +1463,7 @@ loadMatrixAttributes(){
 }
 
 /*** Special Find ***/
-onEvent("Special_Find", "show", "addNaviationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
+onEvent("Special_Find", "show", "addNavigationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
 onEvent("Special_Find/Special_Find_GeneralInformation/SaveAndNew", "delayclick", "newSpecialFind();");
 onEvent("Special_Find/Special_Find_GeneralInformation/Duplicate", "delayclick", "special_find_id = null; specialFindAutoNum();");
@@ -1581,7 +1581,7 @@ loadSpecialFindAttributes(){
 // }
 
 /*** Special Find Locations***/
-onEvent("Special_Find_Location", "show", "addNaviationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
+onEvent("Special_Find_Location", "show", "addNavigationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
 onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
 onEvent("Special_Find_Location/Special_Find_Location/Delete", "delayclick", "deleteSpecialFindLocation()");
 
@@ -1665,7 +1665,7 @@ takeSpecialFindLocationGPS(){
 
 
 /*** Arch Ent: Adobe Element ***/
-onEvent("Adobe_Element", "show", "addNaviationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
+onEvent("Adobe_Element", "show", "addNavigationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
 onEvent("Adobe_Element/Adobe_Element/Delete", "delayclick", "deleteAdobe()");
 onEvent("Adobe_Element/Adobe_Element/SaveAndNew", "delayclick", "newAdobe();");
 onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabGroup(\"Adobe_Element\", true)");
@@ -1788,7 +1788,7 @@ updateAllContextAdobes() {
 */
 
 /*** Arch Ent: PhotoLog ***/
-onEvent("Photograph_Log", "show", "addNaviationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
+onEvent("Photograph_Log", "show", "addNavigationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
 onEvent("Photograph_Log/Photograph_Log/Delete", "delayclick", "deletePhotoLog()");
 onEvent("Photograph_Log/Photograph_Log/SaveAndNew", "delayclick", "savePhotoLog(\"newPhotoLog();\")");
 onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTabGroup(\"Photograph_Log\", true)");
