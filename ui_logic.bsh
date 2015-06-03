@@ -693,9 +693,7 @@ saveContext(String callback) {
         showWarning("Logic Error", "Cannot save record without id");
         return;
     }
-    if (!isNull(context_id)) {
-        entity = fetchArchEnt(context_id);
-    }
+
     Boolean enable_autosave = true;
     saveTabGroup("Context", context_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1219,11 +1217,6 @@ loadArtefactGroup() {
 }
 
 saveArtefactGroup(String callback) {
-    if (!isNull(artefact_group_id)) {
-        entity = fetchArchEnt(artefact_group_id);
-    } else {
-        artefact_group_id = null;
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Artefact_Group", artefact_group_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1315,11 +1308,6 @@ loadSample() {
 }
 
 saveSample(String callback) {
-    if (!isNull(sample_id)) {
-        entity = fetchArchEnt(sample_id);
-    } else {
-        sample_id = null;
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Sample", sample_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1406,11 +1394,6 @@ loadMatrix() {
 }
 
 saveMatrix(String callback) {
-    if (!isNull(matrix_id)) {
-        entity = fetchArchEnt(matrix_id);
-    } else {
-        matrix_id = null;
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Matrix", matrix_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1506,9 +1489,6 @@ loadSpecialFind() {
 }
 
 saveSpecialFind(String callback) {
-    if (!isNull(special_find_id)) {
-        entity = fetchArchEnt(special_find_id);
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Special_Find", special_find_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1612,9 +1592,6 @@ loadSpecialFindLocationFrom(archent_id) {
 }
 
 saveSpecialFindLocation() {
-    if (!isNull(special_find_location_id)) {
-        entity = fetchArchEnt(special_find_location_id);
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Special_Find_Location", special_find_location_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
@@ -1707,26 +1684,22 @@ loadAdobeAttributes(){
 }
 
 saveAdobe(String callback) {
-    if (!isNull(adobe_id)) {
-        entity = fetchArchEnt(adobe_id);
-    }
-
     if (isNull(context_id)) {
         showWarning("Logic Error", "Adobe cannot be saved as parent context is not saved or loaded.");
         return null;
-    } else {
-        Boolean enable_autosave = true;
-        saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback() {
-            onSave(uuid, newRecord) {
-                adobe_id = uuid;
-                onAdobeSaved();
-                execute(callback);
-            }
-            onError(message) {
-                showToast(message);
-            }
-        }, enable_autosave);
     }
+
+    Boolean enable_autosave = true;
+    saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback() {
+        onSave(uuid, newRecord) {
+            adobe_id = uuid;
+            onAdobeSaved();
+            execute(callback);
+        }
+        onError(message) {
+            showToast(message);
+        }
+    }, enable_autosave);
 }
 
 onAdobeSaved(){
@@ -1827,9 +1800,6 @@ loadPhotoLogAttributes(){
 }
 
 savePhotoLog(String callback) {
-    if (!isNull(photolog_id)) {
-        entity = fetchArchEnt(photolog_id);
-    }
     Boolean enable_autosave = true;
     saveTabGroup("Photograph_Log", photolog_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
