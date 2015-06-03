@@ -1107,7 +1107,6 @@ saveContextGroup(){
 
 onContextGroupSaved(){
     if(!isNull(context_id)) {
-        context_group_id = getLastSavedRecordId();
         saveEntitiesToRel("ContextContextGroup", context_id, context_group_id);
     }
 }
@@ -1263,7 +1262,6 @@ saveArtefactGroup(String callback) {
 }
 
 onArtefactGroupSaved(){
-    artefact_group_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextArtefactGroup", context_id, artefact_group_id);
     showToast("{Associated_with_Context}");
 }
@@ -1352,7 +1350,6 @@ saveSample(String callback) {
 }
 
 onSampleSaved(){
-    sample_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextSample", context_id, sample_id);
     showToast("{Associated_with_Context}");
 
@@ -1437,7 +1434,6 @@ saveMatrix(String callback) {
 }
 
 onMatrixSaved(){
-    matrix_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextMatrix", context_id, matrix_id);
     showToast("{Associated_with_Context}");
 
@@ -1530,7 +1526,6 @@ saveSpecialFind(String callback) {
 }
 
 onSpecialFindSaved(){
-    special_find_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextSpecialFind", context_id, special_find_id);
     showToast("{Associated_with_Context}");
 }
@@ -1632,7 +1627,6 @@ saveSpecialFindLocation() {
 }
 
 onSpecialFindLocationSaved(){
-    special_find_location_id = getLastSavedRecordId();
     saveEntitiesToRel("SpecialFindSpecialFindLocation", special_find_location_id, special_find_id);
     showToast("{Associated_with_Special_Find}");
 }
@@ -1729,7 +1723,6 @@ saveAdobe(String callback) {
 }
 
 onAdobeSaved(){
-    adobe_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextAdobe", context_id, adobe_id);
     showToast("{Associated_with_Context}");
 
@@ -1839,7 +1832,6 @@ savePhotoLog(String callback) {
 }
 
 onPhotoLogSaved(){
-    photolog_id = getLastSavedRecordId();
     saveEntitiesToRel("ContextPhotographLog", context_id, photolog_id);
     showToast("{Associated_with_Context}");
 
