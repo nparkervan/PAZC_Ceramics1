@@ -614,9 +614,6 @@ onEvent("Context/Context_Attachments/deletePhotoLog", "click", "deletePhotoLogFr
 onEvent("Context/Context_Attachments/attachPhoto", "click", "attachPictureTo(\"Context/Context_Attachments/Photo\")");
 onEvent("Context/Context_Attachments/attachSketch", "click", "attachFileTo(\"Context/Context_Attachments/Sketch\")");
 onEvent("Context/Context_Attachments/viewattached", "click", "viewArchEntAttachedFiles(context_id)");
-onEvent("Context/Context_Attachments/SaveAndNew", "delayclick", "newContext();openContextTabs();");
-onEvent("Context/Context_Attachments/Duplicate", "delayclick", "duplicateContext()");
-onEvent("Context/Context_Attachments/Delete", "delayclick", "deleteContext()");
 
 onEvent("Context/Context_Artefacts/newArtefactGroup", "delayclick", "newArtefactGroup();");
 onEvent("Context/Context_Artefacts/loadArtefactGroup", "click", "loadArtefactGroup()");
@@ -1182,9 +1179,6 @@ onEvent("Artefact_Group", "show", "addNaviationButtons(\"Artefact_Group\"); keep
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Photo\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/attachSketch", "click", "attachFileTo(\"Artefact_Group/Artefact_Group_GeneralInformation/Sketch\")");
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(artefact_group_id)");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/SaveAndNew", "delayclick", "newArtefactGroup();");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Duplicate", "delayclick", "artefact_group_id=null; autoNumArtefactGroup();");
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/Delete", "delayclick", "deleteArtefactGroup()");
 
 String artefact_group_id = null;
 
@@ -1278,9 +1272,6 @@ onEvent("Sample", "show", "addNaviationButtons(\"Sample\"); keepTabGroupChanges(
 onEvent("Sample/Sample_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Sample/Sample_GeneralInformation/Photo\")");
 onEvent("Sample/Sample_GeneralInformation/attachSketch", "click", "attachFileTo(\"Sample/Sample_GeneralInformation/Sketch\")");
 onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAttachedFiles(sample_id)");
-onEvent("Sample/Sample_GeneralInformation/SaveAndNew", "delayclick", "newSample();");
-onEvent("Sample/Sample_GeneralInformation/Duplicate", "delayclick", "sample_id = null; sampleAutoNum();");
-onEvent("Sample/Sample_GeneralInformation/Delete", "delayclick", "deleteSample()");
 
 String sample_id = null;
 
@@ -1373,8 +1364,6 @@ loadSampleAttributes(){
 
 /*** Matrix ***/
 onEvent("Matrix", "show", "keepTabGroupChanges(\"Matrix\"); saveMatrix(\"\");");
-onEvent("Matrix/Matrix/Delete", "delayclick", "deleteMatrix()");
-onEvent("Matrix/Matrix/SaveAndNew", "delayclick", "newMatrix();");
 
 String matrix_id = null;
 
@@ -1465,9 +1454,6 @@ loadMatrixAttributes(){
 /*** Special Find ***/
 onEvent("Special_Find", "show", "addNaviationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
-onEvent("Special_Find/Special_Find_GeneralInformation/SaveAndNew", "delayclick", "newSpecialFind();");
-onEvent("Special_Find/Special_Find_GeneralInformation/Duplicate", "delayclick", "special_find_id = null; specialFindAutoNum();");
-onEvent("Special_Find/Special_Find_GeneralInformation/Delete", "delayclick", "deleteSpecialFind()");
 
 onEvent("Special_Find/Special_Find_Location", "show", "refreshSpecialFindLocations()");
 onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delayclick", "newSpecialFindLocation();");
@@ -1666,8 +1652,6 @@ takeSpecialFindLocationGPS(){
 
 /*** Arch Ent: Adobe Element ***/
 onEvent("Adobe_Element", "show", "addNaviationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
-onEvent("Adobe_Element/Adobe_Element/Delete", "delayclick", "deleteAdobe()");
-onEvent("Adobe_Element/Adobe_Element/SaveAndNew", "delayclick", "newAdobe();");
 onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabGroup(\"Adobe_Element\", true)");
 
 String adobe_id = null;
@@ -1789,8 +1773,6 @@ updateAllContextAdobes() {
 
 /*** Arch Ent: PhotoLog ***/
 onEvent("Photograph_Log", "show", "addNaviationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
-onEvent("Photograph_Log/Photograph_Log/Delete", "delayclick", "deletePhotoLog()");
-onEvent("Photograph_Log/Photograph_Log/SaveAndNew", "delayclick", "savePhotoLog(\"newPhotoLog();\")");
 onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTabGroup(\"Photograph_Log\", true)");
 
 String photolog_id = null;

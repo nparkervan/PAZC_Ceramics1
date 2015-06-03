@@ -271,9 +271,6 @@
               <PhotoLogList/>
               <loadPhotoLog/>
               <deletePhotoLog/>
-              <SaveAndNew/>
-              <Duplicate/>
-              <Delete/>
             </Context_Attachments>
             <Context_Artefacts>
               <newArtefactGroup/>
@@ -381,9 +378,6 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
-              <Delete/>
-              <SaveAndNew/>
-              <Duplicate/>
             </Artefact_Group_GeneralInformation>
           </Artefact_Group>
 
@@ -411,9 +405,6 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
-              <Delete/>
-              <SaveAndNew/>
-              <Duplicate/>
             </Sample_GeneralInformation>
           </Sample>
 
@@ -426,8 +417,6 @@
               <Stone_Size/>
               <Shape/>
               <Stoniness/>
-              <Delete/>
-              <SaveAndNew/>
             </Matrix>
           </Matrix>
 
@@ -479,9 +468,6 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
-              <Delete/>
-              <SaveAndNew/>
-              <Duplicate/>
             </Special_Find_GeneralInformation>
             <Special_Find_Location>
               <New_Special_Find_Location/>
@@ -512,8 +498,6 @@
               <Length/>
               <Shape/>
               <Method_Manufacture/>
-              <SaveAndNew/>
-              <Delete/>
               <ReturnToContext/>
             </Adobe_Element>
           </Adobe_Element>
@@ -528,8 +512,6 @@
               <Camera/>
               <Caption/>
               <Scene_Type/>
-              <SaveAndNew/>
-              <Delete/>
               <ReturnToContext/>
             </Photograph_Log>
           </Photograph_Log>
@@ -1393,15 +1375,6 @@
         <trigger ref="deletePhotoLog">
           <label>{Delete_Photograph_Log}</label>
         </trigger>
-        <trigger ref="SaveAndNew">
-          <label>{Save_and_New_Context}</label>
-        </trigger>
-        <trigger ref="Duplicate">
-          <label>{Save_and_Duplicate_Context}</label>
-        </trigger>
-        <trigger ref="Delete">
-          <label>{Delete_Context}</label>
-        </trigger>
       </group>
     </group>
 
@@ -1613,15 +1586,6 @@
         <trigger ref="viewattached">
           <label>{View_Attached_Files}</label>
         </trigger>
-        <trigger ref="SaveAndNew">
-          <label>{Save_and_New_Artefact}</label>
-        </trigger>
-        <trigger ref="Duplicate">
-          <label>{Save_and_Duplicate_Artefact}</label>
-        </trigger>
-        <trigger ref="Delete">
-          <label>{Delete_Artefact}</label>
-        </trigger>
       </group>
     </group>
 
@@ -1699,15 +1663,6 @@
         <trigger ref="viewattached">
           <label>{View_Attached_Files}</label>
         </trigger>
-        <trigger ref="SaveAndNew">
-          <label>{Save_and_New_Sample}</label>
-        </trigger>
-        <trigger ref="Duplicate">
-          <label>{Save_and_Duplicate_Sample}</label>
-        </trigger>
-        <trigger ref="Delete">
-          <label>{Delete_Sample}</label>
-        </trigger>
       </group>
     </group>
 
@@ -1748,12 +1703,6 @@
         <input faims_attribute_name="Stoniness" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Stoniness">
           <label>{Soil_Stoniness}</label>
         </input>
-        <trigger ref="SaveAndNew">
-          <label>{Save_and_New_Matrix}</label>
-        </trigger>
-        <trigger ref="Delete">
-          <label>{Delete_Matrix}</label>
-        </trigger>
       </group>
     </group>
 
@@ -1866,16 +1815,6 @@
 
         Kind of pointless without file attachments
       -->
-
-        <trigger ref="SaveAndNew">
-          <label>{Save_and_New_Special_Find}</label>
-        </trigger>
-        <trigger ref="Duplicate">
-          <label>{Save_and_Duplicate_Special_Find}</label>
-        </trigger>
-        <trigger ref="Delete">
-          <label>{Delete_Special_Find}</label>
-        </trigger>
       </group>
       <group ref="Special_Find_Location" faims_scrollable="false">
         <label>{Special_Find_Location} </label>
@@ -1959,14 +1898,6 @@
               <value>placeholder</value>
             </item>
           </select1>
-
-          
-          <trigger ref="SaveAndNew">
-            <label>{Save_and_New}</label>
-          </trigger>
-          <trigger ref="Delete">
-            <label>{Delete_Adobe_Element}</label>
-          </trigger>
           <trigger ref="ReturnToContext">
             <label>{Return_To_Context}</label>
           </trigger>        
@@ -1998,12 +1929,6 @@
           <input faims_attribute_name="Caption" faims_attribute_type="freetext" faims_read_only="false" ref="Caption" faims_certainty="false">
               <label>{Caption}</label>
             </input>
-            <trigger ref="SaveAndNew">
-            <label>{Save_and_New}</label>
-          </trigger>
-          <trigger ref="Delete">
-            <label>{Delete_Photograph_Log}</label>
-          </trigger>
           <trigger ref="ReturnToContext">
             <label>{Return_To_Context}</label>
           </trigger>
