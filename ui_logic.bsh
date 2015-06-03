@@ -100,7 +100,7 @@ makeVocab(String type, String path, String attrib, List vocabExclusions, String 
 
   String getAttributeVocabQuery = "SELECT vocabid, vocabname "+
                                   "  FROM vocabulary "+
-                                  "  JOIN attributekey USING (attributeid) "
+                                  "  JOIN attributekey USING (attributeid) "+
                                   " WHERE attributename = '" + attrib + "' "+
                                   " ORDER BY vocabcountorder;";
   fetchAll(getAttributeVocabQuery,
@@ -257,7 +257,7 @@ setTimestamp(String path) {
 
  
 loadFromLocalSettings(String key, String defaultVal) { 
-    String localSettingsQuery = "SELECT value "
+    String localSettingsQuery = "SELECT value " +
                                 "  FROM localSettings "+
                                 " WHERE key = '" + key + "';";
 
