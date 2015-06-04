@@ -751,9 +751,22 @@ validateFields(List fields, String format) {
 
     return out;
 }
-validateFields() {
-    List fields = new ArrayList();  // Fields to be validated
+validateFields(List fields, String htmlViewPath, Boolean showWarning) {
+    if (showWarning) {
+      String validationMessagePlain = validateFields(fields, "PLAINTEXT");
+      showWarning("Validation_Results" , validationMessagePlain);
+    }
+    String validationMessageHtml  = validateFields(fields, "HTML");
+    populateWebViewHtml(htmlViewPath , validationMessageHtml);
+}
+
+validateContextFields() {
+  validateContextFields(true);
+}
+
+validateContextFields(Boolean showWarning) {
     // Context Tabgroup required fields
+    List fields = new ArrayList();
     fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Date_Closed"  , "{Date_Closed}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Date_Opened"  , "{Date_Opened}"));
@@ -761,7 +774,6 @@ validateFields() {
     fields.add(fieldPair("Context/Context_GeneralInformation/Context_Comments" , "{Context_Comments}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Your_description" , "{Your_description}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Excavator" , "{Excavator}"));
-    
     fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level" , "{Context_Highest_Level}"));
     fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level" , "{Context_Lowest_Level}"));
     fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_NW" , "{Context_Highest_Level_NW}"));
@@ -778,19 +790,25 @@ validateFields() {
     fields.add(fieldPair("Context/Context_Measure/Width" , "{Width}"));
     fields.add(fieldPair("Context/Context_Measure/Depth" , "{Depth}"));
     fields.add(fieldPair("Context/Context_Measure/Volume" , "{Volume}"));
-
     fields.add(fieldPair("Context/Context_Deposits/Soil_Colour" , "{Soil_Colour}"));
-
     fields.add(fieldPair("Context/Context_Cuts/Shape_of_Cut" , "{Shape_of_Cut}"));
-
     fields.add(fieldPair("Context/Context_Interpretation/Your_Discussion" , "{Your_Discussion}"));
     fields.add(fieldPair("Context/Context_Interpretation/Start_date" , "{Start_date}"));
     fields.add(fieldPair("Context/Context_Interpretation/End_date" , "{End_date}"));
     fields.add(fieldPair("Context/Context_Interpretation/Phase_To" , "{Phase_To}"));
-
     fields.add(fieldPair("Context/Context_Attachments/Photo" , "{Photo}"));
-   
+    validateFields(fields, "Context/Context_GeneralInformation/validationResults", showWarning);
+}
+onEvent("Context/Context_GeneralInformation/validate", "delayclick", "validateContextFields()");
+onEvent("Context", "show", "validateContextFields(false)");
+
+validateContextGroupFields() {
+  validateContextGroupFields(true);
+}
+
+validateContextGroupFields(Boolean showWarning) {
     // Context Group Tabgroup required fields
+    List fields = new ArrayList();
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Description" , "{Description}"));
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Length" , "{Length}"));
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Width" , "{Width}"));
@@ -799,17 +817,23 @@ validateFields() {
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Start_Date" , "{Start_Date}"));
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/End_Date" , "{End_Date}"));
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Phase_From" , "{Phase_From}"));
-
-    // Artefact Tabgroup required fields
-    fields.add(fieldPair("Artefact_Group/Artefact_Group_GeneralInformation/Photo" , "{Photo}")); // TODO: modify so that it is required only if artefact entered
-
-    String validationMessagePlain = validateFields(fields, "PLAINTEXT");
-    String validationMessageHtml  = validateFields(fields, "HTML");
-
-    showWarning("Validation_Results"                                           , validationMessagePlain);
-    populateWebViewHtml("Context/Context_GeneralInformation/validationResults" , validationMessageHtml);
+    validateFields(fields, "ContextGroup/ContextGroup_Details/validationResults", showWarning);
 }
-onEvent("Context/Context_GeneralInformation/validate", "delayclick", "validateFields()");
+onEvent("ContextGroup/ContextGroup_Details/validate", "delayclick", "validateContextGroupFields()");
+onEvent("ContextGroup", "show", "validateContextGroupFields(false)");
+
+validateArtefactGroup() {
+  validateArtefactGroup(true);
+}
+
+validateArtefactGroup(Boolean showWarning) {
+  // Artefact Tabgroup required fields
+  List fields = new ArrayList();
+  fields.add(fieldPair("Artefact_Group/Artefact_Group_GeneralInformation/Photo" , "{Photo}"));
+  validateFields(fields, "Artefact_Group/Artefact_Group_GeneralInformation/validationResults", showWarning);
+}
+onEvent("Artefact_Group/Artefact_Group_GeneralInformation/validate", "delayclick", "validateArtefactGroup()");
+onEvent("Artefact_Group", "show", "validateArtefactGroup(false)");
 
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,
@@ -878,7 +902,7 @@ loadContextFrom(contextid) {
 }
 
 // TODO: update old save validation
-validateContext() {
+validateSaveContext() {
   if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
       showWarning("{Error}", "{Cannot_save_record_without_id}");
       return;
@@ -1214,7 +1238,7 @@ makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To"
 String context_group_id = null;
 
 // TODO: update old save validation
-validateContextGroup() {
+validateSaveContextGroup() {
     if (isNull(getFieldValue("ContextGroup/ContextGroup_Details/Title"))) {
         showWarning("{Validation_Error}", "{Context_Group_requires_a_title_to_be_saved}");
         return;
@@ -1377,7 +1401,7 @@ onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click"
 String artefact_group_id = null;
 
 // TODO: update old save validation
-validateArtefactGroup() {
+validateSaveArtefactGroup() {
     if (isNull(getFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID"))) {
         showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
@@ -1470,7 +1494,7 @@ onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAt
 String sample_id = null;
 
 // TODO: update old save validation
-validateSample() {
+validateSaveSample() {
     if (isNull(getFieldValue("Sample/Sample_GeneralInformation/Sample_ID"))) {
         showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
@@ -1562,7 +1586,7 @@ onEvent("Matrix", "show", "keepTabGroupChanges(\"Matrix\"); saveMatrix(\"\");");
 String matrix_id = null;
 
 // TODO: update old save validation
-validateMatrix() {
+validateSaveMatrix() {
     if (isNull(getFieldValue("Matrix/Matrix/Component"))) {
         showWarning("{Error}", "{Cannot_save_Matrix_without_Component}");
         return;
@@ -1656,7 +1680,7 @@ onEvent("Special_Find/Special_Find_Location/List_Special_Find_Location", "click"
 String special_find_id = null;
 
 // TODO: update old save validation
-validateSpecialFind(){
+validateSaveSpecialFind(){
     if (isNull(getFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID"))) {
         showWarning("{Error}", "{Cannot_save_record_without_id}");
         return;
@@ -1769,7 +1793,7 @@ onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpe
 String special_find_location_id = null;
 
 // TODO: update old save validation
-validateSpecialFindLocation(){
+validateSaveSpecialFindLocation(){
     if (isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Latitude")) || isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Longitude"))) {
         showWarning("{Error}", "{Cannot_save_Special_Find_Location_without_Latitdue_or_Longitude}");
         return;
@@ -1849,7 +1873,7 @@ onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabG
 String adobe_id = null;
 
 // TODO: update old save validation
-validateAdobe(){
+validateSaveAdobe(){
     if (isNull(getFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID"))) {
         showWarning("{Error}", "{Cannot_save_Adobe_without_Reference_ID}");
         return;
@@ -1971,7 +1995,7 @@ onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTa
 String photolog_id = null;
 
 // TODO: update old save validation
-validatePhotoLog(){
+validateSavePhotoLog(){
     if (isNull(getFieldValue("Photograph_Log/Photograph_Log/Photograph_Reference_ID"))) {
         showWarning("{Error}", "{Cannot_save_Photgraph_without_Reference_ID}");
         return;

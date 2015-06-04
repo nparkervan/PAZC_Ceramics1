@@ -307,6 +307,7 @@
           <!--ArchEnt / Record Type: CONTEXT_GROUP-->
           <ContextGroup>
             <ContextGroup_Details>
+              <validate/>
               <container1>
                 <child1>
                   <Site_Code/>
@@ -342,6 +343,7 @@
               <End_Date/>
               <Phase_From/>
               <Phase_To/>
+              <validationResults/>
             </ContextGroup_Details>
             <ContextGroup_Contexts>
               <AddContextList/>
@@ -355,6 +357,7 @@
           <!--ArchEnt / Record Type: ARTEFACT_GROUP-->
           <Artefact_Group>
             <Artefact_Group_GeneralInformation>
+              <validate/>
               <container1>
                 <child1>
                   <Site_Code/>
@@ -383,6 +386,7 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
+              <validationResults/>
             </Artefact_Group_GeneralInformation>
           </Artefact_Group>
 
@@ -1418,6 +1422,9 @@
       <label>{Context_Group}</label>
       <group ref="ContextGroup_Details">
         <label>{GEN}</label>
+        <trigger ref="validate">
+          <label>{Validate}</label>
+        </trigger>
          <group faims_style="orientation" ref="container1">
           <label/>
           <group faims_style="even" ref="child1">
@@ -1499,6 +1506,9 @@
             <value>placeholder</value>
           </item>
         </select1>
+        <input ref="validationResults" faims_web="true">
+          <label>{Validation_Results}</label>
+        </input>
       </group>
       <group ref="ContextGroup_Contexts" faims_scrollable="true">
         <label>{Contexts}</label>
@@ -1533,6 +1543,9 @@
       <label>{Artefact_Group}</label>
       <group ref="Artefact_Group_GeneralInformation">
         <label>{Artefact_Group}</label>
+        <trigger ref="validate">
+          <label>{Validate}</label>
+        </trigger>
         <group faims_style="orientation" ref="container1">
           <label/>
           <group faims_style="even" ref="child1">
@@ -1621,6 +1634,9 @@
         <trigger ref="viewattached">
           <label>{View_Attached_Files}</label>
         </trigger>
+        <input ref="validationResults" faims_web="true">
+          <label>{Validation_Results}</label>
+        </input>
       </group>
     </group>
 
