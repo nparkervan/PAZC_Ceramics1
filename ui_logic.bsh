@@ -797,9 +797,10 @@ validateContextFields(Boolean showWarning) {
     fields.add(fieldPair("Context/Context_Interpretation/End_date" , "{End_date}"));
     fields.add(fieldPair("Context/Context_Interpretation/Phase_To" , "{Phase_To}"));
     fields.add(fieldPair("Context/Context_Attachments/Photo" , "{Photo}"));
-    validateFields(fields, "Context/Context_GeneralInformation/validationResults", showWarning);
+    validateFields(fields, "Context/Context_Validation/validationResults", showWarning);
 }
-onEvent("Context/Context_GeneralInformation/validate", "delayclick", "validateContextFields()");
+onEvent("Context/Context_GeneralInformation/validate", "delayclick", "showTab(\"Context/Context_Validation\")");
+onEvent("Context/Context_Validation", "show", "validateContextFields(false)");
 onEvent("Context", "show", "validateContextFields(false)");
 
 validateContextGroupFields() {
@@ -817,23 +818,25 @@ validateContextGroupFields(Boolean showWarning) {
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Start_Date" , "{Start_Date}"));
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/End_Date" , "{End_Date}"));
     fields.add(fieldPair("ContextGroup/ContextGroup_Details/Phase_From" , "{Phase_From}"));
-    validateFields(fields, "ContextGroup/ContextGroup_Details/validationResults", showWarning);
+    validateFields(fields, "ContextGroup/ContextGroup_Validation/validationResults", showWarning);
 }
-onEvent("ContextGroup/ContextGroup_Details/validate", "delayclick", "validateContextGroupFields()");
+onEvent("ContextGroup/ContextGroup_Details/validate", "delayclick", "showTab(\"ContextGroup/ContextGroup_Validation\")");
+onEvent("ContextGroup/ContextGroup_Validation", "show", "validateContextGroupFields(false)");
 onEvent("ContextGroup", "show", "validateContextGroupFields(false)");
 
 validateArtefactGroup() {
   validateArtefactGroup(true);
 }
 
-validateArtefactGroup(Boolean showWarning) {
+validateArtefactGroupFields(Boolean showWarning) {
   // Artefact Tabgroup required fields
   List fields = new ArrayList();
   fields.add(fieldPair("Artefact_Group/Artefact_Group_GeneralInformation/Photo" , "{Photo}"));
-  validateFields(fields, "Artefact_Group/Artefact_Group_GeneralInformation/validationResults", showWarning);
+  validateFields(fields, "Artefact_Group/Artefact_Group_Validation/validationResults", showWarning);
 }
-onEvent("Artefact_Group/Artefact_Group_GeneralInformation/validate", "delayclick", "validateArtefactGroup()");
-onEvent("Artefact_Group", "show", "validateArtefactGroup(false)");
+onEvent("Artefact_Group/Artefact_Group_GeneralInformation/validate", "delayclick", "showTab(\"Artefact_Group/Artefact_Group_Validation\")");
+onEvent("Artefact_Group/Artefact_Group_Validation", "show", "validateArtefactGroupFields(false)");
+onEvent("Artefact_Group", "show", "validateArtefactGroupFields(false)");
 
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,

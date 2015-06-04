@@ -120,7 +120,6 @@
               </container5>
               <Your_description/>
               <Details/>
-              <validationResults/>
             </Context_GeneralInformation>
             <Context_Measure>
               <container1>
@@ -302,6 +301,9 @@
             <map>
               <map/>
             </map>
+            <Context_Validation>
+              <validationResults/>
+            </Context_Validation>
           </Context>
 
           <!--ArchEnt / Record Type: CONTEXT_GROUP-->
@@ -343,7 +345,6 @@
               <End_Date/>
               <Phase_From/>
               <Phase_To/>
-              <validationResults/>
             </ContextGroup_Details>
             <ContextGroup_Contexts>
               <AddContextList/>
@@ -352,6 +353,9 @@
               <ShowContext/>
               <RemoveContext/>
             </ContextGroup_Contexts>
+            <ContextGroup_Validation>
+              <validationResults/>
+            </ContextGroup_Validation>
           </ContextGroup>
 
           <!--ArchEnt / Record Type: ARTEFACT_GROUP-->
@@ -386,8 +390,10 @@
               <Photo/>
               <attachPhoto/>
               <viewattached/>
-              <validationResults/>
             </Artefact_Group_GeneralInformation>
+            <Artefact_Group_Validation>
+              <validationResults/>
+            </Artefact_Group_Validation>
           </Artefact_Group>
 
           <!--ArchEnt / Record Type: SAMPLE-->
@@ -855,10 +861,6 @@
         <trigger ref="Details">
           <label>{Fill_in_Context_Type_Details}</label>
         </trigger>
-
-        <input ref="validationResults" faims_web="true">
-          <label>{Validation_Results}</label>
-        </input>
       </group>
 
       <group ref="Context_Measure">
@@ -1415,6 +1417,12 @@
           <label>{Delete_Photograph_Log}</label>
         </trigger>
       </group>
+      <group ref="Context_Validation">
+        <label>{Validation}</label>
+        <input ref="validationResults" faims_web="true">
+          <label>{Validation_Results}</label>
+        </input>
+      </group>
     </group>
 
     <!-- ArchEnt: CONTEXT_GROUP -->
@@ -1506,9 +1514,6 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input ref="validationResults" faims_web="true">
-          <label>{Validation_Results}</label>
-        </input>
       </group>
       <group ref="ContextGroup_Contexts" faims_scrollable="true">
         <label>{Contexts}</label>
@@ -1535,6 +1540,12 @@
         <trigger ref="RemoveContext">
           <label>{Remove_Context_from_Group}</label>
         </trigger>
+      </group>
+      <group ref="ContextGroup_Validation">
+        <label>{Validation}</label>
+        <input ref="validationResults" faims_web="true">
+          <label>{Validation_Results}</label>
+        </input>
       </group>
     </group>
 
@@ -1634,6 +1645,9 @@
         <trigger ref="viewattached">
           <label>{View_Attached_Files}</label>
         </trigger>
+      </group>
+      <group ref="Artefact_Group_Validation">
+        <label>{Validation}</label>
         <input ref="validationResults" faims_web="true">
           <label>{Validation_Results}</label>
         </input>
