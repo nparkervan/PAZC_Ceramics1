@@ -317,7 +317,7 @@
               </container1>
               <Title/>
               <Context_Type/>
-              <Descriptior/>
+              <Description/>
               <container2>
                 <child1>
                   <Length/>
@@ -859,22 +859,34 @@
 
       <group ref="Context_Measure">
         <label>{Measure}</label>
-		<input faims_attribute_name="Datum" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Datum">
+        <group faims_style="orientation" ref="container1">
+          <label/>
+          <group faims_style="even" ref="child1">
+            <label/>
+            <input faims_attribute_name="Highest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level">
+              <label>{Highest_Level}</label>
+            </input>
+          </group>
+          <group faims_style="even" ref="child2">
+            <label/>
+            <input faims_attribute_name="Lowest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level">
+              <label>{Lowest_Level}</label>
+            </input>
+          </group>
+        </group>
+		    <input faims_attribute_name="Datum" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Datum">
           <label>{Datum}</label>
         </input>
         <group faims_style="orientation" ref="container2">
           <label/>
           <group faims_style="even" ref="child1">
             <label></label>
-
             <input faims_attribute_name="Highest Level NW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_NW">
               <label>{Highest_Level_NW}</label>
             </input>
             <input faims_attribute_name="Highest Level NE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_NE">
               <label>{Highest_Level_NE}</label>
             </input>
-        
-            
             <input faims_attribute_name="Highest Level SE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_SE">
               <label>{Highest_Level_SE}</label>
             </input>
@@ -882,34 +894,27 @@
             <input faims_attribute_name="Highest Level SW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_SW">
               <label>{Highest_Level_SW}</label>
             </input>
-
-
             <input faims_attribute_name="Highest Level Ctr" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_Ctr">
               <label>{Highest_Level_Ctr}</label>
             </input>
-
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-
             <input faims_attribute_name="Lowest Level NW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_NW">
               <label>{Lowest_Level_NW}</label>
             </input>
             <input faims_attribute_name="Lowest Level NE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_NE">
               <label>{Lowest_Level_NE}</label>
             </input>
-       
             <input faims_attribute_name="Lowest Level SE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_SE">
               <label>{Lowest_Level_SE}</label>
             </input>
             <input faims_attribute_name="Lowest Level SW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_SW">
               <label>{Lowest_Level_SW}</label>
             </input>
-
              <input faims_attribute_name="Lowest Level Ctr" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_Ctr">
               <label>{Lowest_Level_Ctr}</label>
             </input>
-
           </group>
         </group>
         <group faims_style="orientation" ref="container3">
@@ -1438,6 +1443,9 @@
             <value>placeholder</value>
           </item>
         </select1>
+        <input faims_attribute_name="Description" faims_attribute_type="freetext" faims_read_only="false" ref="Description">
+          <label>{Description}</label>
+        </input>
         <group faims_style="orientation" ref="container2">
           <label/>
           <group faims_style="even" ref="child1">

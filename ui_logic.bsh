@@ -753,87 +753,55 @@ validateFields(List fields, String format) {
 }
 validateFields() {
     List fields = new ArrayList();  // Fields to be validated
-
+    // Context Tabgroup required fields
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Date_Closed"  , "{Date_Closed}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Date_Opened"  , "{Date_Opened}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Type" , "{Context_Type}"));
-    // TODO: There are other fields which require validation
+    fields.add(fieldPair("Context/Context_GeneralInformation/Excavation_Method" , "{Excavation_Method}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Context_Comments" , "{Context_Comments}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Your_description" , "{Your_description}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Excavator" , "{Excavator}"));
+    
+    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level" , "{Context_Highest_Level}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level" , "{Context_Lowest_Level}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_NW" , "{Context_Highest_Level_NW}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_NE" , "{Context_Highest_Level_NE}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_SE" , "{Context_Highest_Level_SE}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_SW" , "{Context_Highest_Level_SW}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_Ctr" , "{Context_Highest_Level_Ctr}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level_NW" , "{Context_Lowest_Level_NW}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level_NE" , "{Context_Lowest_Level_NE}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level_Ctr" , "{Context_Lowest_Level_Ctr}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level_SE" , "{Context_Lowest_Level_SE}"));
+    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level_SW" , "{Context_Lowest_Level_SW}"));
+    fields.add(fieldPair("Context/Context_Measure/Length" , "{Length}"));
+    fields.add(fieldPair("Context/Context_Measure/Width" , "{Width}"));
+    fields.add(fieldPair("Context/Context_Measure/Depth" , "{Depth}"));
+    fields.add(fieldPair("Context/Context_Measure/Volume" , "{Volume}"));
+
+    fields.add(fieldPair("Context/Context_Deposits/Soil_Colour" , "{Soil_Colour}"));
+
+    fields.add(fieldPair("Context/Context_Cuts/Shape_of_Cut" , "{Shape_of_Cut}"));
+
+    fields.add(fieldPair("Context/Context_Interpretation/Your_Discussion" , "{Your_Discussion}"));
+    fields.add(fieldPair("Context/Context_Interpretation/Start_date" , "{Start_date}"));
+    fields.add(fieldPair("Context/Context_Interpretation/End_date" , "{End_date}"));
+    fields.add(fieldPair("Context/Context_Interpretation/Phase_To" , "{Phase_To}"));
+
+    fields.add(fieldPair("Context/Context_Attachments/Photo" , "{Photo}"));
+   
+    // Context Group Tabgroup required fields
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Description" , "{Description}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Length" , "{Length}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Width" , "{Width}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Depth" , "{Depth}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Your_Discussion" , "{Your_Discussion}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Start_Date" , "{Start_Date}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/End_Date" , "{End_Date}"));
+    fields.add(fieldPair("ContextGroup/ContextGroup_Details/Phase_From" , "{Phase_From}"));
+
+    // Artefact Tabgroup required fields
+    fields.add(fieldPair("Artefact_Group/Artefact_Group_GeneralInformation/Photo" , "{Photo}")); // TODO: modify so that it is required only if artefact entered
 
     String validationMessagePlain = validateFields(fields, "PLAINTEXT");
     String validationMessageHtml  = validateFields(fields, "HTML");
@@ -841,7 +809,7 @@ validateFields() {
     showWarning("Validation_Results"                                           , validationMessagePlain);
     populateWebViewHtml("Context/Context_GeneralInformation/validationResults" , validationMessageHtml);
 }
-onEvent("Context/Context_GeneralInformation/validate", "click", "validateFields()");
+onEvent("Context/Context_GeneralInformation/validate", "delayclick", "validateFields()");
 
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,
