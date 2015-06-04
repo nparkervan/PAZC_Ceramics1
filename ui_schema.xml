@@ -727,7 +727,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
               <label>{Site_Code}</label>
             </input>
           </group>
@@ -739,13 +739,13 @@
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Grid Location Reference" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Grid_Location_Reference">
+            <input faims_attribute_name="Grid Location Reference" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Grid_Location_Reference">
               <label>{Grid_Location_Reference}</label>
             </input>
           </group>
 		  <group faims_style="even" ref="child4">
             <label/>
-            <input faims_attribute_name="Sub Unit" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Sub_Unit">
+            <input faims_attribute_name="Sub Unit" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sub_Unit">
               <label>{Sub_Unit}</label>
             </input>
           </group>
@@ -754,13 +754,13 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
               <label>{Context_Number}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context Name" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Context_Name">
+            <input faims_attribute_name="Context Name" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Name">
               <label>{Context_Name}</label>
             </input>
           </group>
@@ -770,13 +770,13 @@
 			<label/>
 			<group faims_style="even" ref="child1">
 			<label/>
-				<input faims_attribute_name="Date Opened" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Date_Opened">
+				<input faims_attribute_name="Date Opened" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Date_Opened">
 				<label>{Date_Opened}</label>
 				</input>
 			</group>
 			<group faims_style="even" ref="child2">
 			<label/>
-				<input faims_attribute_name="Excavator" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Excavator">
+				<input faims_attribute_name="Excavator" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Excavator">
 				<label>{Excavator}</label>
 				</input>
 			</group>
@@ -818,13 +818,13 @@
         </select1>
  
  
-       <input faims_attribute_name="Your description" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Your_description">
+       <input faims_attribute_name="Your description" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Your_description">
           <label>{Your_description}</label>
         </input>
        
 	
 		
-		<input faims_attribute_name="Context Comments" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Context_Comments">
+		<input faims_attribute_name="Context Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Comments">
           <label>{Context_Comments}</label>
         </input>
         <!--We would like to see Dropdown-->
@@ -872,7 +872,7 @@
             </input>
           </group>
         </group>
-		    <input faims_attribute_name="Datum" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Datum">
+		    <input faims_attribute_name="Datum" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Datum">
           <label>{Datum}</label>
         </input>
         <group faims_style="orientation" ref="container2">
@@ -936,7 +936,7 @@
             </input>
           </group>
         </group>
-		<input faims_attribute_name="Volume" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Volume">
+		<input faims_attribute_name="Volume" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Volume">
          <label>{Volume}</label>
         </input>
       </group>
@@ -952,7 +952,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Soil Compaction Description" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Soil_Compaction_Description">
+        <input faims_attribute_name="Soil Compaction Description" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Soil_Compaction_Description">
           <label>{Soil_Compaction_Description}</label>
         </input>
       <group faims_style="orientation" ref="container1">
@@ -969,7 +969,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-           <input faims_attribute_name="Soil Colour" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Soil_Colour">
+           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour">
                 <label>{Soil_Colour}</label>
 			</input>
           </group>
@@ -1020,10 +1020,10 @@
         <trigger ref="deleteMatrix">
           <label>{Delete_Matrix}</label>
         </trigger>
-        <input faims_attribute_name="Deposit Inclusions" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Deposit_Inclusions">
+        <input faims_attribute_name="Deposit Inclusions" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Deposit_Inclusions">
           <label>{Deposit_Inclusions}</label>
         </input>
-        <input faims_attribute_name="Deposit Thickness and Extent" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Deposit_Thickness_Extent">
+        <input faims_attribute_name="Deposit Thickness and Extent" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Deposit_Thickness_Extent">
           <label>{Deposit_Thickness_and_Extent}</label>
         </input>
         <select1 faims_attribute_name="Horizon Boundary" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Horizon_Boundary">
@@ -1051,7 +1051,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Shape of Cut - Note" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Shape_of_Cut_Note">
+            <input faims_attribute_name="Shape of Cut - Note" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Shape_of_Cut_Note">
               <label>{Shape_of_Cut_-_Note}</label>
             </input>
           </group>
@@ -1080,7 +1080,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <!--<input faims_attribute_name="Sides of Cut" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Sides_of_Cut">
+        <!--<input faims_attribute_name="Sides of Cut" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sides_of_Cut">
           <label>{Sides_of_Cut}</label>
         </input>-->
         <select1 faims_attribute_name="Sides of Cut" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Sides_of_Cut">
@@ -1107,10 +1107,10 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Inclination of axis" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Inclination_of_axis">
+        <input faims_attribute_name="Inclination of axis" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Inclination_of_axis">
           <label>{Inclination_of_axis}</label>
         </input>
-        <input faims_attribute_name="Truncation" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Truncation">
+        <input faims_attribute_name="Truncation" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Truncation">
           <label>{Truncation}</label>
         </input>
       </group>
@@ -1140,10 +1140,10 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Distinguishing Marks" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Distinguishing_Marks">
+        <input faims_attribute_name="Distinguishing Marks" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Distinguishing_Marks">
           <label>{Distinguishing_Marks}</label>
         </input>
-        <input faims_attribute_name="Structure Description" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Structure_Description">
+        <input faims_attribute_name="Structure Description" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Structure_Description">
           <label>{Structure_Description}</label>
         </input>
          <trigger ref="newAdobe">
@@ -1173,7 +1173,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Your Discussion" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Your_Discussion">
+        <input faims_attribute_name="Your Discussion" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Your_Discussion">
           <label>{Your_Discussion}</label>
         </input>
         
@@ -1181,13 +1181,13 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Start date" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Start_date">
+            <input faims_attribute_name="Start date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Start_date">
               <label>{Start_date}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="End date" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="End_date">
+            <input faims_attribute_name="End date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="End_date">
               <label>{End_date}</label>
             </input>
           </group>
@@ -1365,10 +1365,10 @@
       </group>
       <group ref="Context_Attachments">
         <label>{Attach}</label>
-         <input faims_attribute_name="Drawings" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Drawings">
+         <input faims_attribute_name="Drawings" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Drawings">
               <label>{Drawings}</label>
             </input>
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1379,7 +1379,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1429,18 +1429,18 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Area Code" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Area_Code">
+            <input faims_attribute_name="Area Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Area_Code">
               <label>{Area_Code}</label>
             </input>
           </group>
         </group>
-        <input faims_attribute_name="Title" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Title">
+        <input faims_attribute_name="Title" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Title">
           <label>{Context_Group_Title}</label>
         </input>
         <select1 faims_attribute_name="CG Context Type" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Context_Type" type="image">
@@ -1450,7 +1450,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Description" faims_attribute_type="freetext" faims_read_only="false" ref="Description">
+        <input faims_attribute_name="Description" faims_attribute_type="measure" faims_read_only="false" ref="Description">
           <label>{Description}</label>
         </input>
         <group faims_style="orientation" ref="container2">
@@ -1474,20 +1474,20 @@
             </input>
           </group>
         </group>
-        <input ref="Your_Discussion" faims_attribute_type="freetext" faims_attribute_name="Your Discussion">
+        <input ref="Your_Discussion" faims_attribute_type="measure" faims_attribute_name="Your Discussion">
           <label>{Your_Discussion}</label>
         </input>
         <group faims_style="orientation" ref="container3">
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Start date" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Start_Date">
+            <input faims_attribute_name="Start date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Start_Date">
               <label>{Start_date}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="End date" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="End_Date">
+            <input faims_attribute_name="End date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="End_Date">
               <label>{End_date}</label>
             </input>
           </group>
@@ -1553,19 +1553,19 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID">
+            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID">
               <label>{Artefact_Group_ID}</label>
             </input>
           </group>
@@ -1579,7 +1579,7 @@
           </item>
         </select1>
 
-        <input faims_attribute_name="Bag_Number" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Bag_Number">
+        <input faims_attribute_name="Bag_Number" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Bag_Number">
           <label>{Bag_Number}</label>
         </input>
 
@@ -1590,31 +1590,31 @@
         <input faims_attribute_name="Artefact Weight" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Artefact_Weight">
           <label>{Artefact_Weight}</label>
         </input>
-        <input faims_attribute_name="Box_Number" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Box_Number">
+        <input faims_attribute_name="Box_Number" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Box_Number">
           <label>{Box_Number}</label>
         </input>        
-        <input faims_attribute_name="Artefact Group Comment" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_Comment">
+        <input faims_attribute_name="Artefact Group Comment" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_Comment">
           <label>{Artefact_Group_Comment}</label>
         </input>
-        <input faims_attribute_name="Registered" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Registered">
+        <input faims_attribute_name="Registered" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Registered">
           <label>{Registered}</label>
         </input>        
-        <input faims_attribute_name="Counted" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Counted">
+        <input faims_attribute_name="Counted" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Counted">
           <label>{Counted}</label>
         </input>  
-        <input faims_attribute_name="Weighed" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Weighted">
+        <input faims_attribute_name="Weighed" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Weighted">
           <label>{Weighted}</label>
         </input>  
-        <input faims_attribute_name="Labeled" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Labeled">
+        <input faims_attribute_name="Labeled" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Labeled">
           <label>{Labeled}</label>
         </input>  
-        <input faims_attribute_name="Analysed" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Analysed">
+        <input faims_attribute_name="Analysed" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Analysed">
           <label>{Analysed}</label>
         </input>  
-        <input faims_attribute_name="Stored" faims_attribute_type="freetext" faims_certainty="true" faims_read_only="false" ref="Stored">
+        <input faims_attribute_name="Stored" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Stored">
           <label>{Stored}</label>
         </input>                                          
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1624,7 +1624,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true"  faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true"  faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1655,19 +1655,19 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Sample ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Sample_ID">
+            <input faims_attribute_name="Sample ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sample_ID">
               <label>{Sample_ID}</label>
             </input>
           </group>
@@ -1694,10 +1694,10 @@
         <input faims_attribute_name="Sample Volume" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true" faims_read_only="false" ref="Sample_Volume">
           <label>{Sample_Volume}</label>
         </input>
-        <input faims_attribute_name="Sample Comments" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Sample_Comments">
+        <input faims_attribute_name="Sample Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sample_Comments">
           <label>{Sample_Comments}</label>
         </input>
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="freetext" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1707,7 +1707,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1747,7 +1747,7 @@
         <input faims_attribute_name="Percentage" faims_attribute_type="decimal" faims_certainty="false" faims_read_only="false" ref="Percentage">
           <label>{Percentage}</label>
         </input>        
-         <input faims_attribute_name="Stone Size" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Stone_Size">
+         <input faims_attribute_name="Stone Size" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Stone_Size">
           <label>{Soil_Stone_Size}</label>
         </input>
         <select1 faims_attribute_name="Shape" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape" type="image">
@@ -1757,7 +1757,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Stoniness" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Stoniness">
+        <input faims_attribute_name="Stoniness" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Stoniness">
           <label>{Soil_Stoniness}</label>
         </input>
       </group>
@@ -1772,19 +1772,19 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Special Find ID" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Special_Find_ID">
+            <input faims_attribute_name="Special Find ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Special_Find_ID">
               <label>{Special_Find} ID</label>
             </input>
           </group>
@@ -1796,7 +1796,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Special Find Name" faims_attribute_type="freetext" faims_read_only="false" ref="Special_Find_Name">
+        <input faims_attribute_name="Special Find Name" faims_attribute_type="measure" faims_read_only="false" ref="Special_Find_Name">
           <label>{Special_Find} Name</label>
         </input>
         <group faims_style="orientation" ref="container2">
@@ -1835,7 +1835,7 @@
             </input>
           </group>
         </group>
-        <input faims_attribute_name="Special Find Description" faims_attribute_type="freetext" faims_read_only="false" ref="Special_Find_Description">
+        <input faims_attribute_name="Special Find Description" faims_attribute_type="measure" faims_read_only="false" ref="Special_Find_Description">
           <label>{Special_Find} Description</label>
         </input>
         <group faims_style="orientation" ref="container4">
@@ -1853,10 +1853,10 @@
             </input>
           </group>
         </group>
-        <input faims_attribute_name="Special Find Comment" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Special_Find_Comment">
+        <input faims_attribute_name="Special Find Comment" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Special_Find_Comment">
           <label>{Special_Find} Comment</label>
         </input>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="freetext" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1917,14 +1917,14 @@
       <label>{Adobe} </label>
       <group ref="Adobe_Element">
         <label>{Adobe} </label>
- <input faims_attribute_name="Context ID" faims_attribute_type="freetext" faims_read_only="true" ref="Context_ID">
+ <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
               <label>{ContextID}</label>
             </input>
-             <input faims_attribute_name="Site Code" faims_attribute_type="freetext" faims_read_only="true" ref="Site_Code">
+             <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_read_only="true" ref="Site_Code">
               <label>{Site_Code}</label>
             </input>
             
-            <input faims_attribute_name="Adobe Element ID" faims_attribute_type="freetext" faims_read_only="false" ref="Adobe_Element_ID" faims_certainty="false">
+            <input faims_attribute_name="Adobe Element ID" faims_attribute_type="measure" faims_read_only="false" ref="Adobe_Element_ID" faims_certainty="false">
               <label>{Adobe_Element_ID}</label>
             </input>
 
@@ -1964,7 +1964,7 @@
       <label>{Photograph_Log}</label>
         <group ref="Photograph_Log">
           <label>{Photograph_Log}</label>
-            <input faims_attribute_name="ContextID" faims_attribute_type="freetext" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="ContextID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
               <label>{ContextID}</label>
             </input>
             <select1 faims_attribute_name="Camera" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Camera">
@@ -1974,13 +1974,13 @@
               <value>placeholder</value>
             </item>
           </select1>
-            <input faims_attribute_name="Photograph Reference ID" faims_attribute_type="freetext" faims_read_only="false" ref="Photograph_Reference_ID" faims_certainty="false">
+            <input faims_attribute_name="Photograph Reference ID" faims_attribute_type="measure" faims_read_only="false" ref="Photograph_Reference_ID" faims_certainty="false">
               <label>{Photograph_Log}</label>
             </input>
-          <input faims_attribute_name="Scene Type" faims_attribute_type="freetext" faims_certainty="false" faims_read_only="false" ref="Scene_Type">
+          <input faims_attribute_name="Scene Type" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Scene_Type">
             <label>{Scene_Type}</label>
            </input>
-          <input faims_attribute_name="Caption" faims_attribute_type="freetext" faims_read_only="false" ref="Caption" faims_certainty="false">
+          <input faims_attribute_name="Caption" faims_attribute_type="measure" faims_read_only="false" ref="Caption" faims_certainty="false">
               <label>{Caption}</label>
             </input>
           <trigger ref="ReturnToContext">
