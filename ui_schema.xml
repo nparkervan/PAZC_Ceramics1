@@ -34,11 +34,11 @@
           <!--control tabgroup that contains button to manipulate entities: load, list, create-->
           <control>
             <data>
-              <newContext/>
               <ContextIncrement/>
-              <ContextFilter/>
-              <ContextList/>
-              <ContextLoad/>
+              <newContext/>
+              <newContextGroup/>
+            </data>
+            <search>
               <container1>
                 <child1>
                   <Search/>
@@ -47,18 +47,14 @@
                   <searchButton/>
                 </child2>
               </container1>
-            </data>
-            <contextGroup>
-              <newContextGroup/>
-              <GroupList/>
-            </contextGroup>
-            <gps>
-              <startTimeLog/>
-              <startDistanceLog/>
-              <stopTrackLog/>
-            </gps>
-            <search>
-              <entityTypes/>
+              <container2>
+                <child1>
+                  <entityTypes/>
+                </child1>
+                <child2>
+                  <Area_Code/>
+                </child2>
+              </container2>
               <entityList/>
             </search>
           </control>
@@ -498,7 +494,7 @@
               <Northing/>
               <Easting/>
               <TakeGPS/>
-              <Update/>ß
+              <Update/>
             </Special_Find_Location>
           </Special_Find_Location>
 
@@ -665,6 +661,12 @@
         <trigger ref="newContext">
           <label>{Create_New_Context}</label>
         </trigger>
+        <trigger ref="newContextGroup">
+          <label>{New_Context_Group}</label>
+        </trigger>
+      </group>
+      <group ref="search" faims_scrollable="false">
+        <label>{Search}</label>
         <group faims_style="orientation" ref="container1">
           <label/>
           <group faims_style="even" ref="child1">
@@ -680,39 +682,29 @@
             </trigger>
           </group>
         </group>
-        <select1 appearance="compact" faims_annotation="false" faims_certainty="false" ref="ContextList">
-          <label>{Tap_Context_ID_in_list_below_to_load_it}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-      </group>
-      <group faims_scrollable="false" ref="contextGroup">
-        <label>{Context_Groups}</label>
-        <trigger ref="newContextGroup">
-          <label>{New_Context_Group}</label>
-        </trigger>
-        <select1 appearance="compact" faims_annotation="false" faims_certainty="false" ref="GroupList">
-          <label>{Tap_Context_Group_in_list_below_to_load_it.}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-      </group>
-      <group ref="gps">
-        <label>{GPS}</label>
-      </group>
-      <group ref="search" faims_scrollable="false">
-        <label>{Search}</label>
-        <select1 ref="entityTypes" faims_attribute_type="vocab">
-          <label>{EntityTypes}</label>
-          <item>
-            <label>placeholder</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
+        <group faims_style="orientation" ref="container2">
+          <label/>
+          <group faims_style="even" ref="child1">
+            <label/>
+            <select1 ref="entityTypes" faims_attribute_type="vocab">
+              <label>{EntityTypes}</label>
+              <item>
+                <label>placeholder</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+          <group faims_style="even" ref="child2">
+            <label/>
+            <select1 ref="Area_Code">
+              <label>{Select_Area_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+        </group>
         <select1 appearance="compact" ref="entityList" faims_style_class="menu-list">
           <label>{EntityList}</label>
           <item>
@@ -720,7 +712,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-      </group>
+      </group>      
     </group>
 
     <!--CONTEXT-->

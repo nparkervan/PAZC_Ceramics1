@@ -530,60 +530,47 @@ onEvent("user/usertab/guide", "click", "showTab(\"user/help\")");
 /*** end user login code ***/
     
 /*** control ***/
-onEvent("control", "show", "removeNavigationButtons()");
-onEvent("control/data", "show", "refreshEntities()");
-onEvent("control/data/ContextList", "click", "loadContext()");
-onEvent("control/data/newContext", "click", "newContext();");
-onEvent("control/data/Search", "click", "clearSearch()");
-onEvent("control/contextGroup/newContextGroup", "click", "newContextGroup(true);");
-onEvent("control/contextGroup/GroupList", "click", "loadContextGroup()");
+makeVocab("DropDown", "control/search/Area_Code", "AreaCode");
+onEvent("control"                     , "show"  , "removeNavigationButtons(); setSearchAreaCode();");
+onEvent("control/data"                , "show"  , "refreshEntities()");
+onEvent("control/data/newContext"     , "click" , "newContext();");
+onEvent("control/data/newContextGroup", "click" , "newContextGroup(true);");
+onEvent("control/search"              , "show"  , "loadSearch();");
+onEvent("control/search/Search"       , "click" , "clearSearch()");
+onEvent("control/search/searchButton" , "click" , "search()");
+onEvent("control/search/entityTypes"  , "click" , "loadSearch();");
+onEvent("control/search/entityList"   , "click" , "loadEntity();");
 
-onEvent("control/data/searchButton", "click", "search()");
-
-clearSearch(){
-    setFieldValue("control/data/Search","");
+setSearchAreaCode() {
+  setFieldValue("control/search/Area_Code", getFieldValue("user/usertab/Area_Code"));
 }
 
-onEvent("control/contextGroup", "show", "reloadGroupList()");
-
-reloadGroupList(){
-    populateCursorList("control/contextGroup/GroupList", "SELECT uuid, response FROM latestNonDeletedArchEntFormattedIdentifiers JOIN createdmodifiedatby USING (uuid) ORDER BY modifiedat DESC LIMIT ? OFFSET ?", 25);
-    refreshTabgroupCSS("control");
+clearSearch(){
+    setFieldValue("control/search/Search","");
 }
 
 refreshEntities() {
     context_id = null;
     context_group_id = null;
     menu = false;
-    searchFew();
 }
 
-searchFew(){
-    populateCursorList("control/data/ContextList", ""+
-        "SELECT uuid, response  "+
-        "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
-        "  JOIN createdmodifiedatby USING (uuid) "+
-        " WHERE aenttypename = 'Context' "+
-        " ORDER BY modifiedat DESC "+
-        " LIMIT ? "+
-        "OFFSET ?", 10);
-}
-
+// TODO: rewrite query
 search(){
-    populateCursorList("control/data/ContextList", ""+
-        "SELECT uuid, response "+
-        "  FROM latestNonDeletedArchEntFormattedIdentifiers " +
-        "  JOIN createdmodifiedatby USING (uuid) " +
-        " WHERE aenttypename = 'Context' "+
-        "   AND uuid IN (SELECT uuid "+
-                        "  FROM latestnondeletedaentvalue "+
-                        "  LEFT OUTER JOIN vocabulary USING (vocabid) "+
-                        " WHERE freetext like '%"+getFieldValue("control/data/Search")+"%' "+
-                        "    OR vocabname like '%"+getFieldValue("control/data/Search")+"%' "+
-                        "    OR measure like '%"+getFieldValue("control/data/Search")+"%') "+
-        " ORDER BY  modifiedat DESC " +
-        " LIMIT ? "+
-        " OFFSET ? ", 25);
+    // populateCursorList("control/data/ContextList", ""+
+    //     "SELECT uuid, response "+
+    //     "  FROM latestNonDeletedArchEntFormattedIdentifiers " +
+    //     "  JOIN createdmodifiedatby USING (uuid) " +
+    //     " WHERE aenttypename = 'Context' "+
+    //     "   AND uuid IN (SELECT uuid "+
+    //                     "  FROM latestnondeletedaentvalue "+
+    //                     "  LEFT OUTER JOIN vocabulary USING (vocabid) "+
+    //                     " WHERE freetext like '%"+getFieldValue("control/search/Search")+"%' "+
+    //                     "    OR vocabname like '%"+getFieldValue("control/search/Search")+"%' "+
+    //                     "    OR measure like '%"+getFieldValue("control/search/Search")+"%') "+
+    //     " ORDER BY  modifiedat DESC " +
+    //     " LIMIT ? "+
+    //     " OFFSET ? ", 25);
 }
 
 entityTypes = new ArrayList();
@@ -611,6 +598,7 @@ loadSearch() {
       " aenttypename = 'Adobe Element' OR aenttypename = 'Photograph Log' " +
       " limit ? offset ?;", 25);
   }
+  refreshTabgroupCSS("control");
 }
 
 loadEntity() {
@@ -644,11 +632,6 @@ loadEntity() {
     Log.e("PAZC Module", "Cannot load an entity with a null ID.");
   }
 }
-
-onEvent("control/search"             , "show"       , "loadSearch();");
-onEvent("control/search/entityTypes" , "click"      , "loadSearch();");
-onEvent("control/search/entityList"  , "click"      , "loadEntity();");
-
 
 /*** ArchEnt: Context ***/
 onEvent("Context", "show", "addNavigationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
