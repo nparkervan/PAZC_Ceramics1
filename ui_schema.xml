@@ -864,13 +864,13 @@
           <group faims_style="even" ref="child1">
             <label/>
             <input faims_attribute_name="Highest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level">
-              <label>{Highest_Level}</label>
+              <label>{Context_Highest_Level}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
             <input faims_attribute_name="Lowest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level">
-              <label>{Lowest_Level}</label>
+              <label>{Context_Lowest_Level}</label>
             </input>
           </group>
         </group>
