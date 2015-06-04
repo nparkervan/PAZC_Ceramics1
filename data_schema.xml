@@ -69,7 +69,7 @@
   <ArchaeologicalElement name="Context">
     <description>The physical result of any single action, whether it leaves a positive or negative record within the stratigraphic sequence. (MoLAS 1994)
     </description>
-    <property name="Site Code" type="freetext">
+    <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
     <property isIdentifier="true" name="Context ID" type="freetext">
@@ -8331,7 +8331,7 @@
   <ArchaeologicalElement name="Context Group" type="container">
     <description>A group of contexts.
     </description>
-    <property name="Site Code" type="freetext">
+    <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
     <property name="Area Code" type="freetext">
@@ -8651,10 +8651,10 @@
   <ArchaeologicalElement name="Artefact Group">
     <description>The total group or assemblage of objects recovered from a single Context. These are sometimes referred to as 'Bulk Finds'.
     </description>
-    <property name="Site Code" type="freetext">
+    <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
-    <property name="Context ID" type="freetext">
+    <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
     </property>
@@ -8754,10 +8754,10 @@
   <!--SAMPLE-->
   <ArchaeologicalElement name="Sample">
     <description>Deposit samples, or samples of building elements, recovered from this Context for the purpose of further analysis, or ongoing reference. </description>
-    <property name="Site Code" type="freetext">
+    <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
-    <property name="Context ID" type="freetext">
+    <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
     </property>
@@ -9008,10 +9008,10 @@
   </ArchaeologicalElement>
   <!-- SPECIAL FIND -->
   <ArchaeologicalElement name="Special Find">
-    <property name="Site Code" type="freetext">
+    <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
-    <property name="Context ID" type="freetext">
+    <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
     </property>
@@ -9126,10 +9126,10 @@
   <ArchaeologicalElement name="Adobe Element">
     <description>An individual adobe brick within a structure.
     </description>
-    <property name="Site Code" type="freetext">
+    <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
-    <property name="Context ID" type="freetext">
+    <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
     </property>
@@ -9167,7 +9167,7 @@
   <!-- photograph log -->
   <ArchaeologicalElement name="Photograph Log">
     <description>A record of images created and stored on another device, eg by a professional site photographer.</description>
-    <property name="ContextID" type="freetext">
+    <property isIdentifier="true" name="ContextID" type="freetext">
       <description>Unique number or code for each Context</description>
     </property>
     <property name="Photograph Reference ID" isIdentifier="true" type="freetext">
