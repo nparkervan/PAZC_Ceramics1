@@ -1300,7 +1300,11 @@ addToContextGroup() {
         saveContextGroup();
         return;
     }
-    saveEntitiesToRel("ContextContextGroup", getFieldValue("ContextGroup/ContextGroup_Contexts/AddContextList"), context_group_id);
+    String selectedContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList");
+    if (isNull(selectedContextID)) {
+      return;
+    }
+    saveEntitiesToRel("ContextContextGroup", selectedContextID, context_group_id);
     populateContextGroup();
 }
 
@@ -1370,27 +1374,28 @@ reallyDeleteContextGroup(){
 doNotDelete(){
     showToast("{Delete_Cancelled}");
 }
-/* TODO: Redo.
 
+// TODO: Redo.
 removeFromContextGroup() {
-    context_id = getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList");
-    if(!isNull(context_id) && !isNull(context_group_id)) {
-        Object obj = fetchOne("SELECT context.uuid, contextgroup.uuid, relationshipid  " +
-            "FROM latestnondeletedaentreln context JOIN latestnondeletedaentreln contextgroup USING (relationshipid) " +
-            "WHERE context.uuid != contextgroup.uuid " +
-            "and context.uuid = " + context_id + " " +
-            "and contextgroup.uuid = " + context_group_id + ";");
-        String relnid = obj.get(2);
-        if(!isNull(relnid)) {
-            String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '" + userid + "' FROM latestnondeletedaentreln WHERE relationshipid = '" + relnid + "';";
-            fetchOne(query);
-            deleteRel(relnid);
-            populateContextGroup();
-        }
+    showToast("TODO: Redo the removeFromContextGroup() function");
+    // context_id = getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList");
+    // if(!isNull(context_id) && !isNull(context_group_id)) {
+    //     Object obj = fetchOne("SELECT context.uuid, contextgroup.uuid, relationshipid  " +
+    //         "FROM latestnondeletedaentreln context JOIN latestnondeletedaentreln contextgroup USING (relationshipid) " +
+    //         "WHERE context.uuid != contextgroup.uuid " +
+    //         "and context.uuid = " + context_id + " " +
+    //         "and contextgroup.uuid = " + context_group_id + ";");
+    //     String relnid = obj.get(2);
+    //     if(!isNull(relnid)) {
+    //         String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '" + userid + "' FROM latestnondeletedaentreln WHERE relationshipid = '" + relnid + "';";
+    //         fetchOne(query);
+    //         deleteRel(relnid);
+    //         populateContextGroup();
+    //     }
         
-    }
+    // }
 }
-*/
+
 
 /*** Artefact Group ***/
 onEvent("Artefact_Group", "show", "addNavigationButtons(\"Artefact_Group\"); keepTabGroupChanges(\"Artefact_Group\"); saveArtefactGroup(\"\");");
