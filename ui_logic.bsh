@@ -634,6 +634,32 @@ refreshEntities() {
 
 // TODO: rewrite query
 search(){
+    String type = getFieldValue("control/search/entityTypes");
+    String areaCode = getFieldValue("control/search/Area_Code");
+    String term = getFieldValue("control/search/Search");
+    String searchQuery = "SELECT uuid, response "+
+                         "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
+                         " WHERE uuid in (SELECT uuid "+
+                         "                    FROM latestNonDeletedArchEntIdentifiers "+
+                         "                   WHERE attributename != 'Site Code' "+
+                         "                     AND measure LIKE '"+type+"'||'%'  "+
+                         "                     AND aenttypename LIKE '"+term+"'||'%' "+                         
+                         "                  )  "+
+                         "   AND (   '' = "+areaCode+"  "+
+                         "        OR uuid in (SELECT uuid "+
+                         "                     FROM latestnondeletedaentvalue  "+
+                         "                     JOIN attributekey using (attributeid) "+
+                         "                    WHERE attributename = 'AreaCode' "+
+                         "                      AND vocabid = "+areaCode+") "+
+                         "       ) "+
+                         " ORDER BY response; "+
+                         " LIMIT ? "+
+                         "OFFSET ? ";
+                  
+
+    populateCursorList("control/data/ContextList", searchQuery, 25);
+
+
     // populateCursorList("control/data/ContextList", ""+
     //     "SELECT uuid, response "+
     //     "  FROM latestNonDeletedArchEntFormattedIdentifiers " +
@@ -651,7 +677,7 @@ search(){
 }
 
 entityTypes = new ArrayList();
-entityTypes.add(0, new NameValuePair("{All}", "All"));
+entityTypes.add(0, new NameValuePair("{All}", ""));
 entityTypes.add(new NameValuePair("{Context}", "Context"));
 entityTypes.add(new NameValuePair("{Context_Group}", "Context Group"));
 entityTypes.add(new NameValuePair("{Artefact_Group}", "Artefact Group"));
