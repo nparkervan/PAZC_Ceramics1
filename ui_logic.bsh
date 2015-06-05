@@ -1143,31 +1143,12 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
     }
 }
 
-/*
+
 updateAllContextAdobes() {
-    Object contextAdobes = new ArrayList();
-    if (!isNull(context_id)){
-        contextAdobes = fetchAll("SELECT uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Adobe Element'\n"+
-            "             AND uuid in (SELECT uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           WHERE relationshipid in (SELECT relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship USING (relationshipid)\n"+
-            "                                                      JOIN relntype USING (relntypeid)\n"+
-            "                                                     WHERE uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextAdobe')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY  uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "ORDER BY valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Structures/AdobeList",  contextAdobes);
+    updateContextRelationshipBasedDropdown("Context/Context_Structures/AdobeList", "ContextAdobe",context_id);
 }
 
-*/
+
 
 updateAllContextMatrices() {
     updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", "ContextMatrix",context_id);
