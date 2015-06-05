@@ -584,7 +584,7 @@ search(){
                          " WHERE uuid in (SELECT uuid "+
                          "                    FROM latestNonDeletedArchEntIdentifiers "+
                          "                   WHERE attributename != 'Site Code' "+
-                         "                     AND measure LIKE ''||'%'  "+
+                         "                     AND measure LIKE '"+type+"'||'%'  "+
                          "                     AND aenttypename LIKE '"+term+"'||'%' "+                         
                          "                  )  "+
                          "   AND (   '' = "+areaCode+"  "+
@@ -599,7 +599,7 @@ search(){
                          "OFFSET ? ";
                   
 
-    populateCursorList()
+    populateCursorList("control/data/ContextList", searchQuery, 25);
 
 
     // populateCursorList("control/data/ContextList", ""+
