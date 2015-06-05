@@ -531,7 +531,7 @@ login(){
                 username = result.get(1) + " " + result.get(2);
 
                 showTabGroup("control");
-                loadStartingID();
+                loadStartingIds();
             }
 
         });
@@ -582,16 +582,29 @@ loadLoginDetails() {
   });
 }
 
-loadStartingID() {
-    String idQ = "SELECT value FROM localSettings WHERE key = 'control/data/ContextIncrement';";
+loadStartingIds() {
+    List l = new ArrayList();
+    l.add("control/data/Adobe_Element_Starting_ID");
+    l.add("control/data/Artefact_Group_Starting_ID");
+    l.add("control/data/ContextGroup_Starting_ID");
+    l.add("control/data/ContextIncrement");
+    l.add("control/data/Sample_Starting_ID");
+
+    for (ref : l) {
+        loadStartingId(ref);
+    }
+}
+
+loadStartingId(String ref) {
+    String idQ = "SELECT value FROM localSettings WHERE key = '" + ref + "';";
     fetchOne(idQ, new FetchCallback() {
-      onFetch(result) {
-        if (!isNull(result)) {
-          setFieldValue("control/data/ContextIncrement", result.get(0));
-        } else {
-          setFieldValue("control/data/ContextIncrement", "1");
+        onFetch(result) {
+            if (!isNull(result)) {
+                setFieldValue(ref, result.get(0));
+            } else {
+                setFieldValue(ref, "1");
+            }
         }
-      }  
     });
 }
 
@@ -1540,7 +1553,8 @@ newArtefactGroup(){
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    incField("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", 1);
+    setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID"));
+    incField("control/data/Artefact_Group_Starting_ID", 1);
 }
 
 loadArtefactGroup() {
@@ -1637,7 +1651,8 @@ newSample(){
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Sample/Sample_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Sample/Sample_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    incField("Sample/Sample_GeneralInformation/Context_ID", 1);
+    setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID"));
+    incField("control/data/Sample_Starting_ID", 1);
 }
 
 loadSample() {
@@ -1829,7 +1844,8 @@ newSpecialFind(){
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    incField("Special_Find/Special_Find_GeneralInformation/Context_ID", 1);
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/ContextGroup_Starting_ID"));
+    incField("control/data/ContextGroup_Starting_ID", 1);
 }
 
 loadSpecialFind() {
@@ -2028,7 +2044,8 @@ newAdobe(){
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Adobe_Element/Adobe_Element/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Adobe_Element/Adobe_Element/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    incField("Adobe_Element/Adobe_Element/Context_ID", 1);
+    setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID"));
+    incField("control/data/Adobe_Element_Starting_ID", 1);
 }
 
 loadAdobe() {
