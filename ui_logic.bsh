@@ -661,22 +661,24 @@ search(){
                          " WHERE uuid in (SELECT uuid "+
                          "                    FROM latestNonDeletedArchEntIdentifiers "+
                          "                   WHERE attributename != 'Site Code' "+
-                         "                     AND measure LIKE '"+type+"'||'%'  "+
-                         "                     AND aenttypename LIKE '"+term+"'||'%' "+                         
+                         "                     AND measure LIKE '"+term+"'||'%'  "+
+                         "                     AND aenttypename LIKE '"+type+"'||'%' "+                         
                          "                  )  "+
-                         "   AND (   '' = "+areaCode+"  "+
+                         "   AND (   '' = '"+areaCode+"'  "+
                          "        OR uuid in (SELECT uuid "+
                          "                     FROM latestnondeletedaentvalue  "+
                          "                     JOIN attributekey using (attributeid) "+
                          "                    WHERE attributename = 'AreaCode' "+
-                         "                      AND vocabid = "+areaCode+") "+
+                         "                      AND vocabid = '"+areaCode+"') "+
                          "       ) "+
-                         " ORDER BY response; "+
+                         " ORDER BY response "+
                          " LIMIT ? "+
                          "OFFSET ? ";
                   
 
     populateCursorList("control/search/entityList", searchQuery, 25);
+
+    Log.d("foo", searchQuery);
 
 
     // populateCursorList("control/data/ContextList", ""+
@@ -811,7 +813,7 @@ onEvent("Context/Context_Relationships_to_Other_Contexts/showReln", "click", "lo
 onEvent("Context/Context_Relationships_to_Other_Contexts/deleteReln", "delayclick", "deleteReln()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/listOfRelns", "click", "showRelnFromList()");
 
-String moduleExcavationSite = "PAZC";
+String moduleExcavationSite = "";
 String moduleExcavationYear = "2015";
 String moduleSiteCode = moduleExcavationSite + moduleExcavationYear;
 String context_id = null;
@@ -1360,7 +1362,7 @@ remremoveContextGroupReln() {
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 
-onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "click" , "addToContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase From");
@@ -1412,7 +1414,9 @@ saveContextGroup(){
     saveTabGroup("ContextGroup", context_group_id, null, null, new SaveCallback() {
         onSave(uuid, newRecord) {
             context_group_id = uuid;
-            onContextGroupSaved();
+            if (newRecord) {
+              onContextGroupSaved();
+            }
             populateContextGroup();
         }
         onError(message) {
@@ -1584,7 +1588,9 @@ saveArtefactGroup(String callback) {
     saveTabGroup("Artefact_Group", artefact_group_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             artefact_group_id = uuid;
-            onArtefactGroupSaved();
+            if (newRecord) {
+              onArtefactGroupSaved();
+            }            
             execute(callback);
         }
         onError(message) {
@@ -1682,7 +1688,9 @@ saveSample(String callback) {
     saveTabGroup("Sample", sample_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             sample_id = uuid;
-            onSampleSaved();
+            if (newRecord) {
+              onSampleSaved();
+            }
             execute(callback);
         }
         onError(message) {
@@ -1774,7 +1782,9 @@ saveMatrix(String callback) {
     saveTabGroup("Matrix", matrix_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             matrix_id = uuid;
-            onMatrixSaved();
+            if (newRecord) {
+              onMatrixSaved();
+            }
             execute(callback);
         }
         onError(message) {
@@ -1875,7 +1885,9 @@ saveSpecialFind(String callback) {
     saveTabGroup("Special_Find", special_find_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             special_find_id = uuid;
-            onSpecialFindSaved();
+            if (newRecord) {
+              onSpecialFindSaved();
+            }
             execute(callback);
         }
         onError(message) {
@@ -1980,7 +1992,9 @@ saveSpecialFindLocation() {
     saveTabGroup("Special_Find_Location", special_find_location_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             special_find_location_id = uuid;
-            onSpecialFindLocationSaved();
+            if (newRecord) {
+              onSpecialFindLocationSaved();
+            }            
         }
         onError(message) {
             showToast(message);
@@ -2085,7 +2099,9 @@ saveAdobe(String callback) {
     saveTabGroup("Adobe_Element", adobe_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             adobe_id = uuid;
-            onAdobeSaved();
+            if (newRecord) {
+              onAdobeSaved();
+            }
             execute(callback);
         }
         onError(message) {
@@ -2204,7 +2220,9 @@ savePhotoLog(String callback) {
     saveTabGroup("Photograph_Log", photolog_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             photolog_id = uuid;
-            onPhotoLogSaved();
+            if (newRecord) {
+              onPhotoLogSaved();
+            }            
             execute(callback);
         }
         onError(message) {
