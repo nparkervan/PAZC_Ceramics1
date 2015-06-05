@@ -484,6 +484,12 @@ setSyncDelay(5.0f);
 /*setSyncEnabled(true);
 setFileSyncEnabled(true);*/
 
+// TODO: Delete this paragraph after development is complete.
+setSyncMinInterval(4.0f);
+setSyncMaxInterval(6.0f);
+setSyncDelay(5.0f);
+setSyncEnabled(true);
+
 
 /*** 'Uneditable' - you can edit the code below with extreme precaution ***/
 
@@ -1767,7 +1773,7 @@ saveMatrix(String callback) {
     attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
     saveTabGroup("Matrix", matrix_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
-            matrix_id = uuid();
+            matrix_id = uuid;
             onMatrixSaved();
             execute(callback);
         }
