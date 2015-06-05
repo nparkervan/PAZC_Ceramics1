@@ -116,7 +116,7 @@
         <term>136-4<description>{Site} 136.</description></term>
       </lookup>
     </property>
-    <property name="Device Code" type="::sigh::">
+    <property name="Device Code" type="enum">
       <description/>
       <lookup>
         <term>0<description/></term>
@@ -8347,6 +8347,21 @@
     <property name="Area Code" type="freetext">
       <description>Area or Trench: the working subdivision of an archaeological site. </description>
     </property>
+    <property name="Device Code" type="enum">
+      <description/>
+      <lookup>
+        <term>0<description/></term>
+        <term>1<description/></term>
+        <term>2<description/></term>
+        <term>3<description/></term>
+        <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
+      </lookup>
+    </property>
     <property isIdentifier="true" name="Title" type="freetext">
       <description>Name of the context group
       </description>
@@ -8682,6 +8697,21 @@
       <formatString><![CDATA[$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
+    <property name="Device Code" type="enum">
+      <description/>
+      <lookup>
+        <term>0<description/></term>
+        <term>1<description/></term>
+        <term>2<description/></term>
+        <term>3<description/></term>
+        <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
+      </lookup>
+    </property>
     <property isIdentifier="true" name="Artefact Class" type="enum">
       <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
       </description>
@@ -8792,6 +8822,21 @@
       </description>
       <formatString><![CDATA[$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
+    </property>
+    <property name="Device Code" type="enum">
+      <description/>
+      <lookup>
+        <term>0<description/></term>
+        <term>1<description/></term>
+        <term>2<description/></term>
+        <term>3<description/></term>
+        <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
+      </lookup>
     </property>
     <property name="Sample Type" type="enum">
       <description>The type of Sample collected, eg Soil, Wood, Pollen.
@@ -9055,6 +9100,21 @@
       <formatString><![CDATA[$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
+    <property name="Device Code" type="enum">
+      <description/>
+      <lookup>
+        <term>0<description/></term>
+        <term>1<description/></term>
+        <term>2<description/></term>
+        <term>3<description/></term>
+        <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
+      </lookup>
+    </property>
     <property isIdentifier="true" name="Special Find Class" type="freetext">
       <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
       </description>
@@ -9185,6 +9245,21 @@
       <formatString><![CDATA[$2]]></formatString>
       <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
     </property>
+    <property name="Device Code" type="enum">
+      <description/>
+      <lookup>
+        <term>0<description/></term>
+        <term>1<description/></term>
+        <term>2<description/></term>
+        <term>3<description/></term>
+        <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
+      </lookup>
+    </property>
     <property name="Height" type="freetext">
       <description>Maximum height of the adobe brick. </description>
     </property>
@@ -9224,6 +9299,21 @@
       <description>Unique number or code allocated by creator of the image. It could be a filename or a reference number</description>
       <formatString><![CDATA[$2]]></formatString>
       <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+    </property>
+    <property name="Device Code" type="enum">
+      <description/>
+      <lookup>
+        <term>0<description/></term>
+        <term>1<description/></term>
+        <term>2<description/></term>
+        <term>3<description/></term>
+        <term>4<description/></term>
+        <term>5<description/></term>
+        <term>6<description/></term>
+        <term>7<description/></term>
+        <term>8<description/></term>
+        <term>9<description/></term>
+      </lookup>
     </property>
     <property name="Scene Type" type="enum">
       <description>The type of scene captured, eg opening or closing view of the Context. (Vocab: Open, Close, Other)</description>

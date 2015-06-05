@@ -173,6 +173,10 @@ saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb
     });
 }
 
+setTimestamp(String path) {
+    setFieldValue(path, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date()));
+}
+
 /** Action Bar **/
 addActionBarItem("sync", new ToggleActionButtonCallback() {
     actionOnLabel() {
@@ -250,29 +254,6 @@ addActionBarItem("external_gps", new ToggleActionButtonCallback() {
         }
     }
 });
-
-setTimestamp(String path) {
-    setFieldValue(path, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date()));
-}
-
- 
-loadFromLocalSettings(String key, String defaultVal) { 
-    String localSettingsQuery = "SELECT value " +
-                                "  FROM localSettings "+
-                                " WHERE key = '" + key + "';";
-
-    fetchOne(localSettingsQuery, new FetchCallback() {
-        onFetch(result) {
-            print("" + result);
-            String value = defaultVal;
-            if (!isNull(result)) {
-                value = result.get(0);
-            }
-
-            setFieldValue("Project/Main/" + key, value);
-        }
-    });
-}
 
 /*** Navigation Drawer ***/
 removeNavigationButtons() {
@@ -460,7 +441,15 @@ populateListForUsers(){
 
     fetchAll(getNonDeletedUsersQuery, new FetchCallback() {
         onFetch(result) {
-            populateDropDown("user/usertab/users", result);
+            populateDropDown("user/usertab/users", result, true);
+            String userQ = localSettingsQuery("User_VocabID");
+            fetchOne(userQ, new FetchCallback() {
+              onFetch(result) {
+                if (!isNull(result)) {
+                  setFieldValue("user/usertab/users", result.get(0));
+                }
+              }  
+            });
         }
     });
 }
@@ -472,8 +461,8 @@ String device = "";
 String areaCode = "";
 
 login(){
-    if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
-        showWarning("{Warning}", "{Please_select_a_User_and_an_Area_Code_before_logging_in}");
+    if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users")) || isNull(getFieldValue("user/usertab/Device_Code"))){
+        showWarning("{Warning}", "{Please_select_a_User_and_an_Area_Code_and_a_Device_Code_before_logging_in}");
         return;
     } else {
         String userVocabId = getFieldValue("user/usertab/users");
@@ -491,37 +480,53 @@ login(){
 
         // store the user and area code into local settings, and set the globals
         areaCode = getFieldValue("user/usertab/Area_Code");
-        saveUserAndAreaCode();
+        device = getFieldValue("user/usertab/Device_Code");
+        saveLoginDetails();
     }
 }
 
-saveUserAndAreaCode() {
-  fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
-  fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+saveLoginDetails() {
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('User_VocabID', '"+getFieldValue("user/usertab/users")+"');");
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('AreaCode_VocabID', '"+getFieldValue("user/usertab/Area_Code")+"');");
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('DeviceCode_VocabID', '"+getFieldValue("user/usertab/Device_Code")+"');");
+  fetchOne("REPLACE INTO localsettings(key, value) SELECT 'AreaCode_VocabName', vocabname FROM vocabulary WHERE vocabid = "+getFieldValue("user/usertab/Area_Code")+";");
+  fetchOne("REPLACE INTO localsettings(key, value) SELECT 'DeviceCode_VocabName', vocabname FROM vocabulary WHERE vocabid = "+getFieldValue("user/usertab/Device_Code")+";");
 }
 
-loadAreaCode() {
-  areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
-  areaCode  = null;
-  fetchOne(
-      areaCodeQ,
-      new FetchCallback() {
-        onFetch(result) {
-          if (isNull(result)) {
-            return;
-          }
-          String fetchedValue = result.get(0);
-          if (!isNull(fetchedValue)) {
-            areaCode = fetchedValue;
-            setFieldValue("user/usertab/Area_Code", fetchedValue);
-          }
-        }
+localSettingsQuery(String key) {
+  return "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = '"+key+"' ";
+}
+
+loadLoginDetails() {
+  String userQ = localSettingsQuery("User_VocabID");
+  String areaCodeQ = localSettingsQuery("AreaCode_VocabID");
+  String deviceCodeQ = localSettingsQuery("DeviceCode_VocabID");
+  fetchOne(userQ, new FetchCallback() {
+    onFetch(result) {
+      if (!isNull(result)) {
+        setFieldValue("user/usertab/users", result.get(0));
       }
-  );
+    }  
+  });
+  fetchOne(areaCodeQ, new FetchCallback() {
+    onFetch(result) {
+      if (!isNull(result)) {
+        setFieldValue("user/usertab/Area_Code", result.get(0));
+      }
+    }  
+  });
+  fetchOne(deviceCodeQ, new FetchCallback() {
+    onFetch(result) {
+      if (!isNull(result)) {
+        setFieldValue("user/usertab/Device_Code", result.get(0));
+      }
+    }  
+  });
 }
 
-makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode"); // Populate Area code dropdown
-onEvent("user", "load", "loadAreaCode()");
+makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
+makeVocab("DropDown", "user/usertab/Device_Code", "Device Code");
+onEvent("user", "load", "loadLoginDetails()");
 onEvent("user", "show", "removeNavigationButtons()");
 onEvent("user/usertab/", "show", "populateListForUsers()");
 onEvent("user/usertab/login", "click", "login()");
@@ -689,7 +694,9 @@ onEvent("Context/Context_Relationships_to_Other_Contexts/showReln", "click", "lo
 onEvent("Context/Context_Relationships_to_Other_Contexts/deleteReln", "delayclick", "deleteReln()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/listOfRelns", "click", "showRelnFromList()");
 
-
+String moduleExcavationSite = "PAZC";
+String moduleExcavationYear = "2015";
+String moduleSiteCode = moduleExcavationSite + moduleExcavationYear;
 String context_id = null;
 
 Object dialog;
@@ -863,12 +870,12 @@ newContext(){
     setFieldValue("Context/Context_GeneralInformation/Grid_Location_Reference", areaCode.substring(0,4));
     setFieldValue("Context/Context_Measure/Datum", areaCode.substring(0,4));
 
-    setFieldValue("Context/Context_GeneralInformation/Site_Code","PAZC14");
+    setFieldValue("Context/Context_GeneralInformation/Site_Code", moduleSiteCode);
     setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
 
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
-
+    setFieldValue("Context/Context_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
 }
 
 loadContext() {
@@ -1101,6 +1108,7 @@ loadContextAttributes(){
     makeVocab("DropDown", "Context/Context_GeneralInformation/Type_of_Definition", "Type of Definition");
     makeVocab("DropDown", "Context/Context_GeneralInformation/Excavation_Method", "Excavation Method");
     makeVocab("PictureGallery", "Context/Context_GeneralInformation/Context_Type", "Context Type");
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Device_Code", "Device Code");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
     makeVocab("PictureGallery", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
@@ -1238,8 +1246,9 @@ newContextGroup(menu){
     }
     newTabGroup("ContextGroup");
     context_group_id = null;
-    setFieldValue("ContextGroup/ContextGroup_Details/Site_Code","PAZC14");
+    setFieldValue("ContextGroup/ContextGroup_Details/Site_Code", moduleSiteCode);
     setFieldValue("ContextGroup/ContextGroup_Details/Area_Code", areaCode.substring(0,3));
+    setFieldValue("ContextGroup/ContextGroup_Details/Device_Code", getFieldValue("user/usertab/Device_Code"));
     populateContextGroup();
 }
 
@@ -1340,6 +1349,7 @@ loadContextGroupAttributes(){
     makeVocab("PictureGallery", "ContextGroup/ContextGroup_Details/Context_Type", "CG Context Type");
     makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "CG Phase From");
     makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To", "CG Phase To");
+    makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Device_Code", "Device Code");
 }
 
 loadContextFromContextGroup(){
@@ -1412,6 +1422,7 @@ newArtefactGroup(){
     newTabGroup("Artefact_Group");
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", 1);
 }
 
@@ -1473,6 +1484,7 @@ doNotDelete(){
 
 loadArtefactGroupAttributes(){
     makeVocab("HierarchicalDropDown", "Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Class", "Artefact Class");
+    makeVocab("DropDown", "Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", "Device Code");
 }
 
 
@@ -1505,6 +1517,7 @@ newSample(){
     newTabGroup("Sample");
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Sample/Sample_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Sample/Sample_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Sample/Sample_GeneralInformation/Context_ID", 1);
 }
 
@@ -1568,6 +1581,7 @@ doNotDelete(){
 loadSampleAttributes(){
     makeVocab("DropDown", "Sample/Sample_GeneralInformation/Sample_Type", "Sample Type");
     makeVocab("DropDown", "Sample/Sample_GeneralInformation/Collection_Method", "Collection Method");
+    makeVocab("DropDown", "Sample/Sample_GeneralInformation/Device_Code", "Device Code");
 }
 
 
@@ -1691,6 +1705,7 @@ newSpecialFind(){
     newTabGroup("Special_Find");
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Special_Find/Special_Find_GeneralInformation/Context_ID", 1);
 }
 
@@ -1752,6 +1767,7 @@ doNotDelete(){
 
 loadSpecialFindAttributes(){
     makeVocab("HierarchicalDropDown", "Special_Find/Special_Find_GeneralInformation/Special_Find_Class", "Special Find Class");
+    makeVocab("DropDown", "Special_Find/Special_Find_GeneralInformation/Device_Code", "Device Code");
 }
 
 // refreshSpecialFindLocations() {
@@ -1884,6 +1900,7 @@ newAdobe(){
     newTabGroup("Adobe_Element");
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Adobe_Element/Adobe_Element/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Adobe_Element/Adobe_Element/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Adobe_Element/Adobe_Element/Context_ID", 1);
 }
 
@@ -1901,6 +1918,7 @@ loadAdobeFrom(String id) {
 loadAdobeAttributes(){
     makeVocab("DropDown", "Adobe_Element/Adobe_Element/Method_Manufacture", "Method_Manufacture");
     makeVocab("DropDown", "Adobe_Element/Adobe_Element/Shape", "AdobeShape");
+    makeVocab("DropDown", "Adobe_Element/Adobe_Element/Device_Code", "Device Code");
 }
 
 saveAdobe(String callback) {
@@ -2005,6 +2023,7 @@ newPhotoLog(){
     photolog_id = null;
     newTabGroup("Photograph_Log");
     setFieldValue("Photograph_Log/Photograph_Log/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
+    setFieldValue("Photograph_Log/Photograph_Log/Device_Code", getFieldValue("user/usertab/Device_Code"));
 }
 
 loadPhotoLog() {
@@ -2020,6 +2039,7 @@ loadPhotoLogFrom(String id) {
 
 loadPhotoLogAttributes(){
     makeVocab("DropDown", "Photograph_Log/Photograph_Log/Camera", "Camera");
+    makeVocab("DropDown", "Photograph_Log/Photograph_Log/Device_Code", "Device Code");
 }
 
 savePhotoLog(String callback) {
