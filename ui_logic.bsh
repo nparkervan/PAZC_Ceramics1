@@ -207,6 +207,7 @@ addActionBarItem("internal_gps", new ToggleActionButtonCallback() {
     actionOn() {
         stopGPS();
         showToast("{Internal_GPS_Disabled}");
+        updateGPSDiagnostics();
     }
     isActionOff() {
         isInternalGPSOn();
@@ -220,6 +221,7 @@ addActionBarItem("internal_gps", new ToggleActionButtonCallback() {
         }
         startInternalGPS();
         showToast("{Internal_GPS_Enabled}");
+        updateGPSDiagnostics();
     }
 });
 
@@ -234,6 +236,7 @@ addActionBarItem("external_gps", new ToggleActionButtonCallback() {
         } else {
           showToast("{Please_Enable_Bluetooth}");
         }
+        updateGPSDiagnostics();
     }
     isActionOff() {
         isExternalGPSOn();
@@ -252,6 +255,7 @@ addActionBarItem("external_gps", new ToggleActionButtonCallback() {
             showToast("{Please_Enable_Bluetooth}");
             this.actionOn();
         }
+        updateGPSDiagnostics();
     }
 });
 
@@ -417,6 +421,60 @@ deleteRecord(String tabgroup, String id) {
   }
 }
 
+/*** GPS ***/
+
+updateGPSDiagnostics() {
+    String status = "";
+    String previousStatus = getFieldValue("control/data/GPS_Diagnostics");
+    String notInitialised = "{GPS_is_not_initialised}";
+
+    // Check if GPS is initialised or was previously initialised.
+    if (!isExternalGPSOn() && !isInternalGPSOn()) {
+        if (!isNull(previousStatus) && !previousStatus.equals(notInitialised)) {
+            // previous gps status is some last valid coordinate.
+            String error = "{GPS_is_no_longer_initialised}. {Previous_status}:";
+            // check that error message wasn't previously appended to the previous status message.
+            if (previousStatus.subSequence(0, error.length()).equals(error)) {
+                status = previousStatus;
+            } else {
+                status = error + "\n" + previousStatus;
+            }
+        } else {
+            status = notInitialised;
+        }
+    } else {
+        status += "{Internal_GPS}: ";
+        if (isInternalGPSOn())
+        {
+            status += "{on}";
+        } else {
+            status += "{off}";
+        }
+        status += "\nExternal GPS: ";
+        if (isExternalGPSOn())
+        {
+            if (isBluetoothConnected()) {
+                status += "{on_and_bluetooth_connected}";
+            } else {
+                status += "{on_and_bluetooth_disconnected}";
+            }
+        } else {
+            status += "{off}";
+        }
+        Object position = getGPSPosition();
+        if (position != null) {
+            Object projPosition = getGPSPositionProjected();
+            status += "\n{Latitude}: " + position.getLatitude();
+            status += "   {Longitude}: " + position.getLongitude();
+            status += "\n{Northing}: " + projPosition.getLatitude();
+            status += "   {Easting}: " + projPosition.getLongitude();
+            status += "\n{Accuracy}: " + getGPSEstimatedAccuracy();
+        } else {
+            status += "\n{Position}: {no_GPS_position_could_be_found}";
+        }
+    }
+    setFieldValue("control/data/GPS_Diagnostics", status);
+}
 
 
 /*** SYNC ***/
@@ -551,7 +609,7 @@ onEvent("user/usertab/guide", "click", "showTab(\"user/help\")");
 /*** control ***/
 makeVocab("DropDown", "control/search/Area_Code", "AreaCode");
 onEvent("control"                     , "show"  , "removeNavigationButtons(); setSearchAreaCode();");
-onEvent("control/data"                , "show"  , "refreshEntities()");
+onEvent("control/data"                , "show"  , "refreshEntities(); updateGPSDiagnostics();");
 onEvent("control/data/newContext"     , "click" , "newContext();");
 onEvent("control/data/newContextGroup", "click" , "newContextGroup(true);");
 onEvent("control/search"              , "show"  , "loadSearch();");
@@ -576,6 +634,32 @@ refreshEntities() {
 
 // TODO: rewrite query
 search(){
+    String type = getFieldValue("control/search/entityTypes");
+    String areaCode = getFieldValue("control/search/Area_Code");
+    String term = getFieldValue("control/search/Search");
+    String searchQuery = "SELECT uuid, response "+
+                         "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
+                         " WHERE uuid in (SELECT uuid "+
+                         "                    FROM latestNonDeletedArchEntIdentifiers "+
+                         "                   WHERE attributename != 'Site Code' "+
+                         "                     AND measure LIKE '"+type+"'||'%'  "+
+                         "                     AND aenttypename LIKE '"+term+"'||'%' "+                         
+                         "                  )  "+
+                         "   AND (   '' = "+areaCode+"  "+
+                         "        OR uuid in (SELECT uuid "+
+                         "                     FROM latestnondeletedaentvalue  "+
+                         "                     JOIN attributekey using (attributeid) "+
+                         "                    WHERE attributename = 'AreaCode' "+
+                         "                      AND vocabid = "+areaCode+") "+
+                         "       ) "+
+                         " ORDER BY response; "+
+                         " LIMIT ? "+
+                         "OFFSET ? ";
+                  
+
+    populateCursorList("control/data/ContextList", searchQuery, 25);
+
+
     // populateCursorList("control/data/ContextList", ""+
     //     "SELECT uuid, response "+
     //     "  FROM latestNonDeletedArchEntFormattedIdentifiers " +

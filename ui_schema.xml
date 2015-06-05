@@ -42,6 +42,7 @@
               <Artefact_Group_Starting_ID/>
               <Sample_Starting_ID/>
               <Adobe_Element_Starting_ID/>
+              <GPS_Diagnostics/>
             </data>
             <search>
               <container1>
@@ -705,6 +706,9 @@
         </input>
         <input faims_certainty="false" faims_read_only="false" ref="Adobe_Element_Starting_ID">
           <label>{Adobe_Element_Starting_ID}</label>
+        </input>
+        <input ref="GPS_Diagnostics" faims_web="false" faims_certainty="false" faims_annotation="false" faims_read_only="true">
+          <label>{GPS_Diagnostics}</label>
         </input>
       </group>
       <group ref="search" faims_scrollable="false">
