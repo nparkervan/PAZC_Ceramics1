@@ -1107,9 +1107,9 @@ updateContextRelationshipBasedDropdown(path, relntypename, uuid){
                  "  JOIN createdmodifiedatby USING (uuid) "+
                  " WHERE relationshipid in (SELECT relationshipid  "+
                  "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
-                 "                           WHERE relntypename = '"+relntypename+"' "+
-                 "                             and uuid = "+uuid+") "+
-                 "   and parentaenttypename = 'Context' "+
+                 "                           WHERE relntypename = '"+relntypename+"') "+
+                 "   AND parentuuid = "+uuid+" "+
+                 "   AND parentaenttypename = 'Context' "+
                  " ORDER BY createdat desc; "+
                  "",
 
@@ -1129,8 +1129,8 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
                  "  JOIN createdmodifiedatby USING (uuid) "+
                  " WHERE relationshipid in (SELECT relationshipid  "+
                  "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
-                 "                           WHERE relntypename = '"+relntypename+"' "+
-                 "                             and uuid = "+uuid+") "+
+                 "                           WHERE relntypename = '"+relntypename+"') "+
+                 "   AND parentuuid = "+uuid+" "+
                  "   and parentaenttypename = '"+parentaenttypename+"' "+
                  " ORDER BY createdat desc; "+
                  "",
