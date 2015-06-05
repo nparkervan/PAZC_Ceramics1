@@ -794,7 +794,7 @@ onEvent("Context/Context_Relationships_to_Other_Contexts/showReln", "click", "lo
 onEvent("Context/Context_Relationships_to_Other_Contexts/deleteReln", "delayclick", "deleteReln()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/listOfRelns", "click", "showRelnFromList()");
 
-String moduleExcavationSite = "PAZC";
+String moduleExcavationSite = "";
 String moduleExcavationYear = "2015";
 String moduleSiteCode = moduleExcavationSite + moduleExcavationYear;
 String context_id = null;
