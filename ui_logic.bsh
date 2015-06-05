@@ -435,7 +435,7 @@ updateGPSDiagnostics() {
             String error = "{GPS_is_no_longer_initialised}. {Previous_status}:";
             // check that error message wasn't previously appended to the previous status message.
             if (previousStatus.length() < error.length() ||
-                previousStatus.subSequence(0, error.length()).equals(error)) {
+                    previousStatus.subSequence(0, error.length()).equals(error)) {
                 status = previousStatus;
             } else {
                 status = error + "\n" + previousStatus;
@@ -1143,7 +1143,31 @@ updateNonContextRelationshipBasedDropdown(path, relntypename, parentaenttypename
     }
 }
 
+/*
+updateAllContextAdobes() {
+    Object contextAdobes = new ArrayList();
+    if (!isNull(context_id)){
+        contextAdobes = fetchAll("SELECT uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
+            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
+            "            FROM latestNonDeletedArchentIdentifiers\n"+
+            "           WHERE aenttypename = 'Adobe Element'\n"+
+            "             AND uuid in (SELECT uuid\n"+
+            "                            FROM latestNonDeletedAentReln\n"+
+            "                           WHERE relationshipid in (SELECT relationshipid\n"+
+            "                                                      FROM latestNonDeletedAentReln\n"+
+            "                                                      JOIN relationship USING (relationshipid)\n"+
+            "                                                      JOIN relntype USING (relntypeid)\n"+
+            "                                                     WHERE uuid = "+context_id+"\n"+
+            "                                                       and relntypeName = 'ContextAdobe')\n"+
+            "                             and uuid != "+context_id+")\n"+
+            "        ORDER BY  uuid, attributename ASC)\n"+
+            "group by uuid\n"+
+            "ORDER BY valuetimestamp desc, uuid, attributename;");
+    }
+    populateDropDown("Context/Context_Structures/AdobeList",  contextAdobes);
+}
 
+*/
 
 updateAllContextMatrices() {
     updateContextRelationshipBasedDropdown("Context/Context_Deposits/matrixList", "ContextMatrix",context_id);
@@ -2141,32 +2165,6 @@ reallyDeleteAdobe(){
 doNotDelete(){
     showToast("{Delete_Cancelled}");
 }
-
-/*
-updateAllContextAdobes() {
-    Object contextAdobes = new ArrayList();
-    if (!isNull(context_id)){
-        contextAdobes = fetchAll("SELECT uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-            "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-            "            FROM latestNonDeletedArchentIdentifiers\n"+
-            "           WHERE aenttypename = 'Adobe Element'\n"+
-            "             AND uuid in (SELECT uuid\n"+
-            "                            FROM latestNonDeletedAentReln\n"+
-            "                           WHERE relationshipid in (SELECT relationshipid\n"+
-            "                                                      FROM latestNonDeletedAentReln\n"+
-            "                                                      JOIN relationship USING (relationshipid)\n"+
-            "                                                      JOIN relntype USING (relntypeid)\n"+
-            "                                                     WHERE uuid = "+context_id+"\n"+
-            "                                                       and relntypeName = 'ContextAdobe')\n"+
-            "                             and uuid != "+context_id+")\n"+
-            "        ORDER BY  uuid, attributename ASC)\n"+
-            "group by uuid\n"+
-            "ORDER BY valuetimestamp desc, uuid, attributename;");
-    }
-    populateDropDown("Context/Context_Structures/AdobeList",  contextAdobes);
-}
-
-*/
 
 /*** Arch Ent: PhotoLog ***/
 onEvent("Photograph_Log", "show", "addNavigationButtons(\"Photograph_Log\"); keepTabGroupChanges(\"Photograph_Log\"); savePhotoLog(\"\");");
