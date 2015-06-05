@@ -35,9 +35,13 @@
           <!--control tabgroup that contains button to manipulate entities: load, list, create-->
           <control>
             <data>
-              <ContextIncrement/>
               <newContext/>
               <newContextGroup/>
+              <ContextIncrement/>
+              <ContextGroup_Starting_ID/>
+              <Artefact_Group_Starting_ID/>
+              <Sample_Starting_ID/>
+              <Adobe_Element_Starting_ID/>
             </data>
             <search>
               <container1>
@@ -679,17 +683,29 @@
     </group>
     <group ref="control">
       <label/>
-      <group faims_scrollable="false" ref="data">
+      <group faims_scrollable="true" ref="data">
         <label>{Contexts}</label>
-        <input faims_certainty="false" faims_read_only="false" ref="ContextIncrement">
-          <label>{Context_Starting_ID}</label>
-        </input>
         <trigger ref="newContext">
           <label>{Create_New_Context}</label>
         </trigger>
         <trigger ref="newContextGroup">
           <label>{New_Context_Group}</label>
         </trigger>
+        <input faims_certainty="false" faims_read_only="false" ref="ContextIncrement">
+          <label>{Context_Starting_ID}</label>
+        </input>
+        <input faims_certainty="false" faims_read_only="false" ref="ContextGroup_Starting_ID">
+          <label>{ContextGroup_Starting_ID}</label>
+        </input>
+        <input faims_certainty="false" faims_read_only="false" ref="Artefact_Group_Starting_ID">
+          <label>{Artefact_Group_Starting_ID}</label>
+        </input>
+        <input faims_certainty="false" faims_read_only="false" ref="Sample_Starting_ID">
+          <label>{Sample_Starting_ID}</label>
+        </input>
+        <input faims_certainty="false" faims_read_only="false" ref="Adobe_Element_Starting_ID">
+          <label>{Adobe_Element_Starting_ID}</label>
+        </input>
       </group>
       <group ref="search" faims_scrollable="false">
         <label>{Search}</label>
