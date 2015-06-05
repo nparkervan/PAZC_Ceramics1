@@ -71,13 +71,13 @@
     </description>
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Context Name" type="freetext">
@@ -8341,7 +8341,7 @@
     </description>
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="AreaCode" type="enum">
@@ -8393,7 +8393,7 @@
       <description>Name of the context group
       </description>
       <formatString><![CDATA[$2]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="CG Context Type" type="enum">
       <description>
@@ -8640,7 +8640,7 @@
     <property name="Component" type="enum" isIdentifier="true">
       <description>Grains which comprise more than 10% deposit should be included here. </description>
       <formatString><![CDATA[$1]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>No Se Observa
 
@@ -8739,19 +8739,19 @@
     </description>
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Artefact Group ID" type="freetext">
       <description>Unique number or code for the artefact group.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Device Code" type="enum">
@@ -8803,7 +8803,7 @@
       <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
       </description>
       <formatString><![CDATA[$1]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>No Se Observa
           <description>data not collected
@@ -8895,19 +8895,19 @@
     <description>Deposit samples, or samples of building elements, recovered from this Context for the purpose of further analysis, or ongoing reference. </description>
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Sample ID" type="freetext">
       <description>The unique code or reference for the Sample.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Device Code" type="enum">
@@ -9033,7 +9033,7 @@
       <description>Weight (in grams) of the sample collected.
       </description>
       <formatString><![CDATA[$2]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Sample Volume" type="float">
       <description>Volume (in litres) of the sample collected.
@@ -9202,19 +9202,19 @@
   <ArchaeologicalElement name="Special Find">
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Special Find ID" type="freetext">
       <description>Unique number or code for the special find.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Device Code" type="enum">
@@ -9266,7 +9266,7 @@
       <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
       </description>
       <formatString><![CDATA[$2]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>No Se Observa
           <description>data not collected
@@ -9356,7 +9356,7 @@
   <ArchaeologicalElement name="Special Find Location">
     <property name="Latitude" isIdentifier="true">
       <description>Latitude of Special Find</description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Longitude" isIdentifier="true">
@@ -9407,20 +9407,20 @@
     </description>
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Context ID" type="freetext">
       <description>Unique number or code for each Context.
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Adobe Element ID" type="freetext">
       <description>Unique number or code for the {Adobe_Element}.
       </description>
       <formatString><![CDATA[$2]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Device Code" type="enum">
       <description/>
@@ -9499,18 +9499,18 @@
     <description>A record of images created and stored on another device, eg by a professional site photographer.</description>
     <property isIdentifier="true" name="ContextID" type="freetext">
       <description>Unique number or code for each Context</description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property isIdentifier="true" name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Photograph Reference ID" isIdentifier="true" type="freetext">
       <description>Unique number or code allocated by creator of the image. It could be a filename or a reference number</description>
       <formatString><![CDATA[$2]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Device Code" type="enum">
       <description/>
