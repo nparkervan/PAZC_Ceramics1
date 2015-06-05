@@ -856,7 +856,7 @@ incField(String ref) {
 }
 
 newContext(){
-    contextIncrement = incField("control/data/ContextIncrement");
+    Integer contextIncrement = incField("control/data/ContextIncrement");
     if (contextIncrement == null) {
         showWarning("{Alert}","{No_starting_ID_is_entered_please_enter_one}");
         return;
