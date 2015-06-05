@@ -875,7 +875,7 @@ newContext(){
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
 
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
-
+    setFieldValue("Context/Context_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
 }
 
 loadContext() {
@@ -1108,6 +1108,7 @@ loadContextAttributes(){
     makeVocab("DropDown", "Context/Context_GeneralInformation/Type_of_Definition", "Type of Definition");
     makeVocab("DropDown", "Context/Context_GeneralInformation/Excavation_Method", "Excavation Method");
     makeVocab("PictureGallery", "Context/Context_GeneralInformation/Context_Type", "Context Type");
+    makeVocab("DropDown", "Context/Context_GeneralInformation/Device_Code", "Device Code");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
     makeVocab("PictureGallery", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
@@ -1247,6 +1248,7 @@ newContextGroup(menu){
     context_group_id = null;
     setFieldValue("ContextGroup/ContextGroup_Details/Site_Code", moduleSiteCode);
     setFieldValue("ContextGroup/ContextGroup_Details/Area_Code", areaCode.substring(0,3));
+    setFieldValue("ContextGroup/ContextGroup_Details/Device_Code", getFieldValue("user/usertab/Device_Code"));
     populateContextGroup();
 }
 
@@ -1347,6 +1349,7 @@ loadContextGroupAttributes(){
     makeVocab("PictureGallery", "ContextGroup/ContextGroup_Details/Context_Type", "CG Context Type");
     makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "CG Phase From");
     makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To", "CG Phase To");
+    makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Device_Code", "Device Code");
 }
 
 loadContextFromContextGroup(){
@@ -1419,6 +1422,7 @@ newArtefactGroup(){
     newTabGroup("Artefact_Group");
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", 1);
 }
 
@@ -1480,6 +1484,7 @@ doNotDelete(){
 
 loadArtefactGroupAttributes(){
     makeVocab("HierarchicalDropDown", "Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Class", "Artefact Class");
+    makeVocab("DropDown", "Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", "Device Code");
 }
 
 
@@ -1512,6 +1517,7 @@ newSample(){
     newTabGroup("Sample");
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Sample/Sample_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Sample/Sample_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Sample/Sample_GeneralInformation/Context_ID", 1);
 }
 
@@ -1575,6 +1581,7 @@ doNotDelete(){
 loadSampleAttributes(){
     makeVocab("DropDown", "Sample/Sample_GeneralInformation/Sample_Type", "Sample Type");
     makeVocab("DropDown", "Sample/Sample_GeneralInformation/Collection_Method", "Collection Method");
+    makeVocab("DropDown", "Sample/Sample_GeneralInformation/Device_Code", "Device Code");
 }
 
 
@@ -1698,6 +1705,7 @@ newSpecialFind(){
     newTabGroup("Special_Find");
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Special_Find/Special_Find_GeneralInformation/Context_ID", 1);
 }
 
@@ -1759,6 +1767,7 @@ doNotDelete(){
 
 loadSpecialFindAttributes(){
     makeVocab("HierarchicalDropDown", "Special_Find/Special_Find_GeneralInformation/Special_Find_Class", "Special Find Class");
+    makeVocab("DropDown", "Special_Find/Special_Find_GeneralInformation/Device_Code", "Device Code");
 }
 
 // refreshSpecialFindLocations() {
@@ -1891,6 +1900,7 @@ newAdobe(){
     newTabGroup("Adobe_Element");
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Adobe_Element/Adobe_Element/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
+    setFieldValue("Adobe_Element/Adobe_Element/Device_Code", getFieldValue("user/usertab/Device_Code"));
     incField("Adobe_Element/Adobe_Element/Context_ID", 1);
 }
 
@@ -1908,6 +1918,7 @@ loadAdobeFrom(String id) {
 loadAdobeAttributes(){
     makeVocab("DropDown", "Adobe_Element/Adobe_Element/Method_Manufacture", "Method_Manufacture");
     makeVocab("DropDown", "Adobe_Element/Adobe_Element/Shape", "AdobeShape");
+    makeVocab("DropDown", "Adobe_Element/Adobe_Element/Device_Code", "Device Code");
 }
 
 saveAdobe(String callback) {
@@ -2012,6 +2023,7 @@ newPhotoLog(){
     photolog_id = null;
     newTabGroup("Photograph_Log");
     setFieldValue("Photograph_Log/Photograph_Log/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
+    setFieldValue("Photograph_Log/Photograph_Log/Device_Code", getFieldValue("user/usertab/Device_Code"));
 }
 
 loadPhotoLog() {
@@ -2027,6 +2039,7 @@ loadPhotoLogFrom(String id) {
 
 loadPhotoLogAttributes(){
     makeVocab("DropDown", "Photograph_Log/Photograph_Log/Camera", "Camera");
+    makeVocab("DropDown", "Photograph_Log/Photograph_Log/Device_Code", "Device Code");
 }
 
 savePhotoLog(String callback) {

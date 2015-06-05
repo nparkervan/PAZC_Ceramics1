@@ -77,6 +77,9 @@
                 <child4>
                   <Sub_Unit/>
                 </child4>
+                <child5>
+                  <Device_Code/>
+                </child5>
               </container1>
               <container2>
                 <child1>
@@ -314,6 +317,9 @@
                 <child2>
                   <Area_Code/>
                 </child2>
+                <child3>
+                  <Device_Code/>
+                </child3>
               </container1>
               <Title/>
               <Context_Type/>
@@ -369,6 +375,9 @@
                 <child3>
                   <Artefact_Group_ID/>
                 </child3>
+                <child4>
+                  <Device_Code/>
+                </child4>
               </container1>
               <Artefact_Class/>
               <Bag_Number/>
@@ -406,6 +415,9 @@
                 <child3>
                   <Sample_ID/>
                 </child3>
+                <child4>
+                  <Device_Code/>
+                </child4>
               </container1>
               <Sample_Type/>
               <Collection_Method/>
@@ -445,6 +457,9 @@
                 <child3>
                   <Special_Find_ID/>
                 </child3>
+                <child4>
+                  <Device_Code/>
+                </child4>
               </container1>
               <Special_Find_Class/>
               <Special_Find_Name/>
@@ -506,6 +521,7 @@
               <Context_ID/>
               <Site_Code/>
               <Adobe_Element_ID/>
+              <Device_Code/>
               <Height/>
               <Width/>
               <Length/>
@@ -522,6 +538,7 @@
             <Photograph_Log>
               <Context_ID/>
               <Photograph_Reference_ID/>
+              <Device_Code/>
               <Camera/>
               <Caption/>
               <Scene_Type/>
@@ -756,6 +773,16 @@
             <input faims_attribute_name="Sub Unit" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sub_Unit">
               <label>{Sub_Unit}</label>
             </input>
+          </group>
+          <group faims_style="even" ref="child5">
+            <label/>
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           </group>
         </group>
         <group faims_style="orientation" ref="container2">
@@ -1447,6 +1474,16 @@
               <label>{Area_Code}</label>
             </input>
           </group>
+          <group faims_style="even" ref="child3">
+            <label/>
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
         </group>
         <input faims_attribute_name="Title" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Title">
           <label>{Context_Group_Title}</label>
@@ -1577,6 +1614,16 @@
               <label>{Artefact_Group_ID}</label>
             </input>
           </group>
+          <group faims_style="even" ref="child4">
+            <label/>
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
         </group>
         <!--We would like to see Dropdown-->
         <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class">
@@ -1678,6 +1725,16 @@
             <input faims_attribute_name="Sample ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sample_ID">
               <label>{Sample_ID}</label>
             </input>
+          </group>
+          <group faims_style="even" ref="child4">
+            <label/>
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           </group>
         </group>
         <!--We would like to see Radiogroup-->
@@ -1795,6 +1852,16 @@
             <input faims_attribute_name="Special Find ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Special_Find_ID">
               <label>{Special_Find} ID</label>
             </input>
+          </group>
+          <group faims_style="even" ref="child4">
+            <label/>
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           </group>
         </group>
         <select1 faims_attribute_name="Special Find Class" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Special_Find_Class">
@@ -1935,7 +2002,13 @@
             <input faims_attribute_name="Adobe Element ID" faims_attribute_type="measure" faims_read_only="false" ref="Adobe_Element_ID" faims_certainty="false">
               <label>{Adobe_Element_ID}</label>
             </input>
-
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
             <input faims_attribute_name="Height" faims_attribute_type="measure" faims_read_only="false" ref="Height" faims_certainty="true">
               <label>{Height}</label>
             </input>
@@ -1985,6 +2058,13 @@
             <input faims_attribute_name="Photograph Reference ID" faims_attribute_type="measure" faims_read_only="false" ref="Photograph_Reference_ID" faims_certainty="false">
               <label>{Photograph_Log}</label>
             </input>
+          <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           <input faims_attribute_name="Scene Type" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Scene_Type">
             <label>{Scene_Type}</label>
            </input>
