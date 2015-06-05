@@ -42,6 +42,7 @@
               <Artefact_Group_Starting_ID/>
               <Sample_Starting_ID/>
               <Adobe_Element_Starting_ID/>
+              <GPS_Diagnostics/>
             </data>
             <search>
               <container1>
@@ -706,6 +707,9 @@
         <input faims_certainty="false" faims_read_only="false" ref="Adobe_Element_Starting_ID">
           <label>{Adobe_Element_Starting_ID}</label>
         </input>
+        <input ref="GPS_Diagnostics" faims_web="false" faims_certainty="false" faims_annotation="false" faims_read_only="true">
+          <label>{GPS_Diagnostics}</label>
+        </input>
       </group>
       <group ref="search" faims_scrollable="false">
         <label>{Search}</label>
@@ -797,7 +801,7 @@
           </group>
           <group faims_style="even" ref="child5">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1501,7 +1505,7 @@
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1641,7 +1645,7 @@
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1753,7 +1757,7 @@
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1880,7 +1884,7 @@
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -2027,7 +2031,7 @@
             <input faims_attribute_name="Adobe Element ID" faims_attribute_type="measure" faims_read_only="false" ref="Adobe_Element_ID" faims_certainty="false">
               <label>{Adobe_Element_ID}</label>
             </input>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -2086,7 +2090,7 @@
             <input faims_attribute_name="Photograph Reference ID" faims_attribute_type="measure" faims_read_only="false" ref="Photograph_Reference_ID" faims_certainty="false">
               <label>{Photograph_Log}</label>
             </input>
-          <select1 faims_attribute_name="Device Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+          <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
