@@ -642,22 +642,24 @@ search(){
                          " WHERE uuid in (SELECT uuid "+
                          "                    FROM latestNonDeletedArchEntIdentifiers "+
                          "                   WHERE attributename != 'Site Code' "+
-                         "                     AND measure LIKE '"+type+"'||'%'  "+
-                         "                     AND aenttypename LIKE '"+term+"'||'%' "+                         
+                         "                     AND measure LIKE '"+term+"'||'%'  "+
+                         "                     AND aenttypename LIKE '"+type+"'||'%' "+                         
                          "                  )  "+
-                         "   AND (   '' = "+areaCode+"  "+
+                         "   AND (   '' = '"+areaCode+"'  "+
                          "        OR uuid in (SELECT uuid "+
                          "                     FROM latestnondeletedaentvalue  "+
                          "                     JOIN attributekey using (attributeid) "+
                          "                    WHERE attributename = 'AreaCode' "+
-                         "                      AND vocabid = "+areaCode+") "+
+                         "                      AND vocabid = '"+areaCode+"') "+
                          "       ) "+
-                         " ORDER BY response; "+
+                         " ORDER BY response "+
                          " LIMIT ? "+
                          "OFFSET ? ";
                   
 
     populateCursorList("control/search/entityList", searchQuery, 25);
+
+    Log.d("foo", searchQuery);
 
 
     // populateCursorList("control/data/ContextList", ""+
