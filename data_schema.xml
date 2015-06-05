@@ -89,31 +89,12 @@
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
       <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property name="Device Code" type="enum">
@@ -302,7 +283,7 @@
       </lookup>
     </property>
     <property name="Soil Compaction Description" type="freetext">
-      <description>Description of the compaction of soil, including changes throughout the deposit. Eg ‘Varies from loose to compact.
+      <description>Description of the compaction of soil, including changes throughout the deposit. Eg 'Varies from loose to compact.
       </description>
     </property>
     <property name="Soil Munsell Colour" type="freetext">
@@ -7970,7 +7951,7 @@
       <description>Describe the nature of truncation to the cut (where appropriate).
       </description>
     </property>
-    <!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  “Capa Superficial,” “relleno huella de poste,” “huella de poste,” “relleno de pozo,” “huella de tinaja,” “basural,” “relleno,” “contexto huaqueado,” “huella de muro de quincha,” “relleno de huella de muro de quincha,” “fogón,” “muro de quincha,” “artefacto,” “no identificado,” “otro”-->
+    <!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  "Capa Superficial," "relleno huella de poste," "huella de poste," "relleno de pozo," "huella de tinaja," "basural," "relleno," "contexto huaqueado," "huella de muro de quincha," "relleno de huella de muro de quincha," "fogón," "muro de quincha," "artefacto," "no identificado," "otro"-->
     <property name="Your Interpretation" type="freetext">
       <description>Your Interpretation of the function.</description>
       <formatString><![CDATA[$2]]></formatString>
@@ -8650,25 +8631,25 @@
           <description/></term>
         <term>{Coarse_Pebbles}
 
-          <description>20.00–60.00mm</description></term>
+          <description>20.00--60.00mm</description></term>
         <term>{Coarse_Sand}
 
-          <description>0.20–2.00mm</description></term>
+          <description>0.2----2.00mm</description></term>
         <term>{Cobbles}
 
-          <description>60mm–200mm</description></term>
+          <description>60----–200mm</description></term>
         <term>{Fine_Pebbles}
 
-          <description>2.00–6.00mm</description></term>
+          <description>2----0–6.00mm</description></term>
         <term>{Fine_sand}
 
-          <description>0.02–0.06 mm</description></term>
+          <description>----02–0.06 mm</description></term>
         <term>{Medium_Pebbles}
 
-          <description>6.00–20.0mm</description></term>
+          <description----.00–20.0mm</description></term>
         <term>{Medium_Sand}
 
-          <description>0.06–0.20mm</description></term>
+          <descriptio----0.06–0.20mm</description></term>
         <term>{Silt}
 
           <description/></term>
@@ -8872,22 +8853,22 @@
       <description>The number of the box in which the {Artefact_Group} is stored.</description>
     </property>
     <property name="Registered" type="freetext">
-      <description>The initials and date the {Artefact_Group} was registered, eg ‘AB 5/27’.</description>
+      <description>The initials and date the {Artefact_Group} was registered, eg 'AB 5/27'.</description>
     </property>
     <property name="Counted" type="freetext">
-      <description>The initials and date the {Artefact_Group} was {Counted}, eg ‘AB 5/27’.</description>
+      <description>The initials and date the {Artefact_Group} was {Counted}, eg 'AB 5/27'.</description>
     </property>
     <property name="Weighed" type="freetext">
-      <description>The initials and date the {Artefact_Group} was {Weighed}, eg ‘AB 5/27’.</description>
+      <description>The initials and date the {Artefact_Group} was {Weighed}, eg 'AB 5/27'.</description>
     </property>
     <property name="Labeled" type="freetext">
-      <description>The initials and date the {Artefact_Group} was {Labeled}, eg ‘AB 5/27’.</description>
+      <description>The initials and date the {Artefact_Group} was {Labeled}, eg 'AB 5/27'.</description>
     </property>
     <property name="Analysed" type="freetext">
-      <description>The initials and date the {Artefact_Group} was {Analysed}, eg ‘AB 5/27’.</description>
+      <description>The initials and date the {Artefact_Group} was {Analysed}, eg 'AB 5/27'.</description>
     </property>
     <property name="Stored" type="freetext">
-      <description>The initials and date the {Artefact_Group} was put away in storage, eg ‘AB 5/27’.</description>
+      <description>The initials and date the {Artefact_Group} was put away in storage, eg 'AB 5/27'.</description>
     </property>
   </ArchaeologicalElement>
   <!--SAMPLE-->
