@@ -2023,6 +2023,7 @@ newPhotoLog(){
     photolog_id = null;
     newTabGroup("Photograph_Log");
     setFieldValue("Photograph_Log/Photograph_Log/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
+    setFieldValue("Photograph_Log/Photograph_Log/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Photograph_Log/Photograph_Log/Device_Code", getFieldValue("user/usertab/Device_Code"));
 }
 

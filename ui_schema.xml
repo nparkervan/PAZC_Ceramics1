@@ -537,6 +537,7 @@
           <Photograph_Log>
             <Photograph_Log>
               <Context_ID/>
+              <Site_Code/>
               <Photograph_Reference_ID/>
               <Device_Code/>
               <Camera/>
@@ -2047,6 +2048,9 @@
           <label>{Photograph_Log}</label>
             <input faims_attribute_name="ContextID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
               <label>{ContextID}</label>
+            </input>
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+              <label>{Site_Code}</label>
             </input>
             <select1 faims_attribute_name="Camera" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Camera">
             <label>{Camera}</label>
