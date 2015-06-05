@@ -1215,6 +1215,8 @@ showRelnFromList(){
 
 updateRelns(){
     //TODO Figure out a better way of doing this other than a dropdown.
+    if (uuid == null)
+        return;
 
     populateCursorList(
             "Context/Context_Relationships_to_Other_Contexts/listOfRelns",
