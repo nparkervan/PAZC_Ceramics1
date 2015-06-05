@@ -473,7 +473,7 @@ login(){
                 username = result.get(1) + " " + result.get(2);
 
                 showTabGroup("control");
-                incField("control/data/ContextIncrement", 1);
+                loadStartingID();
             }
 
         });
@@ -523,6 +523,20 @@ loadLoginDetails() {
     }  
   });
 }
+
+loadStartingID() {
+    String idQ = "SELECT value FROM localSettings WHERE key = 'control/data/ContextIncrement';";
+    fetchOne(idQ, new FetchCallback() {
+      onFetch(result) {
+        if (!isNull(result)) {
+          setFieldValue("control/data/ContextIncrement", result.get(0));
+        } else {
+          setFieldValue("control/data/ContextIncrement", "1");
+        }
+      }  
+    });
+}
+
 
 makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
 makeVocab("DropDown", "user/usertab/Device_Code", "Device Code");
@@ -709,7 +723,7 @@ fieldPair(String ref, String name) {
 }
 /* Returns true if field specified by `ref` is valid. False otherwise.
  */
-validateField(String ref) {
+isValidField(String ref) {
     return !isNull(getFieldValue(ref));
 }
 /* `format` can either be HTML or PLAINTEXT
@@ -723,7 +737,7 @@ validateFields(List fields, String format) {
         String ref  = f.get(0); // Reference to field
         String name = f.get(1); // Human-readable name
 
-        if (!validateField(ref)) {
+        if (!isValidField(ref)) {
             out += "- " + name + "\n";
             numInvalid++;
         }
@@ -842,10 +856,11 @@ incField(String ref, Integer defaultVal) {
         return defaultVal;
     }
 
-    Integer i = Integer.parseInt(val);
-    i++;
-    setFieldValue(ref, i);
-    return i;
+    Integer inc = Integer.parseInt(val) + 1;
+    setFieldValue(ref, inc);
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + ref + "', '" + inc + "');");
+
+    return inc;
 }
 
 /* Increments the field at `ref` or returns null if it does not contain a
@@ -856,8 +871,8 @@ incField(String ref) {
 }
 
 newContext(){
-    Integer contextIncrement = incField("control/data/ContextIncrement");
-    if (contextIncrement == null) {
+    String contextIncrement = getFieldValue("control/data/ContextIncrement");
+    if (isNull(contextIncrement)) {
         showWarning("{Alert}","{No_starting_ID_is_entered_please_enter_one}");
         return;
     }
@@ -890,6 +905,8 @@ newContext(){
 
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
     setFieldValue("Context/Context_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
+
+    incField("control/data/ContextIncrement");
 }
 
 loadContext() {
