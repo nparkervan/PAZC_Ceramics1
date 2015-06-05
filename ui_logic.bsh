@@ -173,6 +173,10 @@ saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb
     });
 }
 
+setTimestamp(String path) {
+    setFieldValue(path, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date()));
+}
+
 /** Action Bar **/
 addActionBarItem("sync", new ToggleActionButtonCallback() {
     actionOnLabel() {
@@ -250,29 +254,6 @@ addActionBarItem("external_gps", new ToggleActionButtonCallback() {
         }
     }
 });
-
-setTimestamp(String path) {
-    setFieldValue(path, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date()));
-}
-
- 
-loadFromLocalSettings(String key, String defaultVal) { 
-    String localSettingsQuery = "SELECT value " +
-                                "  FROM localSettings "+
-                                " WHERE key = '" + key + "';";
-
-    fetchOne(localSettingsQuery, new FetchCallback() {
-        onFetch(result) {
-            print("" + result);
-            String value = defaultVal;
-            if (!isNull(result)) {
-                value = result.get(0);
-            }
-
-            setFieldValue("Project/Main/" + key, value);
-        }
-    });
-}
 
 /*** Navigation Drawer ***/
 removeNavigationButtons() {
@@ -460,7 +441,15 @@ populateListForUsers(){
 
     fetchAll(getNonDeletedUsersQuery, new FetchCallback() {
         onFetch(result) {
-            populateDropDown("user/usertab/users", result);
+            populateDropDown("user/usertab/users", result, true);
+            String userQ = localSettingsQuery("User_VocabID");
+            fetchOne(userQ, new FetchCallback() {
+              onFetch(result) {
+                if (!isNull(result)) {
+                  setFieldValue("user/usertab/users", result.get(0));
+                }
+              }  
+            });
         }
     });
 }
@@ -472,8 +461,8 @@ String device = "";
 String areaCode = "";
 
 login(){
-    if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users"))){
-        showWarning("{Warning}", "{Please_select_a_User_and_an_Area_Code_before_logging_in}");
+    if(isNull(getFieldValue("user/usertab/Area_Code")) || isNull(getFieldValue("user/usertab/users")) || isNull(getFieldValue("user/usertab/Device_Code"))){
+        showWarning("{Warning}", "{Please_select_a_User_and_an_Area_Code_and_a_Device_Code_before_logging_in}");
         return;
     } else {
         String userVocabId = getFieldValue("user/usertab/users");
@@ -491,37 +480,53 @@ login(){
 
         // store the user and area code into local settings, and set the globals
         areaCode = getFieldValue("user/usertab/Area_Code");
-        saveUserAndAreaCode();
+        device = getFieldValue("user/usertab/Device_Code");
+        saveLoginDetails();
     }
 }
 
-saveUserAndAreaCode() {
-  fetchOne("REPLACE INTO localSettings(key, value) VALUES('User', '"+userid+"');");
-  fetchOne("REPLACE INTO localSettings(key, value) VALUES('Area', '"+getFieldValue("user/usertab/Area_Code")+"');");
+saveLoginDetails() {
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('User_VocabID', '"+getFieldValue("user/usertab/users")+"');");
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('AreaCode_VocabID', '"+getFieldValue("user/usertab/Area_Code")+"');");
+  fetchOne("REPLACE INTO localSettings(key, value) VALUES('DeviceCode_VocabID', '"+getFieldValue("user/usertab/Device_Code")+"');");
+  fetchOne("REPLACE INTO localsettings(key, value) SELECT 'AreaCode_VocabName', vocabname FROM vocabulary WHERE vocabid = "+getFieldValue("user/usertab/Area_Code")+";");
+  fetchOne("REPLACE INTO localsettings(key, value) SELECT 'DeviceCode_VocabName', vocabname FROM vocabulary WHERE vocabid = "+getFieldValue("user/usertab/Device_Code")+";");
 }
 
-loadAreaCode() {
-  areaCodeQ = "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = 'Area' ";
-  areaCode  = null;
-  fetchOne(
-      areaCodeQ,
-      new FetchCallback() {
-        onFetch(result) {
-          if (isNull(result)) {
-            return;
-          }
-          String fetchedValue = result.get(0);
-          if (!isNull(fetchedValue)) {
-            areaCode = fetchedValue;
-            setFieldValue("user/usertab/Area_Code", fetchedValue);
-          }
-        }
+localSettingsQuery(String key) {
+  return "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = '"+key+"' ";
+}
+
+loadLoginDetails() {
+  String userQ = localSettingsQuery("User_VocabID");
+  String areaCodeQ = localSettingsQuery("AreaCode_VocabID");
+  String deviceCodeQ = localSettingsQuery("DeviceCode_VocabID");
+  fetchOne(userQ, new FetchCallback() {
+    onFetch(result) {
+      if (!isNull(result)) {
+        setFieldValue("user/usertab/users", result.get(0));
       }
-  );
+    }  
+  });
+  fetchOne(areaCodeQ, new FetchCallback() {
+    onFetch(result) {
+      if (!isNull(result)) {
+        setFieldValue("user/usertab/Area_Code", result.get(0));
+      }
+    }  
+  });
+  fetchOne(deviceCodeQ, new FetchCallback() {
+    onFetch(result) {
+      if (!isNull(result)) {
+        setFieldValue("user/usertab/Device_Code", result.get(0));
+      }
+    }  
+  });
 }
 
-makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode"); // Populate Area code dropdown
-onEvent("user", "load", "loadAreaCode()");
+makeVocab("DropDown", "user/usertab/Area_Code", "AreaCode");
+makeVocab("DropDown", "user/usertab/Device_Code", "Device Code");
+onEvent("user", "load", "loadLoginDetails()");
 onEvent("user", "show", "removeNavigationButtons()");
 onEvent("user/usertab/", "show", "populateListForUsers()");
 onEvent("user/usertab/login", "click", "login()");

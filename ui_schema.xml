@@ -24,6 +24,7 @@
             <usertab>
               <Area_Code/>
               <users/>
+              <Device_Code/>
               <login/>
               <guide/>
             </usertab>
@@ -621,6 +622,13 @@
         </select1>
         <select1 ref="Area_Code">
           <label>{Select_Area_Code}</label>
+          <item>
+            <label>{placeholder}</label>
+            <value>placeholder</value>
+          </item>
+        </select1>
+        <select1 ref="Device_Code">
+          <label>{Select_Device_Code}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
