@@ -7971,7 +7971,7 @@
       </description>
     </property>
     <!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  “Capa Superficial,” “relleno huella de poste,” “huella de poste,” “relleno de pozo,” “huella de tinaja,” “basural,” “relleno,” “contexto huaqueado,” “huella de muro de quincha,” “relleno de huella de muro de quincha,” “fogón,” “muro de quincha,” “artefacto,” “no identificado,” “otro”-->
-    <property isIdentifier="true" name="Your Interpretation" type="freetext">
+    <property name="Your Interpretation" type="freetext">
       <description>Your Interpretation of the function.</description>
       <formatString><![CDATA[$2]]></formatString>
       <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
@@ -8344,8 +8344,35 @@
       <formatString><![CDATA[$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
-    <property name="Area Code" type="freetext">
+    <property name="AreaCode" type="enum">
       <description>Area or Trench: the working subdivision of an archaeological site. </description>
+      <lookup>
+        <term>123-0<description>{Site} 123.</description></term>
+        <term>125-0<description>{Site} 125.</description></term>
+        <term>128-0<description>{Site} 128.</description></term>
+        <term>131-0<description>{Site} 131.</description></term>
+        <term>136-0<description>{Site} 136.</description></term>
+        <term>123-1<description>{Site} 123. </description></term>
+        <term>125-1<description>{Site} 125.</description></term>
+        <term>128-1<description>{Site} 128.</description></term>
+        <term>131-1<description>{Site} 131.</description></term>
+        <term>136-1<description>{Site} 136.</description></term>
+        <term>123-2<description>{Site} 123. </description></term>
+        <term>125-2<description>{Site} 125.</description></term>
+        <term>128-2<description>{Site} 128.</description></term>
+        <term>131-2<description>{Site} 131.</description></term>
+        <term>136-2<description>{Site} 136.</description></term>
+        <term>123-3<description>{Site} 123. </description></term>
+        <term>125-3<description>{Site} 125.</description></term>
+        <term>128-3<description>{Site} 128.</description></term>
+        <term>131-3<description>{Site} 131.</description></term>
+        <term>136-3<description>{Site} 136.</description></term>
+        <term>123-4<description>{Site} 123. </description></term>
+        <term>125-4<description>{Site} 125.</description></term>
+        <term>128-4<description>{Site} 128.</description></term>
+        <term>131-4<description>{Site} 131.</description></term>
+        <term>136-4<description>{Site} 136.</description></term>
+      </lookup>
     </property>
     <property name="Device Code" type="enum">
       <description/>
@@ -9292,6 +9319,11 @@
     <description>A record of images created and stored on another device, eg by a professional site photographer.</description>
     <property isIdentifier="true" name="ContextID" type="freetext">
       <description>Unique number or code for each Context</description>
+      <formatString><![CDATA[$2]]></formatString>
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
+    </property>
+    <property isIdentifier="true" name="Site Code" type="freetext">
+      <description>Short code to signify the excavation site and often the year of excavation. </description>
       <formatString><![CDATA[$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
