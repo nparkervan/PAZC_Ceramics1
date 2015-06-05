@@ -8327,32 +8327,13 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>Area or Trench: the working subdivision of an archaeological site. </description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property name="Device Code" type="enum">
@@ -8571,32 +8552,13 @@
     <description> </description>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property name="Component Type" type="vocab">
@@ -8637,19 +8599,19 @@
           <description>0.2----2.00mm</description></term>
         <term>{Cobbles}
 
-          <description>60----–200mm</description></term>
+          <description>60------200mm</description></term>
         <term>{Fine_Pebbles}
 
-          <description>2----0–6.00mm</description></term>
+          <description>2--------6.00mm</description></term>
         <term>{Fine_sand}
 
-          <description>----02–0.06 mm</description></term>
+          <description>----------0.06 mm</description></term>
         <term>{Medium_Pebbles}
 
-          <description----.00–20.0mm</description></term>
+          <description>------------20.0mm</description></term>
         <term>{Medium_Sand}
 
-          <descriptio----0.06–0.20mm</description></term>
+          <description>--------------0.20mm</description></term>
         <term>{Silt}
 
           <description/></term>
@@ -8752,32 +8714,13 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property isIdentifier="true" name="Artefact Class" type="enum">
@@ -8908,32 +8851,13 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property name="Sample Type" type="enum">
@@ -9215,32 +9139,13 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property isIdentifier="true" name="Special Find Class" type="freetext">
@@ -9353,32 +9258,13 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
   </ArchaeologicalElement>
@@ -9420,32 +9306,13 @@
     </property>
     <property name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <lookup>
-        <term>123-0<description>{Site} 123.</description></term>
-        <term>125-0<description>{Site} 125.</description></term>
-        <term>128-0<description>{Site} 128.</description></term>
-        <term>131-0<description>{Site} 131.</description></term>
-        <term>136-0<description>{Site} 136.</description></term>
-        <term>123-1<description>{Site} 123. </description></term>
-        <term>125-1<description>{Site} 125.</description></term>
-        <term>128-1<description>{Site} 128.</description></term>
-        <term>131-1<description>{Site} 131.</description></term>
-        <term>136-1<description>{Site} 136.</description></term>
-        <term>123-2<description>{Site} 123. </description></term>
-        <term>125-2<description>{Site} 125.</description></term>
-        <term>128-2<description>{Site} 128.</description></term>
-        <term>131-2<description>{Site} 131.</description></term>
-        <term>136-2<description>{Site} 136.</description></term>
-        <term>123-3<description>{Site} 123. </description></term>
-        <term>125-3<description>{Site} 125.</description></term>
-        <term>128-3<description>{Site} 128.</description></term>
-        <term>131-3<description>{Site} 131.</description></term>
-        <term>136-3<description>{Site} 136.</description></term>
-        <term>123-4<description>{Site} 123. </description></term>
-        <term>125-4<description>{Site} 125.</description></term>
-        <term>128-4<description>{Site} 128.</description></term>
-        <term>131-4<description>{Site} 131.</description></term>
-        <term>136-4<description>{Site} 136.</description></term>
+            <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+        
       </lookup>
     </property>
     <property name="Height" type="freetext">
