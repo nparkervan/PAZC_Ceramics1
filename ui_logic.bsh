@@ -867,8 +867,22 @@ newContext(){
 
     fetchOne("REPLACE INTO localSettings(key, value) VALUES('contextIncrement', '" + contextIncrement + "');", null);
     setFieldValue("Context/Context_GeneralInformation/AreaCode", getFieldValue("user/usertab/Area_Code"));
-    setFieldValue("Context/Context_GeneralInformation/Grid_Location_Reference", areaCode.substring(0,4));
-    setFieldValue("Context/Context_Measure/Datum", areaCode.substring(0,4));
+
+    String gridDatumQ = "SELECT areacode || '-' || devicecode AS grid, areacode || '-' AS datum " + 
+      " FROM (SELECT vocabname as areacode " +
+      " FROM vocabulary, localsettings " +
+      " WHERE vocabid = value " +
+      " and key = 'AreaCode_VocabID'), " +
+      " (SELECT vocabname as devicecode " +
+      " FROM vocabulary, localsettings " +
+      " WHERE vocabid = value " +
+      " and key = 'DeviceCode_VocabID');";
+    fetchOne(gridDatumQ, new FetchCallback() {
+      onFetch(result) {
+        setFieldValue("Context/Context_GeneralInformation/Grid_Location_Reference", result.get(0));
+        setFieldValue("Context/Context_Measure/Datum", result.get(1));
+      }
+    });    
 
     setFieldValue("Context/Context_GeneralInformation/Site_Code", moduleSiteCode);
     setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
