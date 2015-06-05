@@ -599,7 +599,7 @@ search(){
                          "OFFSET ? ";
                   
 
-    populateCursorList("control/data/ContextList", searchQuery, 25);
+    populateCursorList("control/search/entityList", searchQuery, 25);
 
 
     // populateCursorList("control/data/ContextList", ""+
