@@ -759,9 +759,13 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="true" ref="AreaCode">
+            <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="AreaCode">
               <label>{Area_Code}</label>
-            </input>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
@@ -1471,9 +1475,13 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Area Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Area_Code">
+             <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Area_Code">
               <label>{Area_Code}</label>
-            </input>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           </group>
           <group faims_style="even" ref="child3">
             <label/>

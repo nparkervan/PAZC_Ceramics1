@@ -8344,8 +8344,35 @@
       <formatString><![CDATA[$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
-    <property name="Area Code" type="freetext">
+    <property name="AreaCode" type="enum">
       <description>Area or Trench: the working subdivision of an archaeological site. </description>
+      <lookup>
+        <term>123-0<description>{Site} 123.</description></term>
+        <term>125-0<description>{Site} 125.</description></term>
+        <term>128-0<description>{Site} 128.</description></term>
+        <term>131-0<description>{Site} 131.</description></term>
+        <term>136-0<description>{Site} 136.</description></term>
+        <term>123-1<description>{Site} 123. </description></term>
+        <term>125-1<description>{Site} 125.</description></term>
+        <term>128-1<description>{Site} 128.</description></term>
+        <term>131-1<description>{Site} 131.</description></term>
+        <term>136-1<description>{Site} 136.</description></term>
+        <term>123-2<description>{Site} 123. </description></term>
+        <term>125-2<description>{Site} 125.</description></term>
+        <term>128-2<description>{Site} 128.</description></term>
+        <term>131-2<description>{Site} 131.</description></term>
+        <term>136-2<description>{Site} 136.</description></term>
+        <term>123-3<description>{Site} 123. </description></term>
+        <term>125-3<description>{Site} 125.</description></term>
+        <term>128-3<description>{Site} 128.</description></term>
+        <term>131-3<description>{Site} 131.</description></term>
+        <term>136-3<description>{Site} 136.</description></term>
+        <term>123-4<description>{Site} 123. </description></term>
+        <term>125-4<description>{Site} 125.</description></term>
+        <term>128-4<description>{Site} 128.</description></term>
+        <term>131-4<description>{Site} 131.</description></term>
+        <term>136-4<description>{Site} 136.</description></term>
+      </lookup>
     </property>
     <property name="Device Code" type="enum">
       <description/>
