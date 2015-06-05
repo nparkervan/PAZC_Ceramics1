@@ -1456,7 +1456,9 @@ loadArtefactGroupFrom(String id) {
 
 saveArtefactGroup(String callback) {
     Boolean enable_autosave = true;
-    saveTabGroup("Artefact_Group", artefact_group_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Artefact_Group", artefact_group_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             artefact_group_id = uuid;
             onArtefactGroupSaved();
@@ -1551,7 +1553,9 @@ loadSampleFrom(String id) {
 
 saveSample(String callback) {
     Boolean enable_autosave = true;
-    saveTabGroup("Sample", sample_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Sample", sample_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             sample_id = uuid;
             onSampleSaved();
@@ -1641,7 +1645,9 @@ loadMatrixFrom(String id) {
 
 saveMatrix(String callback) {
     Boolean enable_autosave = true;
-    saveTabGroup("Matrix", matrix_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Matrix", matrix_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             matrix_id = uuid();
             onMatrixSaved();
@@ -1739,7 +1745,9 @@ loadSpecialFindFrom(String id) {
 
 saveSpecialFind(String callback) {
     Boolean enable_autosave = true;
-    saveTabGroup("Special_Find", special_find_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Special_Find", special_find_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             special_find_id = uuid;
             onSpecialFindSaved();
@@ -1842,7 +1850,9 @@ loadSpecialFindLocationFrom(archent_id) {
 
 saveSpecialFindLocation() {
     Boolean enable_autosave = true;
-    saveTabGroup("Special_Find_Location", special_find_location_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Special_Find_Location", special_find_location_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             special_find_location_id = uuid;
             onSpecialFindLocationSaved();
@@ -1944,7 +1954,9 @@ saveAdobe(String callback) {
     }
 
     Boolean enable_autosave = true;
-    saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Adobe_Element", adobe_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             adobe_id = uuid;
             onAdobeSaved();
@@ -2061,7 +2073,9 @@ loadPhotoLogAttributes(){
 
 savePhotoLog(String callback) {
     Boolean enable_autosave = true;
-    saveTabGroup("Photograph_Log", photolog_id, null, null, new SaveCallback() {
+    List attributes = createAttributeList();
+    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    saveTabGroup("Photograph_Log", photolog_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             photolog_id = uuid;
             onPhotoLogSaved();
