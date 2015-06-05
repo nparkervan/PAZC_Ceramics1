@@ -7971,7 +7971,7 @@
       </description>
     </property>
     <!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  “Capa Superficial,” “relleno huella de poste,” “huella de poste,” “relleno de pozo,” “huella de tinaja,” “basural,” “relleno,” “contexto huaqueado,” “huella de muro de quincha,” “relleno de huella de muro de quincha,” “fogón,” “muro de quincha,” “artefacto,” “no identificado,” “otro”-->
-    <property isIdentifier="true" name="Your Interpretation" type="freetext">
+    <property name="Your Interpretation" type="freetext">
       <description>Your Interpretation of the function.</description>
       <formatString><![CDATA[$2]]></formatString>
       <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
