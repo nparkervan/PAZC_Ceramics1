@@ -1335,7 +1335,7 @@
         </select1>
       </group>
       
-      <group ref="Context_Artefacts">
+      <group ref="Context_Artefacts" faims_scrollable="true">
         <label>{Artefacts}</label>
         <group ref="colgroup" faims_style="orientation">
           <label/>
@@ -1344,7 +1344,7 @@
             <trigger ref="newArtefactGroup">
               <label>{Add_Artefact_Group}</label>
             </trigger>
-            <select1 faims_certainty="false" faims_read_only="false" ref="artefactGroupList">
+            <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="artefactGroupList">
               <label>{Select_Artefact_Group}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1357,7 +1357,7 @@
             <trigger ref="newSpecialFind">
               <label>{Add_Special_Find}</label>
             </trigger>
-            <select1 faims_certainty="false" faims_read_only="false" ref="specialFindList">
+            <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="specialFindList">
               <label>{Select_Special_Find}</label>
               <item>
                 <label>{placeholder}</label>

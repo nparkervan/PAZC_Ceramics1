@@ -801,8 +801,10 @@ onEvent("Context/Context_Attachments/attachPhoto", "click", "attachPictureTo(\"C
 onEvent("Context/Context_Attachments/attachSketch", "click", "attachFileTo(\"Context/Context_Attachments/Sketch\")");
 onEvent("Context/Context_Attachments/viewattached", "click", "viewArchEntAttachedFiles(context_id)");
 
-onEvent("Context/Context_Artefacts/newArtefactGroup", "delayclick", "newArtefactGroup();");
-onEvent("Context/Context_Artefacts/newSpecialFind", "delayclick", "newSpecialFind();");
+onEvent("Context/Context_Artefacts/newArtefactGroup"  , "delayclick" , "newArtefactGroup();");
+onEvent("Context/Context_Artefacts/newSpecialFind"    , "delayclick" , "newSpecialFind();");
+onEvent("Context/Context_Artefacts/artefactGroupList" , "click"      , "loadArtefactGroup()");
+onEvent("Context/Context_Artefacts/specialFindList"   , "click"      , "loadSpecialFind()");
 
 onEvent("Context/Context_Samples/newSample", "click", "newSample();");
 onEvent("Context/Context_Samples/loadSample", "click", "loadSample()");
@@ -1102,6 +1104,21 @@ fillInCloseDate(){
 }
 //todo wire in placeholder archents into all of these.
 
+updateContextRelationshipBasedCursorList(path, relntypename, uuid){
+    String query = "" +
+        "SELECT childuuid, response "+
+        "  FROM parentchild JOIN latestNonDeletedArchEntFormattedIdentifiers on (childuuid = uuid) "+
+        "  JOIN createdmodifiedatby USING (uuid) "+
+        " WHERE relationshipid in (SELECT relationshipid  "+
+        "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
+        "                           WHERE relntypename = '"+relntypename+"') "+
+        "   AND parentuuid = "+uuid+" "+
+        "   AND parentaenttypename = 'Context' "+
+        " ORDER BY createdat desc " +
+        " LIMIT ? OFFSET ?; ";
+
+    populateCursorList(path, query, 25);
+}
 
 updateContextRelationshipBasedDropdown(path, relntypename, uuid){
     if (!isNull(context_id)){
@@ -1163,10 +1180,8 @@ updateAllContextGroups() {
 }
 
 updateAllContextArtefacts(){
-    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/artefactGroupList", "ContextArtefactGroup", context_id);
-    updateContextRelationshipBasedDropdown("Context/Context_Artefacts/specialFindList", "ContextSpecialFind", context_id);
-
-
+    updateContextRelationshipBasedCursorList("Context/Context_Artefacts/artefactGroupList", "ContextArtefactGroup", context_id);
+    updateContextRelationshipBasedCursorList("Context/Context_Artefacts/specialFindList", "ContextSpecialFind", context_id);
 }
 
 updateAllContextSamples(){
@@ -1560,7 +1575,7 @@ newArtefactGroup(){
 }
 
 loadArtefactGroup() {
-    artefact_group_id = getFieldValue("Context/Context_Artefacts/artefactGroupList");
+    artefact_group_id = getListItemValue();
     loadArtefactGroupFrom(artefact_group_id);
 }
 
@@ -1833,7 +1848,7 @@ newSpecialFind(){
 }
 
 loadSpecialFind() {
-    special_find_id = getFieldValue("Context/Context_Artefacts/specialFindList");
+    special_find_id = getListItemValue();
     loadSpecialFindFrom(special_find_id);
 }
 
