@@ -1,0 +1,156 @@
+<ValidationSchema>
+ 
+<ArchaeologicalElement name='Context'>
+<property name='Context Type'>
+    <validator type='blankchecker'>
+        <param type='field' value='vocab' />
+    </validator>
+</property>
+<property name='Date Closed'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Date Opened'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Excavation Method'>
+    <validator type='blankchecker'>
+        <param type='field' value='vocab' />
+    </validator>
+</property>
+<property name='Context Comments'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Your description'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Excavator'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Highest Level'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Lowest Level'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Highest Level NW'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Highest Level NE'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Highest Level SE'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Highest Level SW'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Highest Level Ctr'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Lowest Level NW'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Lowest Level NE'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Lowest Level Ctr'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Lowest Level SE'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Lowest Level SW'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Length'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Width'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Depth'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Volume'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Soil Colour'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Shape of Cut'>
+    <validator type='blankchecker'>
+        <param type='field' value='vocab' />
+    </validator>
+</property>
+<property name='Your Discussion'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Start date'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='End date'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Phase To'>
+    <validator type='blankchecker'>
+        <param type='field' value='vocab' />
+    </validator>
+</property>
+<property name='Photo'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+</ArchaeologicalElement>
+ 
+</ValidationSchema>
