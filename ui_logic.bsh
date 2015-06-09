@@ -178,6 +178,15 @@ setTimestamp(String path) {
 }
 
 /** Action Bar **/
+addActionBarItem("clean_synced_files", new ActionButtonCallback() {
+    actionOnLabel() {
+      "{Clean_Synced_Files}";
+    }
+    actionOn() {
+      cleanSyncedFiles();
+    }
+});
+
 addActionBarItem("sync", new ToggleActionButtonCallback() {
     actionOnLabel() {
         "{Disable_Sync}";
