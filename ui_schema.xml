@@ -556,6 +556,11 @@
 
         </faims>
       </instance>
+      <bind nodeset="/faims/control/data/ContextIncrement" type="decimal"/>
+      <bind nodeset="/faims/control/data/Artefact_Group_Starting_ID" type="decimal"/>
+      <bind nodeset="/faims/control/data/SpecialFind_Starting_ID" type="decimal"/>
+      <bind nodeset="/faims/control/data/Sample_Starting_ID" type="decimal"/>
+      <bind nodeset="/faims/control/data/Adobe_Element_Starting_ID" type="decimal"/>
       <!--list of numeric and blocktext(memo) attributes(fields)-->
       <bind nodeset="/faims/Context/Context_Measure/container1/child1/Context_Highest_Level" type="decimal"/>
       <bind nodeset="/faims/control/data/ContextIncrement" type="decimal"/>
