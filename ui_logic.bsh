@@ -600,6 +600,9 @@ loadStartingIds() {
     for (ref : l) {
         loadStartingId(ref);
     }
+    for (ref : l) {
+        onFocus(ref, null,  "insertIntoLocalSettings(\"" + ref + "\", getFieldValue(\"" + ref + "\"));");
+    }
 }
 
 loadStartingId(String ref) {
@@ -636,6 +639,7 @@ onEvent("control/search"              , "show"  , "loadSearch();");
 onEvent("control/search/Search"       , "click" , "clearSearch()");
 onEvent("control/search/searchButton" , "click" , "search()");
 onEvent("control/search/entityTypes"  , "click" , "loadSearch();");
+// TODO "control/search/Area_Code" binding?
 onEvent("control/search/entityList"   , "click" , "loadEntity();");
 
 setSearchAreaCode() {
@@ -948,6 +952,10 @@ onEvent("Artefact_Group/Artefact_Group_GeneralInformation/validate", "delayclick
 onEvent("Artefact_Group/Artefact_Group_Validation", "show", "validateArtefactGroupFields(false)");
 onEvent("Artefact_Group", "show", "validateArtefactGroupFields(false)");
 
+insertIntoLocalSettings(String key, String val) {
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + key + "', '" + val + "');");
+}
+
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,
  * otherwise increments its value.
@@ -964,7 +972,7 @@ incField(String ref, Integer defaultVal) {
 
     Integer inc = Integer.parseInt(val) + 1;
     setFieldValue(ref, inc);
-    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + ref + "', '" + inc + "');");
+    insertIntoLocalSettings(ref, inc);
 
     return inc;
 }
