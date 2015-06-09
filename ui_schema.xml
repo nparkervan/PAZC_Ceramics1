@@ -283,14 +283,16 @@
               <deletePhotoLog/>
             </Context_Attachments>
             <Context_Artefacts>
-              <newArtefactGroup/>
-              <artefactGroupList/>
-              <loadArtefactGroup/>
-              <deleteArtefactGroup/>
-              <newSpecialFind/>
-              <specialFindList/>
-              <loadSpecialFind/>
-              <deleteSpecialFind/>
+              <colgroup>
+                <left>
+                  <newArtefactGroup/>
+                  <artefactGroupList/>
+                </left>
+                <right>
+                  <newSpecialFind/>
+                  <specialFindList/>
+                </right>
+              </colgroup>
             </Context_Artefacts>
             <Context_Samples>
               <newSample/>
@@ -1335,38 +1337,35 @@
       
       <group ref="Context_Artefacts">
         <label>{Artefacts}</label>
-        <trigger ref="newArtefactGroup">
-          <label>{Add_Artefact_Group}</label>
-        </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="artefactGroupList">
-          <label>{Select_Artefact_Group}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-        <trigger ref="loadArtefactGroup">
-          <label>{Load_Artefact_Group}</label>
-        </trigger>
-        <trigger ref="deleteArtefactGroup">
-          <label>{Delete_Artefact_Group}</label>
-        </trigger>
-        <trigger ref="newSpecialFind">
-          <label>{Add_Special_Find}</label>
-        </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="specialFindList">
-          <label>{Select_Special_Find}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-        <trigger ref="loadSpecialFind">
-          <label>{Load_Special_Find}</label>
-        </trigger>
-        <trigger ref="deleteSpecialFind">
-          <label>{Delete_Special_Find}</label>
-        </trigger>
+        <group ref="colgroup" faims_style="orientation">
+          <label/>
+          <group ref="left" faims_style="even">
+            <label/>
+            <trigger ref="newArtefactGroup">
+              <label>{Add_Artefact_Group}</label>
+            </trigger>
+            <select1 faims_certainty="false" faims_read_only="false" ref="artefactGroupList">
+              <label>{Select_Artefact_Group}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+          <group ref="right" faims_style="even">
+            <label/>
+            <trigger ref="newSpecialFind">
+              <label>{Add_Special_Find}</label>
+            </trigger>
+            <select1 faims_certainty="false" faims_read_only="false" ref="specialFindList">
+              <label>{Select_Special_Find}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+        </group>
 
       </group>
       <group ref="Context_Samples">

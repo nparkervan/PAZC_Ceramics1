@@ -802,11 +802,7 @@ onEvent("Context/Context_Attachments/attachSketch", "click", "attachFileTo(\"Con
 onEvent("Context/Context_Attachments/viewattached", "click", "viewArchEntAttachedFiles(context_id)");
 
 onEvent("Context/Context_Artefacts/newArtefactGroup", "delayclick", "newArtefactGroup();");
-onEvent("Context/Context_Artefacts/loadArtefactGroup", "click", "loadArtefactGroup()");
-onEvent("Context/Context_Artefacts/deleteArtefactGroup", "delayclick", "deleteArtefactGroupFromContext()");
 onEvent("Context/Context_Artefacts/newSpecialFind", "delayclick", "newSpecialFind();");
-onEvent("Context/Context_Artefacts/loadSpecialFind", "click", "loadSpecialFind()");
-onEvent("Context/Context_Artefacts/deleteSpecialFind", "delayclick", "deleteSpecialFindFromContext()");
 
 onEvent("Context/Context_Samples/newSample", "click", "newSample();");
 onEvent("Context/Context_Samples/loadSample", "click", "loadSample()");
