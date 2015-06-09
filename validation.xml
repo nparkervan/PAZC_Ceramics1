@@ -153,4 +153,57 @@
 </property>
 </ArchaeologicalElement>
  
+<ArchaeologicalElement name='Context Group'>
+
+ <property name='Description'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Length'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Width'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Depth'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Your Discussion'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='Start Date'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='End Date'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+<property name='CG Phase From'>
+    <validator type='blankchecker'>
+        <param type='field' value='vocab' />
+    </validator>
+</property>
+</ArchaeologicalElement>
+
+<ArchaeologicalElement name='Artefact'>
+    <property name='Photo'>
+    <validator type='blankchecker'>
+        <param type='field' value='measure' />
+    </validator>
+</property>
+</ArchaeologicalElement>
+
+
 </ValidationSchema>
