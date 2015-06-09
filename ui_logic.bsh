@@ -691,7 +691,7 @@ search(){
                          "                     AND measure LIKE '"+term+"'||'%'  "+
                          "                     AND aenttypename LIKE '"+type+"'||'%' "+                         
                          "                  )  "+
-                         "   AND (   '' = '"+areaCode+"'  "+
+                         "   AND (   'null' = '"+areaCode+"'  "+
                          "        OR uuid in (SELECT uuid "+
                          "                     FROM latestnondeletedaentvalue  "+
                          "                     JOIN attributekey using (attributeid) "+
