@@ -679,7 +679,6 @@ refreshEntities() {
     menu = false;
 }
 
-// TODO: rewrite query
 search(){
     String type = getFieldValue("control/search/entityTypes");
     String areaCode = getFieldValue("control/search/Area_Code");
@@ -707,22 +706,6 @@ search(){
     populateCursorList("control/search/entityList", searchQuery, 25);
 
     Log.d("foo", searchQuery);
-
-
-    // populateCursorList("control/data/ContextList", ""+
-    //     "SELECT uuid, response "+
-    //     "  FROM latestNonDeletedArchEntFormattedIdentifiers " +
-    //     "  JOIN createdmodifiedatby USING (uuid) " +
-    //     " WHERE aenttypename = 'Context' "+
-    //     "   AND uuid IN (SELECT uuid "+
-    //                     "  FROM latestnondeletedaentvalue "+
-    //                     "  LEFT OUTER JOIN vocabulary USING (vocabid) "+
-    //                     " WHERE freetext like '%"+getFieldValue("control/search/Search")+"%' "+
-    //                     "    OR vocabname like '%"+getFieldValue("control/search/Search")+"%' "+
-    //                     "    OR measure like '%"+getFieldValue("control/search/Search")+"%') "+
-    //     " ORDER BY  modifiedat DESC " +
-    //     " LIMIT ? "+
-    //     " OFFSET ? ", 25);
 }
 
 entityTypes = new ArrayList();
@@ -1062,14 +1045,6 @@ loadContextFrom(contextid) {
     });
 }
 
-// TODO: update old save validation
-validateSaveContext() {
-  if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
-      showWarning("{Error}", "{Cannot_save_record_without_id}");
-      return;
-  }
-}
-
 saveContext(String callback) {  
   
     Boolean enable_autosave = true;
@@ -1314,9 +1289,6 @@ loadContextAttributes(){
 }
 
 openContextTabs(){
-    
-
-//TODO: Check this. I'm sure we have new functions that makes this easier.
     fetchOne("SELECT vocabName FROM vocabulary WHERE vocabid = '"+getFieldValue("Context/Context_GeneralInformation/Context_Type")+"';",
 
         new FetchCallback() {
@@ -1406,14 +1378,6 @@ makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase Fro
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To");
 
 String context_group_id = null;
-
-// TODO: update old save validation
-validateSaveContextGroup() {
-    if (isNull(getFieldValue("ContextGroup/ContextGroup_Details/Title"))) {
-        showWarning("{Validation_Error}", "{Context_Group_requires_a_title_to_be_saved}");
-        return;
-    }
-}
 
 newContextGroup(menu){
     if (!menu && isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -1580,14 +1544,6 @@ onEvent("Artefact_Group/Artefact_Group_GeneralInformation/viewattached", "click"
 
 String artefact_group_id = null;
 
-// TODO: update old save validation
-validateSaveArtefactGroup() {
-    if (isNull(getFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID"))) {
-        showWarning("{Error}", "{Cannot_save_record_without_id}");
-        return;
-    }
-}
-
 newArtefactGroup(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
         showWarning("{Error}", "{Cannot_save_record_without_id}");
@@ -1680,14 +1636,6 @@ onEvent("Sample/Sample_GeneralInformation/viewattached", "click", "viewArchEntAt
 
 String sample_id = null;
 
-// TODO: update old save validation
-validateSaveSample() {
-    if (isNull(getFieldValue("Sample/Sample_GeneralInformation/Sample_ID"))) {
-        showWarning("{Error}", "{Cannot_save_record_without_id}");
-        return;
-    }
-}
-
 newSample(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
         showWarning("{Error}", "{Cannot_save_record_without_id}");
@@ -1779,14 +1727,6 @@ onEvent("Matrix", "show", "keepTabGroupChanges(\"Matrix\"); saveMatrix(\"\");");
 
 String matrix_id = null;
 
-// TODO: update old save validation
-validateSaveMatrix() {
-    if (isNull(getFieldValue("Matrix/Matrix/Component"))) {
-        showWarning("{Error}", "{Cannot_save_Matrix_without_Component}");
-        return;
-    }
-}
-
 newMatrix(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
         showWarning("{Error}", "{Cannot_save_record_without_id}");
@@ -1876,14 +1816,6 @@ onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delaycl
 onEvent("Special_Find/Special_Find_Location/List_Special_Find_Location", "click", "loadSpecialFindLocation()");
 
 String special_find_id = null;
-
-// TODO: update old save validation
-validateSaveSpecialFind(){
-    if (isNull(getFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID"))) {
-        showWarning("{Error}", "{Cannot_save_record_without_id}");
-        return;
-    }
-}
 
 newSpecialFind(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -1997,14 +1929,6 @@ onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpe
 
 String special_find_location_id = null;
 
-// TODO: update old save validation
-validateSaveSpecialFindLocation(){
-    if (isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Latitude")) || isNull(getFieldValue("Special_Find_Location/Special_Find_Location/Longitude"))) {
-        showWarning("{Error}", "{Cannot_save_Special_Find_Location_without_Latitdue_or_Longitude}");
-        return;
-    }
-}
-
 newSpecialFindLocation(){
     special_find_location_id = null;
     newTabGroup("Special_Find_Location");
@@ -2080,14 +2004,6 @@ onEvent("Adobe_Element", "show", "addNavigationButtons(\"Adobe_Element\"); keepT
 onEvent("Adobe_Element/Adobe_Element/ReturnToContext", "delayclick", "cancelTabGroup(\"Adobe_Element\", true)");
 
 String adobe_id = null;
-
-// TODO: update old save validation
-validateSaveAdobe(){
-    if (isNull(getFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID"))) {
-        showWarning("{Error}", "{Cannot_save_Adobe_without_Reference_ID}");
-        return;
-    }
-}
 
 newAdobe(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {
@@ -2183,14 +2099,6 @@ onEvent("Photograph_Log", "show", "addNavigationButtons(\"Photograph_Log\"); kee
 onEvent("Photograph_Log/Photograph_Log/ReturnToContext", "delayclick", "cancelTabGroup(\"Photograph_Log\", true)");
 
 String photolog_id = null;
-
-// TODO: update old save validation
-validateSavePhotoLog(){
-    if (isNull(getFieldValue("Photograph_Log/Photograph_Log/Photograph_Reference_ID"))) {
-        showWarning("{Error}", "{Cannot_save_Photgraph_without_Reference_ID}");
-        return;
-    }
-}
 
 newPhotoLog(){
     if (isNull(getFieldValue("Context/Context_GeneralInformation/Context_ID"))) {

@@ -71,7 +71,7 @@
     </description>
     <property isIdentifier="true" name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[$1-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>123<description>{Site} 123.</description></term>
@@ -8325,7 +8325,7 @@
     </property>
     <property isIdentifier="true" name="AreaCode" type="enum">
       <description>Area or Trench: the working subdivision of an archaeological site. </description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[$1-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>123<description>{Site} 123.</description></term>
@@ -8682,7 +8682,7 @@
     </description>
     <property isIdentifier="true" name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[$1-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>123<description>{Site} 123.</description></term>
@@ -8819,7 +8819,7 @@
     <description>Deposit samples, or samples of building elements, recovered from this Context for the purpose of further analysis, or ongoing reference. </description>
     <property isIdentifier="true" name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[$1-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>123<description>{Site} 123.</description></term>
@@ -9107,7 +9107,7 @@
   <ArchaeologicalElement name="Special Find">
     <property isIdentifier="true" name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[$1-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>123<description>{Site} 123.</description></term>
@@ -9274,7 +9274,7 @@
     </description>
     <property isIdentifier="true" name="AreaCode" type="enum">
       <description>The working subdivision of a total archaeological site.</description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[$1-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>123<description>{Site} 123.</description></term>
@@ -9350,7 +9350,7 @@
       <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
-    <property isIdentifier="true" name="Site Code" type="freetext">
+    <property name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
       <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
