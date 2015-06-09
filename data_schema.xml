@@ -9350,7 +9350,7 @@
       <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
-    <property isIdentifier="true" name="Site Code" type="freetext">
+    <property name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
       <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
