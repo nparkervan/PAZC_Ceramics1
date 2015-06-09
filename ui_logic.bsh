@@ -981,7 +981,7 @@ incField(String ref, Integer defaultVal) {
 
     Integer inc = Integer.parseInt(val) + 1;
     setFieldValue(ref, inc);
-    insertIntoLocalSettings(ref, inc);
+    insertIntoLocalSettings(ref, inc.toString());
 
     return inc;
 }
