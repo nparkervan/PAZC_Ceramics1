@@ -593,12 +593,14 @@ loadStartingIds() {
     List l = new ArrayList();
     l.add("control/data/Adobe_Element_Starting_ID");
     l.add("control/data/Artefact_Group_Starting_ID");
-    l.add("control/data/ContextGroup_Starting_ID");
     l.add("control/data/ContextIncrement");
     l.add("control/data/Sample_Starting_ID");
 
     for (ref : l) {
         loadStartingId(ref);
+    }
+    for (ref : l) {
+        onFocus(ref, null,  "insertIntoLocalSettings(\"" + ref + "\", getFieldValue(\"" + ref + "\"));");
     }
 }
 
@@ -636,6 +638,7 @@ onEvent("control/search"              , "show"  , "loadSearch();");
 onEvent("control/search/Search"       , "click" , "clearSearch()");
 onEvent("control/search/searchButton" , "click" , "search()");
 onEvent("control/search/entityTypes"  , "click" , "loadSearch();");
+// TODO "control/search/Area_Code" binding?
 onEvent("control/search/entityList"   , "click" , "loadEntity();");
 
 setSearchAreaCode() {
@@ -948,6 +951,10 @@ onEvent("Artefact_Group/Artefact_Group_GeneralInformation/validate", "delayclick
 onEvent("Artefact_Group/Artefact_Group_Validation", "show", "validateArtefactGroupFields(false)");
 onEvent("Artefact_Group", "show", "validateArtefactGroupFields(false)");
 
+insertIntoLocalSettings(String key, String val) {
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + key + "', '" + val + "');");
+}
+
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,
  * otherwise increments its value.
@@ -964,7 +971,7 @@ incField(String ref, Integer defaultVal) {
 
     Integer inc = Integer.parseInt(val) + 1;
     setFieldValue(ref, inc);
-    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + ref + "', '" + inc + "');");
+    insertIntoLocalSettings(ref, inc);
 
     return inc;
 }
@@ -1872,8 +1879,6 @@ newSpecialFind(){
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/ContextGroup_Starting_ID"));
-    incField("control/data/ContextGroup_Starting_ID", 1);
 }
 
 loadSpecialFind() {
