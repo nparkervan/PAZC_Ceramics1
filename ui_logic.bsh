@@ -1020,6 +1020,7 @@ newContext(){
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
 
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
+    setFieldValue("Context/Context_GeneralInformation/Excavator", username);
     setFieldValue("Context/Context_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
 
     incField("control/data/ContextIncrement");
