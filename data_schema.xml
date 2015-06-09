@@ -7954,7 +7954,7 @@
     <!-- Change interpretation to drop-down. Remove Internal, external, structural. Replace with  "Capa Superficial," "relleno huella de poste," "huella de poste," "relleno de pozo," "huella de tinaja," "basural," "relleno," "contexto huaqueado," "huella de muro de quincha," "relleno de huella de muro de quincha," "fogón," "muro de quincha," "artefacto," "no identificado," "otro"-->
     <property name="Your Interpretation" type="freetext">
       <description>Your Interpretation of the function.</description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$1]]></formatString>
       <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
       <lookup>
         <term>{Internal}
@@ -9148,10 +9148,10 @@
     <property name="Site Code" type="freetext">
       <description>Short code to signify the excavation site and often the year of excavation. </description>
     </property>
-    <property isIdentifier="true" name="Special Find Class" type="freetext">
+    <property isIdentifier="true" name="Special Find Class" type="vocab">
       <description>Broad Artefact Class for each Artefact (eg Glass, Ceramic, Building Material).
       </description>
-      <formatString><![CDATA[$2]]></formatString>
+      <formatString><![CDATA[$1]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
         <term>No Se Observa
