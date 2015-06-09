@@ -38,7 +38,7 @@
               <newContext/>
               <newContextGroup/>
               <ContextIncrement/>
-              <ContextGroup_Starting_ID/>
+              <SpecialFind_Starting_ID/>
               <Artefact_Group_Starting_ID/>
               <Sample_Starting_ID/>
               <Adobe_Element_Starting_ID/>
@@ -695,8 +695,8 @@
         <input faims_certainty="false" faims_read_only="false" ref="ContextIncrement">
           <label>{Context_Starting_ID}</label>
         </input>
-        <input faims_certainty="false" faims_read_only="false" ref="ContextGroup_Starting_ID">
-          <label>{ContextGroup_Starting_ID}</label>
+        <input faims_certainty="false" faims_read_only="false" ref="SpecialFind_Starting_ID">
+          <label>{SpecialFind_Starting_ID}</label>
         </input>
         <input faims_certainty="false" faims_read_only="false" ref="Artefact_Group_Starting_ID">
           <label>{Artefact_Group_Starting_ID}</label>

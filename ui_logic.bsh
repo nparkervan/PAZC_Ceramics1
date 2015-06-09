@@ -593,7 +593,7 @@ loadStartingIds() {
     List l = new ArrayList();
     l.add("control/data/Adobe_Element_Starting_ID");
     l.add("control/data/Artefact_Group_Starting_ID");
-    l.add("control/data/ContextGroup_Starting_ID");
+    l.add("control/data/SpecialFind_Starting_ID");
     l.add("control/data/ContextIncrement");
     l.add("control/data/Sample_Starting_ID");
 
@@ -1872,8 +1872,8 @@ newSpecialFind(){
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/ContextGroup_Starting_ID"));
-    incField("control/data/ContextGroup_Starting_ID", 1);
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID"));
+    incField("control/data/SpecialFind_Starting_ID", 1);
 }
 
 loadSpecialFind() {
