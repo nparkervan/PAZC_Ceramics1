@@ -1039,7 +1039,7 @@ loadContextFrom(contextid) {
     
     showTabGroup("Context", context_id, new FetchCallback() {
       onFetch(result) {
-        openContextTabs();
+        openContextTabs(true);
       }
     });
 }
@@ -1300,7 +1300,11 @@ loadContextAttributes(){
 
 }
 
-openContextTabs(){
+openContextTabs() {
+  openContextTabs(false);
+}
+
+openContextTabs(Boolean showGeneralInformationTab){
     fetchOne("SELECT vocabName FROM vocabulary WHERE vocabid = '"+getFieldValue("Context/Context_GeneralInformation/Context_Type")+"';",
 
         new FetchCallback() {
@@ -1326,7 +1330,9 @@ openContextTabs(){
                 cancelTab("Context/Context_Deposits", false);
                 cancelTab("Context/Context_Structures", false);
             }
-
+            if(showGeneralInformationTab) {
+              showTab("Context/Context_GeneralInformation");
+            }
           }});    
 }
 
