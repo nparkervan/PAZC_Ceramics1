@@ -11,6 +11,13 @@ import jsqlite.Callback;
 
 Log.d("PAZC Module", "Very first line of logic after imports.");
 
+String WEB_GUIDE = " The FAIMS Excavation Demo Module was prepared in 2013 following a detailed comparison of 11 excavation recording sheets submitted by FAIMS partners. It serves the workflow of single-context, multi-trench excavation and the core definitions are derived from the Museum of London workbook.  <br><br> The module was the first one prepared using Heurist. It has been the basis of several other modules developed for specific projects, and is updated with key features required by partners. | <br><br> The purpose of this Guide is to provide an overview of the features and navigation of the Module. definitions and vocabulary lists for each Attribute are accessible via the Help button alongside each attribute. <br><br> ...MORE TO COME ";
+
+String WEB_REL = "Use this tab to enter relationships between contexts, eg ‘Above’ and ‘Below’. Select the Type of Relationship on the left, the related Context from the list on the right, and click the button ‘Relate Contexts’.";
+
+populateWebViewHtml("user/help/guide", WEB_GUIDE);
+populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/spacer", WEB_REL);
+
 makeLocalID(){
     fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
     fetchOne("DROP VIEW IF EXISTS parentchild;", null);
@@ -571,6 +578,13 @@ localSettingsQuery(String key) {
   return "select vocabid, vocabname from vocabulary join localSettings on (value=vocabid) where key = '"+key+"' ";
 }
 
+insertIntoLocalSettings(String key, String val) {
+    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + key + "', '" + val + "');");
+}
+insertIntoLocalSettings(String key, Integer val) {
+    insertIntoLocalSettings(key, Integer.toString(val));
+}
+
 loadLoginDetails() {
   String userQ = localSettingsQuery("User_VocabID");
   String areaCodeQ = localSettingsQuery("AreaCode_VocabID");
@@ -960,10 +974,6 @@ validateArtefactGroupFields(Boolean showWarning) {
 onEvent("Artefact_Group/Artefact_Group_GeneralInformation/validate", "delayclick", "showTab(\"Artefact_Group/Artefact_Group_Validation\")");
 onEvent("Artefact_Group/Artefact_Group_Validation", "show", "validateArtefactGroupFields(false)");
 onEvent("Artefact_Group", "show", "validateArtefactGroupFields(false)");
-
-insertIntoLocalSettings(String key, String val) {
-    fetchOne("REPLACE INTO localSettings(key, value) VALUES('" + key + "', '" + val + "');");
-}
 
 /*
  * If value of field specified by `ref` is null, sets the field to `defaultVal`,

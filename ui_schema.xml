@@ -557,9 +557,6 @@
         </faims>
       </instance>
       <!--list of numeric and blocktext(memo) attributes(fields)-->
-      <bind nodeset="/faims/user/help/guide" type="string"/>
-      <bind nodeset="/faims/Context/Context_GeneralInformation/Context_Comments" type="string"/>
-      <bind nodeset="/faims/Context/Context_GeneralInformation/Your_description" type="string"/>
       <bind nodeset="/faims/Context/Context_Measure/container1/child1/Context_Highest_Level" type="decimal"/>
       <bind nodeset="/faims/control/data/ContextIncrement" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container1/child2/Context_Lowest_Level" type="decimal"/>
@@ -577,35 +574,25 @@
       <bind nodeset="/faims/Context/Context_Measure/container3/child2/Width" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container3/child3/Depth" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/Volume" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Deposits/Deposit_Inclusions" type="string"/>
-      <bind nodeset="/faims/Context/Context_Cuts/Truncation" type="string"/>
-      <bind nodeset="/faims/Context/Context_Structures/Structure_Description" type="string"/>
-      <bind nodeset="/faims/Context/Context_Interpretation/Your_Discussion" type="string"/>
       <bind nodeset="/faims/Context/Context_Interpretation/container1/child1/Start_date" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Interpretation/container1/child2/End_date" type="decimal"/>
-<!--       <bind nodeset="/faims/Context/Context_Interpretation/Associations" type="string"/> -->
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child1/Length" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child2/Width" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child3/Depth" type="decimal"/>
-      <bind nodeset="/faims/ContextGroup/ContextGroup_Details/Your_Discussion" type="string"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container3/child1/Start_Date" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container3/child2/End_Date" type="decimal"/>
 
       <bind nodeset="/faims/Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Quantity" type="decimal"/>
       <bind nodeset="/faims/Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Weight" type="decimal"/>
-      <bind nodeset="/faims/Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_Comment" type="string"/>
       <bind nodeset="/faims/Sample/Sample_GeneralInformation/Sample_Weight" type="decimal"/>
       <bind nodeset="/faims/Sample/Sample_GeneralInformation/Sample_Volume" type="decimal"/>
-      <bind nodeset="/faims/Sample/Sample_GeneralInformation/Sample_Comments" type="string"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container2/child1/X" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container2/child2/Y" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container2/child3/Z" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child1/Latitude" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child2/Longitude" type="decimal"/>
-      <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/Special_Find_Description" type="string"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container4/child1/Date_From" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container4/child2/Date_To" type="decimal"/>
-      <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/Special_Find_Comment" type="string"/>
       <bind nodeset="/faims/Matrix/Matrix/Percentage" type="decimal"/>
     </model>
   </h:head>
@@ -666,20 +653,9 @@
       </group>
       <group ref="help">
         <label>{Help}</label>
-        <select1 appearance="compact" ref="guide">
-          <label>{Module_Guide}</label>
-            <item>
-            <label>The FAIMS Excavation Demo Module was prepared in 2013 following a detailed comparison of 11 excavation recording sheets submitted by FAIMS partners. It serves the workflow of single-context, multi-trench excavation and the core definitions are derived from the Museum of London workbook. 
-
-            The module was the first one prepared using Heurist. It has been the basis of several other modules developed for specific projects, and is updated with key features required by partners. | 
-
-            The purpose of this Guide is to provide an overview of the features and navigation of the Module. definitions and vocabulary lists for each Attribute are accessible via the Help button alongside each attribute.  
-
-            ...MORE TO COME
-            </label>
-            <value>Help</value>
-          </item>
-        </select1>
+        <input ref="guide" faims_web="true">
+          <label></label>
+        </input>
       </group>
     </group>
     <group ref="control">
@@ -1284,10 +1260,10 @@
         </trigger>
       </group>
       <group ref="Context_Relationships_to_Other_Contexts" faims_scrollable="false">
-        <label>{Rel}</label>
+        <label></label>
         <!-- Brian todo, figure out how to model this -->
-        <input faims_certainty="false" faims_read_only="true" ref="spacer">
-          <label>Use this tab to enter relationships between contexts, eg ‘Above’ and ‘Below’. Select the Type of Relationship on the left, the related Context from the list on the right, and click the button ‘Relate Contexts’.</label>
+        <input faims_certainty="false" faims_read_only="true" ref="spacer" faims_web="true">
+          <label>{Rel}</label>
         </input>
         <group faims_style="orientation" ref="container3">
           <label/>
