@@ -1265,10 +1265,10 @@
         </trigger>
       </group>
       <group ref="Context_Relationships_to_Other_Contexts" faims_scrollable="false">
-        <label></label>
+        <label>{Rel}</label>
         <!-- Brian todo, figure out how to model this -->
         <input faims_certainty="false" faims_read_only="true" ref="spacer" faims_web="true">
-          <label>{Rel}</label>
+          <label></label>
         </input>
         <group faims_style="orientation" ref="container3">
           <label/>
