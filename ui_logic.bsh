@@ -185,6 +185,15 @@ setTimestamp(String path) {
 }
 
 /** Action Bar **/
+addActionBarItem("clean_synced_files", new ActionButtonCallback() {
+    actionOnLabel() {
+      "{Clean_Synced_Files}";
+    }
+    actionOn() {
+      cleanSyncedFiles();
+    }
+});
+
 addActionBarItem("sync", new ToggleActionButtonCallback() {
     actionOnLabel() {
         "{Disable_Sync}";
@@ -607,6 +616,7 @@ loadStartingIds() {
     List l = new ArrayList();
     l.add("control/data/Adobe_Element_Starting_ID");
     l.add("control/data/Artefact_Group_Starting_ID");
+    l.add("control/data/SpecialFind_Starting_ID");
     l.add("control/data/ContextIncrement");
     l.add("control/data/Sample_Starting_ID");
 
@@ -981,7 +991,7 @@ incField(String ref, Integer defaultVal) {
 
     Integer inc = Integer.parseInt(val) + 1;
     setFieldValue(ref, inc);
-    insertIntoLocalSettings(ref, inc);
+    insertIntoLocalSettings(ref, inc.toString());
 
     return inc;
 }
@@ -1889,6 +1899,8 @@ newSpecialFind(){
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID"));
+    incField("control/data/SpecialFind_Starting_ID", 1);
 }
 
 loadSpecialFind() {
