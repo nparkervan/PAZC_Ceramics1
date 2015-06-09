@@ -1010,6 +1010,7 @@ newContext(){
       onFetch(result) {
         setFieldValue("Context/Context_GeneralInformation/Grid_Location_Reference", result.get(0));
         setFieldValue("Context/Context_Measure/Datum", result.get(1));
+        keepTabGroupChanges("Context");
       }
     });    
 
@@ -1020,6 +1021,7 @@ newContext(){
     setFieldValue("Context/Context_GeneralInformation/CreatingUser", username);
     setFieldValue("Context/Context_GeneralInformation/Excavator", username);
     setFieldValue("Context/Context_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    keepTabGroupChanges("Context");
 
     incField("control/data/ContextIncrement");
 }
