@@ -12,14 +12,15 @@ import jsqlite.Callback;
 Log.d("PAZC Module", "Very first line of logic after imports.");
 
 String WEB_GUIDE = " The FAIMS Excavation Demo Module was prepared in 2013 following a detailed comparison of 11 excavation recording sheets submitted by FAIMS partners. It serves the workflow of single-context, multi-trench excavation and the core definitions are derived from the Museum of London workbook.  <br><br> The module was the first one prepared using Heurist. It has been the basis of several other modules developed for specific projects, and is updated with key features required by partners. | <br><br> The purpose of this Guide is to provide an overview of the features and navigation of the Module. definitions and vocabulary lists for each Attribute are accessible via the Help button alongside each attribute. <br><br> ...MORE TO COME ";
-
 String WEB_REL_1 = "Use this tab to enter relationships between contexts, eg 'Above' and 'Below'. Select the Type of Relationship on the left, the related Context from the list on the right, and click the button 'Relate Contexts'.";
 String WEB_REL_2 = "To load or remove contexts, tap one from the list on the left and press button below:";
+String WEB_REL_SELECTED_NONE = "<i>None</i>";
 
 populateWebViewHtml("user/help/guide", WEB_GUIDE);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/spacer", WEB_REL_1);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/help", WEB_REL_2);
 populateWebViewHtml("ContextGroup/ContextGroup_Contexts/help", WEB_REL_2);
+
 
 makeLocalID(){
     fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
@@ -791,8 +792,8 @@ onEvent("Context/Context_Samples/deleteSample", "click", "deleteSampleFromContex
 onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
 
-onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextIdentifier();;updateContextRelationshipTargetArea(); updateRelns()");
-onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "delayclick", "updateAllContextRelationships()");
+onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextIdentifier();;updateContextRelationshipTargetArea(); updateRelns(); ");
+onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "delayclick", "updateAllContextRelationships(); populateWebViewHtml(\"Context/Context_Relationships_to_Other_Contexts/selectedEnt\", WEB_REL_SELECTED_NONE);");
 onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "delayclick", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
 legacyTextInput() {
   String legacyID = getLastTextAlertInput();
@@ -815,7 +816,7 @@ onEvent("Context/Context_Attachments", "show", "updateAllContextPhotologs()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/relate", "delayclick", "makeHierReln()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/showReln", "click", "loadContextFromReln()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/deleteReln", "delayclick", "deleteReln()");
-onEvent("Context/Context_Relationships_to_Other_Contexts/listOfRelns", "click", "showRelnFromList()");
+onEvent("Context/Context_Relationships_to_Other_Contexts/listOfRelns", "click", "selectAssociatedEntityContext()");
 
 String moduleExcavationSite = "";
 String moduleExcavationYear = "2015";
@@ -1101,7 +1102,8 @@ fillInCloseDate(){
 }
 
 updateContextRelationshipTargetArea() {
-  setFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
+    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
+    populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
 }
 
 updateContextIdentifier(){
@@ -1264,6 +1266,16 @@ makeHierReln(){
 
     saveEntitiesToHierRel(arguments[0], context_id, dest, arguments[1], arguments[2]);
     updateRelns();    
+}
+
+selectAssociatedEntityContext() {
+    String selectedEntityIdentifer = getListItemValue();
+    populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/selectedEnt", selectedEntityIdentifer);
+}
+
+selectAssociatedEntityContextGroup() {
+    String selectedEntityIdentifer = getListItemValue();
+    populateWebViewHtml("ContextGroup/ContextGroup_Contexts/selectedEnt", selectedEntityIdentifer);
 }
 
 showRelnFromList(){
@@ -1441,11 +1453,12 @@ remremoveContextGroupReln() {
 
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
-onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea()");
-onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "showToast(\"Placeholder\")");
+onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea();");
+onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "populateWebViewHtml(\"ContextGroup/ContextGroup_Contexts/selectedEnt\", WEB_REL_SELECTED_NONE); showToast(\"Placeholder\")");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
+onEvent("ContextGroup/ContextGroup_Contexts/ContextList" , "click" , "selectAssociatedEntityContextGroup()");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Contexts/Target_Area", "AreaCode");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase From");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To");
@@ -1506,10 +1519,11 @@ onContextGroupSaved(){
 }
 
 populateContextGroupContextsArea() {
-  String contextgroupAreaCode = getFieldValue("ContextGroup/ContextGroup_Details/Area_Code");
-  if (!isNull(contextgroupAreaCode)) {
-    setFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area", contextgroupAreaCode);
-  }
+    String contextgroupAreaCode = getFieldValue("ContextGroup/ContextGroup_Details/Area_Code");
+    if (!isNull(contextgroupAreaCode)) {
+      setFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area", contextgroupAreaCode);
+    }
+    populateWebViewHtml("ContextGroup/ContextGroup_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
 }
 
 addToContextGroup() {
