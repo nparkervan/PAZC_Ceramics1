@@ -382,9 +382,18 @@
               </colgroup>
               <AddContextList/>
               <AddContext/>
-              <ContextList/>
-              <ShowContext/>
-              <RemoveContext/>
+
+              <colgroup1>
+                <left>
+                  <ContextList/>
+                </left>
+                <right>
+                  <help/>
+                  <ShowContext/>
+                  <RemoveContext/>
+                </right>
+              </colgroup1>
+
             </ContextGroup_Contexts>
             <ContextGroup_Validation>
               <validationResults/>
@@ -1600,7 +1609,7 @@
           </item>
         </select1>
       </group>
-      <group ref="ContextGroup_Contexts" faims_scrollable="true">
+      <group ref="ContextGroup_Contexts" faims_scrollable="false">
         <label>{Contexts}</label>
         <group ref="colgroup" faims_style="orientation">
           <label/>
@@ -1637,19 +1646,33 @@
         <trigger ref="AddContext">
           <label>{Add_Context_to_Group}</label>
         </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="ContextList">
-          <label>{Contexts_in_group}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-        <trigger ref="ShowContext">
-          <label>{Load_Context}</label>
-        </trigger>
-        <trigger ref="RemoveContext">
-          <label>{Remove_Context_from_Group}</label>
-        </trigger>
+
+        <group ref="colgroup1" faims_style="orientation">
+          <label/>
+          <group ref="left" faims_style="even">
+            <label/>
+            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList">
+              <label>{Contexts_in_group}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+          <group ref="right" faims_style="even">
+            <label/>
+            <input ref="help" faims_web="true">
+              <label/>
+            </input>
+            <trigger ref="ShowContext">
+              <label>{Load_Context}</label>
+            </trigger>
+            <trigger ref="RemoveContext">
+              <label>{Remove_Context_from_Group}</label>
+            </trigger>
+          </group>
+        </group>
+
       </group>
       <group ref="ContextGroup_Validation">
         <label>{Validation}</label>
