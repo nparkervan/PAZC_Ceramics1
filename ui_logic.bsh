@@ -1483,7 +1483,7 @@ addToContextGroup() {
         saveContextGroup();
         return;
     }
-    String selectedContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList");
+    String selectedContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/AddContextList");
     if (isNull(selectedContextID)) {
       return;
     }
@@ -1525,7 +1525,7 @@ populateContextGroup() {
             new FetchCallback() {
                 onFetch(result) {
                     print(result);
-                    populateDropDown("Context/Context_Relationships_to_Other_Contexts/AddContextList", result);
+                    populateDropDown("ContextGroup/ContextGroup_Contexts/AddContextList", result);
                 }
             }
         );
