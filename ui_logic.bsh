@@ -13,7 +13,7 @@ Log.d("PAZC Module", "Very first line of logic after imports.");
 
 String WEB_GUIDE = " The FAIMS Excavation Demo Module was prepared in 2013 following a detailed comparison of 11 excavation recording sheets submitted by FAIMS partners. It serves the workflow of single-context, multi-trench excavation and the core definitions are derived from the Museum of London workbook.  <br><br> The module was the first one prepared using Heurist. It has been the basis of several other modules developed for specific projects, and is updated with key features required by partners. | <br><br> The purpose of this Guide is to provide an overview of the features and navigation of the Module. definitions and vocabulary lists for each Attribute are accessible via the Help button alongside each attribute. <br><br> ...MORE TO COME ";
 
-String WEB_REL = "Use this tab to enter relationships between contexts, eg ‘Above’ and ‘Below’. Select the Type of Relationship on the left, the related Context from the list on the right, and click the button ‘Relate Contexts’.";
+String WEB_REL = "Use this tab to enter relationships between contexts, eg 'Above' and 'Below'. Select the Type of Relationship on the left, the related Context from the list on the right, and click the button 'Relate Contexts'.";
 
 populateWebViewHtml("user/help/guide", WEB_GUIDE);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/spacer", WEB_REL);
@@ -1251,8 +1251,8 @@ updateRelns(){
             "  JOIN createdmodifiedatby USING (uuid) "+
             " WHERE relationshipid in (SELECT relationshipid  "+
             "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
-            "                           WHERE relntypename not like 'Context%' "+
-            "                             and uuid = "+uuid+") "+
+            "                           WHERE relntypename not like 'Context%') "+
+            "   and uuid = "+uuid+" "+
             "   and parentaenttypename = 'Context' "+
             " ORDER BY createdat desc "+
             " limit ? offset ? ;",
