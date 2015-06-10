@@ -1186,9 +1186,9 @@ updateAllContextRelationships(){
 
     //TODO Figure out how to make this a cursor list, otherwise performance will scale like shit
 
-
+    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area",       getFieldValue("Context/Context_GeneralInformation/AreaCode"));
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-
+    
     Object contextList = new ArrayList();
     
     if (!isNull(context_id)){
@@ -1204,7 +1204,6 @@ updateAllContextRelationships(){
             }
         );
     }
-    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area",       getFieldValue("Context/Context_GeneralInformation/AreaCode"));
 
     updateRelns();
 }
