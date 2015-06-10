@@ -1294,6 +1294,8 @@ updateRelns(){
     } else {
         showToast("No context id!");
     }
+    refreshTabgroupCSS("control");
+
 }
 
 loadContextAttributes(){       
