@@ -247,10 +247,10 @@
             <Context_Relationships_to_Other_Contexts>
               <colgroup>
                 <left>
-                  <Area/>
+                  <Target_Area/>
                 </left>
                 <mid>
-                  <Context_ID/>
+                  <Target_Context_ID/>
                 </mid>
                 <right>
                   <createLegacy/>
@@ -1285,7 +1285,7 @@
           <label/>
           <group ref="left" faims_style="even">
             <label/>
-            <select1 ref="Area">
+            <select1 ref="Target_Area">
               <label>{Area_Trench}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1295,7 +1295,7 @@
           </group>
           <group ref="mid" faims_style="even">
             <label/>
-            <input ref="Context_ID">
+            <input ref="Target_Context_ID">
               <label>{Context_ID}</label>
             </input>
           </group>
