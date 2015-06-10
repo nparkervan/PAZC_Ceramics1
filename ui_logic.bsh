@@ -1188,7 +1188,6 @@ updateAllContextSamples(){
 }
 
 updateAllContextRelationships(){
-    //TODO Figure out how to make this a cursor list, otherwise performance will scale like shit
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     
     Object contextList = new ArrayList();
@@ -1196,12 +1195,31 @@ updateAllContextRelationships(){
     String targetContextAreaCode = getFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area");
     String targetContextID = getFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Context_ID");
 
+    String targetContextQuery = "SELECT uuid, response "+
+                                "  FROM latestnondeletedarchentformattedidentifiers "+
+                                " WHERE (aenttypename='Legacy' "+
+                                "    OR (aenttypename = 'Context' "+
+                                "        AND ('null' = '"+targetContextAreaCode+"' "+
+                                "             OR uuid IN (SELECT uuid "+
+                                "                            FROM latestnondeletedaentvalue  "+
+                                "                            JOIN attributekey USING (attributeid) "+
+                                "                           WHERE attributename = 'AreaCode' "+
+                                "                             AND vocabid = '"+targetContextAreaCode+"') "+
+                                "                ) "+
+                                "        )) "+
+                                "   AND uuid IN (SELECT uuid "+
+                                "                  FROM latestnondeletedaentvalue  "+
+                                "                  JOIN attributekey USING (attributeid) "+
+                                "                 WHERE attributename IN ('Context ID', 'Identifier') "+
+                                "                   AND measure like '"+targetContextID+"'||'%' "+
+                                "                )         "+
+                                " ORDER BY CAST(response as integer); ";
+
     // TODO: Brian (query to populate the list of target contexts)
     if (!isNull(context_id)){
-        String query = "SELECT uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response FROM latestNonDeletedArchEntIdentifiers WHERE aenttypename = 'Context' and uuid != '"+context_id+"' group by uuid;";
 
         fetchAll(
-            query,
+            targetContextQuery,
             new FetchCallback() {
                 onFetch(result) {
                     print(result);
@@ -1475,48 +1493,42 @@ addToContextGroup() {
 
 populateContextGroup() {
   // TODO Brian: query to list avaliable contexts to add to the group based on search criteria, and query to list contexts in current group
-    showToast("TODO: update populateContextGroup() method");
 
     String targetContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/Target_Context_ID");
     String targetContextAreaCode = getFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area");
-//     //updateNonContextRelationshipBasedDropdown("ContextGroup/ContextGroup_Contexts/AddContextList", 'ContextContextGroup', 'ContextGroup', context_group_id);
+
+    String targetContextQuery = "SELECT uuid, response "+
+                                    "  FROM latestnondeletedarchentformattedidentifiers "+
+                                    " WHERE (aenttypename='Legacy' "+
+                                    "    OR (aenttypename = 'Context' "+
+                                    "        AND ('null' = '"+targetContextAreaCode+"' "+
+                                    "             OR uuid IN (SELECT uuid "+
+                                    "                            FROM latestnondeletedaentvalue  "+
+                                    "                            JOIN attributekey USING (attributeid) "+
+                                    "                           WHERE attributename = 'AreaCode' "+
+                                    "                             AND vocabid = '"+targetContextAreaCode+"') "+
+                                    "                ) "+
+                                    "        )) "+
+                                    "   AND uuid IN (SELECT uuid "+
+                                    "                  FROM latestnondeletedaentvalue  "+
+                                    "                  JOIN attributekey USING (attributeid) "+
+                                    "                 WHERE attributename IN ('Context ID', 'Identifier') "+
+                                    "                   AND measure like '"+targetContextID+"'||'%' "+
+                                    "                )         "+
+                                    " ORDER BY CAST(response as integer); ";
+
+       //updateNonContextRelationshipBasedDropdown("ContextGroup/ContextGroup_Contexts/AddContextList", 'ContextContextGroup', 'ContextGroup', context_group_id);
 //     //TODO: Discuss how to turn these into cursor lists. I don't think this scales well.
-    
-//     populateDropDown("ContextGroup/ContextGroup_Contexts/AddContextList", 
-//         fetchAll("SELECT uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-//             "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-//             "            FROM latestNonDeletedArchentIdentifiers\n"+
-//             "           WHERE aenttypename = 'Context'\n"+
-//             "             AND uuid not in (SELECT uuid\n"+
-//             "                            FROM latestNonDeletedAentReln\n"+
-//             "                           WHERE relationshipid in (SELECT relationshipid\n"+
-//             "                                                      FROM latestNonDeletedAentReln\n"+
-//             "                                                      JOIN relationship USING (relationshipid)\n"+
-//             "                                                      JOIN relntype USING (relntypeid)\n"+
-//             "                                                     WHERE uuid = "+context_group_id+"\n"+
-//             "                                                       and relntypeName = 'ContextContextGroup')\n"+
-//             "                             and uuid != "+context_group_id+")\n"+
-//             "        ORDER BY  uuid, attributename ASC)\n"+
-//             "group by uuid\n"+
-//             "ORDER BY  valuetimestamp desc, uuid, attributename;"));
-//     populateDropDown("ContextGroup/ContextGroup_Contexts/ContextList", 
-//         fetchAll("SELECT uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-//             "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-//             "            FROM latestNonDeletedArchentIdentifiers\n"+
-//             "           WHERE aenttypename = 'Context'\n"+
-//             "             AND uuid in (SELECT uuid\n"+
-//             "                            FROM latestNonDeletedAentReln\n"+
-//             "                           WHERE relationshipid in (SELECT relationshipid\n"+
-//             "                                                      FROM latestNonDeletedAentReln\n"+
-//             "                                                      JOIN relationship USING (relationshipid)\n"+
-//             "                                                      JOIN relntype USING (relntypeid)\n"+
-//             "                                                     WHERE uuid = "+context_group_id+"\n"+
-//             "                                                       and relntypeName = 'ContextContextGroup')\n"+
-//             "                             and uuid != "+context_group_id+")\n"+
-//             "        ORDER BY  uuid, attributename ASC)\n"+
-//             "group by uuid\n"+
-//             "ORDER BY  valuetimestamp desc, uuid, attributename;"));
-    
+
+        fetchAll(
+            targetContextQuery,
+            new FetchCallback() {
+                onFetch(result) {
+                    print(result);
+                    populateDropDown("Context/Context_Relationships_to_Other_Contexts/AddContextList", result);
+                }
+            }
+        );
 }
 
 loadContextGroupAttributes(){
