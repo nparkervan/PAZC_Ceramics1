@@ -25,13 +25,13 @@ makeLocalID(){
     fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
     fetchOne("DROP VIEW IF EXISTS parentchild;", null);
     fetchOne( "CREATE VIEW parentchild AS "+
-            "  SELECT parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename"+
+            "  SELECT parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb as parentparticipatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename, child.participatesverb as childparticipatesverb "+
             "    FROM (SELECT uuid, participatesverb, aenttypename, relationshipid"+
             "            FROM latestnondeletedaentreln "+
             "            JOIN relationship USING (relationshipid) "+
             "            JOIN latestnondeletedarchent USING (uuid) "+
             "            JOIN aenttype USING (aenttypeid)) parent "+
-            "    JOIN (SELECT uuid, relationshipid "+
+            "    JOIN (SELECT uuid, relationshipid, participatesverb "+
             "            FROM latestnondeletedaentreln "+
             "            JOIN relationship USING (relationshipid)) child "+
             "      ON (parent.relationshipid = child.relationshipid AND parent.uuid != child.uuid);", null);
@@ -791,7 +791,7 @@ onEvent("Context/Context_Samples/deleteSample", "click", "deleteSampleFromContex
 onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
 
-onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextRelationshipTargetArea(); updateRelns()");
+onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextIdentifier();;updateContextRelationshipTargetArea(); updateRelns()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "delayclick", "updateAllContextRelationships()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "delayclick", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
 legacyTextInput() {
@@ -1104,7 +1104,14 @@ updateContextRelationshipTargetArea() {
   setFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
 }
 
-//todo wire in placeholder archents into all of these.
+updateContextIdentifier(){
+    fetchOne("select response from latestNonDeletedArchEntFormattedIdentifiers where uuid = '"+context_id+"';", new FetchCallback() {
+      onFetch(result) {
+        setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", result.get(0));
+      }
+    });    
+}
+
 
 updateContextRelationshipBasedCursorList(path, relntypename, uuid){
     String query = "" +
@@ -1191,8 +1198,7 @@ updateAllContextSamples(){
 }
 
 updateAllContextRelationships(){
-    setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-    
+   
     Object contextList = new ArrayList();
     
     String targetContextAreaCode = getFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area");
@@ -1274,7 +1280,7 @@ updateRelns(){
     if (!isNull(context_id)){        
         populateCursorList(
                 "Context/Context_Relationships_to_Other_Contexts/listOfRelns",
-                "SELECT childuuid, response "+
+                "SELECT childuuid, parentparticipatesverb||' '||response "+
                 "  FROM parentchild JOIN latestNonDeletedArchEntFormattedIdentifiers on (childuuid = uuid) "+
                 "  JOIN createdmodifiedatby USING (uuid) "+
                 " WHERE relationshipid in (SELECT relationshipid  "+
@@ -1286,6 +1292,8 @@ updateRelns(){
                 " limit ? offset ? ;",
                 25
         );
+    } else {
+        showToast("No context id!");
     }
 }
 
