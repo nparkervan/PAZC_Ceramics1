@@ -789,8 +789,8 @@ onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
 
 onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateAllContextRelationships()");
-onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "click", "updateAllContextRelationships()");
-onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "click", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
+onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "delayclick", "updateAllContextRelationships()");
+onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "delayclick", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
 legacyTextInput() {
   String legacyID = getLastTextAlertInput();
   Log.d("PAZC 2.0 Module", "Legacy ID: " + legacyID);
