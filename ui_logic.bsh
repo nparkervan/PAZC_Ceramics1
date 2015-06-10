@@ -658,11 +658,11 @@ onEvent("control"                     , "show"  , "removeNavigationButtons(); se
 onEvent("control/data"                , "show"  , "refreshEntities(); updateGPSDiagnostics();");
 onEvent("control/data/newContext"     , "click" , "newContext();");
 onEvent("control/data/newContextGroup", "click" , "newContextGroup(true);");
-onEvent("control/search"              , "show"  , "loadSearch();");
+onEvent("control/search"              , "show"  , "search();");
 onEvent("control/search/Search"       , "click" , "clearSearch()");
 onEvent("control/search/searchButton" , "click" , "search()");
-onEvent("control/search/entityTypes"  , "click" , "loadSearch();");
-// TODO "control/search/Area_Code" binding?
+onEvent("control/search/entityTypes"  , "click" , "search()");
+onEvent("control/search/Area_Code"    , "click" , "search()");
 onEvent("control/search/entityList"   , "click" , "loadEntity();");
 
 setSearchAreaCode() {
@@ -704,7 +704,7 @@ search(){
                   
 
     populateCursorList("control/search/entityList", searchQuery, 25);
-
+    refreshTabgroupCSS("control");
     Log.d("foo", searchQuery);
 }
 
@@ -720,21 +720,6 @@ entityTypes.add(new NameValuePair("{Special_Find_Location}", "Special Find Locat
 entityTypes.add(new NameValuePair("{Adobe}", "Adobe Element"));
 entityTypes.add(new NameValuePair("{Photograph_Log}", "Photograph Log"));
 populateDropDown("control/search/entityTypes", entityTypes);
-
-loadSearch() {
-  // load a list view of existing entities
-  String type = getFieldValue("control/search/entityTypes");
-  if (!type.equals("All")) {
-    populateCursorList("control/search/entityList", "select uuid, response from latestNonDeletedArchEntFormattedIdentifiers where aenttypename = '" + type + "' limit ? offset ?;", 25);
-  } else {
-    populateCursorList("control/search/entityList", "select uuid, response from latestNonDeletedArchEntFormattedIdentifiers where " +
-      " aenttypename = 'Context' OR aenttypename = 'Context Group' OR aenttypename = 'Artefact Group' OR aenttypename = 'Sample' OR " +
-      " aenttypename = 'Matrix' OR aenttypename = 'Special Find' OR aenttypename = 'Special Find Location' OR " +
-      " aenttypename = 'Adobe Element' OR aenttypename = 'Photograph Log' " +
-      " limit ? offset ?;", 25);
-  }
-  refreshTabgroupCSS("control");
-}
 
 loadEntity() {
   String listID = getListItemValue();
