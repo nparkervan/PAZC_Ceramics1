@@ -1298,7 +1298,7 @@ updateRelns(){
                 " WHERE relationshipid in (SELECT relationshipid  "+
                 "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
                 "                           WHERE relntypename not like 'Context%') "+
-                "   and uuid = '"+context_id+"' "+
+                "   and parentuuid = '"+context_id+"' "+
                 "   and parentaenttypename = 'Context' "+
                 " ORDER BY createdat desc "+
                 " limit ? offset ? ;",
@@ -1307,6 +1307,8 @@ updateRelns(){
     } else {
         showToast("No context id!");
     }
+    refreshTabgroupCSS("control");
+
 }
 
 loadContextAttributes(){       
@@ -1453,7 +1455,7 @@ remremoveContextGroupReln() {
 
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
-onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea();");
+onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea();populateContextGroupRelatedContexts();");
 onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "populateWebViewHtml(\"ContextGroup/ContextGroup_Contexts/selectedEnt\", WEB_REL_SELECTED_NONE); showToast(\"Placeholder\")");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
@@ -1526,6 +1528,26 @@ populateContextGroupContextsArea() {
     populateWebViewHtml("ContextGroup/ContextGroup_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
 }
 
+populateContextGroupRelatedContexts(){
+    String contextGroupQuery="SELECT childuuid, response "+
+                            "  FROM parentchild JOIN latestNonDeletedArchEntFormattedIdentifiers on (childuuid = uuid) "+
+                            "  JOIN createdmodifiedatby USING (uuid) "+
+                            " WHERE relationshipid in (SELECT relationshipid  "+
+                             "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
+                             "                           WHERE relntypename = 'ContextContextGroup') "+
+                            "   and parentuuid = '"+context_group_id+"' "+
+                            "   and parentaenttypename = 'Context Group' "+
+                            " ORDER BY CAST(response as integer) "+
+                            " limit ? offset ? ;";
+    populateCursorList(
+                "ContextGroup/ContextGroup_Contexts/ContextList",
+                contextGroupQuery,
+                25
+        );
+
+    Log.d("foo", contextGroupQuery);
+
+}
 addToContextGroup() {
     if (isNull(context_group_id)) {
         saveContextGroup();
