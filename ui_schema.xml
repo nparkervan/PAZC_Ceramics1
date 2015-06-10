@@ -275,6 +275,7 @@
                   <listOfRelns/>
                 </child1>
                 <child2>
+                  <selectedEnt/>
                   <help/>
                   <deleteReln/>
                   <showReln/>
@@ -382,9 +383,19 @@
               </colgroup>
               <AddContextList/>
               <AddContext/>
-              <ContextList/>
-              <ShowContext/>
-              <RemoveContext/>
+
+              <colgroup1>
+                <left>
+                  <ContextList/>
+                </left>
+                <right>
+                  <selectedEnt/>
+                  <help/>
+                  <ShowContext/>
+                  <RemoveContext/>
+                </right>
+              </colgroup1>
+
             </ContextGroup_Contexts>
             <ContextGroup_Validation>
               <validationResults/>
@@ -1360,6 +1371,9 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
+            <input ref="selectedEnt" faims_web="true">
+              <label>{Selected_Entity}</label>
+            </input>
             <input ref="help" faims_web="true">
               <label/>
             </input>
@@ -1600,7 +1614,7 @@
           </item>
         </select1>
       </group>
-      <group ref="ContextGroup_Contexts" faims_scrollable="true">
+      <group ref="ContextGroup_Contexts" faims_scrollable="false">
         <label>{Contexts}</label>
         <group ref="colgroup" faims_style="orientation">
           <label/>
@@ -1637,19 +1651,36 @@
         <trigger ref="AddContext">
           <label>{Add_Context_to_Group}</label>
         </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="ContextList">
-          <label>{Contexts_in_group}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-        <trigger ref="ShowContext">
-          <label>{Load_Context}</label>
-        </trigger>
-        <trigger ref="RemoveContext">
-          <label>{Remove_Context_from_Group}</label>
-        </trigger>
+
+        <group ref="colgroup1" faims_style="orientation">
+          <label/>
+          <group ref="left" faims_style="even">
+            <label/>
+            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList" appearance="compact">
+              <label>{Contexts_in_group}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+          <group ref="right" faims_style="even">
+            <label/>
+            <input ref="selectedEnt" faims_web="true">
+              <label>{Selected_Entity}</label>
+            </input>
+            <input ref="help" faims_web="true">
+              <label/>
+            </input>
+            <trigger ref="ShowContext">
+              <label>{Load_Context}</label>
+            </trigger>
+            <trigger ref="RemoveContext">
+              <label>{Remove_Context_from_Group}</label>
+            </trigger>
+          </group>
+        </group>
+
       </group>
       <group ref="ContextGroup_Validation">
         <label>{Validation}</label>

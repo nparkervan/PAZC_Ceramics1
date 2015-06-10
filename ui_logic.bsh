@@ -19,6 +19,7 @@ String WEB_REL_2 = "To load or remove contexts, tap one from the list on the lef
 populateWebViewHtml("user/help/guide", WEB_GUIDE);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/spacer", WEB_REL_1);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/help", WEB_REL_2);
+populateWebViewHtml("ContextGroup/ContextGroup_Contexts/help", WEB_REL_2);
 
 makeLocalID(){
     fetchOne("CREATE TABLE IF NOT EXISTS localSettings (key text primary key, value text);", null);
