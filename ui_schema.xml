@@ -247,10 +247,10 @@
             <Context_Relationships_to_Other_Contexts>
               <colgroup>
                 <left>
-                  <Area/>
+                  <Target_Area/>
                 </left>
                 <mid>
-                  <Context_ID/>
+                  <Target_Context_ID/>
                 </mid>
                 <right>
                   <createLegacy/>
@@ -369,6 +369,17 @@
               <Phase_To/>
             </ContextGroup_Details>
             <ContextGroup_Contexts>
+              <colgroup>
+                <left>
+                  <Target_Area/>
+                </left>
+                <mid>
+                  <Target_Context_ID/>
+                </mid>
+                <right>
+                  <Populate_Target_Context/>
+                </right>
+              </colgroup>
               <AddContextList/>
               <AddContext/>
               <ContextList/>
@@ -1274,7 +1285,7 @@
           <label/>
           <group ref="left" faims_style="even">
             <label/>
-            <select1 ref="Area">
+            <select1 ref="Target_Area">
               <label>{Area_Trench}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1284,7 +1295,7 @@
           </group>
           <group ref="mid" faims_style="even">
             <label/>
-            <input ref="Context_ID">
+            <input ref="Target_Context_ID">
               <label>{Context_ID}</label>
             </input>
           </group>
@@ -1593,6 +1604,31 @@
       </group>
       <group ref="ContextGroup_Contexts" faims_scrollable="true">
         <label>{Contexts}</label>
+        <group ref="colgroup" faims_style="orientation">
+          <label/>
+          <group ref="left" faims_style="even">
+            <label/>
+            <select1 ref="Target_Area">
+              <label>{Area_Trench}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+          <group ref="mid" faims_style="even">
+            <label/>
+            <input ref="Target_Context_ID">
+              <label>{Context_ID}</label>
+            </input>
+          </group>
+          <group ref="right" faims_style="even">
+            <label/>
+            <trigger ref="Populate_Target_Context">
+              <label>{Populate_Target_Context}</label>
+            </trigger>
+          </group>
+        </group>
         <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="AddContextList">
           <label>{Add_Additional_Context}</label>
           <item>

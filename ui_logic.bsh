@@ -788,7 +788,7 @@ onEvent("Context/Context_Samples/deleteSample", "click", "deleteSampleFromContex
 onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
 
-onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateAllContextRelationships()");
+onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextRelationshipTargetArea(); updateAllContextRelationships()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "delayclick", "updateAllContextRelationships()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "delayclick", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
 legacyTextInput() {
@@ -1096,6 +1096,11 @@ fillInCloseDate(){
         showToast("{To_avoid_accidents_please_clear_the_Date_Closed_field_before_updating}");
     }
 }
+
+updateContextRelationshipTargetArea() {
+  setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
+}
+
 //todo wire in placeholder archents into all of these.
 
 updateContextRelationshipBasedCursorList(path, relntypename, uuid){
@@ -1183,14 +1188,15 @@ updateAllContextSamples(){
 }
 
 updateAllContextRelationships(){
-
     //TODO Figure out how to make this a cursor list, otherwise performance will scale like shit
-
-    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area",       getFieldValue("Context/Context_GeneralInformation/AreaCode"));
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     
     Object contextList = new ArrayList();
     
+    String targetContextAreaCode = getFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area");
+    String targetContextID = getFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Context_ID");
+
+    // TODO: Brian (query to populate the list of target contexts)
     if (!isNull(context_id)){
         String query = "SELECT uuid, group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' ') as response FROM latestNonDeletedArchEntIdentifiers WHERE aenttypename = 'Context' and uuid != '"+context_id+"' group by uuid;";
 
@@ -1284,7 +1290,7 @@ loadContextAttributes(){
     makeVocab("RadioGroup", "Context/Context_Interpretation/Your_Interpretation", "Your Interpretation");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
-    makeVocab("DropDown", "Context/Context_Relationships_to_Other_Contexts/Area", "AreaCode");
+    makeVocab("DropDown", "Context/Context_Relationships_to_Other_Contexts/Target_Area", "AreaCode");
     //makeVocab("DropDown", "Context/Context_Interpretation/ContextGroupList", "");
 
     //TODO picture gallery, hierarchical, etc
@@ -1383,10 +1389,12 @@ remremoveContextGroupReln() {
 
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
-
+onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea()");
+onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "showToast(\"Placeholder\")");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
+makeVocab("DropDown", "ContextGroup/ContextGroup_Contexts/Target_Area", "AreaCode");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase From");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To");
 
@@ -1445,6 +1453,13 @@ onContextGroupSaved(){
     }
 }
 
+populateContextGroupContextsArea() {
+  String contextgroupAreaCode = getFieldValue("ContextGroup/ContextGroup_Details/Area_Code");
+  if (!isNull(contextgroupAreaCode)) {
+    setFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area", contextgroupAreaCode);
+  }
+}
+
 addToContextGroup() {
     if (isNull(context_group_id)) {
         saveContextGroup();
@@ -1459,7 +1474,11 @@ addToContextGroup() {
 }
 
 populateContextGroup() {
+  // TODO Brian: query to list avaliable contexts to add to the group based on search criteria, and query to list contexts in current group
     showToast("TODO: update populateContextGroup() method");
+
+    String targetContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/Target_Context_ID");
+    String targetContextAreaCode = getFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area");
 //     //updateNonContextRelationshipBasedDropdown("ContextGroup/ContextGroup_Contexts/AddContextList", 'ContextContextGroup', 'ContextGroup', context_group_id);
 //     //TODO: Discuss how to turn these into cursor lists. I don't think this scales well.
     
