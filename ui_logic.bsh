@@ -790,7 +790,7 @@ onEvent("Context/Context_Samples/deleteSample", "click", "deleteSampleFromContex
 onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
 
-onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextRelationshipTargetArea(); updateAllContextRelationships()");
+onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateContextRelationshipTargetArea(); updateRelns()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "delayclick", "updateAllContextRelationships()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "delayclick", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
 legacyTextInput() {
@@ -1267,23 +1267,22 @@ showRelnFromList(){
 
 updateRelns(){
     //TODO Figure out a better way of doing this other than a dropdown.
-    if (uuid == null)
-        return;
-
-    populateCursorList(
-            "Context/Context_Relationships_to_Other_Contexts/listOfRelns",
-            "SELECT childuuid, response "+
-            "  FROM parentchild JOIN latestNonDeletedArchEntFormattedIdentifiers on (childuuid = uuid) "+
-            "  JOIN createdmodifiedatby USING (uuid) "+
-            " WHERE relationshipid in (SELECT relationshipid  "+
-            "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
-            "                           WHERE relntypename not like 'Context%') "+
-            "   and uuid = "+uuid+" "+
-            "   and parentaenttypename = 'Context' "+
-            " ORDER BY createdat desc "+
-            " limit ? offset ? ;",
-            25
-    );
+    if (!isNull(context_id)){        
+        populateCursorList(
+                "Context/Context_Relationships_to_Other_Contexts/listOfRelns",
+                "SELECT childuuid, response "+
+                "  FROM parentchild JOIN latestNonDeletedArchEntFormattedIdentifiers on (childuuid = uuid) "+
+                "  JOIN createdmodifiedatby USING (uuid) "+
+                " WHERE relationshipid in (SELECT relationshipid  "+
+                "                            FROM latestnondeletedrelationship JOIN relntype USING (relntypeid)  "+
+                "                           WHERE relntypename not like 'Context%') "+
+                "   and uuid = '"+context_id+"' "+
+                "   and parentaenttypename = 'Context' "+
+                " ORDER BY createdat desc "+
+                " limit ? offset ? ;",
+                25
+        );
+    }
 }
 
 loadContextAttributes(){       
@@ -1318,6 +1317,27 @@ loadContextAttributes(){
     // TODO -- we need to discuss how to implement "relating contexts to each other" -- this is not a very good way to do it at all. 
     // relnList = fetchAll("SELECT relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid FROM relntype WHERE relntypename not like '%Context%' and relntypename not like '%SpecialFind%' union SELECT relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid FROM relntype WHERE relntypename not like '%Context%' and relntypename not like '%SpecialFind%' ORDER BY  relntypeid, name;");
     // populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", relnList);
+
+    String relnListQuery = "SELECT relntypename||'~!~'||coalesce(nullif(parent||'~!~'||child,'~!~'),relntypename||'~!~'||relntypename) as relntypeid, coalesce(nullif(parent,''), relntypename) as name, relntypeid "+
+                           "  FROM relntype "+
+                           " WHERE relntypename not like '%Context%' "+
+                           "   AND relntypename not like '%SpecialFind%' "+
+                           " UNION "+
+                           " SELECT relntypename||'~!~'||coalesce(nullif(child||'~!~'||parent,'~!~'),relntypename||'~!~'||relntypename), coalesce(nullif(child,''), relntypename) as name, relntypeid "+
+                           "  FROM relntype "+
+                           " WHERE relntypename not like '%Context%' "+
+                           "   AND relntypename not like '%SpecialFind%' "+
+                           " ORDER BY relntypeid, name;";
+
+    fetchAll(
+            relnListQuery,
+            new FetchCallback() {
+                onFetch(result) {
+                    print(result);
+                    populateDropDown("Context/Context_Relationships_to_Other_Contexts/reln", result);
+                }
+            }
+        );
 
 }
 
