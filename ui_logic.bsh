@@ -1383,10 +1383,12 @@ remremoveContextGroupReln() {
 
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
-
+onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea()");
+onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "showToast(\"Placeholder\")");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
+makeVocab("DropDown", "ContextGroup/ContextGroup_Contexts/Target_Area", "AreaCode");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_From", "Phase From");
 makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Phase_To"  , "Phase To");
 
@@ -1445,6 +1447,13 @@ onContextGroupSaved(){
     }
 }
 
+populateContextGroupContextsArea() {
+  String contextgroupAreaCode = getFieldValue("ContextGroup/ContextGroup_Details/Area_Code");
+  if (!isNull(contextgroupAreaCode)) {
+    setFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area", contextgroupAreaCode);
+  }
+}
+
 addToContextGroup() {
     if (isNull(context_group_id)) {
         saveContextGroup();
@@ -1459,7 +1468,11 @@ addToContextGroup() {
 }
 
 populateContextGroup() {
+  // TODO Brian: query to list avaliable contexts to add to the group based on search criteria, and query to list contexts in current group
     showToast("TODO: update populateContextGroup() method");
+
+    String targetContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/Target_Context_ID");
+    String targetContextAreaCode = getFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area");
 //     //updateNonContextRelationshipBasedDropdown("ContextGroup/ContextGroup_Contexts/AddContextList", 'ContextContextGroup', 'ContextGroup', context_group_id);
 //     //TODO: Discuss how to turn these into cursor lists. I don't think this scales well.
     
