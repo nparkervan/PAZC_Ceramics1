@@ -506,23 +506,7 @@
               <attachPhoto/>
               <viewattached/>
             </Special_Find_GeneralInformation>
-            <Special_Find_Location>
-              <New_Special_Find_Location/>
-              <List_Special_Find_Location/>
-            </Special_Find_Location>
           </Special_Find>
-
-          <!-- ArchEnt: Special Find Location -->
-          <Special_Find_Location>
-            <Special_Find_Location>
-              <Latitude/>
-              <Longitude/>
-              <Northing/>
-              <Easting/>
-              <TakeGPS/>
-              <Update/>
-            </Special_Find_Location>
-          </Special_Find_Location>
 
 
           <!-- ArchEnt: Adobe Element-->
@@ -1970,42 +1954,6 @@
 
         Kind of pointless without file attachments
       -->
-      </group>
-      <group ref="Special_Find_Location" faims_scrollable="false">
-        <label>{Special_Find_Location} </label>
-        <trigger ref="New_Special_Find_Location">
-          <label>{New_Special_Find_Location}</label>
-        </trigger>
-        <select1 appearance="compact" ref="List_Special_Find_Location" faims_certainty="false" faims_annotation="false">
-          <label>{List_of_Special_Find_Locations}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
-      </group>
-    </group>
-
-    <!-- SPECIAL FIND LOCATION -->
-    <group ref="Special_Find_Location" faims_archent_type="Special Find Location">
-      <label>{Special_Find_Location} </label>
-      <group ref="Special_Find_Location">
-        <label>{Special_Find_Location} </label>
-        <input ref="Latitude" faims_attribute_name="Latitude" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true">
-          <label>{Latitude}</label>
-        </input>
-        <input ref="Longitude" faims_attribute_name="Longitude" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true">
-          <label>{Longitude}</label>
-        </input>
-        <input ref="Northing" faims_attribute_name="Northing" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true">
-          <label>{Northing}</label>
-        </input>
-        <input ref="Easting" faims_attribute_name="Easting" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true">
-          <label>{Easting}</label>
-        </input>
-        <trigger ref="TakeGPS">
-          <label>{Take_From_GPS}</label>
-        </trigger>
       </group>
     </group>
 

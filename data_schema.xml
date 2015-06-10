@@ -53,10 +53,6 @@
     <description>Implements a 1:N between context and its special finds
     </description>
   </RelationshipElement>
-  <RelationshipElement name="SpecialFindSpecialFindLocation" type="bidirectional">
-    <description>Implements a 1:N between special finds and their locations
-    </description>
-  </RelationshipElement>
   <RelationshipElement name="ContextPhotographLog" type="bidirectional">
     <description>Implements a 1:N between context and its photograph logs
     </description>
@@ -9244,36 +9240,6 @@
     <property name="Photo" type="file" thumbnail="true" sync="false">
       <description>Photo
       </description>
-    </property>
-  </ArchaeologicalElement>
-  <!-- SPECIAL FIND LOCATION -->
-  <ArchaeologicalElement name="Special Find Location">
-    <property name="Latitude" isIdentifier="true">
-      <description>Latitude of Special Find</description>
-      <formatString><![CDATA[$2-]]></formatString>
-      <appendCharacterString><![CDATA[-]]></appendCharacterString>
-    </property>
-    <property name="Longitude" isIdentifier="true">
-      <description>Longitude of Special Find</description>
-      <formatString><![CDATA[$2]]></formatString>
-      <!-- <appendCharacterString><![CDATA[-]]></appendCharacterString> -->
-    </property>
-    <property name="Northing">
-      <description>Northing of Special Find</description>
-    </property>
-    <property name="Easting">
-      <description>Easting of Special Find</description>
-    </property>
-    <property name="AreaCode" type="enum">
-      <description>The working subdivision of a total archaeological site.</description>
-            <lookup>
-        <term>123<description>{Site} 123.</description></term>
-        <term>125<description>{Site} 125.</description></term>
-        <term>128<description>{Site} 128.</description></term>
-        <term>131<description>{Site} 131.</description></term>
-        <term>136<description>{Site} 136.</description></term>
-        
-      </lookup>
     </property>
   </ArchaeologicalElement>
   <!-- ADOBE ELEMENT -->

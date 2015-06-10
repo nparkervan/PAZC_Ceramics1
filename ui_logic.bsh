@@ -333,8 +333,6 @@ getRecordId(String tabgroup) {
     return matrix_id;
   } else if (tabgroup.equals("Special_Find")) {
     return special_find_id;
-  } else if (tabgroup.equals("Special_Find_Location")) {
-    return special_find_location_id;
   } else if (tabgroup.equals("Adobe_Element")) {
     return adobe_id;
   } else if (tabgroup.equals("Photograph_Log")) {
@@ -365,9 +363,6 @@ newRecord(String tabgroup) {
   } else if (tabgroup.equals("Special_Find")) {
     cancelTabGroup(tabgroup, false);
     newSpecialFind();
-  } else if (tabgroup.equals("Special_Find_Location")) {
-    cancelTabGroup(tabgroup, false);
-    newSpecialFindLocation();
   } else if (tabgroup.equals("Adobe_Element")) {
     cancelTabGroup(tabgroup, false);
     newAdobe();
@@ -399,8 +394,6 @@ duplicateRecord(String tabgroup) {
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Special_Find")) {
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
-  } else if (tabgroup.equals("Special_Find_Location")) {
-    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Adobe_Element")) {
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Photograph_Log")) {
@@ -425,8 +418,6 @@ deleteRecord(String tabgroup, String id) {
     deleteMatrix();
   } else if (tabgroup.equals("Special_Find")) {
     deleteSpecialFind();
-  } else if (tabgroup.equals("Special_Find_Location")) {
-    deleteSpecialFindLocation();
   } else if (tabgroup.equals("Adobe_Element")) {
     deleteAdobe();
   } else if (tabgroup.equals("Photograph_Log")) {
@@ -716,7 +707,6 @@ entityTypes.add(new NameValuePair("{Artefact_Group}", "Artefact Group"));
 entityTypes.add(new NameValuePair("{Sample}", "Sample"));
 entityTypes.add(new NameValuePair("{Matrix}", "Matrix"));
 entityTypes.add(new NameValuePair("{Special_Find}", "Special Find"));
-entityTypes.add(new NameValuePair("{Special_Find_Location}", "Special Find Location"));
 entityTypes.add(new NameValuePair("{Adobe}", "Adobe Element"));
 entityTypes.add(new NameValuePair("{Photograph_Log}", "Photograph Log"));
 populateDropDown("control/search/entityTypes", entityTypes);
@@ -1817,10 +1807,6 @@ onEvent("Special_Find", "show", "addNavigationButtons(\"Special_Find\"); keepTab
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
 onEvent("Special_Find/Special_Find_GeneralInformation/TakeGPS", "click", "takeFromGPS()");
 
-onEvent("Special_Find/Special_Find_Location", "show", "refreshSpecialFindLocations()");
-onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delayclick", "newSpecialFindLocation();");
-onEvent("Special_Find/Special_Find_Location/List_Special_Find_Location", "click", "loadSpecialFindLocation()");
-
 String special_find_id = null;
 
 newSpecialFind(){
@@ -1906,29 +1892,6 @@ loadSpecialFindAttributes(){
     makeVocab("DropDown", "Special_Find/Special_Find_GeneralInformation/Device_Code", "Device Code");
 }
 
-// refreshSpecialFindLocations() {
-//     Object specialFindLocations = new ArrayList();
-//     if (!isNull(special_find_id)){
-//         specialFindLocations = fetchAll("SELECT uuid, aenttypename || ': ' || group_concat(coalesce(measure || ' ' || vocabname || '(' ||freetext||')',  measure || ' (' || freetext ||')',  vocabname || ' (' || freetext ||')',  measure || ' ' || vocabname ,  vocabname || ' (' || freetext || ')',  measure || ' (' || freetext || ')',  measure,  vocabname,  freetext,  measure,  vocabname,  freetext), ' | ') as response, valuetimestamp\n"+
-//             "  FROM (  SELECT uuid, attributeid, vocabid, attributename, vocabname, measure, freetext, certainty, attributetype, valuetimestamp, aenttypename\n"+
-//             "            FROM latestNonDeletedArchentIdentifiers\n"+
-//             "           WHERE aenttypename = 'Special Find Location'\n"+
-//             "             AND uuid in (SELECT uuid\n"+
-//             "                            FROM latestNonDeletedAentReln\n"+
-//             "                           WHERE relationshipid in (SELECT relationshipid\n"+
-//             "                                                      FROM latestNonDeletedAentReln\n"+
-//             "                                                      JOIN relationship USING (relationshipid)\n"+
-//             "                                                      JOIN relntype USING (relntypeid)\n"+
-//             "                                                     WHERE uuid = "+special_find_id+"\n"+
-//             "                                                       and relntypeName = 'SpecialFindSpecialFindLocation')\n"+
-//             "                             and uuid != "+special_find_id+")\n"+
-//             "        ORDER BY uuid, attributename ASC)\n"+
-//             "group by uuid\n"+
-//             "ORDER BY valuetimestamp desc, uuid, attributename;");
-//     }
-//     populateList("Special_Find/Special_Find_Location/List_Special_Find_Location",  specialFindLocations);    
-// }
-
 takeFromGPS(){
   Object position = getGPSPosition();
   Object projPosition = getGPSPositionProjected();
@@ -1945,82 +1908,6 @@ takeFromGPS(){
     showToast("{GPS_Not_initialized}");
   }
 }
-
-/*** Special Find Locations***/
-onEvent("Special_Find_Location", "show", "addNavigationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");
-onEvent("Special_Find_Location/Special_Find_Location/TakeGPS", "click", "takeSpecialFindLocationGPS()");
-
-String special_find_location_id = null;
-
-newSpecialFindLocation(){
-    special_find_location_id = null;
-    newTabGroup("Special_Find_Location");
-}
-
-loadSpecialFindLocation() {
-    special_find_location_id = getListItemValue();
-    loadSpecialFindLocationFrom(special_find_location_id);
-}
-
-loadSpecialFindLocationFrom(archent_id) {
-    special_find_location_id = archent_id;
-    if (isNull(special_find_location_id)) return;
-    
-    showTabGroup("Special_Find_Location", special_find_location_id);
-}
-
-saveSpecialFindLocation() {
-    Boolean enable_autosave = true;
-    List attributes = createAttributeList();
-    attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
-    saveTabGroup("Special_Find_Location", special_find_location_id, null, attributes, new SaveCallback() {
-        onSave(uuid, newRecord) {
-            special_find_location_id = uuid;
-            if (newRecord) {
-              onSpecialFindLocationSaved();
-            }            
-        }
-        onError(message) {
-            showToast(message);
-        }
-    }, enable_autosave);
-}
-
-onSpecialFindLocationSaved(){
-    saveEntitiesToRel("SpecialFindSpecialFindLocation", special_find_location_id, special_find_id);
-    showToast("{Associated_with_Special_Find}");
-}
-
-deleteSpecialFindLocation(){
-    if (!isNull(special_find_location_id)) {
-        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Special_Find_Location_Record}", "reallyDeleteSpecialFindLocation()", "doNotDelete()");
-    } else {
-        cancelTabGroup("Special_Find_Location", true);
-    }
-}
-
-reallyDeleteSpecialFindLocation(){
-    deleteArchEnt(special_find_location_id);
-    cancelTabGroup("Special_Find_Location", false);
-}
-
-takeSpecialFindLocationGPS(){
-    Object position = getGPSPosition();
-    Object projPosition = getGPSPositionProjected();
-    if (projPosition != null ){
-        Double latitude = position.getLatitude();
-        Double longitude = position.getLongitude();
-        Double northing = projPosition.getLatitude();
-        Double easting = projPosition.getLongitude();
-        setFieldValue("Special_Find_Location/Special_Find_Location/Latitude", latitude);
-        setFieldValue("Special_Find_Location/Special_Find_Location/Longitude", longitude);
-        setFieldValue("Special_Find_Location/Special_Find_Location/Northing", northing);
-        setFieldValue("Special_Find_Location/Special_Find_Location/Easting", easting);
-    } else {
-        showToast("{GPS_Not_initialized}");
-    }
-}
-
 
 /*** Arch Ent: Adobe Element ***/
 onEvent("Adobe_Element", "show", "addNavigationButtons(\"Adobe_Element\"); keepTabGroupChanges(\"Adobe_Element\"); saveAdobe(\"\");");
