@@ -1815,6 +1815,7 @@ loadMatrixAttributes(){
 /*** Special Find ***/
 onEvent("Special_Find", "show", "addNavigationButtons(\"Special_Find\"); keepTabGroupChanges(\"Special_Find\"); saveSpecialFind(\"\");");
 onEvent("Special_Find/Special_Find_GeneralInformation/attachPhoto", "click", "attachPictureTo(\"Special_Find/Special_Find_GeneralInformation/Photo\")");
+onEvent("Special_Find/Special_Find_GeneralInformation/TakeGPS", "click", "takeFromGPS()");
 
 onEvent("Special_Find/Special_Find_Location", "show", "refreshSpecialFindLocations()");
 onEvent("Special_Find/Special_Find_Location/New_Special_Find_Location", "delayclick", "newSpecialFindLocation();");
@@ -1927,6 +1928,23 @@ loadSpecialFindAttributes(){
 //     }
 //     populateList("Special_Find/Special_Find_Location/List_Special_Find_Location",  specialFindLocations);    
 // }
+
+takeFromGPS(){
+  Object position = getGPSPosition();
+  Object projPosition = getGPSPositionProjected();
+  if (projPosition != null ){
+    Double latitude = position.getLatitude();
+    Double longitude = position.getLongitude();
+    Double northing = projPosition.getLatitude();
+    Double easting = projPosition.getLongitude();
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Latitude", latitude);
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Longitude", longitude);
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Northing", northing);
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Easting", easting);
+  } else {
+    showToast("{GPS_Not_initialized}");
+  }
+}
 
 /*** Special Find Locations***/
 onEvent("Special_Find_Location", "show", "addNavigationButtons(\"Special_Find_Location\"); keepTabGroupChanges(\"Special_Find_Location\"); saveSpecialFindLocation(\"\");");

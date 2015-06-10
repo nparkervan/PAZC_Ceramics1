@@ -484,11 +484,14 @@
               <container3>
                 <child1>
                   <Latitude/>
+                  <Northing/>
                 </child1>
                 <child2>
                   <Longitude/>
+                  <Easting/>
                 </child2>
               </container3>
+              <TakeGPS/>
               <Special_Find_Description/>
               <container4>
                 <child1>
@@ -598,6 +601,8 @@
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container2/child3/Z" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child1/Latitude" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child2/Longitude" type="decimal"/>
+      <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child1/Northing" type="decimal"/>
+      <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container3/child2/Easting" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container4/child1/Date_From" type="decimal"/>
       <bind nodeset="/faims/Special_Find/Special_Find_GeneralInformation/container4/child2/Date_To" type="decimal"/>
       <bind nodeset="/faims/Matrix/Matrix/Percentage" type="decimal"/>
@@ -1911,14 +1916,23 @@
             <input faims_attribute_name="Latitude" faims_attribute_type="measure" faims_read_only="false" ref="Latitude">
               <label>{Latitude}</label>
             </input>
+            <input ref="Northing" faims_attribute_name="Northing" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true">
+              <label>{Northing}</label>
+            </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
             <input faims_attribute_name="Longitude" faims_attribute_type="measure" faims_read_only="false" ref="Longitude">
               <label>{Longitude}</label>
             </input>
+            <input ref="Easting" faims_attribute_name="Easting" faims_attribute_type="measure" faims_certainty="true" faims_annotation="true">
+              <label>{Easting}</label>
+            </input>
           </group>
         </group>
+        <trigger ref="TakeGPS">
+          <label>{Take_From_GPS}</label>
+        </trigger>
         <input faims_attribute_name="Special Find Description" faims_attribute_type="measure" faims_read_only="false" ref="Special_Find_Description">
           <label>{Special_Find} Description</label>
         </input>

@@ -9218,6 +9218,14 @@
       <description>The geographic longitude of the Special Find at the time of excavation.
       </description>
     </property>
+    <property name="Northing" type="float">
+      <description>The geographic northing of the Special Find at the time of excavation.
+      </description>
+    </property>
+    <property name="Easting" type="float">
+      <description>The geographic easting of the Special Find at the time of excavation.
+      </description>
+    </property>
     <property name="Special Find Description" type="freetext">
       <description>Description of the Special Find.
       </description>
