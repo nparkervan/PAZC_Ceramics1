@@ -1098,7 +1098,7 @@ fillInCloseDate(){
 }
 
 updateContextRelationshipTargetArea() {
-  setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
+  setFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
 }
 
 //todo wire in placeholder archents into all of these.
