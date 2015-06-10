@@ -270,16 +270,16 @@
                 </child3>
               </container3>
               <relate/>
-              <listRelns/>
               <container4>
                 <child1>
-                  <deleteReln/>
+                  <listOfRelns/>
                 </child1>
                 <child2>
+                  <help/>
+                  <deleteReln/>
                   <showReln/>
                 </child2>
               </container4>
-              <listOfRelns/>
             </Context_Relationships_to_Other_Contexts>
             <Context_Attachments>
               <Recorded_By/>
@@ -1345,35 +1345,33 @@
         <trigger ref="relate">
           <label>{Relate_Contexts}</label>
         </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="listRelns">
-          <label>{Associated_Entities}</label>
-          <item>
-            <label>{placeholder}</label>
-            <value>placeholder</value>
-          </item>
-        </select1>
+
         <group faims_style="orientation" ref="container4">
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <trigger ref="deleteReln">
-              <label>{Remove_Reln}</label>
-            </trigger>
+            <select1 ref="listOfRelns" appearance="compact">
+              <label>Associated Entities</label>
+              <item>
+                    <label>placeholder</label>
+                    <value>placeholder</value>
+                  </item>
+            </select1>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
+            <input ref="help" faims_web="true">
+              <label/>
+            </input>
+            <trigger ref="deleteReln">
+              <label>{Remove_Reln}</label>
+            </trigger>
             <trigger ref="showReln">
               <label>{Load_Context}</label>
             </trigger>
           </group>
         </group>
-         <select1 ref="listOfRelns" appearance="compact">
-          <label>Associated Entities</label>
-          <item>
-                <label>placeholder</label>
-                <value>placeholder</value>
-              </item>
-        </select1>
+
       </group>
       
       <group ref="Context_Artefacts" faims_scrollable="true">
