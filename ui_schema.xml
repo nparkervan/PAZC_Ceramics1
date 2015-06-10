@@ -245,6 +245,7 @@
               <RemoveFromContextGroup/>
             </Context_Interpretation>
             <Context_Relationships_to_Other_Contexts>
+              <createLegacy/>
               <spacer/>
               <container3>
                 <child0>
@@ -1257,6 +1258,9 @@
       </group>
       <group ref="Context_Relationships_to_Other_Contexts" faims_scrollable="false">
         <label>{Rel}</label>
+        <trigger ref="createLegacy">
+          <label>{Create_Legacy}</label>
+        </trigger>
         <!-- Brian todo, figure out how to model this -->
         <input faims_certainty="false" faims_read_only="true" ref="spacer" faims_web="true">
           <label></label>

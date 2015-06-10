@@ -9381,4 +9381,11 @@
       <description>A brief description of the photograph</description>
     </property>
   </ArchaeologicalElement>
+  <ArchaeologicalElement name="Legacy">
+    <description></description>
+    <property name="Identifier" isIdentifier="true" type="freetext">
+      <description></description>
+      <formatString><![CDATA[$2]]></formatString>
+    </property>
+  </ArchaeologicalElement>
 </dataSchema>
