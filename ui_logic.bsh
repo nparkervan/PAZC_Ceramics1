@@ -1224,11 +1224,14 @@ updateAllContextRelationships(){
             targetContextQuery,
             new FetchCallback() {
                 onFetch(result) {
-                    print(result);
+                    Log.d("PAZC Module", "Fetched target contexts: " + result.toString());
                     populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", result);
                 }
             }
         );
+    }
+    else {
+      showToast("{You_must_save_a_context_first}");
     }
 
     updateRelns();
