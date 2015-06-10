@@ -245,7 +245,18 @@
               <RemoveFromContextGroup/>
             </Context_Interpretation>
             <Context_Relationships_to_Other_Contexts>
-              <createLegacy/>
+              <colgroup>
+                <left>
+                  <Area/>
+                </left>
+                <mid>
+                  <Context_ID/>
+                </mid>
+                <right>
+                  <createLegacy/>
+                  <Populate_Target_Context/>
+                </right>
+              </colgroup>
               <spacer/>
               <container3>
                 <child0>
@@ -1258,9 +1269,34 @@
       </group>
       <group ref="Context_Relationships_to_Other_Contexts" faims_scrollable="false">
         <label>{Rel}</label>
-        <trigger ref="createLegacy">
-          <label>{Create_Legacy}</label>
-        </trigger>
+        <group ref="colgroup" faims_style="orientation">
+          <label/>
+          <group ref="left" faims_style="even">
+            <label/>
+            <select1 ref="Area">
+              <label>{Area_Trench}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
+          </group>
+          <group ref="mid" faims_style="even">
+            <label/>
+            <input ref="Context_ID">
+              <label>{Context_ID}</label>
+            </input>
+          </group>
+          <group ref="right" faims_style="even">
+            <label/>
+            <trigger ref="createLegacy">
+              <label>{Create_Legacy}</label>
+            </trigger>
+            <trigger ref="Populate_Target_Context">
+              <label>{Populate_Target_Context}</label>
+            </trigger>
+          </group>
+        </group>
         <!-- Brian todo, figure out how to model this -->
         <input faims_certainty="false" faims_read_only="true" ref="spacer" faims_web="true">
           <label></label>
