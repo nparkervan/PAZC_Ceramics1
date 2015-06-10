@@ -563,30 +563,31 @@
       <bind nodeset="/faims/control/data/Sample_Starting_ID" type="decimal"/>
       <bind nodeset="/faims/control/data/Adobe_Element_Starting_ID" type="decimal"/>
       <!--list of numeric and blocktext(memo) attributes(fields)-->
+      <bind nodeset="/faims/Context/Context_Interpretation/container1/child1/Start_date" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Interpretation/container1/child2/End_date" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Measure/Volume" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container1/child1/Context_Highest_Level" type="decimal"/>
-      <bind nodeset="/faims/control/data/ContextIncrement" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container1/child2/Context_Lowest_Level" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_NW" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_Ctr" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_NE" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_NW" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_SE" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_SW" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_Ctr" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_NW" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_Ctr" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_NE" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_NW" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_SE" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_SW" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/container2/child2/Context_Lowest_Level_Ctr" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container3/child1/Length" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container3/child2/Width" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container3/child3/Depth" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/Volume" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Interpretation/container1/child1/Start_date" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Interpretation/container1/child2/End_date" type="decimal"/>
+      <bind nodeset="/faims/Context/Context_Relationships_to_Other_Contexts/Context_ID" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child1/Length" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child2/Width" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child3/Depth" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container3/child1/Start_Date" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container3/child2/End_Date" type="decimal"/>
+      <bind nodeset="/faims/control/data/ContextIncrement" type="decimal"/>
 
       <bind nodeset="/faims/Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Quantity" type="decimal"/>
       <bind nodeset="/faims/Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Weight" type="decimal"/>
