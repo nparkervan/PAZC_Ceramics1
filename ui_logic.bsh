@@ -789,6 +789,7 @@ onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
 
 onEvent("Context/Context_Relationships_to_Other_Contexts", "show", "updateAllContextRelationships()");
+onEvent("Context/Context_Relationships_to_Other_Contexts/Populate_Target_Context", "click", "updateAllContextRelationships()");
 onEvent("Context/Context_Relationships_to_Other_Contexts/createLegacy", "click", "showTextAlert(\"Alert\", \"Legacy identifier:\", \"legacyTextInput()\",  null)");
 legacyTextInput() {
   String legacyID = getLastTextAlertInput();
@@ -1203,6 +1204,8 @@ updateAllContextRelationships(){
         );
     }
     populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", contextList);
+    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area",       getFieldValue("Context/Context_GeneralInformation/AreaCode"));
+    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
 
     updateRelns();
 }
@@ -1283,6 +1286,7 @@ loadContextAttributes(){
     makeVocab("RadioGroup", "Context/Context_Interpretation/Your_Interpretation", "Your Interpretation");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
+    makeVocab("DropDown", "Context/Context_Relationships_to_Other_Contexts/Area", "AreaCode");
     //makeVocab("DropDown", "Context/Context_Interpretation/ContextGroupList", "");
 
     //TODO picture gallery, hierarchical, etc
