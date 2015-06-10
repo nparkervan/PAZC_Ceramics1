@@ -1198,14 +1198,13 @@ updateAllContextRelationships(){
             query,
             new FetchCallback() {
                 onFetch(result) {
-                    contextList = result;
+                    print(result);
+                    populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", result);
                 }
             }
         );
     }
-    populateDropDown("Context/Context_Relationships_to_Other_Contexts/context", contextList);
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/Area",       getFieldValue("Context/Context_GeneralInformation/AreaCode"));
-    setFieldValue("Context/Context_Relationships_to_Other_Contexts/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
 
     updateRelns();
 }
