@@ -275,6 +275,7 @@
                   <listOfRelns/>
                 </child1>
                 <child2>
+                  <selectedEnt/>
                   <help/>
                   <deleteReln/>
                   <showReln/>
@@ -388,6 +389,7 @@
                   <ContextList/>
                 </left>
                 <right>
+                  <selectedEnt/>
                   <help/>
                   <ShowContext/>
                   <RemoveContext/>
@@ -1369,6 +1371,9 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
+            <input ref="selectedEnt" faims_web="true">
+              <label>{Selected_Entity}</label>
+            </input>
             <input ref="help" faims_web="true">
               <label/>
             </input>
@@ -1651,7 +1656,7 @@
           <label/>
           <group ref="left" faims_style="even">
             <label/>
-            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList">
+            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList" appearance="compact">
               <label>{Contexts_in_group}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1661,6 +1666,9 @@
           </group>
           <group ref="right" faims_style="even">
             <label/>
+            <input ref="selectedEnt" faims_web="true">
+              <label>{Selected_Entity}</label>
+            </input>
             <input ref="help" faims_web="true">
               <label/>
             </input>
