@@ -1078,7 +1078,7 @@ doNotDelete(){
 
 
 loadContextFromReln(){
-    String relnid = getFieldValue("Context/Context_Relationships_to_Other_Contexts/listRelns");
+    String relnid = getListItemValue();
     if (!isNull(relnid)){   
         Object uuid = fetchOne("SELECT uuid FROM latestNonDeletedAentReln WHERE relationshipID = '"+relnid+"' and uuid != '"+context_id+"';");
         context_id = uuid.get(0);
@@ -1087,13 +1087,13 @@ loadContextFromReln(){
 }
 
 deleteReln(){
-    relnid = getFieldValue("Context/Context_Relationships_to_Other_Contexts/listRelns");
-    
-    String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+relnid+"';";
-    
-    fetchOne(query, null);
-    deleteRel(relnid);
-    updateRelns();
+    relnid = getListItemValue();
+    if (!isNull(relnid)){  
+      String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+relnid+"';";
+      fetchOne(query, null);
+      deleteRel(relnid);
+      updateRelns();
+    }
 }
 
 fillInCloseDate(){
