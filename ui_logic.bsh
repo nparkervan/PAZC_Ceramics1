@@ -388,13 +388,12 @@ duplicateRecord(String tabgroup) {
   getDuplicateCallback(String extraCallback) {
     saveCallback = new SaveCallback() {
       onSave(uuid, newRecord) {
-          if (!isNull(extraCallback)) {
-            execute(extraCallback);
-          }
-          showToast("{Duplicated_record}");
+        if (!isNull(extraCallback)) {
+          execute(extraCallback);
         }
-      };
-    }
+        showToast("{Duplicated_record}");
+      }
+    };
     return saveCallback;
   }
   
