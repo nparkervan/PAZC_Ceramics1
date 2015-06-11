@@ -1456,7 +1456,7 @@ remremoveContextGroupReln() {
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
 onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea();populateContextGroupRelatedContexts();");
-onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "populateWebViewHtml(\"ContextGroup/ContextGroup_Contexts/selectedEnt\", WEB_REL_SELECTED_NONE); showToast(\"Placeholder\")");
+onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "populateWebViewHtml(\"ContextGroup/ContextGroup_Contexts/selectedEnt\", WEB_REL_SELECTED_NONE); populateContextGroup();");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/ShowContext"   , "click" , "loadContextFromContextGroup()");
 onEvent("ContextGroup/ContextGroup_Contexts/RemoveContext" , "click" , "removeFromContextGroup()");
@@ -1477,7 +1477,6 @@ newContextGroup(menu){
     setFieldValue("ContextGroup/ContextGroup_Details/Site_Code", moduleSiteCode);
     setFieldValue("ContextGroup/ContextGroup_Details/Area_Code", getFieldValue("user/usertab/Area_Code"));
     setFieldValue("ContextGroup/ContextGroup_Details/Device_Code", getFieldValue("user/usertab/Device_Code"));
-    populateContextGroup();
 }
 
 loadContextGroup(){
@@ -1551,6 +1550,7 @@ populateContextGroupRelatedContexts(){
 addToContextGroup() {
     if (isNull(context_group_id)) {
         saveContextGroup();
+        showToast("{You_must_have_saved_your_entity}");
         return;
     }
     String selectedContextID = getFieldValue("ContextGroup/ContextGroup_Contexts/AddContextList");
@@ -1559,6 +1559,7 @@ addToContextGroup() {
     }
     saveEntitiesToRel("ContextContextGroup", selectedContextID, context_group_id);
     populateContextGroup();
+    populateContextGroupRelatedContexts();
 }
 
 populateContextGroup() {
