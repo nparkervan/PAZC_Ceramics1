@@ -1623,10 +1623,6 @@ loadContextGroupAttributes(){
     makeVocab("DropDown", "ContextGroup/ContextGroup_Details/Area_Code", "AreaCode");
 }
 
-loadContextFromContextGroup(){
-    loadContextFrom(getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList"));
-}
-
 deleteContextGroup(){
     if (!isNull(context_group_id)) {
         showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Context_Group}", "reallyDeleteContextGroup()", "doNotDelete()");
@@ -1642,25 +1638,30 @@ doNotDelete(){
     showToast("{Delete_Cancelled}");
 }
 
-// TODO: Redo.
+loadContextFromContextGroup(){
+    String childuuid = selectedEntityIdentifer;
+    if (!isNull(childuuid)){
+        loadEntityFrom(childuuid);
+    } else {
+        showWarning("Nothing Selected", "Please select a child entity in the list.");
+    }
+}
+
 removeFromContextGroup() {
-    showToast("TODO: Redo the removeFromContextGroup() function");
-    // context_id = getFieldValue("ContextGroup/ContextGroup_Contexts/ContextList");
-    // if(!isNull(context_id) && !isNull(context_group_id)) {
-    //     Object obj = fetchOne("SELECT context.uuid, contextgroup.uuid, relationshipid  " +
-    //         "FROM latestnondeletedaentreln context JOIN latestnondeletedaentreln contextgroup USING (relationshipid) " +
-    //         "WHERE context.uuid != contextgroup.uuid " +
-    //         "and context.uuid = " + context_id + " " +
-    //         "and contextgroup.uuid = " + context_group_id + ";");
-    //     String relnid = obj.get(2);
-    //     if(!isNull(relnid)) {
-    //         String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '" + userid + "' FROM latestnondeletedaentreln WHERE relationshipid = '" + relnid + "';";
-    //         fetchOne(query);
-    //         deleteRel(relnid);
-    //         populateContextGroup();
-    //     }
-        
-    // }
+  String childuuid = selectedEntityIdentifer;
+  if (!isNull(childuuid)){
+    String relationshipidQuery = "select relationshipid from parentchild where parentuuid = '"+context_group_id+"' and childuuid = '"+childuuid+"';";
+    fetchOne(relationshipidQuery, new FetchCallback() {
+      onFetch(result) {
+        String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
+        fetchOne(deletequery, null);
+        deleteRel(result.get(0));
+        populateWebViewHtml("ContextGroup/ContextGroup_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
+        selectedEntityIdentifer = null;
+        populateContextGroupRelatedContexts();
+      }
+    });        
+  }
 }
 
 
