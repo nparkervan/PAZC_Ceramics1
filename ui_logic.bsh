@@ -1100,7 +1100,7 @@ deleteReln(){
         fetchOne(relationshipidQuery, new FetchCallback() {
           onFetch(result) {
             String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
-            fetchOne(query, null);
+            fetchOne(deletequery, null);
             deleteRel(result.get(0));
             updateRelns();
           }
