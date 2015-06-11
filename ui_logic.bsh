@@ -1127,11 +1127,15 @@ updateContextRelationshipTargetArea() {
 }
 
 updateContextIdentifier(){
-    fetchOne("select response from latestNonDeletedArchEntFormattedIdentifiers where uuid = '"+context_id+"';", new FetchCallback() {
-      onFetch(result) {
-        setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", result.get(0));
-      }
-    });    
+    if (!isNull(context_id)){
+        fetchOne("select response from latestNonDeletedArchEntFormattedIdentifiers where uuid = '"+context_id+"';", new FetchCallback() {
+          onFetch(result) {
+            setFieldValue("Context/Context_Relationships_to_Other_Contexts/context_id", result.get(0));
+          }
+        });    
+    } else {
+        showToast("Please save your context before going to this tab.");
+    }
 }
 
 
