@@ -9329,6 +9329,18 @@
       <formatString><![CDATA[$2-]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
+    <property name="AreaCode" type="enum">
+      <description>The working subdivision of a total archaeological site.</description>
+      <formatString><![CDATA[$1-]]></formatString>
+      <appendCharacterString><![CDATA[-]]></appendCharacterString>
+      <lookup>
+        <term>123<description>{Site} 123.</description></term>
+        <term>125<description>{Site} 125.</description></term>
+        <term>128<description>{Site} 128.</description></term>
+        <term>131<description>{Site} 131.</description></term>
+        <term>136<description>{Site} 136.</description></term>
+      </lookup>
+    </property>
     <property name="Photograph Reference ID" isIdentifier="true" type="freetext">
       <description>Unique number or code allocated by creator of the image. It could be a filename or a reference number</description>
       <formatString><![CDATA[$2]]></formatString>
