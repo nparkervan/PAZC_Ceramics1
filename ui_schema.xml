@@ -1214,20 +1214,20 @@
           <label>{Structure_Description}</label>
         </input>
          <trigger ref="newAdobe">
-          <label>Add {Adobe}</label>
+          <label>{Add} {Adobe}</label>
         </trigger>
         <select1 faims_certainty="false" faims_read_only="false" ref="AdobeList">
-          <label>Select a {Adobe}:</label>
+          <label>{Select_a} {Adobe}:</label>
           <item>
             <label>placeholder</label>
             <value>placeholder</value>
           </item>
         </select1>
         <trigger ref="loadAdobe">
-          <label>Load {Adobe}</label>
+          <label>{Load} {Adobe}</label>
         </trigger>
         <trigger ref="deleteAdobe">
-          <label>Delete {Adobe}</label>
+          <label>{Delete} {Adobe}</label>
         </trigger>
 
       </group>
@@ -1362,7 +1362,7 @@
           <group faims_style="even" ref="child1">
             <label/>
             <select1 ref="listOfRelns" appearance="compact" faims_style_class="record_list">
-              <label>Associated Entities</label>
+              <label></label>
               <item>
                     <label>placeholder</label>
                     <value>placeholder</value>

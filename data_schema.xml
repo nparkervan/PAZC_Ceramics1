@@ -4,30 +4,30 @@
   <RelationshipElement name="AboveBelow" type="hierarchical">
     <description>Implements a above below for contexts.
     </description>
-    <parent>Está encima de</parent>
-    <child>Está debajo de</child>
+    <parent>{Está_encima_de}</parent>
+    <child>{Está_debajo_de}</child>
   </RelationshipElement>
-  <RelationshipElement name="Es igual a" type="bidirectional">
+  <RelationshipElement name="{Es_igual_a}" type="bidirectional">
     <description>Implements a same as for contexts
     </description>
   </RelationshipElement>
   <RelationshipElement name="Contains - Contained By" type="hierarchical">
     <description>Implements a contains-containedby for contexts.
     </description>
-    <parent>Contiene</parent>
-    <child>Está contenido por</child>
+    <parent>{Contiene}</parent>
+    <child>{Está_contenido_por}</child>
   </RelationshipElement>
   <RelationshipElement name="Cuts - Cut By" type="hierarchical">
     <description>Implements a cuts-cutby for contexts.
     </description>
-    <parent>Se corta</parent>
-    <child>Está cortado por</child>
+    <parent>{Se_corta}</parent>
+    <child>{Está_cortado_por}</child>
   </RelationshipElement>
   <RelationshipElement name="Butts - Butted By" type="hierarchical">
     <description>Implements a Butts-ButtedBy for contexts.
     </description>
-    <parent>Topa</parent>
-    <child>Está topado por</child>
+    <parent>{Topa}</parent>
+    <child>{Está_topado_por}</child>
   </RelationshipElement>
   <RelationshipElement name="Está pegado a" type="bidirectional">
     <description>Implements a bonded to for contexts
