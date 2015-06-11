@@ -756,7 +756,7 @@ loadEntityFrom(String entityID) {
 }
 
 /*** ArchEnt: Context ***/
-onEvent("Context", "show", "addNavigationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");");
+onEvent("Context", "show", "addNavigationButtons(\"Context\"); openContextTabs(); keepTabGroupChanges(\"Context\"); saveContext(\"\");refreshTabgroupCSS(\"Context\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Deposits\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Cuts\");");
 onEvent("Context", "load", "showTab(\"Context/Context_Structures\");");
@@ -1328,7 +1328,7 @@ updateRelns(){
     } else {
         showToast("No context id!");
     }
-    refreshTabgroupCSS("control");
+    refreshTabgroupCSS("Context");
 
 }
 
@@ -1484,7 +1484,7 @@ removeContextGroupReln() {
 }
 
 /*** ArchEnt: Context Group***/
-onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
+onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();refreshTabgroupCSS(\"ContextGroup\");");
 onEvent("ContextGroup/ContextGroup_Contexts", "show", "populateContextGroupContextsArea();populateContextGroupRelatedContexts();");
 onEvent("ContextGroup/ContextGroup_Contexts/Populate_Target_Context", "delayclick", "populateWebViewHtml(\"ContextGroup/ContextGroup_Contexts/selectedEnt\", WEB_REL_SELECTED_NONE); populateContextGroup();");
 onEvent("ContextGroup/ContextGroup_Contexts/AddContext"    , "delayclick" , "addToContextGroup()");
@@ -1576,6 +1576,7 @@ populateContextGroupRelatedContexts(){
         );
 
     Log.d("foo", contextGroupQuery);
+    refreshTabgroupCSS("ContextGroup");
 
 }
 addToContextGroup() {

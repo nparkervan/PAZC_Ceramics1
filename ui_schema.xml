@@ -1361,7 +1361,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 ref="listOfRelns" appearance="compact">
+            <select1 ref="listOfRelns" appearance="compact" faims_style_class="record_list">
               <label>Associated Entities</label>
               <item>
                     <label>placeholder</label>
@@ -1656,7 +1656,7 @@
           <label/>
           <group ref="left" faims_style="even">
             <label/>
-            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList" appearance="compact">
+            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList" appearance="compact" faims_style_class="record_list">
               <label>{Contexts_in_group}</label>
               <item>
                 <label>{placeholder}</label>
