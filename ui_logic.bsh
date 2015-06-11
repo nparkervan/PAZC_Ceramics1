@@ -719,29 +719,34 @@ entityTypes.add(new NameValuePair("{Photograph_Log}", "Photograph Log"));
 populateDropDown("control/search/entityTypes", entityTypes);
 
 loadEntity() {
-  String listID = getListItemValue();
-  if (!isNull(listID)) {
-    fetchAll("select aenttypename from latestnondeletedarchent join aenttype using (aenttypeid) where uuid = '" + listID + "';", new FetchCallback() {
+  loadEntityFrom(getListItemValue());
+}
+
+loadEntityFrom(String entityID) {
+  if (!isNull(entityID)) {
+    fetchAll("select aenttypename from latestnondeletedarchent join aenttype using (aenttypeid) where uuid = '" + entityID + "';", new FetchCallback() {
       onFetch(result) {
         String name = result.get(0).get(0);
         if (name.equals("Context")) {
-          loadContextFrom(listID);
+          loadContextFrom(entityID);
+        } else if (name.equals("Legacy")) {
+          showWarning("{Alert}", "{This_is_a_legacy_identifier_and_is_not_viewable_on_the_device}");
         } else if (name.equals("Context Group")) {
-          loadContextGroupFrom(listID);
+          loadContextGroupFrom(entityID);
         } else if (name.equals("Artefact Group")) {
-          loadArtefactGroupFrom(listID);
+          loadArtefactGroupFrom(entityID);
         } else if (name.equals("Sample")) {
-          loadSampleFrom(listID);
+          loadSampleFrom(entityID);
         } else if (name.equals("Matrix")) {
-          loadMatrixFrom(listID);
+          loadMatrixFrom(entityID);
         } else if (name.equals("Special Find")) {
-          loadSpecialFindFrom(listID);
+          loadSpecialFindFrom(entityID);
         } else if (name.equals("Special Find Location")) {
-          loadSpecialFindLocationFrom(listID);
+          loadSpecialFindLocationFrom(entityID);
         } else if (name.equals("Adobe Element")) {
-          loadAdobeFrom(listID);
+          loadAdobeFrom(entityID);
         } else if (name.equals("Photograph Log")) {
-          loadPhotoLogFrom(listID);
+          loadPhotoLogFrom(entityID);
         }
       }
     });
@@ -1080,7 +1085,7 @@ doNotDelete(){
 loadContextFromReln(){
     String childuuid = selectedEntityIdentifer;
     if (!isNull(childuuid)){
-        loadContextFrom(childuuid);
+        loadEntityFrom(childuuid);
         
     } else {
         showWarning("Nothing Selected", "Please select a child entity in the list.");
@@ -1097,6 +1102,8 @@ deleteReln(){
             String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
             fetchOne(deletequery, null);
             deleteRel(result.get(0));
+            populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
+            selectedEntityIdentifer = null;
             updateRelns();
           }
         });    
