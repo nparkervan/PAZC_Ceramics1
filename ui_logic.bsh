@@ -1088,7 +1088,7 @@ loadContextFromReln(){
         loadEntityFrom(childuuid);
         
     } else {
-        showWarning("Nothing Selected", "Please select a child entity in the list.");
+        showWarning("{Nothing_Selected}", "{Please_select_a_child_entity_in_the_list}");
     }
 }
 
@@ -1658,7 +1658,7 @@ loadContextFromContextGroup(){
     if (!isNull(childuuid)){
         loadEntityFrom(childuuid);
     } else {
-        showWarning("Nothing Selected", "Please select a child entity in the list.");
+        showWarning("{Nothing_Selected}", "{Please_select_a_child_entity_in_the_list}");
     }
 }
 
