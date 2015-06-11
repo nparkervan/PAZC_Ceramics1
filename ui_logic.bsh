@@ -1095,7 +1095,7 @@ deleteReln(){
         fetchOne(relationshipidQuery, new FetchCallback() {
           onFetch(result) {
             String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
-            fetchOne(query, null);
+            fetchOne(deletequery, null);
             deleteRel(result.get(0));
             updateRelns();
           }
@@ -1108,7 +1108,7 @@ deleteReln(){
 
 fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
-        setTimestamp("Context/Context_GeneralInformation/Date_Closed");        
+        setTimestamp("Context/Context_GeneralInformation/Date_Closed");        select relationshipid from 
     } else {
         showToast("{To_avoid_accidents_please_clear_the_Date_Closed_field_before_updating}");
     }
@@ -1303,6 +1303,7 @@ showRelnFromList(){
 
 updateRelns(){
     //TODO Figure out a better way of doing this other than a dropdown.
+    selectedEntityIdentifer = null;
     if (!isNull(context_id)){        
         populateCursorList(
                 "Context/Context_Relationships_to_Other_Contexts/listOfRelns",
@@ -1686,7 +1687,7 @@ newArtefactGroup(){
     newTabGroup("Artefact_Group");
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID"));
     incField("control/data/Artefact_Group_Starting_ID", 1);
 }
@@ -1778,7 +1779,7 @@ newSample(){
     newTabGroup("Sample");
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Sample/Sample_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    setFieldValue("Sample/Sample_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    setFieldValue("Sample/Sample_GeneralInformation/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID"));
     incField("control/data/Sample_Starting_ID", 1);
 }
@@ -1956,7 +1957,7 @@ newSpecialFind(){
     newTabGroup("Special_Find");
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID"));
     incField("control/data/SpecialFind_Starting_ID", 1);
 }
@@ -2062,7 +2063,7 @@ newAdobe(){
     newTabGroup("Adobe_Element");
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Adobe_Element/Adobe_Element/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    setFieldValue("Adobe_Element/Adobe_Element/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    setFieldValue("Adobe_Element/Adobe_Element/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID"));
     incField("control/data/Adobe_Element_Starting_ID", 1);
 }
@@ -2157,7 +2158,7 @@ newPhotoLog(){
     newTabGroup("Photograph_Log");
     setFieldValue("Photograph_Log/Photograph_Log/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
     setFieldValue("Photograph_Log/Photograph_Log/Site_Code", getFieldValue("Context/Context_GeneralInformation/Site_Code"));
-    setFieldValue("Photograph_Log/Photograph_Log/Device_Code", getFieldValue("user/usertab/Device_Code"));
+    setFieldValue("Photograph_Log/Photograph_Log/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
 }
 
 loadPhotoLog() {
