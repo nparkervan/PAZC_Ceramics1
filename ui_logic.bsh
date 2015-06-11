@@ -1107,6 +1107,8 @@ deleteReln(){
             updateRelns();
           }
         });        
+    } else {
+      showWarning("{Nothing_Selected}", "{Please_select_a_child_entity_in_the_list}");
     }
 }
 
@@ -1676,6 +1678,8 @@ removeFromContextGroup() {
         populateContextGroupRelatedContexts();
       }
     });        
+  } else {
+    showWarning("{Nothing_Selected}", "{Please_select_a_child_entity_in_the_list}");
   }
 }
 
