@@ -384,24 +384,46 @@ newRecord(String tabgroup) {
 
 // Duplicates the current record of the given tabgroup
 duplicateRecord(String tabgroup) {
-  saveCallback = new SaveCallback() {
-    onSave(uuid, newRecord) {
-      showToast("{Duplicated_record}");
+  // generic callback
+  getDuplicateCallback(String extraCallback) {
+    saveCallback = new SaveCallback() {
+      onSave(uuid, newRecord) {
+          if (!isNull(extraCallback)) {
+            execute(extraCallback);
+          }
+          showToast("{Duplicated_record}");
+        }
+      };
     }
-  };
+    return saveCallback;
+  }
+  
+  saveCallback = getDuplicateCallback(null);
+
+  // specific callbacks
   if (tabgroup.equals("Context")) {
+    String extraCallback = "setFieldValue(\"Context/Context_GeneralInformation/Context_ID\", getFieldValue(\"control/data/ContextIncrement\")); incField(\"control/data/ContextIncrement\");";
+    saveCallback = getDuplicateCallback(extraCallback);
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("ContextGroup")) {
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Artefact_Group")) {
+    String extraCallback = "setFieldValue(\"Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID\", getFieldValue(\"control/data/Artefact_Group_Starting_ID\")); incField(\"control/data/Artefact_Group_Starting_ID\", 1);";
+    saveCallback = getDuplicateCallback(extraCallback);
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Sample")) {
+    String extraCallback = "setFieldValue(\"Sample/Sample_GeneralInformation/Sample_ID\", getFieldValue(\"control/data/Sample_Starting_ID\")); incField(\"control/data/Sample_Starting_ID\", 1);";
+    saveCallback = getDuplicateCallback(extraCallback);
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Matrix")) {
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Special_Find")) {
+    String extraCallback = "setFieldValue(\"Special_Find/Special_Find_GeneralInformation/Special_Find_ID\", getFieldValue(\"control/data/SpecialFind_Starting_ID\")); incField(\"control/data/SpecialFind_Starting_ID\", 1);";
+    saveCallback = getDuplicateCallback(extraCallback);
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Adobe_Element")) {
+    String extraCallback = "setFieldValue(\"Adobe_Element/Adobe_Element/Adobe_Element_ID\", getFieldValue(\"control/data/Adobe_Element_Starting_ID\")); incField(\"control/data/Adobe_Element_Starting_ID\", 1);";
+    saveCallback = getDuplicateCallback(extraCallback);
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("Photograph_Log")) {
     duplicateTabGroup(tabgroup, null, null, null, saveCallback);
