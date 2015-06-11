@@ -1078,22 +1078,32 @@ doNotDelete(){
 
 
 loadContextFromReln(){
-    String relnid = getFieldValue("Context/Context_Relationships_to_Other_Contexts/listRelns");
-    if (!isNull(relnid)){   
-        Object uuid = fetchOne("SELECT uuid FROM latestNonDeletedAentReln WHERE relationshipID = '"+relnid+"' and uuid != '"+context_id+"';");
-        context_id = uuid.get(0);
-        loadContextFrom(uuid.get(0));
+    String childuuid = selectedEntityIdentifer;
+    if (!isNull(childuuid)){
+        loadContextFrom(childuuid);
+        
+    } else {
+        showWarning("Nothing Selected", "Please select a child entity in the list.");
     }
 }
 
 deleteReln(){
-    relnid = getFieldValue("Context/Context_Relationships_to_Other_Contexts/listRelns");
-    
-    String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+relnid+"';";
-    
-    fetchOne(query, null);
-    deleteRel(relnid);
-    updateRelns();
+    String childuuid = selectedEntityIdentifer;
+    if (!isNull(childuuid)){
+
+        String relationshipidQuery = "select relationshipid from parentchild where parentuuid = '"+context_id+"' and childuuid = '"+childuuid+"';";
+        fetchOne(relationshipidQuery, new FetchCallback() {
+          onFetch(result) {
+            String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
+            fetchOne(query, null);
+            deleteRel(result.get(0));
+            updateRelns();
+          }
+        });    
+        
+       
+        
+    }
 }
 
 fillInCloseDate(){
@@ -1107,6 +1117,7 @@ fillInCloseDate(){
 updateContextRelationshipTargetArea() {
     setFieldValue("Context/Context_Relationships_to_Other_Contexts/Target_Area", getFieldValue("Context/Context_GeneralInformation/AreaCode"));
     populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
+
 }
 
 updateContextIdentifier(){
@@ -1270,14 +1281,14 @@ makeHierReln(){
     String relSaveCallback = "updateRelns();";
     saveEntitiesToHierRel(arguments[0], context_id, dest, arguments[1], arguments[2], relSaveCallback);
 }
-
+String selectedEntityIdentifer = null;
 selectAssociatedEntityContext() {
-    String selectedEntityIdentifer = getListItemValue();
+    selectedEntityIdentifer = getListItemValue();
     populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/selectedEnt", selectedEntityIdentifer);
 }
 
 selectAssociatedEntityContextGroup() {
-    String selectedEntityIdentifer = getListItemValue();
+    selectedEntityIdentifer = getListItemValue();
     populateWebViewHtml("ContextGroup/ContextGroup_Contexts/selectedEnt", selectedEntityIdentifer);
 }
 
@@ -1528,6 +1539,7 @@ populateContextGroupContextsArea() {
       setFieldValue("ContextGroup/ContextGroup_Contexts/Target_Area", contextgroupAreaCode);
     }
     populateWebViewHtml("ContextGroup/ContextGroup_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
+    selectedEntityIdentifer = null;
 }
 
 populateContextGroupRelatedContexts(){
