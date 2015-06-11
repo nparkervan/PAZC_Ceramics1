@@ -904,7 +904,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_certainty="false" faims_read_only="false" ref="Date_Closed" faims_attribute_name="Date Closed" faims_attribute_type="date">
+            <input faims_certainty="false" faims_read_only="false" ref="Date_Closed" faims_attribute_name="Date Closed" faims_attribute_type="measure">
               <label>{Date_Closed}</label>
             </input>
           </group>
@@ -1912,7 +1912,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Percentage" faims_attribute_type="decimal" faims_certainty="false" faims_read_only="false" ref="Percentage">
+        <input faims_attribute_name="Percentage" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Percentage">
           <label>{Percentage}</label>
         </input>        
          <input faims_attribute_name="Stone Size" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Stone_Size">
