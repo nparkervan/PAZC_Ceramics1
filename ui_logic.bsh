@@ -1106,16 +1106,13 @@ deleteReln(){
             selectedEntityIdentifer = null;
             updateRelns();
           }
-        });    
-        
-       
-        
+        });        
     }
 }
 
 fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
-        setTimestamp("Context/Context_GeneralInformation/Date_Closed");       
+        setTimestamp("Context/Context_GeneralInformation/Date_Closed");
     } else {
         showToast("{To_avoid_accidents_please_clear_the_Date_Closed_field_before_updating}");
     }
@@ -1463,27 +1460,21 @@ returnToContext(){
     cancelTab("Context/Texture_Helper", false);
     showTab("Context/Context_Deposits");
 }
-/*
-TODO: redo. figure out what queries are needed here.)
-remremoveContextGroupReln() {
+
+removeContextGroupReln() {
     context_group_id = getFieldValue("Context/Context_Interpretation/ContextGroupList");
     if(!isNull(context_id) && !isNull(context_group_id)) {
-        Object obj = fetchOne("SELECT context.uuid, contextgroup.uuid, relationshipid  " +
-            "FROM latestnondeletedaentreln context JOIN latestnondeletedaentreln contextgroup USING (relationshipid) " +
-            "WHERE context.uuid != contextgroup.uuid " +
-            "and context.uuid = " + context_id + " " +
-            "and contextgroup.uuid = " + context_group_id + ";");
-        String relnid = obj.get(2);
-        if(!isNull(relnid)) {
-            String query = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '" + userid + "' FROM latestnondeletedaentreln WHERE relationshipid = '" + relnid + "';";
-            fetchOne(query);
-            deleteRel(relnid);
+      String relationshipidQuery = "select relationshipid from parentchild where parentuuid = '"+context_id+"' and childuuid = '"+context_group_id+"';";
+        fetchOne(relationshipidQuery, new FetchCallback() {
+          onFetch(result) {
+            String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
+            fetchOne(deletequery, null);
+            deleteRel(result.get(0));
             updateAllContextGroups();
-        }
-        
+          }
+        });        
     }
 }
-*/
 
 /*** ArchEnt: Context Group***/
 onEvent("ContextGroup", "show", "addNavigationButtons(\"ContextGroup\"); keepTabGroupChanges(\"ContextGroup\"); saveContextGroup();");
