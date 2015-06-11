@@ -4,8 +4,8 @@
   <RelationshipElement name="AboveBelow" type="hierarchical">
     <description>Implements a above below for contexts.
     </description>
-    <parent>{Está_encima_de}</parent>
-    <child>{Está_debajo_de}</child>
+    <parent>{Esta_encima_de}</parent>
+    <child>{Esta_debajo_de}</child>
   </RelationshipElement>
   <RelationshipElement name="{Es_igual_a}" type="bidirectional">
     <description>Implements a same as for contexts
@@ -29,7 +29,7 @@
     <parent>{Topa}</parent>
     <child>{Está_topado_por}</child>
   </RelationshipElement>
-  <RelationshipElement name="Está pegado a" type="bidirectional">
+  <RelationshipElement name="{Esta_pegado_a}" type="bidirectional">
     <description>Implements a bonded to for contexts
     </description>
   </RelationshipElement>
