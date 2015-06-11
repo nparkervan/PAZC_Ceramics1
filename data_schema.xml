@@ -15,19 +15,19 @@
     <description>Implements a contains-containedby for contexts.
     </description>
     <parent>{Contiene}</parent>
-    <child>{Está_contenido_por}</child>
+    <child>{Esta_contenido_por}</child>
   </RelationshipElement>
   <RelationshipElement name="Cuts - Cut By" type="hierarchical">
     <description>Implements a cuts-cutby for contexts.
     </description>
     <parent>{Se_corta}</parent>
-    <child>{Está_cortado_por}</child>
+    <child>{Esta_cortado_por}</child>
   </RelationshipElement>
   <RelationshipElement name="Butts - Butted By" type="hierarchical">
     <description>Implements a Butts-ButtedBy for contexts.
     </description>
     <parent>{Topa}</parent>
-    <child>{Está_topado_por}</child>
+    <child>{Esta_topado_por}</child>
   </RelationshipElement>
   <RelationshipElement name="{Esta_pegado_a}" type="bidirectional">
     <description>Implements a bonded to for contexts
@@ -8113,12 +8113,12 @@
         </term>
       </lookup>
     </property>
-    <property name="Sketch" type="file" thumbnail="true" sync="false">
+    <property name="Sketch" type="file" file="true" thumbnail="true" >
       <description>Sketch
       </description>
     </property>
     <!--Make below a required Field -->
-    <property name="Photo" type="file" thumbnail="true" sync="false">
+    <property name="Photo" type="file" file="true" thumbnail="true" >
       <description>Photo
       </description>
     </property>
@@ -8774,12 +8774,12 @@
       <description>General comment about this group of Artefacts from this Context, eg 'Lots of early porcelain. Few marks.'
       </description>
     </property>
-    <property name="Sketch" type="file" thumbnail="true" sync="false">
+    <property name="Sketch" type="file" file="true" thumbnail="true" >
       <description>Sketch
       </description>
     </property>
     <!--Make below a required Field if Artifact entered-->
-    <property name="Photo" type="file" thumbnail="true" sync="false">
+    <property name="Photo" type="file" file="true" thumbnail="true" >
       <description>Photo
       </description>
     </property>
@@ -9088,11 +9088,11 @@
       <description>Other description about structural elements, eg slate dry-proofing.
       </description>
     </property>
-    <property name="Sketch" type="file" thumbnail="true" sync="false">
+    <property name="Sketch" type="file" file="true" thumbnail="true" >
       <description>Sketch
       </description>
     </property>
-    <property name="Photo" type="file" thumbnail="true" sync="false">
+    <property name="Photo" type="file" file="true" thumbnail="true" >
       <description>Photo
       </description>
     </property>
@@ -9235,7 +9235,7 @@
       <description>
       </description>
     </property>
-    <property name="Photo" type="file" thumbnail="true" sync="false">
+    <property name="Photo" type="file" file="true" thumbnail="true" >
       <description>Photo
       </description>
     </property>

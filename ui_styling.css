@@ -1,64 +1,19 @@
-.duplicate-id-list {
-    height: 20%;
-}
-
-.sample-list {
-    height: 60%;
-}
 
 .record-list {
     height: 400px;
 }
 
-.ph-list {
-    height: 80%;
-}
+.required {
 
-.menu-list {
-    height: 75%;
 }
-
-.record_list{
-    height: 100%;
-}
-.user_list{
-    height: 80%;
-}
-.user_list-label{
-    }
-
-.button_and_list{
-    height: 70%;
-}
-.button_and_list-label{
-        margin-top:7%;
-}
-
-.list{    
-            
-}
-
-.list-label{
-        margin-top:7%;
-}
-
 .required-label {
         color: red;
 }
 
-.required{
-        }
 
 .required-picture-gallery-label{
     color: red;
 }
-
-.input-field{
-        
-}
-.input-field-label{
-    margin-top:7%;
-    }
 
 .read-only {
             background-color: #EEEEEE;
@@ -66,21 +21,9 @@
 .read-only-label{
     }
 
-.half-line {
-    height: 60px;
-}
 
 .gps-status {
     height: 130px;
-}
-
-.all {
-    margin-left: 5%;
-    padding-left: 2%;
-    padding-right: 2%;
-    margin-top:7%;
-    padding-top:5%;
-    color: #222222;
 }
 
 .faims-blue {
@@ -89,22 +32,5 @@
     color: white;
 	margin-top:10px;
     margin-bottom:10px;
-        /*border-    border-radius:10%;*/
     
-}
-
-.faims-danger {
-    background-color: #d9534f;
-    border-color: #be3e3a;
-    color: white;
-}
-
-.faims-success {
-    background-color: #45b845;
-    border-color: #38a538;
-    color: white;
-}
-
-#Project/Main/GPS_Diagnostics {
-    height: 80%;
 }

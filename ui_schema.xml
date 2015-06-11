@@ -603,7 +603,6 @@
       <bind nodeset="/faims/Context/Context_Measure/container3/child1/Length" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container3/child2/Width" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container3/child3/Depth" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Relationships_to_Other_Contexts/Context_ID" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child1/Length" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child2/Width" type="decimal"/>
       <bind nodeset="/faims/ContextGroup/ContextGroup_Details/container2/child3/Depth" type="decimal"/>
@@ -654,28 +653,28 @@
       <label>{User_List}</label>
       <group ref="usertab">
         <label>{User_List}</label>
-        <select1 ref="users">
+        <select1 ref="users" faims_style_class="required">
           <label>{Users}:</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
         </select1>
-        <select1 ref="Area_Code">
+        <select1 ref="Area_Code" faims_style_class="required">
           <label>{Select_Area_Code}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
         </select1>
-        <select1 ref="Device_Code">
+        <select1 ref="Device_Code" faims_style_class="required">
           <label>{Select_Device_Code}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="login">
+        <trigger ref="login" faims_style_class="faims-blue">
           <label>{Login}</label>
         </trigger>
         <trigger ref="guide">
@@ -837,13 +836,13 @@
 			<label/>
 			<group faims_style="even" ref="child1">
 			<label/>
-				<input faims_attribute_name="Date Opened" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Date_Opened">
+				<input faims_attribute_name="Date Opened" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Date_Opened" faims_style_class="required">
 				<label>{Date_Opened}</label>
 				</input>
 			</group>
 			<group faims_style="even" ref="child2">
 			<label/>
-				<input faims_attribute_name="Excavator" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Excavator">
+				<input faims_attribute_name="Excavator" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Excavator" faims_style_class="required">
 				<label>{Excavator}</label>
 				</input>
 			</group>
@@ -864,7 +863,7 @@
 			</group>
 			<group faims_style="even" ref="child2">
 			<label/>
-			<select1 faims_attribute_name="Excavation Method" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Excavation_Method">
+			<select1 faims_attribute_name="Excavation Method" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Excavation_Method" faims_style_class="required">
           <label>{Excavation_Method}</label>
           <item>
             <label>{placeholder}</label>
@@ -876,7 +875,7 @@
 		</group>
 		
 		
-        <select1 faims_attribute_name="Context Type" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Context_Type" type="image">
+        <select1 faims_attribute_name="Context Type" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Context_Type" type="image" faims_style_class="required">
           <label>{Context_Type}</label>
           <item>
             <label>{placeholder}</label>
@@ -885,13 +884,13 @@
         </select1>
  
  
-       <input faims_attribute_name="Your description" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Your_description">
+       <input faims_attribute_name="Your description" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Your_description" faims_style_class="required">
           <label>{Your_description}</label>
         </input>
        
 	
 		
-		<input faims_attribute_name="Context Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Comments">
+		<input faims_attribute_name="Context Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Comments" faims_style_class="required">
           <label>{Context_Comments}</label>
         </input>
         <!--We would like to see Dropdown-->
@@ -928,13 +927,13 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Highest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level">
+            <input faims_attribute_name="Highest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level" faims_style_class="required">
               <label>{Context_Highest_Level}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Lowest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level">
+            <input faims_attribute_name="Lowest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level" faims_style_class="required">
               <label>{Context_Lowest_Level}</label>
             </input>
           </group>
@@ -946,38 +945,38 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label></label>
-            <input faims_attribute_name="Highest Level NW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_NW">
+            <input faims_attribute_name="Highest Level NW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_NW" faims_style_class="required">
               <label>{Highest_Level_NW}</label>
             </input>
-            <input faims_attribute_name="Highest Level NE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_NE">
+            <input faims_attribute_name="Highest Level NE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_NE" faims_style_class="required">
               <label>{Highest_Level_NE}</label>
             </input>
-            <input faims_attribute_name="Highest Level SE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_SE">
+            <input faims_attribute_name="Highest Level SE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_SE" faims_style_class="required">
               <label>{Highest_Level_SE}</label>
             </input>
 
-            <input faims_attribute_name="Highest Level SW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_SW">
+            <input faims_attribute_name="Highest Level SW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_SW" faims_style_class="required">
               <label>{Highest_Level_SW}</label>
             </input>
-            <input faims_attribute_name="Highest Level Ctr" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_Ctr">
+            <input faims_attribute_name="Highest Level Ctr" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level_Ctr" faims_style_class="required">
               <label>{Highest_Level_Ctr}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Lowest Level NW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_NW">
+            <input faims_attribute_name="Lowest Level NW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_NW" faims_style_class="required">
               <label>{Lowest_Level_NW}</label>
             </input>
-            <input faims_attribute_name="Lowest Level NE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_NE">
+            <input faims_attribute_name="Lowest Level NE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_NE" faims_style_class="required">
               <label>{Lowest_Level_NE}</label>
             </input>
-            <input faims_attribute_name="Lowest Level SE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_SE">
+            <input faims_attribute_name="Lowest Level SE" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_SE" faims_style_class="required">
               <label>{Lowest_Level_SE}</label>
             </input>
-            <input faims_attribute_name="Lowest Level SW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_SW">
+            <input faims_attribute_name="Lowest Level SW" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_SW" faims_style_class="required">
               <label>{Lowest_Level_SW}</label>
             </input>
-             <input faims_attribute_name="Lowest Level Ctr" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_Ctr">
+             <input faims_attribute_name="Lowest Level Ctr" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level_Ctr" faims_style_class="required">
               <label>{Lowest_Level_Ctr}</label>
             </input>
           </group>
@@ -986,24 +985,24 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Length" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Length">
+            <input faims_attribute_name="Length" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Length" faims_style_class="required">
               <label>{Length}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Width" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Width">
+            <input faims_attribute_name="Width" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Width" faims_style_class="required">
               <label>{Width}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Depth" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Depth">
+            <input faims_attribute_name="Depth" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Depth" faims_style_class="required">
               <label>{Depth}</label>
             </input>
           </group>
         </group>
-		<input faims_attribute_name="Volume" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Volume">
+		<input faims_attribute_name="Volume" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Volume" faims_style_class="required">
          <label>{Volume}</label>
         </input>
       </group>
@@ -1036,7 +1035,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour">
+           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour" faims_style_class="required">
                 <label>{Soil_Colour}</label>
 			</input>
           </group>
@@ -1108,7 +1107,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 faims_attribute_name="Shape of Cut" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape_of_Cut">
+            <select1 faims_attribute_name="Shape of Cut" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape_of_Cut" faims_style_class="required">
               <label>{Shape_of_Cut}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1240,7 +1239,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Your Discussion" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Your_Discussion">
+        <input faims_attribute_name="Your Discussion" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Your_Discussion" faims_style_class="required">
           <label>{Your_Discussion}</label>
         </input>
         
@@ -1248,13 +1247,13 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Start date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Start_date">
+            <input faims_attribute_name="Start date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Start_date" faims_style_class="required">
               <label>{Start_date}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="End date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="End_date">
+            <input faims_attribute_name="End date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="End_date" faims_style_class="required">
               <label>{End_date}</label>
             </input>
           </group>
@@ -1266,7 +1265,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <select1 faims_attribute_name="Phase To" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Phase_To">
+        <select1 faims_attribute_name="Phase To" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Phase_To" faims_style_class="required">
           <label>{Phase_To}</label>
           <item>
             <label>{placeholder}</label>
@@ -1361,7 +1360,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 ref="listOfRelns" appearance="compact" faims_style_class="record_list">
+            <select1 ref="listOfRelns" appearance="compact" faims_style_class="record-list">
               <label></label>
               <item>
                     <label>placeholder</label>
@@ -1461,7 +1460,7 @@
          <input faims_attribute_name="Drawings" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Drawings">
               <label>{Drawings}</label>
             </input>
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="true" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1472,7 +1471,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="true" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="true" ref="Photo" type="camera" faims_style_class="required">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1557,49 +1556,49 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Description" faims_attribute_type="measure" faims_read_only="false" ref="Description">
+        <input faims_attribute_name="Description" faims_attribute_type="measure" faims_read_only="false" ref="Description" faims_style_class="required">
           <label>{Description}</label>
         </input>
         <group faims_style="orientation" ref="container2">
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Length" faims_attribute_type="measure" faims_read_only="false" ref="Length">
+            <input faims_attribute_name="Length" faims_attribute_type="measure" faims_read_only="false" ref="Length" faims_style_class="required">
               <label>{Length}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Width" faims_attribute_type="measure" faims_read_only="false" ref="Width">
+            <input faims_attribute_name="Width" faims_attribute_type="measure" faims_read_only="false" ref="Width" faims_style_class="required">
               <label>{Width}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Depth" faims_attribute_type="measure" faims_read_only="false" ref="Depth">
+            <input faims_attribute_name="Depth" faims_attribute_type="measure" faims_read_only="false" ref="Depth" faims_style_class="required">
               <label>{Depth}</label>
             </input>
           </group>
         </group>
-        <input ref="Your_Discussion" faims_attribute_type="measure" faims_attribute_name="Your Discussion">
+        <input ref="Your_Discussion" faims_attribute_type="measure" faims_attribute_name="Your Discussion" faims_style_class="required">
           <label>{Your_Discussion}</label>
         </input>
         <group faims_style="orientation" ref="container3">
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Start date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Start_Date">
+            <input faims_attribute_name="Start date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Start_Date" faims_style_class="required">
               <label>{Start_date}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="End date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="End_Date">
+            <input faims_attribute_name="End date" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="End_Date" faims_style_class="required">
               <label>{End_date}</label>
             </input>
           </group>
         </group>
-        <select1 faims_attribute_name="CG Phase From" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Phase_From">
+        <select1 faims_attribute_name="CG Phase From" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Phase_From" faims_style_class="required">
           <label>{Phase_From}</label>
           <item>
             <label>{placeholder}</label>
@@ -1656,7 +1655,7 @@
           <label/>
           <group ref="left" faims_style="even">
             <label/>
-            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList" appearance="compact" faims_style_class="record_list">
+            <select1 faims_certainty="false" faims_read_only="false" ref="ContextList" appearance="compact" faims_style_class="record-list">
               <label>{Contexts_in_group}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1773,7 +1772,7 @@
         <input faims_attribute_name="Stored" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Stored">
           <label>{Stored}</label>
         </input>                                          
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
+        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="true" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1783,7 +1782,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true"  faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="true" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true"  faims_sync="true" ref="Photo" type="camera" faims_style_class="required">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -1866,7 +1865,7 @@
         <input faims_attribute_name="Sample Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sample_Comments">
           <label>{Sample_Comments}</label>
         </input>
-        <select faims_annotation="false" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="false" ref="Sketch" type="file">
+        <select faims_annotation="true" faims_attribute_name="Sketch" faims_attribute_type="measure" faims_certainty="false" faims_sync="true" ref="Sketch" type="file">
           <label>{Sketch}</label>
           <item>
             <label>{placeholder}</label>
@@ -1876,7 +1875,7 @@
         <trigger ref="attachSketch">
           <label>{Attach_Sketch}</label>
         </trigger>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="true" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="true" ref="Photo" type="camera">
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
@@ -2044,7 +2043,7 @@
         <input faims_attribute_name="Special Find Comment" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Special_Find_Comment">
           <label>{Special_Find} Comment</label>
         </input>
-        <select faims_annotation="false" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="false" ref="Photo" type="camera">
+        <select faims_annotation="true" faims_attribute_name="Photo" faims_attribute_type="measure" faims_certainty="true" faims_sync="true" ref="Photo" type="camera">          
           <label>{Photo}</label>
           <item>
             <label>{placeholder}</label>
