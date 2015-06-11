@@ -684,7 +684,7 @@ search(){
                          "                    FROM latestNonDeletedArchEntIdentifiers "+
                          "                   WHERE attributename != 'Site Code' "+
                          "                     AND measure LIKE '"+term+"'||'%'  "+
-                         "                     AND aenttypename LIKE '"+type+"'||'%' "+                         
+                         "                     AND ( aenttypename LIKE '"+type+"' OR 'All' = '"+type+"' ) "+                         
                          "                  )  "+
                          "   AND (   'null' = '"+areaCode+"'  "+
                          "        OR uuid in (SELECT uuid "+
@@ -704,7 +704,7 @@ search(){
 }
 
 entityTypes = new ArrayList();
-entityTypes.add(0, new NameValuePair("{All}", ""));
+entityTypes.add(0, new NameValuePair("{All}", "All"));
 entityTypes.add(new NameValuePair("{Context}", "Context"));
 entityTypes.add(new NameValuePair("{Context_Group}", "Context Group"));
 entityTypes.add(new NameValuePair("{Artefact_Group}", "Artefact Group"));
