@@ -116,7 +116,7 @@
       <description>Deposit, cut or 'other' (feature).
       </description>
       <lookup>
-        <term pictureURL="files/data/gallery/ContextType/Other/NA.png">No Se Observa
+        <term pictureURL="files/data/gallery/ContextType/Other/NA.png">{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -156,10 +156,10 @@
     <property name="Excavation Method" type="enum">
       <description>Method and conditions of archaeological excavation.</description>
       <lookup>
-        <term>Lampa<description>Lampa</description></term>
-        <term>Badilejo<description>Badilejo</description></term>
-        <term>Pico<description>Pico</description></term>
-        <term>Otro<description>Otro</description></term>
+        <term>{Lampa}<description>Lampa</description></term>
+        <term>{Badilejo}<description>Badilejo</description></term>
+        <term>{Pico}<description>Pico</description></term>
+        <term>{Otro}<description>Otro</description></term>
       </lookup>
     </property>
     <!--Make below a required Field -->
@@ -235,7 +235,7 @@
     <property name="Soil Compaction Type" type="enum">
       <description>The type of compaction of sediments in the deposit, eg 'Compact', 'Cemented' or 'Loose'.</description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected</description></term>
         <term>{Coarse-grained_sediments}
@@ -7607,8 +7607,8 @@
       <description>Proportions of different grain sizes within the deposit, eg if there is more sand to silt it should be described as a 'silty sand'.
       </description>
       <lookup>
-        <term>No Se Observa
-          <description>No Se Observa. Use the Texture helper to prefil this.
+        <term>{No_Se_Observa}
+          <description>{No_Se_Observa}. Use the Texture helper to prefil this.
           </description>
         </term>
         <term>{Sand}
@@ -7661,7 +7661,7 @@
       <description>Assessment of the frequency with which particles of the same size occur.
       </description>
       <lookup>
-        <term pictureURL="files/data/gallery/Other/NA.png">No Se Observa
+        <term pictureURL="files/data/gallery/Other/NA.png">{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -7700,7 +7700,7 @@
       <description>Boundary to the next horizon
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -7747,7 +7747,7 @@
       <description>The shape at the top of the cut.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -7861,17 +7861,17 @@
       <description>Describe the sides in terms of their smoothness or irregularity, and state whether they are 'vertical', 'convex', 'concave' or 'stepped', giving details for each side of a multi-sided cut. When describing post-holes note particularly whether the sides taper or drop vertically to the base, since this may help define whether the post was set or driven. Where possible state the gradient of a sloping side. Where the side is 'concave' but meets the base at a sharp angle, give an overall gradient. If' it is 'concave' and has no perceptible break of slope with the base, then do not attempt to give a gradient. (Source: MoLAS 1994)
       </description>
       <lookup>
-        <term>Vertical<description/></term>
-        <term>Convex<description/></term>
-        <term>Concave<description/></term>
-        <term>Stepped<description/></term>
+        <term>{Vertical}<description/></term>
+        <term>{Convex}<description/></term>
+        <term>{Concave}<description/></term>
+        <term>{Stepped}<description/></term>
       </lookup>
     </property>
     <property name="Shape of Base" type="enum">
       <description>The shape of the base of the cut, in profile.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -7912,7 +7912,7 @@
       <description>Orientation of linear cuts, eg N-S.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -7992,7 +7992,7 @@
       </description>
       <lookup>
         <!--Make sure 16th century shows up as an option. Add values here -->
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected 
 		  </description>
         </term>
@@ -8055,7 +8055,7 @@
       <description>The latest phase in which this Context was likely to have been deposited or sealed.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected 
 		  </description>
         </term>
@@ -8126,7 +8126,7 @@
       <description>Primary components of structure or feature, eg dry-pressed brick, rough-hewn stone.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected
           </description>
         </term>
@@ -8143,8 +8143,7 @@
         <term>{Stone}
           <description>Worked or unworked stone used in masonry walls.
           </description>
-          <term>
-            {Ashlar}
+          <term>{Ashlar}
             <description>Finely dressed stone with flat face.
             </description>
           </term>
@@ -8171,8 +8170,7 @@
         <term>{Timber}
           <description>{Timber} uprights or other elements for a wall or fence.
           </description>
-          <term>
-            {Beam}
+          <term>{Beam}
             <description>Timber beam or support.
             </description>
           </term>
@@ -8194,7 +8192,7 @@
       <description>Primary bonding material of structure or feature, eg mortar.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -8224,7 +8222,7 @@
       <description>The type of bonding course, eg 'English bond'
       </description>
       <lookup>
-        <term>No Se Observa 
+        <term>{No_Se_Observa} 
           <description>data not collected
           </description>
         </term>
@@ -8290,7 +8288,7 @@
     <property name="Type of Definition" type="enum">
       <description> The reason why the {Context} was declared, ie because of a change in soil color or consistency, a change in the characteristics of material culture recovered, or for arbitrary reasons.</description>
       <lookup>
-        <term>No Se Observa<description>data not collected</description></term>
+        <term>{No_Se_Observa}<description>data not collected</description></term>
         <term>{Natural}<description>No description.</description></term>
         <term>{Cultural}<description>No description.</description></term>
         <term>{Arbitrary}<description>No description.</description></term>
@@ -8357,7 +8355,7 @@
       <description>
       </description>
       <lookup>
-        <term pictureURL="files/data/gallery/ContextType/Other/NA.png">No Se Observa
+        <term pictureURL="files/data/gallery/ContextType/Other/NA.png">{No_Se_Observa}
           <description>data not collected
           </description>
         </term>
@@ -8422,7 +8420,7 @@
       <description>The earliest phase in which this Context was likely to have been created.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected 
 		  </description>
         </term>
@@ -8484,7 +8482,7 @@
       <description>The latest phase in which this Context was likely to have been deposited or sealed.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected 
 		  </description>
         </term>
@@ -8581,7 +8579,7 @@
       <formatString><![CDATA[$1]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected</description></term>
         <term>{Clay}
@@ -8620,7 +8618,7 @@
     <property name="Shape" type="enum">
       <description>Shape and roundness of stones and pebbles in the deposit. </description>
       <lookup>
-        <term pictureURL="files/data/gallery/Other/NA.png">No Se Observa
+        <term pictureURL="files/data/gallery/Other/NA.png">{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -8725,7 +8723,7 @@
       <formatString><![CDATA[$1]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected
           </description>
         </term>
@@ -8860,7 +8858,7 @@
       <description>The type of Sample collected, eg Soil, Wood, Pollen.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>Data not collected.
           </description>
         </term>
@@ -8903,7 +8901,7 @@
       <description>Method of collecting the sample.
       </description>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
 
           <description>data not collected
           </description>
@@ -9150,7 +9148,7 @@
       <formatString><![CDATA[$1]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
       <lookup>
-        <term>No Se Observa
+        <term>{No_Se_Observa}
           <description>data not collected
           </description>
         </term>
@@ -9301,7 +9299,7 @@
     <property name="AdobeShape" type="enum">
       <description>Shape of the adobe brick.</description>
       <lookup>
-        <term>No Se Observa<description>data not collected</description></term>
+        <term>{No_Se_Observa}<description>data not collected</description></term>
         <term>{Flat}<description>No description.</description></term>
         <term>{Rounded}<description>No description.</description></term>
         <term>{Loaf-shaped}<description>No description.</description></term>
@@ -9310,7 +9308,7 @@
     <property name="Method_Manufacture" type="enum">
       <description>The method of adobe manufacture.</description>
       <lookup>
-        <term>No Se Observa<description>data not collected</description></term>
+        <term>{No_Se_Observa}<description>data not collected</description></term>
         <term>{Mold_made}<description>Bears evidence of having been made in a {Mould}.</description></term>
         <term>{Non_mold_made}<description>Free form, or bears no evidence of having been made in a {Mould}.</description></term>
       </lookup>
@@ -9364,7 +9362,7 @@
     <property name="Scene Type" type="enum">
       <description>The type of scene captured, eg opening or closing view of the Context. (Vocab: Open, Close, Other)</description>
       <lookup>
-        <term>No Se Observa<description>data not collected</description></term>
+        <term>{No_Se_Observa}<description>data not collected</description></term>
         <term>{Open}
           <description/>
         </term>
@@ -9379,7 +9377,7 @@
     <property name="Camera" type="enum">
       <description>The name or type of camera on which the photograph was taken. </description>
       <lookup>
-        <term>No Se Observa<description>data not collected</description></term>
+        <term>{No_Se_Observa}<description>data not collected</description></term>
         <term>{Parker_Nikon_D90}<description>Parker's Nikon D90</description></term>
         <term>{Parker_Canon_SX260HS}<description>Parker's Canon SX260HS</description></term>
         <term>{Parker_Canon_S100}<description>Parker CanonS100</description></term>
