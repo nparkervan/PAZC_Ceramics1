@@ -173,13 +173,16 @@ saveEntitiesToRel(String type, String entity1, String entity2, String callback) 
     });
 }
 
-/** Saves two entity id's as a hierachical relation. **/
-saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb, String e2verb) {
+/** Saves two entity id's as a hierachical relation with some callback executed. **/
+saveEntitiesToHierRel(String type, String entity1, String entity2, String e1verb, String e2verb, String callback) {
     if (isNull(entity1) || isNull(entity2)) return;
     saveRel(null, type, null, null, new SaveCallback() {
         onSave(rel_id, newRecord) {
             addReln(entity1, rel_id, e1verb);
             addReln(entity2, rel_id, e2verb);
+            if(!isNull(callback)) {
+               execute(callback);
+            }
         }
     });
 }
@@ -1264,8 +1267,8 @@ makeHierReln(){
     String[] arguments = getFieldValue("Context/Context_Relationships_to_Other_Contexts/reln").split("~!~");
     String dest = getFieldValue("Context/Context_Relationships_to_Other_Contexts/context");
 
-    saveEntitiesToHierRel(arguments[0], context_id, dest, arguments[1], arguments[2]);
-    updateRelns();    
+    String relSaveCallback = "updateRelns();";
+    saveEntitiesToHierRel(arguments[0], context_id, dest, arguments[1], arguments[2], relSaveCallback);
 }
 
 selectAssociatedEntityContext() {
@@ -1557,9 +1560,8 @@ addToContextGroup() {
     if (isNull(selectedContextID)) {
       return;
     }
-    saveEntitiesToRel("ContextContextGroup", selectedContextID, context_group_id);
-    populateContextGroup();
-    populateContextGroupRelatedContexts();
+    String relSaveCallback = "populateContextGroup();populateContextGroupRelatedContexts();";
+    saveEntitiesToRel("ContextContextGroup", selectedContextID, context_group_id, relSaveCallback);    
 }
 
 populateContextGroup() {
