@@ -1102,6 +1102,8 @@ deleteReln(){
             String deletequery = "insert into aentreln (uuid, relationshipid, deleted, participatesverb, userid) SELECT uuid, relationshipid, 'true', participatesverb, '"+userid+"' FROM latestnondeletedaentreln WHERE relationshipid = '"+result.get(0)+"';";
             fetchOne(deletequery, null);
             deleteRel(result.get(0));
+            populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/selectedEnt", WEB_REL_SELECTED_NONE);
+            selectedEntityIdentifer = null;
             updateRelns();
           }
         });    
