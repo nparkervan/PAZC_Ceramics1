@@ -1411,6 +1411,11 @@ openContextTabs(Boolean showGeneralInformationTab){
                     cancelTab("Context/Context_Deposits", false);
                     cancelTab("Context/Context_Cuts", false);
                     showTab("Context/Context_Structures");
+                } else {
+
+                    cancelTab("Context/Context_Cuts", false);
+                    cancelTab("Context/Context_Deposits", false);
+                    cancelTab("Context/Context_Structures", false);
                 }
             } else {
 
