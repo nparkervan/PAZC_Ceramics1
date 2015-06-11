@@ -1115,7 +1115,7 @@ deleteReln(){
 
 fillInCloseDate(){
     if(getFieldValue("Context/Context_GeneralInformation/Date_Closed").equals("")){
-        setTimestamp("Context/Context_GeneralInformation/Date_Closed");        select relationshipid from 
+        setTimestamp("Context/Context_GeneralInformation/Date_Closed");       
     } else {
         showToast("{To_avoid_accidents_please_clear_the_Date_Closed_field_before_updating}");
     }
@@ -1342,7 +1342,7 @@ loadContextAttributes(){
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Compaction_Type", "Soil Compaction Type");
     makeVocab("DropDown", "Context/Context_Deposits/Soil_Munsell_Colour", "Soil Munsell Colour");
     makeVocab("PictureGallery", "Context/Context_Deposits/Soil_Particle_Sorting", "Soil Particle Sorting");
-    makeVocab("HierarchicalDropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
+    makeVocab("DropDown", "Context/Context_Deposits/Soil_Texture_Actual", "Soil Texture");
     makeVocab("DropDown", "Context/Context_Deposits/Horizon_Boundary", "Horizon Boundary");
     makeVocab("DropDown", "Context/Context_Cuts/Shape_of_Cut", "Shape of Cut");
     makeVocab("RadioGroup", "Context/Context_Cuts/Shape_of_Corners", "Shape of Corners");
@@ -1358,6 +1358,8 @@ loadContextAttributes(){
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_From", "Phase From");
     makeVocab("DropDown", "Context/Context_Interpretation/Phase_To", "Phase To");
     makeVocab("DropDown", "Context/Context_Relationships_to_Other_Contexts/Target_Area", "AreaCode");
+    makeVocab("HierarchicalDropDown", "Context/Texture_Helper/Soil_Texture", "Soil Texture Helper");
+
     //makeVocab("DropDown", "Context/Context_Interpretation/ContextGroupList", "");
 
     //TODO picture gallery, hierarchical, etc
@@ -1430,17 +1432,25 @@ helpSetTextureActual(){
 }
 
 setTextureActual(){
-
+    String soilQuery= "SELECT vocabid " +
+                      "  FROM vocabulary JOIN attributekey USING (attributeid) "+
+                      " WHERE attributeName = 'Soil Texture' "+
+                      "   AND vocabname = (SELECT vocabname " +
+                                          "  FROM vocabulary JOIN attributekey USING (attributeid) " +
+                                          " WHERE vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"' "+
+                                          "   AND attributeName = 'Soil Texture Helper'); ";
     //This function makes the hierarchical soil texture selector write to the texture dropdown. We should discuss.
-    fetchOne("SELECT vocabid FROM vocabulary JOIN attributekey USING (attributeid)WHERE attributeName = 'Soil Texture Actual'and vocabname = (SELECT vocabname"
-            + " FROM vocabulary JOIN attributekey USING (attributeid) "
-           + " WHERE vocabid = '"+ getFieldValue("Context/Texture_Helper/Soil_Texture") +"' "
-         + " and attributeName = 'Soil Texture'); ",
+    Log.d("foo1", soilQuery);
 
+    fetchOne(soilQuery,
         new FetchCallback() {
           onFetch(textureToSet) {
+
             if(!isNull(textureToSet)){
+                Log.d("foo1", textureToSet.get(0));
                 setFieldValue("Context/Context_Deposits/Soil_Texture_Actual", textureToSet.get(0));
+            } else {
+                showToast("Match not found. You shouldn't see this, but select the result manually.");
             }
             cancelTab("Context/Texture_Helper", false);
             showTab("Context/Context_Deposits");
@@ -2124,7 +2134,7 @@ onAdobeSaved(){
 deleteAdobeFromContext(){
     adobe_id = getFieldValue("Context/Context_Structures/AdobeList");
     if (!isNull(adobe_id)) {
-        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Photograph_Log}", "reallyDeleteAdobe()", "doNotDelete()");
+        showAlert("{Confirm_Deletion}", "{Press_OK_to_Delete_this_Adobe}", "reallyDeleteAdobe()", "doNotDelete()");
     }
 }
 
