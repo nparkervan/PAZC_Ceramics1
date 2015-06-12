@@ -645,7 +645,7 @@
       </group>
     </group>
     <group ref="user">
-      <label>{User_List}</label>
+      <label></label>
       <group ref="usertab">
         <label>{User_List}</label>
         <select1 ref="users" faims_style_class="required">
@@ -805,13 +805,13 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Sub Unit" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sub_Unit">
+            <input faims_attribute_name="Sub Unit" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sub_Unit" faims_style_class="sharedwithvocab">
               <label>{Sub_Unit}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1013,7 +1013,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 faims_attribute_name="Soil Munsell Colour" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Soil_Munsell_Colour">
+            <select1 faims_attribute_name="Soil Munsell Colour" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Soil_Munsell_Colour" faims_style_class="sharedwithvocab">
               <label>{Soil_Munsell_Colour}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1023,7 +1023,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour" faims_style_class="required">
+           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour" faims_style_class="required sharedwithvocab">
                 <label>{Soil_Colour}</label>
 			</input>
           </group>
@@ -1095,7 +1095,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 faims_attribute_name="Shape of Cut" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape_of_Cut" faims_style_class="required">
+            <select1 faims_attribute_name="Shape of Cut" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape_of_Cut" faims_style_class="required sharedwithvocab">
               <label>{Shape_of_Cut}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1105,7 +1105,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Shape of Cut - Note" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Shape_of_Cut_Note">
+            <input faims_attribute_name="Shape of Cut - Note" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Shape_of_Cut_Note" faims_style_class="sharedwithvocab">
               <label>{Shape_of_Cut_-_Note}</label>
             </input>
           </group>
@@ -1283,7 +1283,7 @@
           <label/>
           <group ref="left" faims_style="even">
             <label/>
-            <select1 ref="Target_Area">
+            <select1 ref="Target_Area" faims_style_class="doubleheight">
               <label>{Area_Trench}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1293,7 +1293,7 @@
           </group>
           <group ref="mid" faims_style="even">
             <label/>
-            <input ref="Target_Context_ID">
+            <input ref="Target_Context_ID" faims_style_class="doubleheight">
               <label>{Context_ID}</label>
             </input>
           </group>
@@ -1315,13 +1315,13 @@
           <label/>
           <group faims_style="even" ref="child0">
             <label/>
-            <input faims_certainty="false" faims_read_only="true" ref="context_id">
+            <input faims_certainty="false" faims_read_only="true" ref="context_id" faims_style_class="sharedwithvocab">
               <label>{This_Context}</label>
             </input>
           </group>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 faims_certainty="false" faims_read_only="false" ref="reln">
+            <select1 faims_certainty="false" faims_read_only="false" ref="reln" faims_style_class="sharedwithvocab">
               <label>{Relationship}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1331,7 +1331,7 @@
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <select1 faims_certainty="false" faims_read_only="false" ref="context">
+            <select1 faims_certainty="false" faims_read_only="false" ref="context" faims_style_class="sharedwithvocab">
               <label>{to_Context}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1384,7 +1384,7 @@
             <trigger ref="newArtefactGroup">
               <label>{Add_Artefact_Group}</label>
             </trigger>
-            <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="artefactGroupList">
+            <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="artefactGroupList" faims_style_class="double-record-list">
               <label>{Select_Artefact_Group}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1397,7 +1397,7 @@
             <trigger ref="newSpecialFind">
               <label>{Add_Special_Find}</label>
             </trigger>
-            <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="specialFindList">
+            <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="specialFindList" faims_style_class="double-record-list">
               <label>{Select_Special_Find}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1413,7 +1413,7 @@
         <trigger ref="newSample">
           <label>{Add_Sample}</label>
         </trigger>
-        <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="sampleList">
+        <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="sampleList" faims_style_class="double-record-list">
           <label>{Select_Sample}</label>
           <item>
             <label>{placeholder}</label>
@@ -1683,25 +1683,25 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code" faims_style_class="sharedwithvocab">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID">
+            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID" faims_style_class="sharedwithvocab">
               <label>{Artefact_Group_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1795,25 +1795,25 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code" faims_style_class="sharedwithvocab">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Sample ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sample_ID">
+            <input faims_attribute_name="Sample ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Sample_ID" faims_style_class="sharedwithvocab">
               <label>{Sample_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1922,25 +1922,25 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
+            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code" faims_style_class="sharedwithvocab">
               <label>{Site_Code}</label>
             </input>
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Special Find ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Special_Find_ID">
+            <input faims_attribute_name="Special Find ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Special_Find_ID" faims_style_class="sharedwithvocab">
               <label>{Special_Find} ID</label>
             </input>
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
