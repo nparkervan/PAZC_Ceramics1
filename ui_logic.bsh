@@ -1080,7 +1080,6 @@ newContext(){
       }
     });    
 
-    setFieldValue("Context/Context_GeneralInformation/Site_Code", moduleSiteCode);
     setFieldValue("Context/Context_GeneralInformation/Context_ID", contextIncrement);
     setTimestamp("Context/Context_GeneralInformation/Date_Opened");
 
@@ -1112,10 +1111,11 @@ loadContextFrom(contextid) {
     });
 }
 
-saveContext(String callback) {  
-  
+saveContext(String callback) {
     Boolean enable_autosave = true;
-    saveTabGroup("Context", context_id, null, null, new SaveCallback() {
+    attributes = createAttributeList();
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
+    saveTabGroup("Context", context_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             context_id = uuid;
             execute(callback);
@@ -1572,7 +1572,6 @@ newContextGroup(menu){
     }
     newTabGroup("ContextGroup");
     context_group_id = null;
-    setFieldValue("ContextGroup/ContextGroup_Details/Site_Code", moduleSiteCode);
     setFieldValue("ContextGroup/ContextGroup_Details/Area_Code", getFieldValue("user/usertab/Area_Code"));
     setFieldValue("ContextGroup/ContextGroup_Details/Device_Code", getFieldValue("user/usertab/Device_Code"));
 }
@@ -1597,7 +1596,9 @@ loadContextGroupFromContext() {
 
 saveContextGroup(){
     Boolean enable_autosave = true;
-    saveTabGroup("ContextGroup", context_group_id, null, null, new SaveCallback() {
+    attributes = createAttributeList();
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
+    saveTabGroup("ContextGroup", context_group_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             context_group_id = uuid;
             if (newRecord) {
@@ -1773,7 +1774,6 @@ newArtefactGroup(){
     artefact_group_id = null;
     newTabGroup("Artefact_Group");
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-    setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Site_Code", moduleSiteCode));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID"));
     incField("control/data/Artefact_Group_Starting_ID", 1);
@@ -1795,6 +1795,7 @@ saveArtefactGroup(String callback) {
     Boolean enable_autosave = true;
     List attributes = createAttributeList();
     attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
     saveTabGroup("Artefact_Group", artefact_group_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             artefact_group_id = uuid;
@@ -1865,7 +1866,6 @@ newSample(){
     sample_id = null;
     newTabGroup("Sample");
     setFieldValue("Sample/Sample_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-    setFieldValue("Sample/Sample_GeneralInformation/Site_Code", moduleSiteCode);
     setFieldValue("Sample/Sample_GeneralInformation/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID"));
     incField("control/data/Sample_Starting_ID", 1);
@@ -1887,6 +1887,7 @@ saveSample(String callback) {
     Boolean enable_autosave = true;
     List attributes = createAttributeList();
     attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
     saveTabGroup("Sample", sample_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             sample_id = uuid;
@@ -2043,7 +2044,6 @@ newSpecialFind(){
     special_find_id = null;
     newTabGroup("Special_Find");
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-    setFieldValue("Special_Find/Special_Find_GeneralInformation/Site_Code", moduleSiteCode);
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID"));
     incField("control/data/SpecialFind_Starting_ID", 1);
@@ -2065,6 +2065,7 @@ saveSpecialFind(String callback) {
     Boolean enable_autosave = true;
     List attributes = createAttributeList();
     attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
     saveTabGroup("Special_Find", special_find_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             special_find_id = uuid;
@@ -2149,7 +2150,6 @@ newAdobe(){
     adobe_id = null;
     newTabGroup("Adobe_Element");
     setFieldValue("Adobe_Element/Adobe_Element/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-    setFieldValue("Adobe_Element/Adobe_Element/Site_Code", moduleSiteCode);
     setFieldValue("Adobe_Element/Adobe_Element/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
     setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID"));
     incField("control/data/Adobe_Element_Starting_ID", 1);
@@ -2181,6 +2181,7 @@ saveAdobe(String callback) {
     Boolean enable_autosave = true;
     List attributes = createAttributeList();
     attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
     saveTabGroup("Adobe_Element", adobe_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             adobe_id = uuid;
@@ -2244,7 +2245,6 @@ newPhotoLog(){
     photolog_id = null;
     newTabGroup("Photograph_Log");
     setFieldValue("Photograph_Log/Photograph_Log/Context_ID", getFieldValue("Context/Context_GeneralInformation/Context_ID"));
-    setFieldValue("Photograph_Log/Photograph_Log/Site_Code", moduleSiteCode);
     setFieldValue("Photograph_Log/Photograph_Log/Device_Code", getFieldValue("Context/Context_GeneralInformation/Device_Code"));
 }
 
@@ -2268,6 +2268,7 @@ savePhotoLog(String callback) {
     Boolean enable_autosave = true;
     List attributes = createAttributeList();
     attributes.add(createEntityAttribute("AreaCode", null, getFieldValue("Context/Context_GeneralInformation/AreaCode"), null, null));
+    attributes.add(createEntityAttribute("Site Code", null, null, moduleSiteCode, null));
     saveTabGroup("Photograph_Log", photolog_id, null, attributes, new SaveCallback() {
         onSave(uuid, newRecord) {
             photolog_id = uuid;
