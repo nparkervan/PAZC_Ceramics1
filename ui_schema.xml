@@ -310,8 +310,6 @@
             <Context_Samples>
               <newSample/>
               <sampleList/>
-              <loadSample/>
-              <deleteSample/>
             </Context_Samples>
             <Texture_Helper>
               <Soil_Texture/>
@@ -904,7 +902,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_certainty="false" faims_read_only="false" ref="Date_Closed" faims_attribute_name="Date Closed" faims_attribute_type="date">
+            <input faims_certainty="false" faims_read_only="false" ref="Date_Closed" faims_attribute_name="Date Closed" faims_attribute_type="measure">
               <label>{Date_Closed}</label>
             </input>
           </group>
@@ -1425,19 +1423,13 @@
         <trigger ref="newSample">
           <label>{Add_Sample}</label>
         </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="sampleList">
+        <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="sampleList">
           <label>{Select_Sample}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="loadSample">
-          <label>{Load_Sample}</label>
-        </trigger>
-        <trigger ref="deleteSample">
-          <label>{Delete_Sample}</label>
-        </trigger>
       </group>
       <group ref="Texture_Helper" faims_hidden="true">
         <label>{Texture_Helper}</label>
@@ -1912,7 +1904,7 @@
             <value>placeholder</value>
           </item>
         </select1>
-        <input faims_attribute_name="Percentage" faims_attribute_type="decimal" faims_certainty="false" faims_read_only="false" ref="Percentage">
+        <input faims_attribute_name="Percentage" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Percentage">
           <label>{Percentage}</label>
         </input>        
          <input faims_attribute_name="Stone Size" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Stone_Size">
