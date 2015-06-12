@@ -397,43 +397,72 @@ duplicateRecord(String tabgroup) {
     return saveCallback;
   }
   
-  saveCallback = getDuplicateCallback(null);
+  defaulSaveCallback = getDuplicateCallback(null);
 
   // specific callbacks
   if (tabgroup.equals("Context")) {
     String extraCallback = "setFieldValue(\"Context/Context_GeneralInformation/Context_ID\", getFieldValue(\"control/data/ContextIncrement\")); incField(\"control/data/ContextIncrement\");";
     saveCallback = getDuplicateCallback(extraCallback);
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
   } else if (tabgroup.equals("ContextGroup")) {
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    duplicateTabGroup(tabgroup, null, null, null, defaulSaveCallback);
   } else if (tabgroup.equals("Artefact_Group")) {
-    String extraCallback = "setFieldValue(\"Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID\", getFieldValue(\"control/data/Artefact_Group_Starting_ID\")); incField(\"control/data/Artefact_Group_Starting_ID\", 1);";
-    saveCallback = getDuplicateCallback(extraCallback);
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    // TODO: Brian -> following queries, and also for each a query to duplicate any relationships with the parent Context
+    fetchOne("SELECT savedVocabValue FROM savedArtefact where attributename = 'AreaCode' AND savedUuid = '"+artefact_group_id+"'", new FetchCallback(){
+      onFetch(areaCodeAttribute) {
+        String extraCallback = "setFieldValue(\"Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID\", getFieldValue(\"control/data/Artefact_Group_Starting_ID\")); incField(\"control/data/Artefact_Group_Starting_ID\", 1);";
+        saveCallback = getDuplicateCallback(extraCallback);
+        extraAttributes = createAttributeList();
+        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
+        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+      }
+    });
   } else if (tabgroup.equals("Sample")) {
-    String extraCallback = "setFieldValue(\"Sample/Sample_GeneralInformation/Sample_ID\", getFieldValue(\"control/data/Sample_Starting_ID\")); incField(\"control/data/Sample_Starting_ID\", 1);";
-    saveCallback = getDuplicateCallback(extraCallback);
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    fetchOne("SELECT savedVocabValue FROM savedSample where attributename = 'AreaCode' AND savedUuid = '"+sample_id+"'", new FetchCallback(){
+      onFetch(areaCodeAttribute) {
+        String extraCallback = "setFieldValue(\"Sample/Sample_GeneralInformation/Sample_ID\", getFieldValue(\"control/data/Sample_Starting_ID\")); incField(\"control/data/Sample_Starting_ID\", 1);";
+        saveCallback = getDuplicateCallback(extraCallback);
+        extraAttributes = createAttributeList();
+        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
+        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+      }
+    });
   } else if (tabgroup.equals("Matrix")) {
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    fetchOne("SELECT savedVocabValue FROM savedMatrix where attributename = 'AreaCode' AND savedUuid = '"+matrix_id+"'", new FetchCallback(){
+      onFetch(areaCodeAttribute) {
+        extraAttributes = createAttributeList();
+        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
+        duplicateTabGroup(tabgroup, null, extraAttributes, null, defaulSaveCallback);
+      }
+    });
   } else if (tabgroup.equals("Special_Find")) {
-    String extraCallback = "setFieldValue(\"Special_Find/Special_Find_GeneralInformation/Special_Find_ID\", getFieldValue(\"control/data/SpecialFind_Starting_ID\")); incField(\"control/data/SpecialFind_Starting_ID\", 1);";
-    saveCallback = getDuplicateCallback(extraCallback);
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    fetchOne("SELECT savedVocabValue FROM savedSpecialFind where attributename = 'AreaCode' AND savedUuid = '"+special_find_id+"'", new FetchCallback(){
+      onFetch(areaCodeAttribute) {
+        String extraCallback = "setFieldValue(\"Special_Find/Special_Find_GeneralInformation/Special_Find_ID\", getFieldValue(\"control/data/SpecialFind_Starting_ID\")); incField(\"control/data/SpecialFind_Starting_ID\", 1);";
+        saveCallback = getDuplicateCallback(extraCallback);
+        extraAttributes = createAttributeList();
+        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
+        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+      }
+    });
   } else if (tabgroup.equals("Adobe_Element")) {
-    String extraCallback = "setFieldValue(\"Adobe_Element/Adobe_Element/Adobe_Element_ID\", getFieldValue(\"control/data/Adobe_Element_Starting_ID\")); incField(\"control/data/Adobe_Element_Starting_ID\", 1);";
-    saveCallback = getDuplicateCallback(extraCallback);
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    fetchOne("SELECT savedVocabValue FROM savedAdobe where attributename = 'AreaCode' AND savedUuid = '"+adobe_id+"'", new FetchCallback(){
+      onFetch(areaCodeAttribute) {
+        String extraCallback = "setFieldValue(\"Adobe_Element/Adobe_Element/Adobe_Element_ID\", getFieldValue(\"control/data/Adobe_Element_Starting_ID\")); incField(\"control/data/Adobe_Element_Starting_ID\", 1);";
+        saveCallback = getDuplicateCallback(extraCallback);
+        extraAttributes = createAttributeList();
+        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
+        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+      }
+    });
   } else if (tabgroup.equals("Photograph_Log")) {
-    extraAttributes = null;
-    duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+    fetchOne("SELECT savedVocabValue FROM savedPhotoLog where attributename = 'AreaCode' AND savedUuid = '"+photolog_id+"'", new FetchCallback(){
+      onFetch(areaCodeAttribute) {
+        extraAttributes = createAttributeList();
+        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
+        duplicateTabGroup(tabgroup, null, extraAttributes, null, defaulSaveCallback);
+      }
+    });
   } else {
     Log.e("PAZC Module", "Can't make duplicate the record for the tabgroup '"+tabgroup+"'");
     return;
