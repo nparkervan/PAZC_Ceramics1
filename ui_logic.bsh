@@ -384,83 +384,87 @@ newRecord(String tabgroup) {
 
 // Duplicates the current record of the given tabgroup
 duplicateRecord(String tabgroup) {
-  // generic callback
-  getDuplicateCallback(String extraCallback) {
+  // generic duplication save callback
+  getDuplicateSaveCallback(String entityTabgroup, String globalIDName, String extraCallback) {
     saveCallback = new SaveCallback() {
       onSave(uuid, newRecord) {
-        if (!isNull(extraCallback)) {
-          execute(extraCallback);
-        }
-        showToast("{Duplicated_record}");
+        Log.d("PAZC Module", "Duplicate uuid: " + uuid.toString());
+        // show the newly duplicated entity
+        showTabGroup(entityTabgroup, uuid, new FetchCallback() {
+          onFetch(result) {
+            // update the global id for that entity and then do the rest of the extra callback
+            extraCallback = globalIDName+"=\""+uuid+"\";" + extraCallback + "print(\"DEBUG: artefact_group_id: \" + artefact_group_id)";
+            execute(extraCallback);
+            showToast("{Duplicated_record}");
+          }
+        });
       }
     };
     return saveCallback;
   }
-  
-  defaulSaveCallback = getDuplicateCallback(null);
-
-  // specific callbacks
+  // generic fetch saved attributes query
+  getDuplicateAttributeQuery(String originalRecordID) {
+    String duplicateQuery = "SELECT attributename, freetext, vocabid, measure, certainty " +
+      " FROM latestnondeletedaentvalue JOIN attributekey USING (attributeid) " +
+      " WHERE attributename IN ('AreaCode', 'Site Code') " + 
+      " AND uuid = '"+originalRecordID+"'; ";
+    return duplicateQuery;
+  }
+  // generic get extra attributes
+  getExtraAttributes(fetchedAttributes) {
+    List extraAttributes = createAttributeList();
+    Log.d("PAZC Module", "Duplicating fetched attributes: " + fetchedAttributes.toString());
+    for (savedAttribute : fetchedAttributes) {
+      extraAttributes.add(createEntityAttribute(savedAttribute.get(0), savedAttribute.get(1), savedAttribute.get(2), savedAttribute.get(3), savedAttribute.get(4)));
+    }
+    return extraAttributes;
+  }
+  // duplication branching based on entity type
   if (tabgroup.equals("Context")) {
     String extraCallback = "setFieldValue(\"Context/Context_GeneralInformation/Context_ID\", getFieldValue(\"control/data/ContextIncrement\")); incField(\"control/data/ContextIncrement\");";
-    saveCallback = getDuplicateCallback(extraCallback);
-    duplicateTabGroup(tabgroup, null, null, null, saveCallback);
+    duplicateTabGroup(tabgroup, null, null, null, getDuplicateSaveCallback("Context", "context_id", extraCallback));
   } else if (tabgroup.equals("ContextGroup")) {
-    duplicateTabGroup(tabgroup, null, null, null, defaulSaveCallback);
+    duplicateTabGroup(tabgroup, null, null, null, getDuplicateSaveCallback("ContextGroup", "context_group_id", null));
   } else if (tabgroup.equals("Artefact_Group")) {
-    // TODO: Brian -> following queries, and also for each a query to duplicate any relationships with the parent Context
-    fetchOne("SELECT savedVocabValue FROM savedArtefact where attributename = 'AreaCode' AND savedUuid = '"+artefact_group_id+"'", new FetchCallback(){
-      onFetch(areaCodeAttribute) {
+    // TODO: Brian -> duplicate any relationships with the parent Context
+    fetchAll(getDuplicateAttributeQuery(artefact_group_id), new FetchCallback(){
+      onFetch(result) {
+        Log.d("PAZC Module", "Calling duplicate on artefact_group_id: " + artefact_group_id);
         String extraCallback = "setFieldValue(\"Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID\", getFieldValue(\"control/data/Artefact_Group_Starting_ID\")); incField(\"control/data/Artefact_Group_Starting_ID\", 1);";
-        saveCallback = getDuplicateCallback(extraCallback);
-        extraAttributes = createAttributeList();
-        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
-        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Artefact_Group", "artefact_group_id", extraCallback));
       }
     });
   } else if (tabgroup.equals("Sample")) {
-    fetchOne("SELECT savedVocabValue FROM savedSample where attributename = 'AreaCode' AND savedUuid = '"+sample_id+"'", new FetchCallback(){
-      onFetch(areaCodeAttribute) {
+    fetchAll(getDuplicateAttributeQuery(sample_id), new FetchCallback(){
+      onFetch(result) {
         String extraCallback = "setFieldValue(\"Sample/Sample_GeneralInformation/Sample_ID\", getFieldValue(\"control/data/Sample_Starting_ID\")); incField(\"control/data/Sample_Starting_ID\", 1);";
-        saveCallback = getDuplicateCallback(extraCallback);
-        extraAttributes = createAttributeList();
-        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
-        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Sample", "sample_id", extraCallback));
       }
     });
   } else if (tabgroup.equals("Matrix")) {
-    fetchOne("SELECT savedVocabValue FROM savedMatrix where attributename = 'AreaCode' AND savedUuid = '"+matrix_id+"'", new FetchCallback(){
-      onFetch(areaCodeAttribute) {
-        extraAttributes = createAttributeList();
-        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
-        duplicateTabGroup(tabgroup, null, extraAttributes, null, defaulSaveCallback);
+    fetchAll(getDuplicateAttributeQuery(matrix_id), new FetchCallback(){
+      onFetch(result) {
+        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Matrix", "matrix_id", null));
       }
     });
   } else if (tabgroup.equals("Special_Find")) {
-    fetchOne("SELECT savedVocabValue FROM savedSpecialFind where attributename = 'AreaCode' AND savedUuid = '"+special_find_id+"'", new FetchCallback(){
-      onFetch(areaCodeAttribute) {
+    fetchAll(getDuplicateAttributeQuery(special_find_id), new FetchCallback(){
+      onFetch(result) {
         String extraCallback = "setFieldValue(\"Special_Find/Special_Find_GeneralInformation/Special_Find_ID\", getFieldValue(\"control/data/SpecialFind_Starting_ID\")); incField(\"control/data/SpecialFind_Starting_ID\", 1);";
-        saveCallback = getDuplicateCallback(extraCallback);
-        extraAttributes = createAttributeList();
-        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
-        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Special_Find", "special_find_id", extraCallback));
       }
     });
   } else if (tabgroup.equals("Adobe_Element")) {
-    fetchOne("SELECT savedVocabValue FROM savedAdobe where attributename = 'AreaCode' AND savedUuid = '"+adobe_id+"'", new FetchCallback(){
-      onFetch(areaCodeAttribute) {
+    fetchAll(getDuplicateAttributeQuery(adobe_id), new FetchCallback(){
+      onFetch(result) {
         String extraCallback = "setFieldValue(\"Adobe_Element/Adobe_Element/Adobe_Element_ID\", getFieldValue(\"control/data/Adobe_Element_Starting_ID\")); incField(\"control/data/Adobe_Element_Starting_ID\", 1);";
-        saveCallback = getDuplicateCallback(extraCallback);
-        extraAttributes = createAttributeList();
-        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
-        duplicateTabGroup(tabgroup, null, extraAttributes, null, saveCallback);
+        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Adobe_Element", "adobe_id", extraCallback));
       }
     });
   } else if (tabgroup.equals("Photograph_Log")) {
-    fetchOne("SELECT savedVocabValue FROM savedPhotoLog where attributename = 'AreaCode' AND savedUuid = '"+photolog_id+"'", new FetchCallback(){
-      onFetch(areaCodeAttribute) {
-        extraAttributes = createAttributeList();
-        attributes.add(createEntityAttribute("AreaCode", null, areaCodeAttribute, null, null));
-        duplicateTabGroup(tabgroup, null, extraAttributes, null, defaulSaveCallback);
+    fetchAll(getDuplicateAttributeQuery(photolog_id), new FetchCallback(){
+      onFetch(result) {
+        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Photograph_Log", "photolog_id", null));
       }
     });
   } else {
