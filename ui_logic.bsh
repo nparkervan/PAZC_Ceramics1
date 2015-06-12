@@ -851,9 +851,8 @@ onEvent("Context/Context_Artefacts/newSpecialFind"    , "delayclick" , "newSpeci
 onEvent("Context/Context_Artefacts/artefactGroupList" , "click"      , "loadArtefactGroup()");
 onEvent("Context/Context_Artefacts/specialFindList"   , "click"      , "loadSpecialFind()");
 
-onEvent("Context/Context_Samples/newSample", "click", "newSample();");
-onEvent("Context/Context_Samples/loadSample", "click", "loadSample()");
-onEvent("Context/Context_Samples/deleteSample", "click", "deleteSampleFromContext()");
+onEvent("Context/Context_Samples/newSample"   , "delayclick"  , "newSample();");
+onEvent("Context/Context_Samples/sampleList" , "click"       , "loadSample();");
 
 onEvent("Context/Context_Deposits", "show", "updateAllContextMatrices()");
 onEvent("Context/Context_Interpretation", "show", "updateAllContextGroups()");
@@ -1280,7 +1279,7 @@ updateAllContextArtefacts(){
 }
 
 updateAllContextSamples(){
-    updateContextRelationshipBasedDropdown("Context/Context_Samples/sampleList", "ContextSample", context_id);
+    updateContextRelationshipBasedCursorList("Context/Context_Samples/sampleList", "ContextSample", context_id);
 }
 
 updateAllContextRelationships(){
@@ -1868,7 +1867,7 @@ newSample(){
 }
 
 loadSample() {
-    sample_id = getFieldValue("Context/Context_Samples/sampleList");
+    sample_id = getListItemValue();
     loadSampleFrom(sample_id);
 }
 

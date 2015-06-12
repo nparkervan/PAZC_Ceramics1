@@ -310,8 +310,6 @@
             <Context_Samples>
               <newSample/>
               <sampleList/>
-              <loadSample/>
-              <deleteSample/>
             </Context_Samples>
             <Texture_Helper>
               <Soil_Texture/>
@@ -1425,19 +1423,13 @@
         <trigger ref="newSample">
           <label>{Add_Sample}</label>
         </trigger>
-        <select1 faims_certainty="false" faims_read_only="false" ref="sampleList">
+        <select1 appearance="compact" faims_certainty="false" faims_read_only="false" ref="sampleList">
           <label>{Select_Sample}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
         </select1>
-        <trigger ref="loadSample">
-          <label>{Load_Sample}</label>
-        </trigger>
-        <trigger ref="deleteSample">
-          <label>{Delete_Sample}</label>
-        </trigger>
       </group>
       <group ref="Texture_Helper" faims_hidden="true">
         <label>{Texture_Helper}</label>
