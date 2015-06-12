@@ -429,15 +429,16 @@ getExtraAttributes(fetchedAttributes) {
 duplicateContext() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Context", true);
       context_id = uuid;
-      showTabGroup("Context", uuid, new FetchCallback() {
-        onFetch(result) {
-          setFieldValue("Context/Context_GeneralInformation/Context_ID", getFieldValue("control/data/ContextIncrement")); 
-          incField("control/data/ContextIncrement");
+      setFieldValue("Context/Context_GeneralInformation/Context_ID", getFieldValue("control/data/ContextIncrement")); 
+      incField("control/data/ContextIncrement");
+      Boolean enable_autosave = true;
+      saveTabGroup("Context", context_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          context_id = autosaveUuid;
           showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -451,13 +452,14 @@ duplicateContext() {
 duplicateContextGroup() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("ContextGroup", true);
       context_group_id = uuid;
-      showTabGroup("ContextGroup", uuid, new FetchCallback(){
-        onFetch(result) {
+      Boolean enable_autosave = true;
+      saveTabGroup("ContextGroup", context_group_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          context_group_id = autosaveUuid;
           showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -471,15 +473,16 @@ duplicateContextGroup() {
 duplicateArtefactGroup() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Artefact_Group", true);
       artefact_group_id = uuid;
-      showTabGroup("Artefact_Group", uuid, new FetchCallback() {
-        onFetch(result) {
-          setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID")); 
-          incField("control/data/Artefact_Group_Starting_ID", 1);
-          showToast("{Duplicated_record}"); 
+      setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID")); 
+      incField("control/data/Artefact_Group_Starting_ID", 1);
+      Boolean enable_autosave = true;
+      saveTabGroup("Artefact_Group", artefact_group_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          artefact_group_id = autosaveUuid;
+          showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -493,15 +496,16 @@ duplicateArtefactGroup() {
 duplicateSample() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Sample", true);
       sample_id = uuid;
-      showTabGroup("Sample", uuid, new FetchCallback() {
-        onFetch(result) {
-          setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID")); 
-          incField("control/data/Sample_Starting_ID", 1);
-          showToast("{Duplicated_record}"); 
+      setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID")); 
+      incField("control/data/Sample_Starting_ID", 1);
+      Boolean enable_autosave = true;
+      saveTabGroup("Sample", sample_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          sample_id = autosaveUuid;
+          showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -515,13 +519,14 @@ duplicateSample() {
 duplicateMatrix() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Matrix", true);
       matrix_id = uuid;
-      showTabGroup("Matrix", uuid, new FetchCallback() {
-        onFetch(result) {
-          showToast("{Duplicated_record}"); 
+      Boolean enable_autosave = true;
+      saveTabGroup("Matrix", matrix_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          matrix_id = autosaveUuid;
+          showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -535,15 +540,16 @@ duplicateMatrix() {
 duplicateSpecialFind() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Special_Find", true);
       special_find_id = uuid;
-      showTabGroup("Special_Find", uuid, new FetchCallback() {
-        onFetch(result) {
-          setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID")); 
-          incField("control/data/SpecialFind_Starting_ID", 1);
-          showToast("{Duplicated_record}"); 
+      setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID")); 
+      incField("control/data/SpecialFind_Starting_ID", 1);
+      Boolean enable_autosave = true;
+      saveTabGroup("Special_Find", special_find_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          special_find_id = autosaveUuid;
+          showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -557,15 +563,16 @@ duplicateSpecialFind() {
 duplicateAdobeElement() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Adobe_Element", true);
       adobe_id = uuid;
-      showTabGroup("Adobe_Element", uuid, new FetchCallback() {
-        onFetch(result) {
-          setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID")); 
-          incField("control/data/Adobe_Element_Starting_ID", 1);
-          showToast("{Duplicated_record}"); 
+      setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID")); 
+      incField("control/data/Adobe_Element_Starting_ID", 1);
+      Boolean enable_autosave = true;
+      saveTabGroup("Adobe_Element", adobe_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          adobe_id = autosaveUuid;
+          showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
@@ -579,13 +586,14 @@ duplicateAdobeElement() {
 duplicatePhotoLog() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
-      cancelTabGroup("Photograph_Log", true);
       photolog_id = uuid;
-      showTabGroup("Photograph_Log", uuid, new FetchCallback() {
-        onFetch(result) {
-          showToast("{Duplicated_record}"); 
+      Boolean enable_autosave = true;
+      saveTabGroup("Photograph_Log", photolog_id, null, null, new SaveCallback(){
+        onSave(autosaveUuid, autosaveNewRecord) {
+          photolog_id = autosaveUuid;
+          showToast("{Duplicated_record}");
         }
-      });
+      }, enable_autosave);
     }
   };
 
