@@ -390,6 +390,7 @@ duplicateRecord(String tabgroup) {
       onSave(uuid, newRecord) {
         Log.d("PAZC Module", "Duplicate uuid: " + uuid.toString());
         // show the newly duplicated entity
+        cancelTabGroup(entityTabgroup, true);
         showTabGroup(entityTabgroup, uuid, new FetchCallback() {
           onFetch(result) {
             // update the global id for that entity and then do the rest of the extra callback
