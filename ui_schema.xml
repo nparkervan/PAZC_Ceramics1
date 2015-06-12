@@ -770,7 +770,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="AreaCode">
+            <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="AreaCode" faims_style_class="sharedwithvocab">
               <label>{Area_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -780,13 +780,13 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
               <label>{Context_Number}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Context Name" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Name">
+            <input faims_attribute_name="Context Name" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Name" faims_style_class="sharedwithvocab">
               <label>{Context_Name}</label>
             </input>
           </group>
@@ -1019,7 +1019,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour" faims_style_class="required sharedwithvocab">
+           <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour" faims_style_class="requiredsharedwithvocab">
                 <label>{Soil_Colour}</label>
 			</input>
           </group>
@@ -1091,7 +1091,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <select1 faims_attribute_name="Shape of Cut" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape_of_Cut" faims_style_class="required sharedwithvocab">
+            <select1 faims_attribute_name="Shape of Cut" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Shape_of_Cut" faims_style_class="requiredsharedwithvocab">
               <label>{Shape_of_Cut}</label>
               <item>
                 <label>{placeholder}</label>

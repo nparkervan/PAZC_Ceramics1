@@ -415,6 +415,15 @@ getDuplicateAttributeQuery(String originalRecordID) {
   return duplicateQuery;
 }
 
+getDuplicateRelnQuery(String originalRecordID) {
+  String dupeRelnQuery = "SELECT relntypename, parentparticipatesverb, childparticipatesverb, childuuid "+
+                         "  FROM parentchild join relationship using (relationshipid) "+
+                         "  JOIN relntype using (relntypeid) "+
+                         " WHERE parentuuid = '"+originalRecordID+"';";
+  return dupeRelnQuery;
+
+}
+
 
 // generic get extra attributes
 getExtraAttributes(fetchedAttributes) {
@@ -425,13 +434,19 @@ getExtraAttributes(fetchedAttributes) {
   }
   return extraAttributes;
 }
-
+makeDuplicateRelationships(fetchedAttributes, String newuuid){
+    for (savedAttribute : fetchedAttributes){
+        //    saveEntitiesToHierRel(relnname, parent, child, parentverb, childverb, relSaveCallback);
+        //relntypename, parentparticipatesverb, childparticipatesverb, childuuid
+        saveEntitiesToHierRel(savedAttribute.get(0), newuuid, savedAttribute.get(3), savedAttribute.get(1), savedAttribute.get(2), null);
+    }
+}
 duplicateContext() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       context_id = uuid;
-      setFieldValue("Context/Context_Attachments/Photo", null);
-      setFieldValue("Context/Context_Attachments/Sketch", null);
+      populateCameraPictureGallery("Context/Context_Attachments/Photo", new ArrayList());
+      populateFileList("Context/Context_Attachments/Sketch", new ArrayList());
       setFieldValue("Context/Context_GeneralInformation/Context_ID", getFieldValue("control/data/ContextIncrement")); 
       incField("control/data/ContextIncrement");
       Boolean enable_autosave = true;
@@ -439,6 +454,8 @@ duplicateContext() {
         onSave(autosaveUuid, autosaveNewRecord) {
           context_id = autosaveUuid;
           showToast("{Duplicated_record}");
+          populateCameraPictureGallery("Context/Context_Attachments/Photo", new ArrayList());
+          //intentionally did not duplicate children of context.
         }
       }, enable_autosave);
     }
@@ -465,6 +482,7 @@ duplicateContextGroup() {
         onSave(autosaveUuid, autosaveNewRecord) {
           context_group_id = autosaveUuid;
           showToast("{Duplicated_record}");
+          //again, didn't choose to duplicate child contexts.
         }
       }, enable_autosave);
     }
@@ -481,17 +499,24 @@ duplicateContextGroup() {
 }
 
 duplicateArtefactGroup() {
+  String oldArtefact_ID = artefact_group_id;
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       artefact_group_id = uuid;
-      setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Photo", null);
-      setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Sketch", null);
+      populateCameraPictureGallery("Artefact_Group/Artefact_Group_GeneralInformation/Photo", new ArrayList());
+      populateFileList("Artefact_Group/Artefact_Group_GeneralInformation/Sketch", new ArrayList());
       setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID")); 
       incField("control/data/Artefact_Group_Starting_ID", 1);
       Boolean enable_autosave = true;
       saveTabGroup("Artefact_Group", artefact_group_id, null, null, new SaveCallback(){
         onSave(autosaveUuid, autosaveNewRecord) {
           artefact_group_id = autosaveUuid;
+          populateCameraPictureGallery("Artefact_Group/Artefact_Group_GeneralInformation/Photo", new ArrayList());
+          fetchAll(getDuplicateRelnQuery(oldArtefact_ID), new FetchCallback(){
+            onFetch(result) {
+                makeDuplicateRelationships(result, artefact_group_id);
+            }
+          });
           showToast("{Duplicated_record}");
         }
       }, enable_autosave);
@@ -501,8 +526,8 @@ duplicateArtefactGroup() {
   fetchAll(getDuplicateAttributeQuery(artefact_group_id), new FetchCallback(){
     onFetch(result) {
       excludeAttributes = new ArrayList();
-      excludeAttributes.add("AreaCode");
-      excludeAttributes.add("Site Code");
+      //excludeAttributes.add("AreaCode");
+      //excludeAttributes.add("Site Code");
       excludeAttributes.add("Photo");
       excludeAttributes.add("Sketch");
       duplicateTabGroup("Artefact_Group", null, getExtraAttributes(result), excludeAttributes, saveCallback);
@@ -511,18 +536,25 @@ duplicateArtefactGroup() {
 }
 
 duplicateSample() {
+
+
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       sample_id = uuid;
-      setFieldValue("Sample/Sample_GeneralInformation/Photo", null);
-      setFieldValue("Sample/Sample_GeneralInformation/Sketch", null);
+      populateCameraPictureGallery("Sample/Sample_GeneralInformation/Photo", new ArrayList());
+      populateFileList("Sample/Sample_GeneralInformation/Sketch", new ArrayList());      
       setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID")); 
       incField("control/data/Sample_Starting_ID", 1);
       Boolean enable_autosave = true;
+
+
       saveTabGroup("Sample", sample_id, null, null, new SaveCallback(){
         onSave(autosaveUuid, autosaveNewRecord) {
           sample_id = autosaveUuid;
+          populateCameraPictureGallery("Sample/Sample_GeneralInformation/Photo", new ArrayList());
+
           showToast("{Duplicated_record}");
+
         }
       }, enable_autosave);
     }
@@ -531,8 +563,8 @@ duplicateSample() {
   fetchAll(getDuplicateAttributeQuery(sample_id), new FetchCallback(){
     onFetch(result) {
       excludeAttributes = new ArrayList();
-      excludeAttributes.add("AreaCode");
-      excludeAttributes.add("Site Code");
+      //excludeAttributes.add("AreaCode");
+      //excludeAttributes.add("Site Code");
       excludeAttributes.add("Photo");
       excludeAttributes.add("Sketch");
       duplicateTabGroup("Sample", null, getExtraAttributes(result), excludeAttributes, saveCallback);
@@ -557,7 +589,7 @@ duplicateMatrix() {
   fetchAll(getDuplicateAttributeQuery(matrix_id), new FetchCallback(){
     onFetch(result) {
       excludeAttributes = new ArrayList();
-      excludeAttributes.add("AreaCode");
+      //excludeAttributes.add("AreaCode");
       duplicateTabGroup("Matrix", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
@@ -567,7 +599,7 @@ duplicateSpecialFind() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       special_find_id = uuid;
-      setFieldValue("Special_Find/Special_Find_GeneralInformation/Photo", null);
+      populateCameraPictureGallery("Special_Find/Special_Find_GeneralInformation/Photo", new ArrayList());
       setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID")); 
       incField("control/data/SpecialFind_Starting_ID", 1);
       Boolean enable_autosave = true;
@@ -575,6 +607,8 @@ duplicateSpecialFind() {
         onSave(autosaveUuid, autosaveNewRecord) {
           special_find_id = autosaveUuid;
           showToast("{Duplicated_record}");
+          populateCameraPictureGallery("Sample/Sample_GeneralInformation/Photo", new ArrayList());
+
         }
       }, enable_autosave);
     }
@@ -583,8 +617,8 @@ duplicateSpecialFind() {
   fetchAll(getDuplicateAttributeQuery(special_find_id), new FetchCallback(){
     onFetch(result) {
       excludeAttributes = new ArrayList();
-      excludeAttributes.add("AreaCode");
-      excludeAttributes.add("Site Code");
+      //excludeAttributes.add("AreaCode");
+      //excludeAttributes.add("Site Code");
       excludeAttributes.add("Photo");
       duplicateTabGroup("Special_Find", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
@@ -610,8 +644,8 @@ duplicateAdobeElement() {
   fetchAll(getDuplicateAttributeQuery(adobe_id), new FetchCallback(){
     onFetch(result) {
       excludeAttributes = new ArrayList();
-      excludeAttributes.add("AreaCode");
-      excludeAttributes.add("Site Code");
+      //excludeAttributes.add("AreaCode");
+      //excludeAttributes.add("Site Code");
       duplicateTabGroup("Adobe_Element", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
@@ -634,8 +668,8 @@ duplicatePhotoLog() {
   fetchAll(getDuplicateAttributeQuery(photolog_id), new FetchCallback(){
     onFetch(result) {
       excludeAttributes = new ArrayList();
-      excludeAttributes.add("AreaCode");
-      excludeAttributes.add("Site Code");
+      //excludeAttributes.add("AreaCode");
+      //excludeAttributes.add("Site Code");
       duplicateTabGroup("Photograph_Log", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });

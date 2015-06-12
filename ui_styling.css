@@ -8,6 +8,12 @@
 .required {
 
 }
+.requiredsharedwithvocab{
+    height: 40px;
+}
+.requiredsharedwithvocab-label{
+    color: red;
+}
 
 .sharedwithvocab{
     height: 40px;
