@@ -384,94 +384,216 @@ newRecord(String tabgroup) {
 
 // Duplicates the current record of the given tabgroup
 duplicateRecord(String tabgroup) {
-  // generic duplication save callback
-  getDuplicateSaveCallback(String entityTabgroup, String globalIDName, String extraCallback) {
-    saveCallback = new SaveCallback() {
-      onSave(uuid, newRecord) {
-        Log.d("PAZC Module", "Duplicate uuid: " + uuid.toString());
-        // show the newly duplicated entity
-        cancelTabGroup(entityTabgroup, true);
-        showTabGroup(entityTabgroup, uuid, new FetchCallback() {
-          onFetch(result) {
-            // update the global id for that entity and then do the rest of the extra callback
-            extraCallback = globalIDName+"=\""+uuid+"\";" + extraCallback + "print(\"DEBUG: artefact_group_id: \" + artefact_group_id)";
-            execute(extraCallback);
-            showToast("{Duplicated_record}");
-          }
-        });
-      }
-    };
-    return saveCallback;
-  }
-  // generic fetch saved attributes query
-  getDuplicateAttributeQuery(String originalRecordID) {
-    String duplicateQuery = "SELECT attributename, freetext, vocabid, measure, certainty " +
-      " FROM latestnondeletedaentvalue JOIN attributekey USING (attributeid) " +
-      " WHERE attributename IN ('AreaCode', 'Site Code') " + 
-      " AND uuid = '"+originalRecordID+"'; ";
-    return duplicateQuery;
-  }
-  // generic get extra attributes
-  getExtraAttributes(fetchedAttributes) {
-    List extraAttributes = createAttributeList();
-    Log.d("PAZC Module", "Duplicating fetched attributes: " + fetchedAttributes.toString());
-    for (savedAttribute : fetchedAttributes) {
-      extraAttributes.add(createEntityAttribute(savedAttribute.get(0), savedAttribute.get(1), savedAttribute.get(2), savedAttribute.get(3), savedAttribute.get(4)));
-    }
-    return extraAttributes;
-  }
-  // duplication branching based on entity type
   if (tabgroup.equals("Context")) {
-    String extraCallback = "setFieldValue(\"Context/Context_GeneralInformation/Context_ID\", getFieldValue(\"control/data/ContextIncrement\")); incField(\"control/data/ContextIncrement\");";
-    duplicateTabGroup(tabgroup, null, null, null, getDuplicateSaveCallback("Context", "context_id", extraCallback));
+    duplicateContext();
   } else if (tabgroup.equals("ContextGroup")) {
-    duplicateTabGroup(tabgroup, null, null, null, getDuplicateSaveCallback("ContextGroup", "context_group_id", null));
+    duplicateContextGroup();
   } else if (tabgroup.equals("Artefact_Group")) {
-    // TODO: Brian -> duplicate any relationships with the parent Context
-    fetchAll(getDuplicateAttributeQuery(artefact_group_id), new FetchCallback(){
-      onFetch(result) {
-        Log.d("PAZC Module", "Calling duplicate on artefact_group_id: " + artefact_group_id);
-        String extraCallback = "setFieldValue(\"Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID\", getFieldValue(\"control/data/Artefact_Group_Starting_ID\")); incField(\"control/data/Artefact_Group_Starting_ID\", 1);";
-        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Artefact_Group", "artefact_group_id", extraCallback));
-      }
-    });
+    duplicateArtefactGroup();
   } else if (tabgroup.equals("Sample")) {
-    fetchAll(getDuplicateAttributeQuery(sample_id), new FetchCallback(){
-      onFetch(result) {
-        String extraCallback = "setFieldValue(\"Sample/Sample_GeneralInformation/Sample_ID\", getFieldValue(\"control/data/Sample_Starting_ID\")); incField(\"control/data/Sample_Starting_ID\", 1);";
-        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Sample", "sample_id", extraCallback));
-      }
-    });
+    duplicateSample();
   } else if (tabgroup.equals("Matrix")) {
-    fetchAll(getDuplicateAttributeQuery(matrix_id), new FetchCallback(){
-      onFetch(result) {
-        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Matrix", "matrix_id", null));
-      }
-    });
+    duplicateMatrix();
   } else if (tabgroup.equals("Special_Find")) {
-    fetchAll(getDuplicateAttributeQuery(special_find_id), new FetchCallback(){
-      onFetch(result) {
-        String extraCallback = "setFieldValue(\"Special_Find/Special_Find_GeneralInformation/Special_Find_ID\", getFieldValue(\"control/data/SpecialFind_Starting_ID\")); incField(\"control/data/SpecialFind_Starting_ID\", 1);";
-        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Special_Find", "special_find_id", extraCallback));
-      }
-    });
+    duplicateSpecialFind();
   } else if (tabgroup.equals("Adobe_Element")) {
-    fetchAll(getDuplicateAttributeQuery(adobe_id), new FetchCallback(){
-      onFetch(result) {
-        String extraCallback = "setFieldValue(\"Adobe_Element/Adobe_Element/Adobe_Element_ID\", getFieldValue(\"control/data/Adobe_Element_Starting_ID\")); incField(\"control/data/Adobe_Element_Starting_ID\", 1);";
-        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Adobe_Element", "adobe_id", extraCallback));
-      }
-    });
+    duplicateAdobeElement();
   } else if (tabgroup.equals("Photograph_Log")) {
-    fetchAll(getDuplicateAttributeQuery(photolog_id), new FetchCallback(){
-      onFetch(result) {
-        duplicateTabGroup(tabgroup, null, getExtraAttributes(result), null, getDuplicateSaveCallback("Photograph_Log", "photolog_id", null));
-      }
-    });
+    duplicatePhotoLog();
   } else {
     Log.e("PAZC Module", "Can't make duplicate the record for the tabgroup '"+tabgroup+"'");
     return;
   }
+}
+
+// generic fetch saved attributes query
+getDuplicateAttributeQuery(String originalRecordID) {
+  String duplicateQuery = "SELECT attributename, freetext, vocabid, measure, certainty " +
+    " FROM latestnondeletedaentvalue JOIN attributekey USING (attributeid) " +
+    " WHERE attributename IN ('AreaCode', 'Site Code') " + 
+    " AND uuid = '"+originalRecordID+"'; ";
+  return duplicateQuery;
+}
+
+
+// generic get extra attributes
+getExtraAttributes(fetchedAttributes) {
+  List extraAttributes = createAttributeList();
+  Log.d("PAZC Module", "Duplicating fetched attributes: " + fetchedAttributes.toString());
+  for (savedAttribute : fetchedAttributes) {
+    extraAttributes.add(createEntityAttribute(savedAttribute.get(0), savedAttribute.get(1), savedAttribute.get(2), savedAttribute.get(3), savedAttribute.get(4)));
+  }
+  return extraAttributes;
+}
+
+duplicateContext() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Context", true);
+      context_id = uuid;
+      showTabGroup("Context", uuid, new FetchCallback() {
+        onFetch(result) {
+          setFieldValue("Context/Context_GeneralInformation/Context_ID", getFieldValue("control/data/ContextIncrement")); 
+          incField("control/data/ContextIncrement");
+          showToast("{Duplicated_record}");
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(context_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Context", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicateContextGroup() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("ContextGroup", true);
+      context_group_id = uuid;
+      showTabGroup("ContextGroup", uuid, new FetchCallback(){
+        onFetch(result) {
+          showToast("{Duplicated_record}");
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(context_group_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("ContextGroup", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicateArtefactGroup() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Artefact_Group", true);
+      artefact_group_id = uuid;
+      showTabGroup("Artefact_Group", uuid, new FetchCallback() {
+        onFetch(result) {
+          setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID")); 
+          incField("control/data/Artefact_Group_Starting_ID", 1);
+          showToast("{Duplicated_record}"); 
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(artefact_group_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Artefact_Group", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicateSample() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Sample", true);
+      sample_id = uuid;
+      showTabGroup("Sample", uuid, new FetchCallback() {
+        onFetch(result) {
+          setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID")); 
+          incField("control/data/Sample_Starting_ID", 1);
+          showToast("{Duplicated_record}"); 
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(sample_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Sample", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicateMatrix() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Matrix", true);
+      matrix_id = uuid;
+      showTabGroup("Matrix", uuid, new FetchCallback() {
+        onFetch(result) {
+          showToast("{Duplicated_record}"); 
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(matrix_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Matrix", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicateSpecialFind() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Special_Find", true);
+      special_find_id = uuid;
+      showTabGroup("Special_Find", uuid, new FetchCallback() {
+        onFetch(result) {
+          setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID")); 
+          incField("control/data/SpecialFind_Starting_ID", 1);
+          showToast("{Duplicated_record}"); 
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(special_find_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Special_Find", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicateAdobeElement() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Adobe_Element", true);
+      adobe_id = uuid;
+      showTabGroup("Adobe_Element", uuid, new FetchCallback() {
+        onFetch(result) {
+          setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID")); 
+          incField("control/data/Adobe_Element_Starting_ID", 1);
+          showToast("{Duplicated_record}"); 
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(adobe_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Adobe_Element", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
+}
+
+duplicatePhotoLog() {
+  saveCallback = new SaveCallback() {
+    onSave(uuid, newRecord) {
+      cancelTabGroup("Photograph_Log", true);
+      photolog_id = uuid;
+      showTabGroup("Photograph_Log", uuid, new FetchCallback() {
+        onFetch(result) {
+          showToast("{Duplicated_record}"); 
+        }
+      });
+    }
+  };
+
+  fetchAll(getDuplicateAttributeQuery(photolog_id), new FetchCallback(){
+    onFetch(result) {
+      duplicateTabGroup("Photograph_Log", null, getExtraAttributes(result), null, saveCallback);
+    }
+  });
 }
 
 // Deletes the current record of the given tabgroup
