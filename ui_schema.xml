@@ -326,9 +326,6 @@
             <ContextGroup_Details>
               <validate/>
               <container1>
-                <child1>
-                  <Site_Code/>
-                </child1>
                 <child2>
                   <Area_Code/>
                 </child2>
@@ -402,9 +399,6 @@
             <Artefact_Group_GeneralInformation>
               <validate/>
               <container1>
-                <child1>
-                  <Site_Code/>
-                </child1>
                 <child2>
                   <Context_ID/>
                 </child2>
@@ -442,9 +436,6 @@
           <Sample>
             <Sample_GeneralInformation>
               <container1>
-                <child1>
-                  <Site_Code/>
-                </child1>
                 <child2>
                   <Context_ID/>
                 </child2>
@@ -484,9 +475,6 @@
           <Special_Find>
             <Special_Find_GeneralInformation>
               <container1>
-                <child1>
-                  <Site_Code/>
-                </child1>
                 <child2>
                   <Context_ID/>
                 </child2>
@@ -542,7 +530,6 @@
           <Adobe_Element>
             <Adobe_Element>
               <Context_ID/>
-              <Site_Code/>
               <Adobe_Element_ID/>
               <Device_Code/>
               <Height/>
@@ -560,7 +547,6 @@
           <Photograph_Log>
             <Photograph_Log>
               <Context_ID/>
-              <Site_Code/>
               <Photograph_Reference_ID/>
               <Device_Code/>
               <Camera/>
@@ -1501,12 +1487,6 @@
         </trigger>
          <group faims_style="orientation" ref="container1">
           <label/>
-          <group faims_style="even" ref="child1">
-            <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
-              <label>{Site_Code}</label>
-            </input>
-          </group>
           <group faims_style="even" ref="child2">
             <label/>
              <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Area_Code">
@@ -1681,12 +1661,6 @@
         </trigger>
         <group faims_style="orientation" ref="container1">
           <label/>
-          <group faims_style="even" ref="child1">
-            <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code" faims_style_class="sharedwithvocab">
-              <label>{Site_Code}</label>
-            </input>
-          </group>
           <group faims_style="even" ref="child2">
             <label/>
             <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
@@ -1793,12 +1767,6 @@
         <label>{Deposit_Samples}</label>
         <group faims_style="orientation" ref="container1">
           <label/>
-          <group faims_style="even" ref="child1">
-            <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code" faims_style_class="sharedwithvocab">
-              <label>{Site_Code}</label>
-            </input>
-          </group>
           <group faims_style="even" ref="child2">
             <label/>
             <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
@@ -1920,12 +1888,6 @@
         <label>{Special_Find}</label>
         <group faims_style="orientation" ref="container1">
           <label/>
-          <group faims_style="even" ref="child1">
-            <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code" faims_style_class="sharedwithvocab">
-              <label>{Site_Code}</label>
-            </input>
-          </group>
           <group faims_style="even" ref="child2">
             <label/>
             <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
@@ -2052,11 +2014,7 @@
         <label>{Adobe} </label>
  <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
               <label>{ContextID}</label>
-            </input>
-             <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_read_only="true" ref="Site_Code">
-              <label>{Site_Code}</label>
-            </input>
-            
+            </input>            
             <input faims_attribute_name="Adobe Element ID" faims_attribute_type="measure" faims_read_only="false" ref="Adobe_Element_ID" faims_certainty="false">
               <label>{Adobe_Element_ID}</label>
             </input>
@@ -2105,9 +2063,6 @@
           <label>{Photograph_Log}</label>
             <input faims_attribute_name="ContextID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
               <label>{ContextID}</label>
-            </input>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
-              <label>{Site_Code}</label>
             </input>
             <select1 faims_attribute_name="Camera" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Camera">
             <label>{Camera}</label>
