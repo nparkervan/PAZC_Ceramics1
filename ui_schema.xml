@@ -330,10 +330,10 @@
                   <Area_Code/>
                 </child2>
                 <child3>
-                  <Device_Code/>
+                  <Title/>
                 </child3>
               </container1>
-              <Title/>
+              <Device_Code/>
               <Context_Type/>
               <Description/>
               <container2>
@@ -406,10 +406,10 @@
                   <Artefact_Group_ID/>
                 </child3>
                 <child4>
-                  <Device_Code/>
+                  <Artefact_Class/>
                 </child4>
               </container1>
-              <Artefact_Class/>
+              <Device_Code/>
               <Bag_Number/>
               <Box_Number/>
               <Registered/>
@@ -442,10 +442,8 @@
                 <child3>
                   <Sample_ID/>
                 </child3>
-                <child4>
-                  <Device_Code/>
-                </child4>
               </container1>
+              <Device_Code/>
               <Sample_Type/>
               <Collection_Method/>
               <Sample_Weight/>
@@ -482,10 +480,10 @@
                   <Special_Find_ID/>
                 </child3>
                 <child4>
-                  <Device_Code/>
+                  <Special_Find_Class/>
                 </child4>
               </container1>
-              <Special_Find_Class/>
+              <Device_Code/>
               <Special_Find_Name/>
               <container2>
                 <child1>
@@ -529,8 +527,14 @@
           <!-- ArchEnt: Adobe Element-->
           <Adobe_Element>
             <Adobe_Element>
-              <Context_ID/>
-              <Adobe_Element_ID/>
+              <container1>
+                <child1>
+                  <Context_ID/>
+                </child1>
+                <child2>
+                  <Adobe_Element_ID/>
+                </child2>
+              </container1>
               <Device_Code/>
               <Height/>
               <Width/>
@@ -546,8 +550,14 @@
           <!-- ArchEnt: Photograph Log -->
           <Photograph_Log>
             <Photograph_Log>
-              <Context_ID/>
-              <Photograph_Reference_ID/>
+              <container1>
+                <child1>
+                  <Context_ID/>
+                </child1>
+                <child2>
+                  <Photograph_Reference_ID/>
+                </child2>
+              </container1>
               <Device_Code/>
               <Camera/>
               <Caption/>
@@ -1499,18 +1509,18 @@
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+            <input faims_attribute_name="Title" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Title">
+              <label>{Context_Group_Title}</label>
+            </input>
+          </group>
+        </group>
+        <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
                 <label>{placeholder}</label>
                 <value>placeholder</value>
               </item>
             </select1>
-          </group>
-        </group>
-        <input faims_attribute_name="Title" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Title">
-          <label>{Context_Group_Title}</label>
-        </input>
         <select1 faims_attribute_name="CG Context Type" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Context_Type" type="image">
           <label>{Context_Type}</label>
           <item>
@@ -1675,8 +1685,9 @@
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
-              <label>{Select_Device_Code}</label>
+            <!--We would like to see Dropdown-->
+            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class">
+              <label>{Artefact_Class}</label>
               <item>
                 <label>{placeholder}</label>
                 <value>placeholder</value>
@@ -1684,9 +1695,8 @@
             </select1>
           </group>
         </group>
-        <!--We would like to see Dropdown-->
-        <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class">
-          <label>{Artefact_Class}</label>
+        <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
+          <label>{Select_Device_Code}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
@@ -1779,17 +1789,14 @@
               <label>{Sample_ID}</label>
             </input>
           </group>
-          <group faims_style="even" ref="child4">
-            <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
-              <label>{Select_Device_Code}</label>
-              <item>
-                <label>{placeholder}</label>
-                <value>placeholder</value>
-              </item>
-            </select1>
-          </group>
         </group>
+        <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
+          <label>{Select_Device_Code}</label>
+          <item>
+            <label>{placeholder}</label>
+            <value>placeholder</value>
+          </item>
+        </select1>
         <!--We would like to see Radiogroup-->
         <select1 faims_attribute_name="Sample Type" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Sample_Type">
           <label>{Sample_Type}</label>
@@ -1902,8 +1909,8 @@
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
-              <label>{Select_Device_Code}</label>
+            <select1 faims_attribute_name="Special Find Class" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Special_Find_Class">
+              <label>{Special_Find_Class}</label>
               <item>
                 <label>{placeholder}</label>
                 <value>placeholder</value>
@@ -1911,8 +1918,8 @@
             </select1>
           </group>
         </group>
-        <select1 faims_attribute_name="Special Find Class" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Special_Find_Class">
-          <label>{Special_Find_Class}</label>
+        <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
+          <label>{Select_Device_Code}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
@@ -2012,12 +2019,21 @@
       <label>{Adobe} </label>
       <group ref="Adobe_Element">
         <label>{Adobe} </label>
- <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
+        <group faims_style="orientation" ref="container1">
+          <label/>
+          <group faims_style="even" ref="child1">
+            <label/>
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
               <label>{ContextID}</label>
-            </input>            
+            </input>   
+          </group>
+          <group faims_style="even" ref="child2">
+            <label/>
             <input faims_attribute_name="Adobe Element ID" faims_attribute_type="measure" faims_read_only="false" ref="Adobe_Element_ID" faims_certainty="false">
               <label>{Adobe_Element_ID}</label>
             </input>
+          </group>
+        </group>
             <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
@@ -2061,9 +2077,21 @@
       <label>{Photograph_Log}</label>
         <group ref="Photograph_Log">
           <label>{Photograph_Log}</label>
-            <input faims_attribute_name="ContextID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
-              <label>{ContextID}</label>
-            </input>
+          <group faims_style="orientation" ref="container1">
+            <label/>
+            <group faims_style="even" ref="child1">
+              <label/>
+                <input faims_attribute_name="ContextID" faims_attribute_type="measure" faims_read_only="true" ref="Context_ID">
+                <label>{ContextID}</label>
+              </input>
+            </group>
+            <group faims_style="even" ref="child2">
+              <label/>
+              <input faims_attribute_name="Photograph Reference ID" faims_attribute_type="measure" faims_read_only="false" ref="Photograph_Reference_ID" faims_certainty="false">
+                <label>{Photograph_Log}</label>
+              </input>
+            </group>
+          </group>
             <select1 faims_attribute_name="Camera" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Camera">
             <label>{Camera}</label>
             <item>
@@ -2071,9 +2099,6 @@
               <value>placeholder</value>
             </item>
           </select1>
-            <input faims_attribute_name="Photograph Reference ID" faims_attribute_type="measure" faims_read_only="false" ref="Photograph_Reference_ID" faims_certainty="false">
-              <label>{Photograph_Log}</label>
-            </input>
           <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
               <label>{Select_Device_Code}</label>
               <item>
