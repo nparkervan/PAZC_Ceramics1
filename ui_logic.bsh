@@ -11,10 +11,10 @@ import jsqlite.Callback;
 
 Log.d("PAZC Module", "Very first line of logic after imports.");
 
-String WEB_GUIDE = "The FAIMS Excavation Demo Module was prepared in 2013 following a detailed comparison of 11 excavation recording sheets submitted by FAIMS partners. It serves the workflow of single-context, multi-trench excavation and the core definitions are derived from the Museum of London workbook.  <br><br> The module was the first one prepared using Heurist. It has been the basis of several other modules developed for specific projects, and is updated with key features required by partners. | <br><br> The purpose of this Guide is to provide an overview of the features and navigation of the Module. definitions and vocabulary lists for each Attribute are accessible via the Help button alongside each attribute. <br><br> ...MORE TO COME ";
-String WEB_REL_1 = "Use this tab to enter relationships between contexts, eg 'Above' and 'Below'. Select the Type of Relationship on the left, the related Context from the list on the right, and click the button 'Relate Contexts'.";
-String WEB_REL_2 = "To load or remove contexts, tap one from the list on the left and press button below:";
-String WEB_REL_SELECTED_NONE = "<i>None</i>";
+String WEB_GUIDE = "{webGuide}";
+String WEB_REL_1 = "{useToRelate} {Contexts}, eg '{Esta_encima_de}' & '{Esta_debajo_de}'. {selectReln} {Context} {clickButtonRelate} {Contexts}'.";
+String WEB_REL_2 = "{toLoadRemove} {Contexts}, {tapOne}";
+String WEB_REL_SELECTED_NONE = "<i>{none}</i>";
 
 populateWebViewHtml("user/help/guide", WEB_GUIDE);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/spacer", WEB_REL_1);
@@ -1193,7 +1193,7 @@ updateContextIdentifier(){
           }
         });    
     } else {
-        showToast("Please save your context before going to this tab.");
+        showToast("{pleaseSave} {Context} {beforeThisTab}.");
     }
 }
 
@@ -1389,7 +1389,7 @@ updateRelns(){
                 25
         );
     } else {
-        showToast("No context id!");
+        showToast("{NoContextId}!");
     }
     refreshTabgroupCSS("Context");
 

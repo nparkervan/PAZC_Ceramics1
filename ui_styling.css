@@ -2,9 +2,18 @@
 .record-list {
     height: 400px;
 }
-
+.double-record-list {
+    height: 600px;
+}
 .required {
 
+}
+
+.sharedwithvocab{
+    height: 40px;
+}
+.doubleheight{
+    height: 55px;
 }
 .required-label {
         color: red;
