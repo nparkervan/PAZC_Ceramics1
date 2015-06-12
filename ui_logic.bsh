@@ -525,14 +525,14 @@ updateGPSDiagnostics() {
 setSyncMinInterval(120.0f);
 setSyncMaxInterval(600.0f);
 setSyncDelay(5.0f);
-/*setSyncEnabled(true);
-setFileSyncEnabled(true);*/
+/*setSyncEnabled(true);*/
 
 // TODO: Delete this paragraph after development is complete.
 setSyncMinInterval(4.0f);
 setSyncMaxInterval(6.0f);
 setSyncDelay(5.0f);
 setSyncEnabled(true);
+setFileSyncEnabled(true);
 
 
 /*** 'Uneditable' - you can edit the code below with extreme precaution ***/
