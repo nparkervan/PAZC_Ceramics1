@@ -69,32 +69,27 @@
           <Context>
             <Context_GeneralInformation>
               <validate/>
-              <container1_1>
+              <container1>
                 <child1>
-                  <Site_Code/>
+                  <AreaCode/>
                 </child1>
                 <child2>
-                  <AreaCode/>
+                  <Context_ID/>
                 </child2>
                 <child3>
-                  <Device_Code/>
+                  <Context_Name/>
                 </child3>
-              </container1_1>
-              <container1_2>
+              </container1>
+              <container2>
                 <child1>
                   <Grid_Location_Reference/>
                 </child1>
                 <child2>
                   <Sub_Unit/>
                 </child2>
-              </container1_2>
-              <container2>
-                <child1>
-                  <Context_ID/>
-                </child1>
-                <child2>
-                  <Context_Name/>
-                </child2>
+                <child3>
+                  <Device_Code/>
+                </child3>
               </container2>
               <container6>
                 <child1>
@@ -775,15 +770,9 @@
         <trigger ref="validate">
           <label>{Validate}</label>
         </trigger>
-        <group faims_style="orientation" ref="container1_1">
+        <group faims_style="orientation" ref="container1">
           <label/>
           <group faims_style="even" ref="child1">
-            <label/>
-            <input faims_attribute_name="Site Code" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Site_Code">
-              <label>{Site_Code}</label>
-            </input>
-          </group>
-          <group faims_style="even" ref="child2">
             <label/>
             <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="AreaCode">
               <label>{Area_Code}</label>
@@ -793,18 +782,20 @@
               </item>
             </select1>
           </group>
+          <group faims_style="even" ref="child2">
+            <label/>
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
+              <label>{Context_Number}</label>
+            </input>
+          </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
-              <label>{Select_Device_Code}</label>
-              <item>
-                <label>{placeholder}</label>
-                <value>placeholder</value>
-              </item>
-            </select1>
+            <input faims_attribute_name="Context Name" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Name">
+              <label>{Context_Name}</label>
+            </input>
           </group>
         </group>
-        <group faims_style="orientation" ref="container1_2">
+        <group faims_style="orientation" ref="container2">
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
@@ -818,23 +809,17 @@
               <label>{Sub_Unit}</label>
             </input>
           </group>
-        </group>
-        <group faims_style="orientation" ref="container2">
-          <label/>
-          <group faims_style="even" ref="child1">
+          <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID">
-              <label>{Context_Number}</label>
-            </input>
+            <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
+              <label>{Select_Device_Code}</label>
+              <item>
+                <label>{placeholder}</label>
+                <value>placeholder</value>
+              </item>
+            </select1>
           </group>
-          <group faims_style="even" ref="child2">
-            <label/>
-            <input faims_attribute_name="Context Name" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Name">
-              <label>{Context_Name}</label>
-            </input>
-          </group>
-        </group>
-		
+        </group>		
 	   <group faims_style="orientation" ref="container6">
 			<label/>
 			<group faims_style="even" ref="child1">
