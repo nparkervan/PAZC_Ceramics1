@@ -430,6 +430,8 @@ duplicateContext() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       context_id = uuid;
+      setFieldValue("Context/Context_Attachments/Photo", null);
+      setFieldValue("Context/Context_Attachments/Sketch", null);
       setFieldValue("Context/Context_GeneralInformation/Context_ID", getFieldValue("control/data/ContextIncrement")); 
       incField("control/data/ContextIncrement");
       Boolean enable_autosave = true;
@@ -444,7 +446,12 @@ duplicateContext() {
 
   fetchAll(getDuplicateAttributeQuery(context_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Context", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      excludeAttributes.add("Photo");
+      excludeAttributes.add("Sketch");
+      duplicateTabGroup("Context", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -465,7 +472,10 @@ duplicateContextGroup() {
 
   fetchAll(getDuplicateAttributeQuery(context_group_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("ContextGroup", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      duplicateTabGroup("ContextGroup", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -474,6 +484,8 @@ duplicateArtefactGroup() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       artefact_group_id = uuid;
+      setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Photo", null);
+      setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Sketch", null);
       setFieldValue("Artefact_Group/Artefact_Group_GeneralInformation/Artefact_Group_ID", getFieldValue("control/data/Artefact_Group_Starting_ID")); 
       incField("control/data/Artefact_Group_Starting_ID", 1);
       Boolean enable_autosave = true;
@@ -488,7 +500,12 @@ duplicateArtefactGroup() {
 
   fetchAll(getDuplicateAttributeQuery(artefact_group_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Artefact_Group", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      excludeAttributes.add("Photo");
+      excludeAttributes.add("Sketch");
+      duplicateTabGroup("Artefact_Group", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -497,6 +514,8 @@ duplicateSample() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       sample_id = uuid;
+      setFieldValue("Sample/Sample_GeneralInformation/Photo", null);
+      setFieldValue("Sample/Sample_GeneralInformation/Sketch", null);
       setFieldValue("Sample/Sample_GeneralInformation/Sample_ID", getFieldValue("control/data/Sample_Starting_ID")); 
       incField("control/data/Sample_Starting_ID", 1);
       Boolean enable_autosave = true;
@@ -511,7 +530,12 @@ duplicateSample() {
 
   fetchAll(getDuplicateAttributeQuery(sample_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Sample", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      excludeAttributes.add("Photo");
+      excludeAttributes.add("Sketch");
+      duplicateTabGroup("Sample", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -532,7 +556,9 @@ duplicateMatrix() {
 
   fetchAll(getDuplicateAttributeQuery(matrix_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Matrix", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      duplicateTabGroup("Matrix", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -541,6 +567,7 @@ duplicateSpecialFind() {
   saveCallback = new SaveCallback() {
     onSave(uuid, newRecord) {
       special_find_id = uuid;
+      setFieldValue("Special_Find/Special_Find_GeneralInformation/Photo", null);
       setFieldValue("Special_Find/Special_Find_GeneralInformation/Special_Find_ID", getFieldValue("control/data/SpecialFind_Starting_ID")); 
       incField("control/data/SpecialFind_Starting_ID", 1);
       Boolean enable_autosave = true;
@@ -555,7 +582,11 @@ duplicateSpecialFind() {
 
   fetchAll(getDuplicateAttributeQuery(special_find_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Special_Find", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      excludeAttributes.add("Photo");
+      duplicateTabGroup("Special_Find", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -578,7 +609,10 @@ duplicateAdobeElement() {
 
   fetchAll(getDuplicateAttributeQuery(adobe_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Adobe_Element", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      duplicateTabGroup("Adobe_Element", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
@@ -599,7 +633,10 @@ duplicatePhotoLog() {
 
   fetchAll(getDuplicateAttributeQuery(photolog_id), new FetchCallback(){
     onFetch(result) {
-      duplicateTabGroup("Photograph_Log", null, getExtraAttributes(result), null, saveCallback);
+      excludeAttributes = new ArrayList();
+      excludeAttributes.add("AreaCode");
+      excludeAttributes.add("Site Code");
+      duplicateTabGroup("Photograph_Log", null, getExtraAttributes(result), excludeAttributes, saveCallback);
     }
   });
 }
