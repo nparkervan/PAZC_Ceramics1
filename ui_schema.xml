@@ -1673,20 +1673,20 @@
           <label/>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="60px">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID" faims_style_class="sharedwithvocab">
+            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID" faims_style_class="60px">
               <label>{Artefact_Group_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child4">
             <label/>
             <!--We would like to see Dropdown-->
-            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class" faims_style_class="sharedwithvocab">
+            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class" faims_style_class="60px">
               <label>{Artefact_Class}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1695,7 +1695,7 @@
             </select1>
           </group>
         </group>
-        <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code" faims_style_class="sharedwithvocab">
+        <select1 faims_attribute_name="Device Code" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Device_Code">
           <label>{Select_Device_Code}</label>
           <item>
             <label>{placeholder}</label>
