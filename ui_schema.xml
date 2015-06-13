@@ -815,50 +815,50 @@
               </item>
             </select1>
           </group>
-        </group>		
-	   <group faims_style="orientation" ref="container6">
-			<label/>
-			<group faims_style="even" ref="child1">
-			<label/>
-				<input faims_attribute_name="Date Opened" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Date_Opened" faims_style_class="required">
-				<label>{Date_Opened}</label>
-				</input>
-			</group>
-			<group faims_style="even" ref="child2">
-			<label/>
-				<input faims_attribute_name="Excavator" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Excavator" faims_style_class="required">
-				<label>{Excavator}</label>
-				</input>
-			</group>
-		</group>
-	
-		   <group faims_style="orientation" ref="container7">
-			<label/>
-			<group faims_style="even" ref="child1">
-			<label/>
-			<select1 faims_attribute_name="Type of Definition" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Type_of_Definition">
+        </group>    
+     <group faims_style="orientation" ref="container6">
+      <label/>
+      <group faims_style="even" ref="child1">
+      <label/>
+        <input faims_attribute_name="Date Opened" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Date_Opened" faims_style_class="required">
+        <label>{Date_Opened}</label>
+        </input>
+      </group>
+      <group faims_style="even" ref="child2">
+      <label/>
+        <input faims_attribute_name="Excavator" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Excavator" faims_style_class="required">
+        <label>{Excavator}</label>
+        </input>
+      </group>
+    </group>
+  
+       <group faims_style="orientation" ref="container7">
+      <label/>
+      <group faims_style="even" ref="child1">
+      <label/>
+      <select1 faims_attribute_name="Type of Definition" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Type_of_Definition">
           <label>{Type_of_Definition}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
-			</select1>
-			
-			</group>
-			<group faims_style="even" ref="child2">
-			<label/>
-			<select1 faims_attribute_name="Excavation Method" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Excavation_Method" faims_style_class="required">
+      </select1>
+      
+      </group>
+      <group faims_style="even" ref="child2">
+      <label/>
+      <select1 faims_attribute_name="Excavation Method" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Excavation_Method" faims_style_class="required">
           <label>{Excavation_Method}</label>
           <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
-			</select1>
-			
-			</group>
-		</group>
-		
-		
+      </select1>
+      
+      </group>
+    </group>
+    
+    
         <select1 faims_attribute_name="Context Type" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Context_Type" type="image" faims_style_class="required">
           <label>{Context_Type}</label>
           <item>
@@ -872,9 +872,9 @@
           <label>{Your_description}</label>
         </input>
        
-	
-		
-		<input faims_attribute_name="Context Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Comments" faims_style_class="required">
+  
+    
+    <input faims_attribute_name="Context Comments" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Comments" faims_style_class="required">
           <label>{Context_Comments}</label>
         </input>
         <!--We would like to see Dropdown-->
@@ -922,7 +922,7 @@
             </input>
           </group>
         </group>
-		    <input faims_attribute_name="Datum" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Datum">
+        <input faims_attribute_name="Datum" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Datum">
           <label>{Datum}</label>
         </input>
         <group faims_style="orientation" ref="container2">
@@ -986,7 +986,7 @@
             </input>
           </group>
         </group>
-		<input faims_attribute_name="Volume" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Volume" faims_style_class="required">
+    <input faims_attribute_name="Volume" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Volume" faims_style_class="required">
          <label>{Volume}</label>
         </input>
       </group>
@@ -1021,7 +1021,7 @@
             <label/>
            <input faims_attribute_name="Soil Colour" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Soil_Colour" faims_style_class="requiredsharedwithvocab">
                 <label>{Soil_Colour}</label>
-			</input>
+      </input>
           </group>
         </group>
         
@@ -1033,27 +1033,27 @@
             <value>placeholder</value>
           </item>
         </select1>
-		
-		 <group faims_style="orientation" ref="container8">
-			<label/>
-			<group faims_style="even" ref="child1">
-			<label/>
-			<select1 faims_attribute_name="Soil Texture" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Soil_Texture_Actual">
+    
+     <group faims_style="orientation" ref="container8">
+      <label/>
+      <group faims_style="even" ref="child1">
+      <label/>
+      <select1 faims_attribute_name="Soil Texture" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Soil_Texture_Actual">
           <label>{Soil_Texture}</label>
             <item>
             <label>{placeholder}</label>
             <value>placeholder</value>
           </item>
         </select1>
-			</group>
-			<group faims_style="even" ref="child2">
-			<label/>
-			<trigger ref="Texture_Helper">
+      </group>
+      <group faims_style="even" ref="child2">
+      <label/>
+      <trigger ref="Texture_Helper">
           <label>{Texture_Helper}</label>
         </trigger>
-			</group>
-		</group>
-		
+      </group>
+    </group>
+    
         <trigger ref="newMatrix">
           <label>{Add_New_Matrix}</label>
         </trigger>
@@ -1499,7 +1499,7 @@
           <label/>
           <group faims_style="even" ref="child2">
             <label/>
-             <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Area_Code">
+             <select1 faims_annotation="false" faims_attribute_name="AreaCode" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Area_Code" faims_style_class="sharedwithvocab">
               <label>{Area_Code}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1509,7 +1509,7 @@
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Title" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Title">
+            <input faims_attribute_name="Title" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Title" faims_style_class="sharedwithvocab">
               <label>{Context_Group_Title}</label>
             </input>
           </group>
@@ -1686,7 +1686,7 @@
           <group faims_style="even" ref="child4">
             <label/>
             <!--We would like to see Dropdown-->
-            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class">
+            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class" faims_style_class="sharedwithvocab">
               <label>{Artefact_Class}</label>
               <item>
                 <label>{placeholder}</label>
@@ -2065,9 +2065,7 @@
               <value>placeholder</value>
             </item>
           </select1>
-          <trigger ref="ReturnToContext">
-            <label>{Return_To_Context}</label>
-          </trigger>        
+             
       </group>
     </group>
 
@@ -2112,9 +2110,7 @@
           <input faims_attribute_name="Caption" faims_attribute_type="measure" faims_read_only="false" ref="Caption" faims_certainty="false">
               <label>{Caption}</label>
             </input>
-          <trigger ref="ReturnToContext">
-            <label>{Return_To_Context}</label>
-          </trigger>
+          
         </group>
     </group>
 

@@ -7994,7 +7994,7 @@
         <!--Make sure 16th century shows up as an option. Add values here -->
         <term>{No_Se_Observa}
           <description>data not collected 
-		  </description>
+      </description>
         </term>
         <term>{Formativo} 
           <description>No description
@@ -8013,9 +8013,9 @@
           </description>
         </term>
         <term>{Transicional}
-		 <description>No description
+     <description>No description
           </description>
-		</term>
+    </term>
         <term>{Sican_Temprano} 
           <description>No description
           </description>
@@ -8057,7 +8057,7 @@
       <lookup>
         <term>{No_Se_Observa}
           <description>data not collected 
-		  </description>
+      </description>
         </term>
         <term>{Formativo} 
           <description>No description
@@ -8076,9 +8076,9 @@
           </description>
         </term>
         <term>{Transicional}
-		 <description>No description
+     <description>No description
           </description>
-		</term>
+    </term>
         <term>{Sican_Temprano} 
           <description>No description
           </description>
@@ -8131,11 +8131,11 @@
           </description>
         </term>
         <term>{Adobe}
-    		 <description>Sun-dried brick.
+         <description>Sun-dried brick.
               </description>
-      		<term>{With_Straw}<description>{Adobe} {brick} with straw temper.</description></term>
-      		<term>{Without_Straw}<description>{Adobe} {brick} without straw temper.</description></term>
-    		</term>
+          <term>{With_Straw}<description>{Adobe} {brick} with straw temper.</description></term>
+          <term>{Without_Straw}<description>{Adobe} {brick} without straw temper.</description></term>
+        </term>
         <term>{Brick}
           <description>Fired clay block used in masonry construction.
           </description>
@@ -8158,15 +8158,15 @@
             <description>Stone fragments with few signs of shaping
             </description>
           </term>
-		  <term>{Gravel}
-		  <description>Loose aggregation of stones.
-		  </description>
-		  </term>
+      <term>{Gravel}
+      <description>Loose aggregation of stones.
+      </description>
+      </term>
         </term>
         <term>{Quincha}
-	   <description>Mud and rushes.
-	   </description>
-	   </term>
+     <description>Mud and rushes.
+     </description>
+     </term>
         <term>{Timber}
           <description>{Timber} uprights or other elements for a wall or fence.
           </description>
@@ -8422,7 +8422,7 @@
       <lookup>
         <term>{No_Se_Observa}
           <description>data not collected 
-		  </description>
+      </description>
         </term>
         <term>{Formativo} 
           <description>No description
@@ -8441,9 +8441,9 @@
           </description>
         </term>
         <term>{Transicional}
-		 <description>No description
+     <description>No description
           </description>
-		</term>
+    </term>
         <term>{Sicán_Temprano} 
           <description>No description
           </description>
@@ -8484,7 +8484,7 @@
       <lookup>
         <term>{No_Se_Observa}
           <description>data not collected 
-		  </description>
+      </description>
         </term>
         <term>{Formativo} 
           <description>No description
@@ -8503,9 +8503,9 @@
           </description>
         </term>
         <term>{Transicional}
-		 <description>No description
+     <description>No description
           </description>
-		</term>
+    </term>
         <term>{Sicán_Temprano} 
           <description>No description
           </description>
@@ -8730,28 +8730,28 @@
         <term>{Ceramic}
           <description> </description>
         <term>{Diagnostic}
-		<description/>
-		</term>
-		<term>{Not diagnostic}
-		<description/>
-		</term>
+    <description/>
+    </term>
+    <term>{Not_diagnostic}
+    <description/>
+    </term>
         </term>
         <term>{Beads}
-		<description/>
-		</term>
+    <description/>
+    </term>
         <term>{Charcoal}<description>No description.</description></term>
         <term>{Macrobotanical}<description/></term>
         <term>{Building_Materials}
           <description> </description>
-			<term>{Adobe}
-			<description>Sun-dried brick</description>
-			</term>
-			<term>{Brick}
-			<description>Fired or sun-dried clay block used in masonry construction.</description>
-			</term>
-			<term>{Quincha}
-			<description>Mud and rushes.</description>
-			</term>
+      <term>{Adobe}
+      <description>Sun-dried brick</description>
+      </term>
+      <term>{Brick}
+      <description>Fired or sun-dried clay block used in masonry construction.</description>
+      </term>
+      <term>{Quincha}
+      <description>Mud and rushes.</description>
+      </term>
         </term>
         <term>{Lithics}<description/></term>
         <term>{Bone}<description/></term>
@@ -8863,25 +8863,25 @@
           </description>
         </term>
         <term>{Charcoal}
-		<description>Sample of {Charcoal}.</description>
-		</term>
+    <description>Sample of {Charcoal}.</description>
+    </term>
         <term>{Ceramic}
-		<description>Sample of {Ceramic} sherds.</description>
-		</term>
+    <description>Sample of {Ceramic} sherds.</description>
+    </term>
         <term>{Phytolith}
-		<description/>
-		</term>
+    <description/>
+    </term>
         <term>{Phosphate}
-		<description/>
-		</term>
+    <description/>
+    </term>
         <term>{Building_Materials}
 
           <description>Sample of bricks or worked stone collected from this Context.
           </description>
         </term>
         <term>{Microarchaeological}
-		<description/>
-		</term>
+    <description/>
+    </term>
         <term>{Soil}
 
           <description>General collection of soil deposit from the Context.
@@ -8893,8 +8893,8 @@
           </description>
         </term>
         <term>{Other}
-		<description>Other sample.</description>
-		</term>
+    <description>Other sample.</description>
+    </term>
       </lookup>
     </property>
     <property name="Collection Method" type="enum">
@@ -9155,28 +9155,28 @@
         <term>{Ceramic}
           <description> </description>
         <term>{Diagnostic}
-		<description/>
-		</term>
-		<term>{Not diagnostic}
-		<description/>
-		</term>
+    <description/>
+    </term>
+    <term>{Not diagnostic}
+    <description/>
+    </term>
         </term>
         <term>{Beads}
-		<description/>
-		</term>
+    <description/>
+    </term>
         <term>{Charcoal}<description>No description.</description></term>
         <term>{Macrobotanical}<description/></term>
         <term>{Building_Materials}
           <description> </description>
-			<term>{Adobe}
-			<description>Sun-dried brick</description>
-			</term>
-			<term>{Brick}
-			<description>Fired or sun-dried clay block used in masonry construction.</description>
-			</term>
-			<term>{Quincha}
-			<description>Mud and rushes.</description>
-			</term>
+      <term>{Adobe}
+      <description>Sun-dried brick</description>
+      </term>
+      <term>{Brick}
+      <description>Fired or sun-dried clay block used in masonry construction.</description>
+      </term>
+      <term>{Quincha}
+      <description>Mud and rushes.</description>
+      </term>
         </term>
         <term>{Lithics}<description/></term>
         <term>{Bone}<description/></term>
