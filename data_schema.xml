@@ -7445,7 +7445,7 @@
 
           <description>Place approximately 25 g soil in palm. Add water dropwise and knead the soil to break down all aggregates. Soil is at the proper consistency when plastic and moldable, like moist putty.
           </description>
-          <term>{TASK:_Roll_ribbon}
+          <term>{TASK_Roll_ribbon}
 
             <description>Rub a ball of soil between thumb and forefinger to make a 'ribbon'
             </description>
@@ -8444,15 +8444,15 @@
      <description>No description
           </description>
     </term>
-        <term>{Sicán_Temprano} 
+        <term>{Sican_Temprano} 
           <description>No description
           </description>
         </term>
-        <term>{Sicán_Medio} 
+        <term>{Sican_Medio} 
           <description>No description
           </description>
         </term>
-        <term>{Sicán_Tardío} 
+        <term>{Sican_Tardío} 
           <description>No description
           </description>
         </term>
@@ -8506,15 +8506,15 @@
      <description>No description
           </description>
     </term>
-        <term>{Sicán_Temprano} 
+        <term>{Sican_Temprano} 
           <description>No description
           </description>
         </term>
-        <term>{Sicán_Medio} 
+        <term>{Sican_Medio} 
           <description>No description
           </description>
         </term>
-        <term>{Sicán_Tardío} 
+        <term>{Sican_Tardio} 
           <description>No description
           </description>
         </term>
