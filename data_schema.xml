@@ -7415,7 +7415,7 @@
 
             <description>The soil sample is too dry.
             </description>
-            <term>{NO RESULT: Add more water and start again}
+            <term>{NO_RESULT_add_water}
 
               <description> </description>
             </term>
@@ -7424,7 +7424,7 @@
 
             <description>The soil sample is too wet.
             </description>
-            <term>{NO RESULT: Add dry soil and start again}
+            <term>{NO_RESULT_add_soil}
 
               <description>NO RESULT: add dry soil to soak up water
               </description>
@@ -7666,6 +7666,11 @@
           <description>data not collected
           </description>
         </term>
+        <term pictureURL="files/data/gallery/Sorting/WellSorted.png">{Well_sorted}
+
+          <description>Particles are roughly the same size and evenly distributed.
+          </description>
+        </term>        
         <term pictureURL="files/data/gallery/Sorting/ModeratelySorted.png">{Moderately_sorted}
 
           <description>Particles are mostly the same size and evenly distributed, but there are some larger particles.
@@ -7679,11 +7684,6 @@
         <term pictureURL="files/data/gallery/Sorting/VeryPoorlySorted.png">{Very_poorly_sorted}
 
           <description>Particles are very different sizes and very unevenly distributed.
-          </description>
-        </term>
-        <term pictureURL="files/data/gallery/Sorting/WellSorted.png">{Well_sorted}
-
-          <description>Particles are roughly the same size and evenly distributed.
           </description>
         </term>
       </lookup>
@@ -9157,7 +9157,7 @@
         <term>{Diagnostic}
     <description/>
     </term>
-    <term>{Not diagnostic}
+    <term>{Not_diagnostic}
     <description/>
     </term>
         </term>
