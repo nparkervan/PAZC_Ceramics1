@@ -1673,20 +1673,20 @@
           <label/>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="60px">
+            <input faims_attribute_name="Context ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="true" ref="Context_ID" faims_style_class="sharedwithvocab">
               <label>{Context_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child3">
             <label/>
-            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID" faims_style_class="60px">
+            <input faims_attribute_name="Artefact Group ID" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Artefact_Group_ID" faims_style_class="sharedwithvocab">
               <label>{Artefact_Group_ID}</label>
             </input>
           </group>
           <group faims_style="even" ref="child4">
             <label/>
             <!--We would like to see Dropdown-->
-            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class" faims_style_class="60px">
+            <select1 faims_attribute_name="Artefact Class" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Artefact_Class" faims_style_class="sharedwithvocab">
               <label>{Artefact_Class}</label>
               <item>
                 <label>{placeholder}</label>
@@ -1909,7 +1909,7 @@
           </group>
           <group faims_style="even" ref="child4">
             <label/>
-            <select1 faims_attribute_name="Special Find Class" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Special_Find_Class">
+            <select1 faims_attribute_name="Special Find Class" faims_attribute_type="vocab" faims_certainty="false" faims_read_only="false" ref="Special_Find_Class" faims_style_class="sharedwithvocab">
               <label>{Special_Find_Class}</label>
               <item>
                 <label>{placeholder}</label>

@@ -7467,7 +7467,7 @@
 
                 <description>The ribbon formed when a ball of soil is rubbed between thumb and forefinger is between 2.5 and 5cm long.
                 </description>
-                <term>{TASK:_Wet_soil_and_rub_with_forefinger}
+                <term>{TASK_Wet_soil_and_rub_with_forefinger}
 
                   <description>Excessively wet a small pinch of soil in palm and rub with forefinger.
                   </description>
@@ -7512,7 +7512,7 @@
 
                 <description>The ribbon formed when a ball of soil is rubbed between thumb and forefinger is strong and over 5cm long.
                 </description>
-                <term>{TASK:_Wet_soil_and_rub_with_forefinger}
+                <term>{TASK_Wet_soil_and_rub_with_forefinger}
 
                   <description>Excessively wet a small pinch of soil in palm and rub with forefinger.
                   </description>
@@ -7557,7 +7557,7 @@
 
                 <description>The ribbon formed when a ball of soil is rubbed between thumb and forefinger is less than 2.5cm long.
                 </description>
-                <term>{TASK:_Wet_soil_and_rub_with_forefinger}
+                <term>{TASK_Wet_soil_and_rub_with_forefinger}
 
                   <description>Excessively wet a small pinch of soil in palm and rub with forefinger.
                   </description>
@@ -8452,7 +8452,7 @@
           <description>No description
           </description>
         </term>
-        <term>{Sican_Tardío} 
+        <term>{Sican_Tardio} 
           <description>No description
           </description>
         </term>
@@ -9393,7 +9393,7 @@
   </ArchaeologicalElement>
   <ArchaeologicalElement name="Legacy">
     <description></description>
-    <property name="Identifier" isIdentifier="true" type="freetext">
+    <property name="LegacyIdentifier" isIdentifier="true" type="freetext">
       <description></description>
       <formatString><![CDATA[$2]]></formatString>
     </property>

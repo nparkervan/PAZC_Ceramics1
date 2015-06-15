@@ -673,7 +673,7 @@ duplicateSpecialFind() {
 }
 
 duplicateAdobeElement() {
-    
+
   disableAutoSave("Adobe_Element");
 
   setFieldValue("Adobe_Element/Adobe_Element/Adobe_Element_ID", getFieldValue("control/data/Adobe_Element_Starting_ID")); 
@@ -1143,7 +1143,7 @@ legacyTextInput() {
   String legacyID = getLastTextAlertInput();
   Log.d("PAZC 2.0 Module", "Legacy ID: " + legacyID);
   List attributes = createAttributeList();
-  attributes.add(createEntityAttribute("Identifier", null, null, legacyID, null));
+  attributes.add(createEntityAttribute("LegacyIdentifier", null, null, legacyID, null));
   saveArchEnt(null, "Legacy", null, attributes, new SaveCallback() {
     onSave(uuid, newRecord){
       if (newRecord) {
@@ -1583,7 +1583,7 @@ updateAllContextRelationships(){
                                 "   AND uuid IN (SELECT uuid "+
                                 "                  FROM latestnondeletedaentvalue  "+
                                 "                  JOIN attributekey USING (attributeid) "+
-                                "                 WHERE attributename IN ('Context ID', 'Identifier') "+
+                                "                 WHERE attributename IN ('Context ID', 'LegacyIdentifier') "+
                                 "                   AND measure like '"+targetContextID+"'||'%' "+
                                 "                )         "+
                                 " ORDER BY CAST(response as integer); ";
@@ -1957,7 +1957,7 @@ populateContextGroup() {
                                     "   AND uuid IN (SELECT uuid "+
                                     "                  FROM latestnondeletedaentvalue  "+
                                     "                  JOIN attributekey USING (attributeid) "+
-                                    "                 WHERE attributename IN ('Context ID', 'Identifier') "+
+                                    "                 WHERE attributename IN ('Context ID', 'LegacyIdentifier') "+
                                     "                   AND measure like '"+targetContextID+"'||'%' "+
                                     "                )         "+
                                     " ORDER BY CAST(response as integer); ";
