@@ -163,15 +163,7 @@
       </lookup>
     </property>
     <!--Make below a required Field -->
-    <property name="Highest Level" type="float">
-      <description> The highest elevation, or 'starting level', recorded for that context. This may be relative to the site grid, or real world co-ordinates, depending on the method of measurement.
-      </description>
-    </property>
-    <!--Make below a required Field -->
-    <property name="Lowest Level" type="float">
-      <description>The lowest elevation recorded for that context. This may be relative to the site grid, or real world co-ordinates, depending on the method of measurement.
-      </description>
-    </property>
+    
     <!--Make below a required Field -->
     <property name="Length" type="float">
       <description>Length of the longest side, in mm.
@@ -8833,7 +8825,7 @@
     <property isIdentifier="true" name="Sample ID" type="freetext">
       <description>The unique code or reference for the Sample.
       </description>
-      <formatString><![CDATA[$2-]]></formatString>
+      <formatString><![CDATA[S$2]]></formatString>
       <appendCharacterString><![CDATA[-]]></appendCharacterString>
     </property>
     <property name="Device Code" type="enum">
@@ -8928,7 +8920,7 @@
         </term>
       </lookup>
     </property>
-    <property isIdentifier="true" name="Sample Weight" type="float">
+    <property name="Sample Weight" type="float">
       <description>Weight (in grams) of the sample collected.
       </description>
       <formatString><![CDATA[$2]]></formatString>

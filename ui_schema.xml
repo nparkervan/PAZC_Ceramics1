@@ -576,11 +576,9 @@
       <bind nodeset="/faims/control/data/Sample_Starting_ID" type="decimal"/>
       <bind nodeset="/faims/control/data/Adobe_Element_Starting_ID" type="decimal"/>
       <!--list of numeric and blocktext(memo) attributes(fields)-->
-      <bind nodeset="/faims/Context/Context_Interpretation/container1/child1/Start_date" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Interpretation/container1/child2/End_date" type="decimal"/>
+
       <bind nodeset="/faims/Context/Context_Measure/Volume" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/container1/child1/Context_Highest_Level" type="decimal"/>
-      <bind nodeset="/faims/Context/Context_Measure/container1/child2/Context_Lowest_Level" type="decimal"/>
+
       <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_Ctr" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_NE" type="decimal"/>
       <bind nodeset="/faims/Context/Context_Measure/container2/child1/Context_Highest_Level_NW" type="decimal"/>
@@ -795,7 +793,7 @@
           <label/>
           <group faims_style="even" ref="child1">
             <label/>
-            <input faims_attribute_name="Grid Location Reference" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Grid_Location_Reference">
+            <input faims_attribute_name="Grid Location Reference" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Grid_Location_Reference" faims_style_class="required">
               <label>{Grid_Location_Reference}</label>
             </input>
           </group>
@@ -836,7 +834,7 @@
       <label/>
       <group faims_style="even" ref="child1">
       <label/>
-      <select1 faims_attribute_name="Type of Definition" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Type_of_Definition">
+      <select1 faims_attribute_name="Type of Definition" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Type_of_Definition" faims_style_class="required">
           <label>{Type_of_Definition}</label>
           <item>
             <label>{placeholder}</label>
@@ -888,7 +886,7 @@
           </group>
           <group faims_style="even" ref="child2">
             <label/>
-            <input faims_certainty="false" faims_read_only="false" ref="Date_Closed" faims_attribute_name="Date Closed" faims_attribute_type="measure">
+            <input faims_certainty="false" faims_read_only="false" ref="Date_Closed" faims_attribute_name="Date Closed" faims_attribute_type="measure" faims_style_class="required">
               <label>{Date_Closed}</label>
             </input>
           </group>
@@ -907,21 +905,7 @@
 
       <group ref="Context_Measure">
         <label>{Measure}</label>
-        <group faims_style="orientation" ref="container1">
-          <label/>
-          <group faims_style="even" ref="child1">
-            <label/>
-            <input faims_attribute_name="Highest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Highest_Level" faims_style_class="required">
-              <label>{Context_Highest_Level}</label>
-            </input>
-          </group>
-          <group faims_style="even" ref="child2">
-            <label/>
-            <input faims_attribute_name="Lowest Level" faims_attribute_type="measure" faims_certainty="false" faims_read_only="false" ref="Context_Lowest_Level" faims_style_class="required">
-              <label>{Context_Lowest_Level}</label>
-            </input>
-          </group>
-        </group>
+        
         <input faims_attribute_name="Datum" faims_attribute_type="measure" faims_certainty="true" faims_read_only="false" ref="Datum">
           <label>{Datum}</label>
         </input>
@@ -1242,7 +1226,7 @@
             </input>
           </group>
         </group>
-        <select1 faims_attribute_name="Phase From" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Phase_From">
+        <select1 faims_attribute_name="Phase From" faims_attribute_type="vocab" faims_certainty="true" faims_read_only="false" ref="Phase_From" faims_style_class="required">
           <label>{Phase_From}</label>
           <item>
             <label>{placeholder}</label>

@@ -1232,8 +1232,8 @@ validateContextFields(Boolean showWarning) {
     fields.add(fieldPair("Context/Context_GeneralInformation/Context_Comments" , "{Context_Comments}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Your_description" , "{Your_description}"));
     fields.add(fieldPair("Context/Context_GeneralInformation/Excavator" , "{Excavator}"));
-    fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level" , "{Context_Highest_Level}"));
-    fields.add(fieldPair("Context/Context_Measure/Context_Lowest_Level" , "{Context_Lowest_Level}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Grid_Location_Reference" , "{Grid_Location_Reference}"));
+    fields.add(fieldPair("Context/Context_GeneralInformation/Type_of_Definition" , "{Type_of_Definition}"));
     fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_NW" , "{Context_Highest_Level_NW}"));
     fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_NE" , "{Context_Highest_Level_NE}"));
     fields.add(fieldPair("Context/Context_Measure/Context_Highest_Level_SE" , "{Context_Highest_Level_SE}"));
@@ -1248,11 +1248,12 @@ validateContextFields(Boolean showWarning) {
     fields.add(fieldPair("Context/Context_Measure/Width" , "{Width}"));
     fields.add(fieldPair("Context/Context_Measure/Depth" , "{Depth}"));
     fields.add(fieldPair("Context/Context_Measure/Volume" , "{Volume}"));
-    fields.add(fieldPair("Context/Context_Deposits/Soil_Colour" , "{Soil_Colour}"));
-    fields.add(fieldPair("Context/Context_Cuts/Shape_of_Cut" , "{Shape_of_Cut}"));
+    //fields.add(fieldPair("Context/Context_Deposits/Soil_Colour" , "{Soil_Colour}"));
     fields.add(fieldPair("Context/Context_Interpretation/Your_Discussion" , "{Your_Discussion}"));
     fields.add(fieldPair("Context/Context_Interpretation/Start_date" , "{Start_date}"));
     fields.add(fieldPair("Context/Context_Interpretation/End_date" , "{End_date}"));
+    fields.add(fieldPair("Context/Context_Interpretation/Phase_From" , "{Phase_From}"));
+
     fields.add(fieldPair("Context/Context_Interpretation/Phase_To" , "{Phase_To}"));
     fields.add(fieldPair("Context/Context_Attachments/Photo" , "{Photo}"));
     validateFields(fields, "Context/Context_Validation/validationResults", showWarning);
