@@ -16,8 +16,9 @@ String WEB_GUIDE = "{webGuide}";
 String WEB_REL_1 = "{useToRelate} {Contexts}, eg '{Esta_encima_de}' & '{Esta_debajo_de}'. {selectReln} {Context} {clickButtonRelate} {Contexts}'.";
 String WEB_REL_2 = "{toLoadRemove} {Contexts}, {tapOne}";
 String WEB_REL_SELECTED_NONE = "<i>{none}</i>";
+htmlFile = getAttachedFilePath("files/data/guide/guidePureHtml.html");
 
-populateWebViewHtml("user/help/guide", WEB_GUIDE);
+populateWebView("user/help/guide", htmlFile);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/spacer", WEB_REL_1);
 populateWebViewHtml("Context/Context_Relationships_to_Other_Contexts/help", WEB_REL_2);
 populateWebViewHtml("ContextGroup/ContextGroup_Contexts/help", WEB_REL_2);
@@ -836,9 +837,9 @@ setSyncDelay(5.0f);
 /*setSyncEnabled(true);*/
 
 // TODO: Delete this paragraph after development is complete.
-setSyncMinInterval(4.0f);
+/*setSyncMinInterval(4.0f);
 setSyncMaxInterval(6.0f);
-setSyncDelay(5.0f);
+setSyncDelay(5.0f);*/
 setSyncEnabled(true);
 setFileSyncEnabled(true);
 
