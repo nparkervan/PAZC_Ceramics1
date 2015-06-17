@@ -148,9 +148,21 @@
         <param type='field' value='measure' />
     </validator>
 </property>
-
-
-
+<!--
+<property name='Shape of Cut'>
+            <validator type='querychecker'>
+                <query><![CDATA[ select count(vocabname) = 0 or count(vocabname) = 2, 'Shape of cut must not be blank when cut is selected'
+                                   from latestnondeletedaentvalue join attributekey using (attributeid)
+                                   join vocabulary using (vocabid, attributeid)
+                                   where uuid = ?
+                                   and (    (attributename = 'Context Type' and vocabname = '{Cut}')
+                                         OR (attributename = 'Shape of Cut')
+                                       );
+                                       ]]></query>
+                <param type='query' value='select uuid from archentity where uuid = ? and aenttimestamp = ?' />
+            </validator>
+</property>
+-->
 </ArchaeologicalElement>
  
 <ArchaeologicalElement name='Context Group'>
