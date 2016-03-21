@@ -831,7 +831,7 @@ updateGPSDiagnostics() {
 
 
 /*** SYNC ***/
-setSyncMinInterval(120.0f);
+setSyncMinInterval(2.0f);
 setSyncMaxInterval(600.0f);
 setSyncDelay(5.0f);
 /*setSyncEnabled(true);*/
