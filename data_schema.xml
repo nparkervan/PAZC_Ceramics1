@@ -1,66 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSchema name="PAZC" preparer="Penny Crook">
-  <!-- PAZC 2014 for University of Vermont -->
-  <RelationshipElement name="AboveBelow" type="hierarchical">
-    <description>Implements a above below for contexts.
-    </description>
-    <parent>{Esta_encima_de}</parent>
-    <child>{Esta_debajo_de}</child>
-  </RelationshipElement>
-  <RelationshipElement name="{Es_igual_a}" type="bidirectional">
-    <description>Implements a same as for contexts
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="Contains - Contained By" type="hierarchical">
-    <description>Implements a contains-containedby for contexts.
-    </description>
-    <parent>{Contiene}</parent>
-    <child>{Esta_contenido_por}</child>
-  </RelationshipElement>
-  <RelationshipElement name="Cuts - Cut By" type="hierarchical">
-    <description>Implements a cuts-cutby for contexts.
-    </description>
-    <parent>{Se_corta}</parent>
-    <child>{Esta_cortado_por}</child>
-  </RelationshipElement>
-  <RelationshipElement name="Butts - Butted By" type="hierarchical">
-    <description>Implements a Butts-ButtedBy for contexts.
-    </description>
-    <parent>{Topa}</parent>
-    <child>{Esta_topado_por}</child>
-  </RelationshipElement>
-  <RelationshipElement name="{Esta_pegado_a}" type="bidirectional">
-    <description>Implements a bonded to for contexts
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextMatrix" type="bidirectional">
-    <description>Implements a 1:N between contexts and matrices
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextContextGroup" type="bidirectional">
-    <description>Implements a N:N between contexts and context groups
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextArtefactGroup" type="bidirectional">
-    <description>Implements a 1:N between context and its artefact groups
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextSample" type="bidirectional">
-    <description>Implements a 1:N between context and its samples
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextSpecialFind" type="bidirectional">
-    <description>Implements a 1:N between context and its special finds
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextPhotographLog" type="bidirectional">
-    <description>Implements a 1:N between context and its photograph logs
-    </description>
-  </RelationshipElement>
-  <RelationshipElement name="ContextAdobe" type="bidirectional">
-    <description>Implements a 1:N between context and its Adobe bricks
-    </description>
-  </RelationshipElement>
+<dataSchema name="PAZC_Ceramics" preparer="Parker VanValkenburgh">
+  
   <!-- CONTEXT -->
   <ArchaeologicalElement name="Context">
     <description>The physical result of any single action, whether it leaves a positive or negative record within the stratigraphic sequence. (MoLAS 1994)
